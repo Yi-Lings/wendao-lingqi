@@ -245,7 +245,8 @@ class Campaign {
   }
 }
 
-test('zero-draw legal actions reach all 120 independent route nodes and both endings', {timeout:120000}, () => {
+test('zero-draw legal actions reach all 120 independent route nodes and each guardian ending', {timeout:120000}, () => {
+  fs.mkdirSync(path.join(__dirname,'../dist'),{recursive:true});
   const results=[];
   for(const route of ['magic','body']) {
     const campaign=new Campaign(route);
