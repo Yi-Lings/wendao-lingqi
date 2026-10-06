@@ -1,0 +1,9 @@
+{
+  "name": "wendao-lingqi",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Android portrait offline cultivation game",
+  "scripts": {
+    "test": "node tests/run-v3.cjs"
+  }
+}
