@@ -9,13 +9,18 @@ parser.add_argument('--report', default=str(ROOT / 'dist/apk-check.txt'))
 args = parser.parse_args()
 apk = pathlib.Path(args.apk)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'core.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'app.js']
+modules = ['data.js', 'equipment-art.js', 'game-art.js', 'core.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
-       'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png']
+       'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',
+       'v4-weapons-atlas.png', 'v4-armor-atlas.png', 'v4-utilities-atlas.png',
+       'v4-treasures-atlas.png', 'v4-pills-atlas.png', 'v4-basic-skills-atlas.png']
+audio = ['bgm-home', 'bgm-battle', 'bgm-heaven', 'ui', 'success', 'error',
+         'battle-hit', 'battle-skill', 'victory', 'defeat', 'summon-rise', 'reveal',
+         'red-awaken', 'red-impact']
 assets = [p for p in sorted((ROOT / 'web').rglob('*')) if p.is_file()]
-required = modules + ['index.html', 'style.css'] + ['assets/' + name for name in art]
-assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required V3 asset missing'
+required = modules + ['index.html', 'style.css', 'selection.css', 'layout.css', 'battle.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json']
+assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required game asset missing'
 
 def digest(stream):
     h = hashlib.sha256()
@@ -50,7 +55,8 @@ with apk.open('rb') as source:
     sha256 = digest(source)
 report = '\n'.join(lines) + '\n'
 report += 'All ' + str(len(assets)) + ' packaged game assets exactly match source.\n'
-report += 'V3 artwork: ' + ', '.join(art) + '\n'
+report += 'Game artwork: ' + ', '.join(art) + '\n'
+report += 'Offline audio: ' + ', '.join(audio) + '\n'
 report += 'Game modules: ' + ', '.join(modules) + '\n'
 report += 'classes.dex bytes: ' + str(dex_bytes) + '\n'
 report += 'APK bytes: ' + str(apk.stat().st_size) + '\nAPK SHA256: ' + sha256 + '\n'

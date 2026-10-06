@@ -30,6 +30,20 @@
     {id:'orangeGear',name:'本阶橙色装备',cost:{dust:120}},
     {id:'orangeTreasure',name:'橙色灵宝',cost:{dust:150}}
   ];
+  var RESOURCE_MARKET=[
+    {id:'herb',name:'灵草',reward:{materials:{herb:50}},price:{jade:40,dust:20}},
+    {id:'ore',name:'玄铁',reward:{materials:{ore:50}},price:{jade:40,dust:20}},
+    {id:'lotus',name:'灵莲',reward:{materials:{lotus:3}},price:{jade:40,dust:15}},
+    {id:'insight',name:'参悟',reward:{materials:{insight:10}},price:{jade:40,dust:20}},
+    {id:'essence',name:'炼器精华',reward:{materials:{essence:10}},price:{jade:60,dust:30}},
+    {id:'soul',name:'器魂',reward:{materials:{soul:3}},price:{jade:80,dust:40}},
+    {id:'stones',name:'灵石',reward:{stones:5000},price:{jade:60,dust:30}}
+  ];
+  RESOURCE_MARKET.forEach(function(item){
+    if(item.reward.materials)Object.freeze(item.reward.materials);
+    Object.freeze(item.reward);Object.freeze(item.price);Object.freeze(item);
+  });
+  Object.freeze(RESOURCE_MARKET);
   var SLOT_KEYS=Object.keys(C.slots),SCHOOL_KEYS=Object.keys(C.schools),AFFIX_KEYS=Object.keys(AFFIXES);
   var LEVEL_CAPS=[5,8,11,14,17,20],ENHANCE_CAPS=[5,8,12,16,20,20];
   function yes(message,data){return {ok:true,message:message,data:data};}
@@ -126,6 +140,11 @@
   function eligibleTechnique(s,id){return C.techniques[id]&&available(s,C.techniques[id]);}
   function costs(s,type,a){
     a=a||{};var p=path(s),lv,g,t,n,id;
+    if(type==='buyResource'){
+      t=RESOURCE_MARKET.find(function(x){return x.id===a.item;});
+      if(!t||a.currency!=='jade'&&a.currency!=='dust'||!int(a.count,1,99))return null;
+      var marketCost={};marketCost[a.currency]=t.price[a.currency]*a.count;return marketCost;
+    }
     if(type==='exchangeJade'||type==='drawWithJade')return {jade:C.shop.jadePerDraw*(a.count===10?10:1)};
     if(type==='upgradeTechnique'){
       t=s.techniques[a.id];if(!t)return null;lv=t.level;
@@ -351,7 +370,7 @@
     var actions=['learnTechnique','upgradeTechnique','resetTechnique','setTechniqueBranch','setLoadout','savePreset','loadPreset',
       'equipGear','autoEquip','recycleGear','bulkRecycle','lockGear','enhanceSlot','forgeGear','recastGear','rerollGear','acceptReroll',
       'awakenGear','researchRecipe','craftPill','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','usePill','upgradeFacility','equipTreasure','upgradeTreasure','recycleTreasure',
-      'setGachaTarget','draw','drawWithJade','buyJade','exchangeJade','exchangeDust','claimOverflow'];
+      'setGachaTarget','draw','drawWithJade','buyJade','buyResource','exchangeJade','exchangeDust','claimOverflow'];
     if(actions.indexOf(a.type)<0)return null;
     if(['queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob'].indexOf(a.type)>=0){
       var alchemyValidation=K.validate(s);
@@ -575,6 +594,27 @@
       K.log(s,'模拟购入'+pack.name+'：灵玉+'+pack.jade,now);
       return yes('购入成功，灵玉+'+pack.jade,{jade:pack.jade,receipt:copy(receipt)});
     }
+    if(a.type==='buyResource'){
+      var product=RESOURCE_MARKET.find(function(x){return x.id===a.item;});
+      if(!product)return no('集市商品不存在');
+      if(a.currency!=='jade'&&a.currency!=='dust')return no('请选择灵玉或天道尘支付');
+      if(!int(a.count,1,99))return no('每次可购买1至99份');
+      var purchaseReward={};
+      if(product.reward.materials){
+        purchaseReward.materials={};
+        Object.keys(product.reward.materials).forEach(function(key){purchaseReward.materials[key]=product.reward.materials[key]*a.count;});
+        if(Object.keys(purchaseReward.materials).some(function(key){return s.materials[key]+purchaseReward.materials[key]>K.CAP;}))return no('材料已达存储上限，请先使用');
+      }
+      if(product.reward.stones){
+        purchaseReward.stones=product.reward.stones*a.count;
+        if(s.stones+purchaseReward.stones>K.CAP)return no('灵石已达存储上限，请先使用');
+      }
+      cost=costs(s,a.type,a);
+      if(!pay(s,cost))return no(a.currency==='jade'?'灵玉不足':'天道尘不足');
+      K.grant(s,purchaseReward);
+      K.log(s,'集市购入'+product.name+'，共'+a.count+'份',now);
+      return yes('已购入'+product.name+'，共'+a.count+'份',{item:product.id,currency:a.currency,count:a.count,cost:copy(cost),reward:copy(purchaseReward)});
+    }
     if(a.type==='exchangeJade'){
       if(a.count!==1&&a.count!==10)return no('请选择兑换1张或10张感应券');
       if(s.tickets+a.count>K.CAP)return no('感应券已达存储上限');
@@ -621,7 +661,7 @@
     handle:handle,draw:draw,createGear:createGear,addGear:addGear,costs:costs,
     alchemyCapacity:alchemyCapacity,alchemyView:alchemyView,alchemyBonus:alchemyBonus,
     targets:targets,gachaPool:pools,gachaTable:TABLE,affixes:AFFIXES,exchangeList:EXCHANGES,
-    checkLoadout:checkLoadout,limits:{bag:MAX_BAG,overflow:MAX_OVERFLOW,history:200},
+    checkLoadout:checkLoadout,resourceMarket:RESOURCE_MARKET,limits:{bag:MAX_BAG,overflow:MAX_OVERFLOW,history:200},
     redChance:function(pity){var n=pity+1;return n>=80?1:n>50?0.01+(n-50)*0.005:0.01;}
   };
 });
