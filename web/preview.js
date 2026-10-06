@@ -61,6 +61,11 @@ function createState(now){
     {slot:'boots',set:'body',rarity:3}
   ];
   for(const options of samples)act(Object.assign({type:'forgeGear'},options));
+  // Fill only missing set slots in this fresh isolated fixture. All equipment
+  // still uses actual forge costs and UID allocation; current samples stay worn.
+  for(const set of Object.keys(C.sets))for(const slot of Object.keys(C.slots)){
+    if(!s.bag.some(g=>g.set===set&&g.slot===slot))act({type:'forgeGear',set,slot,rarity:2});
+  }
   act({type:'setLoadout',
     heart:'sword_heart_1',
     skills:['sword_skill_3','thunder_skill_3','body_skill_1','array_skill_0'],

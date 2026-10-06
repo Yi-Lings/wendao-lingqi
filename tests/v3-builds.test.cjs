@@ -66,7 +66,10 @@ test('current route, realm and layer restrictions apply to learned high-tier tec
   const s=state(2,4);schools.forEach(id=>learn(s,id));const future=gear(s,'weapon','sword',5,2);
   s.route='body';s.paths.body={realm:0,layer:1,xp:0,reserve:0};
   schools.forEach(id=>{const p=B.plan(s,id);assert.notEqual(p.equipped.weapon,future.uid);assertUsable(s,p);assert.equal(p.loadout.skills.length,2);assert.equal(p.loadout.secrets.length,0);});
-  const p=B.plan(s,'shadow');assert.ok(p.goals.some(goal=>goal.requirements.some(text=>/需要|开放/.test(text))));
+  const p=B.plan(s,'shadow'),setGoal=p.goals.find(goal=>goal.kind==='set');
+  assert.ok(setGoal,'the lower route still has a real set-completion goal');
+  assert.equal(setGoal.source.type,'forge');assert.equal(setGoal.available,true,'ordinary equipment forging is allowed before red blueprints unlock');
+  assert.ok(!setGoal.requirements.some(text=>/蓝图/.test(text)));
 });
 
 test('null hearts and zero learned techniques are safe and provide an honest acquisition goal',()=>{

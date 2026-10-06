@@ -1,0 +1,55 @@
+.battle-settlement{--settlement-glow:#edc877;position:relative;min-width:0;color:#e5eeec}
+.settlement-hero{position:relative;isolation:isolate;text-align:center;overflow:hidden;padding:18px 10px 20px;border-radius:15px;background:radial-gradient(ellipse at 50% 34%,#98763337,transparent 65%),linear-gradient(140deg,#102c34,#0a1d26);border:1px solid #c9ac6844}
+.settlement-kicker{position:relative;z-index:1;display:block;color:#d7c39a;font-size:10px;letter-spacing:.18em}
+.settlement-seal{position:relative;display:grid;place-items:center;width:70px;height:70px;margin:15px auto 10px;font-family:serif;font-size:40px;color:#ffe7aa;border:1px solid #eacd8080;border-radius:50%;background:radial-gradient(circle,#96713244,#062127d9);box-shadow:0 0 28px #e6b64b23,inset 0 0 16px #e6b64b20;animation:settlement-seal-enter .65s cubic-bezier(.2,.8,.25,1) both}
+.settlement-orbit{position:absolute;z-index:-1;width:220px;height:220px;left:50%;top:3px;border:1px solid #cbae6340;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 0 18px #cbae6310,0 0 0 34px #cbae630c;animation:settlement-halo-enter .9s ease-out both}
+.settlement-orbit:before,.settlement-orbit:after{content:"✦";position:absolute;color:#f5da93;font-size:21px;left:24px;top:40px;text-shadow:0 0 15px #f8cd5f}
+.settlement-orbit:after{left:auto;right:29px;top:72px;font-size:12px}
+.settlement-hero h3{position:relative;margin:0 0 5px!important;font-size:24px;letter-spacing:.2em;color:#ffe8b2}
+.settlement-hero p{position:relative;margin:0!important;font-size:13px;color:#dfebea}
+.settlement-hero>small{display:block;margin:10px auto 0;font-size:10px;color:#a1b7b6;overflow-wrap:anywhere}
+.settlement-stars{margin:7px 0 0;font-size:22px;letter-spacing:8px;color:#efc774;text-shadow:0 0 13px #eac45640}
+.settlement-stars span{color:#79877f;text-shadow:none}
+.settlement-first{display:inline-block;margin-top:10px;font-size:11px;color:#ffe6a9;background:#8c622e33;border:1px solid #cba96860;border-radius:20px;padding:5px 12px;animation:settlement-card-enter .55s .25s ease-out both}
+.settlement-status{display:flex;align-items:center;justify-content:center;gap:7px;margin:12px 0;padding:9px;border:1px solid #79cda333;border-radius:10px;font-size:11px;color:#a0dbb7;background:#37774f15;text-align:center;line-height:1.5}
+.settlement-status.is-pending{color:#e9d1a0;border-color:#d2aa6038;background:#815d201a}
+.settlement-loot{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
+.settlement-card{display:flex;align-items:center;gap:11px;position:relative;min-width:0;padding:11px 12px;border:1px solid #5b898044;border-left:3px solid var(--rarity,#6e8b83);border-radius:11px;background:linear-gradient(120deg,#0b262acc,#0a1d2599);animation:settlement-card-enter .35s calc(min(var(--reward-order),8)*55ms) ease-out both}
+.settlement-card.settlement-rare{background:linear-gradient(105deg,color-mix(in srgb,var(--rarity) 13%,#09212c),#0a1c2599);box-shadow:inset 0 0 20px color-mix(in srgb,var(--rarity) 6%,transparent)}
+.settlement-card.rarity-5{box-shadow:inset 0 0 22px #dd456c13,0 0 12px #d6335e15}
+.settlement-card .settlement-icon{display:block;flex:none;width:52px;height:52px;min-width:52px;aspect-ratio:1;border-radius:9px;border:1px solid #bdd7c532}
+.settlement-fallback{display:grid!important;place-items:center;font-size:30px;background:#213c43;color:#e4cf93}
+.settlement-item-copy{min-width:0;flex:1}
+.settlement-item-copy>small{display:block;margin-bottom:3px;color:var(--rarity,#adc5bc);font-size:9px}
+.settlement-item-copy>strong{display:block;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+.settlement-item-copy>span{display:block;font-size:9px;color:#90ada9;line-height:1.6;margin-top:3px}
+.settlement-count{flex:none;white-space:nowrap;font-size:15px;color:#e8d4a2;font-variant-numeric:tabular-nums}
+.settlement-inspect.btn{min-height:30px;margin-top:3px;padding:3px 5px 3px 0;font-size:10px;text-align:left;border:0;color:#b8ded0}
+.settlement-touch-hint{font-size:10px;text-align:center;color:#879f9c;margin:13px 0 0!important;line-height:1.6}
+.settlement-reason{font-size:11px;color:#91ada7;line-height:1.7;margin:11px 1px 0!important}
+.settlement-empty{padding:17px 14px;text-align:center;line-height:1.7;font-size:12px;color:#9fbbb6;border:1px dashed #77989440;border-radius:11px}
+.settlement-details{margin-top:16px;border-top:1px solid #6a969530;padding-top:12px}
+.settlement-details>summary{font-size:12px;color:#a4c3bd;cursor:pointer;min-height:32px;display:flex;align-items:center}
+.settlement-details h3{margin-top:14px!important;font-size:13px}
+.settlement-details .section-note{font-size:11px}
+.settlement-defeat .settlement-hero,.settlement-exit .settlement-hero,.settlement-practice .settlement-hero{background:radial-gradient(ellipse at 50% 34%,#40768a25,transparent 65%),#0a222c;border-color:#6397a343}
+.settlement-defeat .settlement-hero h3,.settlement-exit .settlement-hero h3,.settlement-practice .settlement-hero h3{color:#c3dedb}
+.settlement-defeat .settlement-seal,.settlement-exit .settlement-seal,.settlement-practice .settlement-seal{color:#c5dfdc;border-color:#81b4b766;box-shadow:0 0 25px #66a4b418}
+@keyframes settlement-card-enter{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes settlement-seal-enter{from{opacity:0;transform:scale(.68);filter:brightness(2)}to{opacity:1;transform:scale(1);filter:brightness(1)}}
+@keyframes settlement-halo-enter{from{opacity:0;transform:translateX(-50%) scale(.6)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+@media(min-width:650px){.settlement-loot{grid-template-columns:repeat(2,minmax(0,1fr))}.settlement-card{gap:9px;padding:10px}.settlement-count{font-size:13px}}
+@media(max-width:374px){.settlement-card{gap:8px;padding:9px}.settlement-card .settlement-icon{width:44px;height:44px;min-width:44px}.settlement-count{font-size:13px}.settlement-item-copy>strong{font-size:12px}}
+@media(max-height:700px){
+ .settlement-hero{display:grid;grid-template-columns:58px minmax(0,1fr);gap:4px 11px;align-content:center;min-height:184px;padding:12px 14px}
+ .settlement-seal{grid-column:1;grid-row:1/span 4;align-self:center;width:58px;height:58px;margin:0;font-size:34px}
+ .settlement-kicker{grid-column:2;text-align:left;font-size:9px;line-height:1.4;letter-spacing:.12em}
+ .settlement-hero h3{grid-column:2;text-align:left;font-size:23px;line-height:1.3;letter-spacing:.1em;margin:0!important}
+ .settlement-hero p{grid-column:2;text-align:left;font-size:12px;line-height:1.5}
+ .settlement-stars{grid-column:2;text-align:left;font-size:20px;line-height:1.25;letter-spacing:5px;margin:0}
+ .settlement-first{grid-column:1/-1;justify-self:center;margin-top:6px;padding:4px 10px;font-size:10px;line-height:1.4}
+ .settlement-hero>small{grid-column:1/-1;margin:4px 0 0;font-size:9px;line-height:1.5}
+ .settlement-orbit{width:165px;height:165px;top:-20px;left:45%;opacity:.8}
+ .settlement-status{margin:9px 0;padding:7px;line-height:1.4}
+}
+@media(prefers-reduced-motion:reduce){.battle-settlement *,.battle-settlement *:before,.battle-settlement *:after{animation:none!important;transition:none!important}}

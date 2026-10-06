@@ -5,7 +5,7 @@ const PREVIEW=new URLSearchParams(location.search).get('preview')==='1';
 const KEY=PREVIEW?'lingqi-preview-save-v1':'lingqi-save-v2', OLD=PREVIEW?'lingqi-preview-save-v1':'lingqi-save-v1', AGE=PREVIEW?'lingqi-preview-age-confirmed':'lingqi-age-confirmed', MAX=1048576;
 const app=document.getElementById('app'), layer=document.getElementById('modal-layer'), toastEl=document.getElementById('toast'), fileInput=document.getElementById('import-file');
 let s=null,page='cultivation',modal=null,recovery=null,mounted=false,lastFrame=Date.now(),lastPassive=Date.now(),lastPersist=0,timer=null,toastTimer=null,busy=false,pointerHeld=false,previousBattleFrame=null,summonTimer=null,summonPulseTimer=null,redRevealTimer=null;
-const uiState={techSchool:'all',techKind:'all',dungeonType:'resource',gearSlot:'all',gearRarity:'all',gearSet:'all',sideTab:'story',selectedDungeon:null,drawResults:[],redRevealIndex:0,poolCategory:'gear',poolRarity:5,modalPages:{},shopTab:'resources',resourceCount:1,buildTab:'techniques'};
+const uiState={techSchool:'all',techKind:'all',dungeonType:'resource',gearSlot:'all',gearRarity:'all',gearSet:'all',sideTab:'story',selectedDungeon:null,drawResults:[],redRevealIndex:0,poolCategory:'gear',poolRarity:5,modalPages:{},shopTab:'resources',resourceCount:1,buildTab:'techniques',setPreviewRarity:2};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(Number(x))?Number(x).toLocaleString('zh-CN',{maximumFractionDigits:1}):'0';
 const pct=(x,m)=>Math.max(0,Math.min(100,m?x/m*100:0));
@@ -280,7 +280,7 @@ function frame(title,body,footer=''){
 }
 function showModal(type,p={}){
  clearDrawTimers();window.WendaoSelection?.cancelHold();window.WendaoSelection?.hideDetail();app.inert=false;
- modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,'gear-detail':gearDetail,'equipment-sets':equipmentSetsModal,'build-recommendations':buildRecommendationsModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,'red-reveal':redRevealModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal};
+ modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,'gear-detail':gearDetail,'equipment-sets':equipmentSetsModal,'gear-source':gearSourceModal,'build-recommendations':buildRecommendationsModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,'red-reveal':redRevealModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal};
  (fn[type]||helpModal)(p);
  updateAudioScene();
 }
@@ -328,8 +328,18 @@ function equipmentSetsModal(p={}){
  const chosen=sets.find(x=>x.id===active),rec=chosen.recommendation;
  const tabs=sets.map(x=>`<button class="build-school-tab${x.id===active?' active':''}" data-ui="equipment-sets" data-payload="${esc(JSON.stringify({set:x.id}))}" aria-pressed="${x.id===active}"><strong>${esc(x.name)}</strong><small>${esc(C.schools[x.id].name)} · ${x.equippedCount}/6</small></button>`).join('');
  const effects=chosen.effects.map(x=>`<div class="build-effect${x.active?' active':''}"><strong>${x.pieces}件 · ${x.active?'已激活':'未激活'}</strong><p>${esc(x.description)}</p></div>`).join('');
- const slots=chosen.slots.map(x=>{const g=s.bag.find(g=>g.uid===x.candidateUid);return g?buildGearTile(g):`<button class="build-gear-tile empty" data-ui="gear-change" data-payload="${esc(JSON.stringify({slot:x.slot}))}"><span class="empty-slot">＋</span><strong>${esc(C.slots[x.slot])}</strong><small>待获取 ${esc(chosen.name)}</small></button>`;}).join('');
- frame('成套装备',`<div class="build-school-tabs">${tabs}</div><div class="build-overview"><span class="eyebrow">${esc(C.schools[active].name)} · ${esc(chosen.name)}</span><h3>${esc(chosen.description)}</h3><p>当前穿戴 ${chosen.equippedCount} 件 · 背包可组成 ${rec.setCount} 件</p></div><div class="build-effects">${effects}</div><p class="build-synergy">${esc(chosen.synergy.description)}</p><details class="build-detail"><summary>六部位成套方案 · ${rec.replaceCount} 处可更换</summary><div class="build-gear-grid">${slots}</div></details><p class="compact-note">${esc(rec.reason||'仅装配已拥有且当前境界可用的装备，缺少的部位保留当前穿戴。')}</p>`,act('一键装配 '+chosen.name,'equipSet',{set:active},'primary',!rec.canEquip||!!s.battle||!!s.exploration)+ui('查看搭配功法','build-recommendations',{school:active},'secondary'));
+ const slots=chosen.slots.map(x=>{const g=s.bag.find(g=>g.uid===x.candidateUid);if(g)return buildGearTile(g);const v=window.WendaoEquipmentSources.view(s,{set:active,slot:x.slot,rarity:uiState.setPreviewRarity}),preview={...v.gear,uid:'preview-'+active+'-'+x.slot+'-'+v.rarity,awakening:0,affixes:[],preview:true};return `<button class="build-gear-tile missing rarity-${v.rarity}" data-ui="gear-source" data-payload="${esc(JSON.stringify({set:active,slot:x.slot,rarity:v.rarity}))}" data-inspect-kind="gear" data-inspect-id="${esc(preview.uid)}" data-inspect-snapshot="${esc(JSON.stringify(preview))}">${gearIcon(v.gear)}<strong>${esc(v.name)}</strong><small>${esc(C.slots[x.slot])} · ${esc(v.status)}</small><span>查看获取途径 ›</span></button>`;}).join('');
+ frame('成套装备',`<div class="build-school-tabs">${tabs}</div><div class="build-overview"><span class="eyebrow">${esc(C.schools[active].name)} · ${esc(chosen.name)}</span><h3>${esc(chosen.description)}</h3><p>当前穿戴 ${chosen.equippedCount} 件 · 背包可组成 ${rec.setCount} 件</p></div><div class="build-effects">${effects}</div><p class="build-synergy">${esc(chosen.synergy.description)}</p><details class="build-detail" open><summary>六部位成套方案 · ${rec.replaceCount} 处可更换</summary><label class="set-preview-quality">缺件预览品质${select('set-preview-rarity',C.rarities.map((x,i)=>({id:i,name:x.name})),uiState.setPreviewRarity)}</label><div class="build-gear-grid">${slots}</div></details><p class="compact-note">${esc(rec.reason||'仅装配已拥有且当前境界可用的装备，缺少的部位保留当前穿戴。')}</p>`,act('一键装配 '+chosen.name,'equipSet',{set:active},'primary',!rec.canEquip||!!s.battle||!!s.exploration)+ui('查看搭配功法','build-recommendations',{school:active},'secondary'));
+}
+function gearSourceModal(p={}){
+ if(!C.sets[p.set]||!C.slots[p.slot])return closeModal();
+ const v=window.WendaoEquipmentSources.view(s,p),f=v.forge;
+ modal={type:'gear-source',p:{set:v.set,slot:v.slot,rarity:v.rarity}};
+ const lacking=f.missing.map(x=>`${mat[x.id||x.key]||x.id||x.key}还差 ${num(x.missing)}`).concat(f.requirements);
+ const owned=v.eligible.length?ui('查看本部位装备','gear-change',{slot:v.slot},'secondary small'):v.overflow.length?act('领取奖励暂存','claimOverflow',{},'secondary small'):'';
+ const bosses=v.bosses.map(b=>`<article class="gear-source-route"><strong>${esc(b.name)}</strong><small>${esc(realmName(s.route,b.realm))}${b.layer}层 · ${b.blueprint&&b.firstClear?'首通获得本套蓝图':'本套装备掉落'}</small><p>${esc(b.drop)}</p>${!b.allowed?`<p class="source-requirements">${esc(b.requirements.join(' · '))}</p>`:''}${ui(b.allowed?'前往讨伐':'查看开启条件','source',{id:b.id},'secondary small')}</article>`).join('');
+ const blueprint=v.rarity===5&&!v.blueprintOwned?`<details class="build-detail"><summary>获取道品打造蓝图</summary>${v.blueprintSources.map(x=>`<p>${esc(x.label)} ${ui('前往查看','source',x,'ghost small')}</p>`).join('')}</details>`:'';
+ frame('获取 '+C.slots[v.slot],`<div class="gear-source-heading rarity-${v.rarity}">${gearIcon(v.gear)}<div><strong>${esc(v.name)}</strong><small>${esc(C.sets[v.set].name)} · ${esc(rar(v.rarity).name)}</small><span>${esc(v.status)}</span></div></div>${owned}<label class="gap-top">目标品质${select('source-gear-rarity',C.rarities.map((x,i)=>({id:i,name:x.name})),v.rarity)}</label><section class="gear-source-route"><h3>定向打造 · 固定套装与部位</h3><p>${v.rarity===5?'道品需要本套永久蓝图与同阶天命晶。':'凡品至天品无需蓝图，备齐材料即可打造。'}</p><p class="cost">消耗：${esc(price(f.cost))}</p><p class="source-requirements">${esc(lacking.length?lacking.join(' · '):'材料已齐，可直接打造')}</p>${ui('前往定向打造','source',{type:'forge',set:v.set,slot:v.slot,rarity:v.rarity},'primary small')}</section><details class="build-detail"><summary>妖王掉落 · ${v.bosses.filter(b=>b.allowed).length}处已开放</summary>${bosses}</details><details class="build-detail"><summary>抽卡获取 · 道品部位定向</summary><p>${esc(v.gacha.description)}</p><p class="source-requirements">${esc(v.gacha.requirements.join(' · ')||('当前感应券 '+num(v.gacha.tickets)))}</p>${ui(v.gacha.allowed?'前往设置道品定向':'查看感应开启条件','source',{type:'gacha',target:v.gacha.target},'secondary small')}</details>${blueprint}`,ui('返回套装','equipment-sets',{set:v.set},'secondary'));
 }
 function buildGoalAction(goal,plan){
  const source=goal.source||{};
@@ -399,7 +409,7 @@ function treasuresModal(){
  frame('灵宝图鉴 · 12件',`<div class="list">${modalSlice(items,'treasures',4).map(([id,t])=>{const own=s.ownedTreasures[id];return `<article class="item rarity-${t.rarity}">${itemIcon('treasure',id,t.name.slice(0,1))}<div class="item-main"><strong>${esc(t.name)}${own?' · '+own.level+'级':''}</strong><small>${esc(rar(t.rarity).name)} · ${t.kind==='active'?'主动':'被动'}${own?' · 持有'+num(own.count):' · 未获得'}</small><p>${esc(t.description)}</p>${source(t)}${own?costLine('upgradeTreasure',{id}):''}<div class="item-actions">${own?act('灵宝升级','upgradeTreasure',{id},'primary small'):''}${own?act('装配','equipTreasure',{id,index:t.kind==='active'?0:1},'secondary small',!K.unlocks(s).treasureSlots):''}${own?ui('分解一件','confirm',{type:'recycleTreasure',payload:{id,confirm:t.rarity===5},label:'分解 '+t.name,text:'会移除一件灵宝并回收天道尘，配置和预设中的最后一件受到保护。'},'ghost small'):''}</div></div></article>`;}).join('')}</div>${modalPager('treasures',items.length,4)}`,ui('调整灵宝槽','loadout',{},'primary'));
 }
 function recycleModal(){frame('整理与分解',`<p>已穿戴、锁定与预设引用的物品自动保护。红装只能逐件明确确认。</p><p class="muted gap-top">建议先保护准备保留的装备，再批量整理低品质。</p><div class="grid-3 gap-top">${[0,1,2].map(i=>act('分解至'+rar(i).name,'bulkRecycle',{maxRarity:i},'secondary')).join('')}</div><p class="safe-note">红、橙、紫默认不参加此处批量整理。分解回收可用于强化与洗炼。</p>`,ui('查看背包','equipment',{},'primary'));}
-function targetModal(){const list=targetList();frame('选择红色定向',`<p class="muted">更换目标保留红计数及“下一红必定向”。保证基础物品身份，不保证随机词条。</p><label class="gap-top">当前可用目标${select('gacha-target',[{id:'',name:'取消定向'},...list],s.gacha.target||'')}</label><p class="section-note">${s.gacha.fateGuarantee?'已积累下一红必定向状态。':'首红50%目标；若未中，下红必定目标。'}</p>`,act('保存定向','setGachaTarget',{},'primary'));}
+function targetModal(p={}){const list=targetList(),available=!p.target||list.some(x=>x.id===p.target),target=available?(p.target||s.gacha.target||''):'';frame('选择红色定向',`<p class="muted">更换目标保留红计数及“下一红必定向”。保证基础物品身份，不保证随机词条。</p>${!available?'<p class="source-requirements">达到第二境一层后，开放装备道品定向。</p>':''}<label class="gap-top">当前可用目标${select('gacha-target',[{id:'',name:'取消定向'},...list],target)}</label><p class="section-note">${s.gacha.fateGuarantee?'已积累下一红必定向状态。':'首红50%目标；若未中，下红必定目标。'}保存目标后，再自行选择感应次数。</p>`,act('保存定向','setGachaTarget',{},'primary',!available));}
 function oddsModal(){
  const rows=Q?.gachaTable||[{category:'equipment',weights:[4,8,9,5,3.5,.5]},{category:'treasure',weights:[0,3,4,5,2.7,.3]},{category:'technique',weights:[3,7,6,3,.8,.2]},{category:'pill',weights:[10,8,1,1,0,0]},{category:'material',weights:[8,4,2,1,0,0]}],names={equipment:'装备',gear:'装备',treasure:'灵宝',technique:'功法',pill:'丹药',material:'材料'};
  frame('天道概率与规则',`<p class="muted">普通状态联合概率。每抽先判红，未中后处理橙保底。十连与连续单抽完全同规则。</p><div class="table-wrap gap-top"><table><tr><th>类别</th>${C.rarities.map(x=>`<th>${esc(x.name)}</th>`).join('')}</tr>${rows.map(x=>`<tr><th>${esc(names[x.category]||x.category)}</th>${x.weights.map(n=>`<td>${num(n)}%</td>`).join('')}</tr>`).join('')}<tr><th>合计</th>${[25,30,22,15,7,1].map(n=>`<td>${n}%</td>`).join('')}</tr></table></div><h3>保底</h3><p>连续9次未出橙或红，第10次至少橙。红色前50次1%；第51次1.5%，以后每次增加0.5个百分点，第80次必红。</p><h3>定向</h3><p>首个红有50%命中目标，未中则下一红必定命中。定向最坏160抽获得基础物品。外部获得红色不清感应计数。</p><h3>重复与记录</h3><p>每抽固定2尘，重复秘籍转残页。结果与保底先保存再播放动画，跳过动画不影响奖励。</p><h3>当前可选红色目录</h3><div class="list">${targetList().map(x=>`<p class="tiny">${esc(x.name)} · ${esc(names[x.category]||x.category||'红色目标')}</p>`).join('')||'<p class="muted">第二境一层后显示当前可用目标。</p>'}</div>`,ui('返回感应','close',{},'primary'));
@@ -510,9 +520,19 @@ function battleReportModal(p={}){
  const r=Number.isInteger(p.index)?s.battleReports?.[p.index]||s.lastBattleResult:s.lastBattleResult;
  if(!r)return frame('最近战报','<p>完成一次挑战后，可查看战报。</p>');
  const details=(title,items)=>Array.isArray(items)&&items.length?'<h3>'+esc(title)+'</h3><div class="list gap-top">'+items.map(x=>'<p class="section-note">'+esc(typeof x==='string'?x:x.message||x.text||x.label||'')+'</p>').join('')+'</div>':'';
- const rewardText=price(r.rewards||r.reward),legacy=r.reasons||r.advice||r.report;
- frame(r.win||r.victory||r.ok?'挑战胜利':'挑战战报','<h3>'+esc(r.name||r.id||'山海历练')+'</h3><p class="muted">'+esc(reportOutcome(r))+' · '+esc(reportContext(r))+'</p><p class="tiny">'+esc(reportDate(r))+'</p><p class="gap-top">'+esc(r.reason||r.message||r.summary||'战斗已结算。')+'</p><p class="muted">用时 '+num(r.duration??r.time)+' 秒 · 处理机制 '+num(r.performance?.handled)+' · 错失机制 '+num(r.performance?.missed)+'</p><p class="cost">奖励：'+esc(r.rewardsPending?'暂存待携出：'+(rewardText||'常规收益'):rewardText||(r.practice?'试阵不发奖励':'本场无奖励'))+'</p>'+details('敌人机制',r.mechanisms)+details('应对建议',r.failures)+details('战斗回顾',legacy)+details('战斗记录',r.log),ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary')+ui('继续历练','close',{},'primary'));
+ const rewards=window.WendaoRewards.model(r),legacy=r.reasons||r.advice||r.report;
+ const review='<details class="settlement-details"><summary>查看战斗回顾与机制</summary><p class="tiny">'+esc(reportDate(r))+' · 处理机制 '+num(r.performance?.handled)+' · 错失机制 '+num(r.performance?.missed)+'</p>'+details('敌人机制',r.mechanisms)+details('应对建议',r.failures)+details('战斗回顾',legacy)+details('战斗记录',r.log)+'</details>';
+ const continuation=p.settlement&&s.battle&&s.battle.paused?act('继续挑战','pauseBattle',{paused:false},'primary'):ui(s.exploration?'继续探索':'继续历练','close',{},'primary');
+ frame(rewards.title+(rewards.items.length?' · 战利品':''),window.WendaoRewards.render(r,{state:s,context:reportContext(r)})+review,ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary',!!s.battle)+continuation);
 }
+function showBattleSettlement(){
+ const r=s.lastBattleResult;if(!r)return;
+ clearTimeout(toastTimer);toastEl.hidden=true;
+ showModal('battle-report',{settlement:true});
+ Sound?.play(r.practice?(r.win?'success':'defeat'):r.win||r.victory?'victory':r.outcome==='exit'?'ui':'defeat');
+ if(!r.practice&&(r.rewards?.gear||[]).some(g=>g.rarity===5))Sound?.play('red-impact');
+}
+
 function confirmModal(p){frame('确认'+p.label,`<p>${esc(p.text)}</p>`,act('确认'+p.label,p.type,p.payload||{},'danger')+ui('返回','close',{},'secondary'));}
 function offlineModal(p){const x=p.summary||{};frame('归来 · 灵气仍在',`<p>基础修行与洞府产出已结算并保存。</p><p class="muted gap-top">离线 ${num(x.elapsedMs?x.elapsedMs/3600000:(x.seconds||x.elapsedSeconds||0)/3600)} 小时 · 修为上限24小时 · 生产上限七天</p><p class="cost">${esc(price(x.reward||x.rewards||x.gains||{xp:x.xp,stones:x.stones,materials:x.materials}))}</p><p class="muted">新增悟道券储备 ${num(x.wisdomTickets)} · 历练储备 +${num((x.sweepAddedMs||0)/3600000)}h</p><p class="safe-note">新副本、剧情与大境突破仍由你主动完成。战斗已暂停，可继续或调整准备。</p>`,ui('继续仙途','close',{},'primary'));}
 function techBranch(p){const t=C.techniques[p.id],x=s.techniques[p.id];if(!t||!x)return;modal={type:'tech-branch',p};frame(t.name+' · 参悟分支',`<p>${esc(t.description)}</p><p class="muted gap-top">五级后可以选择分支，洞府切换免费。当前分支 ${esc(t.branches?.[x.branch]?.name||String(x.branch+1))}。</p>${techniqueMilestones(t,x)}<div class="stack gap-top">${(t.branches||[]).map(b=>'<p class="section-note">'+esc(b.name)+'：'+esc(b.description)+'</p>').join('')}</div><div class="grid-2 gap-top">${act(t.branches?.[0]?.name||'凝练','setTechniqueBranch',{id:p.id,branch:0},'secondary')}${act(t.branches?.[1]?.name||'通明','setTechniqueBranch',{id:p.id,branch:1},'secondary',x.level<5)}</div><p class="safe-note">重置返还90%参悟投入，教学首次重置全额返还。等级记录仅在主动重置时清除。</p>${costLine('resetTechnique',{id:p.id})}`,ui('重置此功法','confirm',{type:'resetTechnique',payload:{id:p.id},label:'重置 '+t.name,text:'功法等级退回初始，返还规则按实际投入结算。'},'ghost'));}
@@ -537,14 +557,19 @@ function payload(type,p){
 function run(type,p={},interactive=true){
  if(!s||busy)return{ok:false,message:'操作进行中'};
  if(modal?.type==='equipment'){const library=layer.querySelector('[data-selection-library=gear]');try{if(library)uiState.modalPages.equipment=JSON.parse(library.dataset.selectionOptions).page||0;}catch(e){}}
- busy=true;const before=JSON.stringify(s);let r;
+ busy=true;const before=JSON.stringify(s),previousReport=JSON.stringify(s.lastBattleResult);let r,completed=false;
  try{
   r=E.act(s,{type,...p},Date.now());
   if(!r?.ok){if(interactive){toast(r?.message||'当前条件尚未满足。');Sound?.play('error');}return r||{ok:false};}
+  // E.act validates a cloned state, so object identity changes on every action.
+  completed=!!s.lastBattleResult&&(JSON.stringify(s.lastBattleResult)!==previousReport||type==='leaveBattle'||type==='finishCave'||type==='chooseCave'&&!s.exploration);
+  if(completed&&s.battle){const paused=E.act(s,{type:'pauseBattle',paused:true},Date.now());if(!paused.ok)throw Error('下一场战斗暂停失败');}
   if(!persist(s)){s=JSON.parse(before);updateChrome();renderPage();renderEncounter();return{ok:false,message:'存档未成功，已撤回'};}
-  if(interactive){toast(r.message);if(['useSkill','useTreasure'].includes(type))Sound?.play('battle-skill');else if(type==='targetEnemy')Sound?.play('ui');else if(!['draw','drawWithJade','pauseBattle','setBattleAuto'].includes(type))Sound?.play('success');}
+  if(interactive){toast(r.message);if(['useSkill','useTreasure'].includes(type))Sound?.play('battle-skill');else if(type==='targetEnemy')Sound?.play('ui');else if(!completed&&!['draw','drawWithJade','pauseBattle','setBattleAuto'].includes(type))Sound?.play('success');}
   updateChrome();renderPage();renderEncounter();
-  if(type==='draw'||type==='drawWithJade'){uiState.drawResults=r.data?.results||[];startDrawAnimation();}
+  if(completed){showBattleSettlement();}
+  else if(type==='pauseBattle'&&p.paused===false&&modal?.type==='battle-report'&&modal.p.settlement){closeModal();}
+  else if(type==='draw'||type==='drawWithJade'){uiState.drawResults=r.data?.results||[];startDrawAnimation();}
   else if(type==='buyJade'||type==='exchangeJade'||type==='buyResource'){showModal('shop');}
   else if(type==='startDungeon'){closeModal();}
   else if(type==='talk'){showModal('conversation',{companion:p.companion,text:r.message});}
@@ -552,7 +577,7 @@ function run(type,p={},interactive=true){
   else if(type==='rerollGear'||type==='acceptReroll'){showModal('reroll',{uid:p.uid});}
   else if(type==='jointInvite'||type==='jointStep'){s.joint?showModal('joint'):closeModal();}
   else if(type==='jointCancel'||type==='setLoadout'||type==='loadPreset'||type==='leaveBattle'||type==='recycleGear'||type==='resetTechnique'){closeModal();}
-  else if(modal&&['upgradeTechnique','learnTechnique','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','craftPill','usePill','equipGear','equipSet','equipRecommendedBuild','lockGear','enhanceSlot','recastGear','awakenGear','upgradeTreasure','equipTreasure','recycleTreasure','exchangeDust','talk','gift','savePreset','setTechniqueBranch'].includes(type)){const m=modal;if(m.type==='tech-branch')techBranch(m.p);else showModal(m.type,m.p);}
+  else if(modal&&['upgradeTechnique','learnTechnique','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','craftPill','usePill','equipGear','equipSet','equipRecommendedBuild','claimOverflow','lockGear','enhanceSlot','recastGear','awakenGear','upgradeTreasure','equipTreasure','recycleTreasure','exchangeDust','talk','gift','savePreset','setTechniqueBranch'].includes(type)){const m=modal;if(m.type==='tech-branch')techBranch(m.p);else showModal(m.type,m.p);}
   if(type==='setGachaTarget')closeModal();
   return r;
  }catch(e){s=JSON.parse(before);if(interactive){toast('操作未完成，进度已恢复。');Sound?.play('error');}console.error(e);return{ok:false,message:'操作异常'};}
@@ -567,7 +592,18 @@ function boot(){
  persist(s);mounted=true;mount();lastFrame=lastPassive=Date.now();clearInterval(timer);
  timer=setInterval(()=>{
   if(!s||!mounted||document.hidden||busy)return;const now=Date.now(),seconds=Math.min(1,(now-lastFrame)/1000);lastFrame=now;
-  if(s.battle){const before=JSON.stringify(s),beforeBattle=!!s.battle,beforeView=battleView();try{E.tick(s,seconds);if((beforeBattle&&!s.battle)||now-lastPersist>1000){if(!persist(s)){s=JSON.parse(before);if(s.battle)E.act(s,{type:'pauseBattle',paused:true},now);}}}catch(e){s=JSON.parse(before);}const afterView=battleView();if(afterView.active&&beforeView.active&&(afterView.player.hp<beforeView.player.hp||afterView.enemies.some(x=>x.hp<(beforeView.enemies.find(y=>y.index===x.index)?.hp??x.hp))))Sound?.play('battle-hit');renderEncounter();if(beforeBattle&&!s.battle){renderPage();if(s.lastBattleResult){Sound?.play(s.lastBattleResult.win||s.lastBattleResult.victory?'victory':'defeat');showModal('battle-report');}}}
+  if(s.battle){
+   const before=JSON.stringify(s),previousReport=s.lastBattleResult,beforeView=battleView();let completed=false;
+   try{
+    E.tick(s,seconds);completed=!!s.lastBattleResult&&s.lastBattleResult!==previousReport;
+    // Auto retry can immediately create a new battle. Pause it before committing
+    // the completed fight so every reward screen has a stable, saved boundary.
+    if(completed&&s.battle){const paused=E.act(s,{type:'pauseBattle',paused:true},now);if(!paused.ok)throw Error('下一场战斗暂停失败');}
+    if(completed||now-lastPersist>1000){if(!persist(s)){s=JSON.parse(before);completed=false;if(s.battle)E.act(s,{type:'pauseBattle',paused:true},now);}}
+   }catch(e){s=JSON.parse(before);completed=false;}
+   const afterView=battleView();if(!completed&&afterView.active&&beforeView.active&&(afterView.player.hp<beforeView.player.hp||afterView.enemies.some(x=>x.hp<(beforeView.enemies.find(y=>y.index===x.index)?.hp??x.hp))))Sound?.play('battle-hit');
+   renderEncounter();if(completed){updateChrome();renderPage();showBattleSettlement();}
+  }
   if(now-lastPassive>=1000){const priorRank=K.pathRank(s),before=JSON.stringify(s);try{E.advance(s,now);if(now-lastPersist>5000&&!persist(s,true))s=JSON.parse(before);}catch(e){s=JSON.parse(before);}lastPassive=now;updateChrome();if(K.pathRank(s)!==priorRank)renderPage();}
  },250);
  settle(true);
@@ -596,7 +632,7 @@ function handleUi(id,p){
  if(id==='dungeon-type'){uiState.dungeonType=p.id;return renderPage();}
  if(id==='ending-story'){uiState.sideTab='story';return navigate('fate');}
  if(id==='fate-tab'){uiState.sideTab=p.id;return renderPage();}
- if(id==='source'){if(p.type==='forge'){navigate('cave');return showModal('forge',{set:p.set,slot:p.slot,rarity:3});}if(p.id&&C.dungeons[p.id]){uiState.dungeonType=C.dungeons[p.id].type;navigate('adventure');return showModal('dungeon',{id:p.id,floor:p.floor});}uiState.dungeonType=p.type||'resource';return navigate('adventure');}
+ if(id==='source'){if(p.type==='forge'){navigate('cave');return showModal('forge',{set:p.set,slot:p.slot,rarity:Number.isInteger(p.rarity)&&p.rarity>=0&&p.rarity<=5?p.rarity:3});}if(p.type==='gacha'){navigate('heaven');return showModal('gacha-target',{target:p.target});}if(p.type==='sidequest'){uiState.sideTab='side';const index=(currentView().sidequestProgress||C.sidequests).findIndex(q=>q.id===p.id);if(index>=0)layoutState.lists['fate-side']=Math.floor(index/2);closeModal();return navigate('fate');}if(p.id&&C.dungeons[p.id]){uiState.dungeonType=C.dungeons[p.id].type;navigate('adventure');return showModal('dungeon',{id:p.id,floor:p.floor});}uiState.dungeonType=p.type||'resource';return navigate('adventure');}
  if(id==='gear-change'){if(!C.slots[p.slot])return;uiState.gearSlot=p.slot;uiState.gearRarity=uiState.gearSet='all';uiState.modalPages.equipment=0;return showModal('equipment',{slot:p.slot});}
  if(id==='build-tab'){if(!['techniques','gear','goals'].includes(p.tab))return;uiState.buildTab=p.tab;return showModal('build-recommendations',modal?.p||{});}
  if(id==='gear-detail')return showModal('gear-detail',p);if(id==='tech-branch')return techBranch(p);
@@ -632,6 +668,8 @@ document.addEventListener('change',event=>{
  if(id==='filter-gear-slot'){uiState.gearSlot=read(id);uiState.modalPages.equipment=0;equipmentModal();}
  if(id==='filter-gear-rarity'){uiState.gearRarity=read(id);uiState.modalPages.equipment=0;equipmentModal();}
  if(id==='filter-gear-set'){uiState.gearSet=read(id);uiState.modalPages.equipment=0;equipmentModal();}
+ if(id==='set-preview-rarity'){uiState.setPreviewRarity=Number(read(id));equipmentSetsModal(modal?.p||{});}
+ if(id==='source-gear-rarity')gearSourceModal(Object.assign({},modal?.p,{rarity:Number(read(id))}));
  if(['dungeon-tier','dungeon-difficulty','dungeon-floor','dungeon-practice'].includes(id)&&uiState.selectedDungeon){const x=dungeonPreview({id:uiState.selectedDungeon,tier:Number(read('dungeon-tier')||s.paths[s.route].realm),difficulty:Number(read('dungeon-difficulty')||0),floor:Number(read('dungeon-floor')||1),practice:!!document.getElementById('dungeon-practice')?.checked});if(x)text('dungeon-live-preview',(x.practice?'试阵无奖励':'当前预览：'+price(x.rewards))+(x.requirements?' · '+(Array.isArray(x.requirements)?x.requirements.join('、'):x.requirements):''));}
  if(['forge-slot','forge-set','forge-rarity'].includes(id))updateForgePreview();
 });

@@ -6,8 +6,8 @@
 'use strict';
 const SETS=['sword','body','thunder','elements','shadow','array'];
 const SLOTS=['weapon','armor','head','bracer','boots','charm'];
-const WEARABLES=['armor','head','bracer','boots','charm'];
 const QUALITY=['凡品','灵品','玄品','地品','天品','道品'];
+const SET_NAMES={sword:'青锋',body:'玄武',thunder:'雷霄',elements:'离火',shadow:'太虚',array:'回春'};
 const RED_LEGACY_WEAPONS={sword:0,thunder:2,elements:5,shadow:4};
 const WEAPONS={
   sword:['铁剑','精钢剑','灵纹剑','紫玄剑','天锋剑','青锋剑'],
@@ -45,16 +45,16 @@ function baseName(value){
     const setName=own(C&&C.sets,g.set)?C.sets[g.set].name:'道藏';
     return setName+({armor:'宝衣',head:'宝冠',bracer:'宝腕',boots:'宝履',charm:'宝佩'}[g.slot]);
   }
-  if(g.slot==='armor'&&g.set==='body')return BODY_ARMOR[g.rarity];
-  return ARMOR[g.slot][g.rarity];
+  const name=g.slot==='armor'&&g.set==='body'?BODY_ARMOR[g.rarity]:ARMOR[g.slot][g.rarity];
+  return SET_NAMES[g.set]+'·'+name;
 }
 function gearArt(value){
-  const g=normalize(value),row=g.slot==='weapon'?SETS.indexOf(g.set):g.slot==='armor'&&g.set!=='body'?5:WEARABLES.indexOf(g.slot);
+  const g=normalize(value),row=SETS.indexOf(g.set),col=SLOTS.indexOf(g.slot);
   if(g.rarity===5&&(g.slot==='weapon'&&own(RED_LEGACY_WEAPONS,g.set)||g.slot==='armor'&&g.set==='body')){
-    const col=g.slot==='weapon'?RED_LEGACY_WEAPONS[g.set]:1;
-    return {file:'v3-items-atlas.png',position:col*20+'% 0%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};
+    const legacyColumn=g.slot==='weapon'?RED_LEGACY_WEAPONS[g.set]:1;
+    return {file:'v3-items-atlas.png',position:legacyColumn*20+'% 0%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};
   }
-  return {file:g.slot==='weapon'?'v4-weapons-atlas.png':'v4-armor-atlas.png',position:g.rarity*20+'% '+row*20+'%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};
+  return {file:'v5-gear-quality-'+g.rarity+'.png',position:col*20+'% '+row*20+'%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};
 }
 function gearLabel(value){
   const raw=record(value),g=normalize(raw),tier=integer(raw.tier,0,5),awakening=integer(raw.awakening,1,5);

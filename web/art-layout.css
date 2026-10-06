@@ -1,0 +1,50 @@
+/* Keep the complete atlas at one scale in both axes. Pixel offsets isolate the
+   chosen tile when a scenic container is wider than its original square crop. */
+.atlas-fit {
+  background-size: var(--atlas-fit-size) !important;
+  background-position: var(--atlas-fit-position) !important;
+  background-repeat: no-repeat;
+}
+
+/* Narrative pictures deserve enough height to read as illustrations. */
+.game-shell .chapter-art {
+  width: 100%;
+  height: auto;
+  min-height: 138px;
+  max-height: 220px;
+  aspect-ratio: 16 / 9;
+  background-color: #142f37;
+}
+
+/* The three original companion portraits are 512 x 1024 crops. Flex row
+   content must never change the portrait's height or expose adjacent people. */
+.game-shell .companion-card .companion-art {
+  align-self: center;
+  width: 61px;
+  height: 122px;
+  min-height: 0;
+  flex: none;
+  overflow: hidden;
+}
+
+/* Boss artwork uses square source cells even in a wide encounter preview. */
+.boss-banner .boss-banner-art {
+  width: 140px;
+  height: 140px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: none;
+}
+
+/* Scenic thumbnails crop naturally; never flatten hills or temples into a
+   thin ribbon. Their source-tile geometry is handled by art-layout.js. */
+.dungeon-banner:not(.boss-banner) { height: 178px; }
+
+@media (max-width: 370px) {
+  .game-shell .companion-card .companion-art { width: 55px; height: 110px; }
+  .dungeon-banner:not(.boss-banner) { height: 160px; }
+}
+
+@media (max-height: 620px) {
+  .game-shell .chapter-art { min-height: 128px; max-height: 175px; }
+}
