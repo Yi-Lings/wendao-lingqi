@@ -21,6 +21,7 @@ const KEY = 'lingqi-preview-save-v1';
 const REGULAR_KEY = 'lingqi-save-v2';
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/assets/audio/manifest.json'), 'utf8'));
 const images = fs.readdirSync(path.join(ROOT, 'web/assets')).filter(name => /\.png$/i.test(name));
+const setAtlases = Array.from({ length: 6 }, (_, rarity) => 'v5-gear-quality-' + rarity + '.png');
 const sourceMedia = ['icon.svg', ...images.map(name => 'assets/' + name), ...Object.values(manifest.assets).map(info => 'assets/audio/' + info.file)];
 const expectedMedia = sourceMedia.map(name => {
   const bytes = fs.readFileSync(path.join(ROOT, 'web', name));
@@ -184,7 +185,26 @@ async function chooseSkill(id) {
     await screenshot('preview-single-html-home.png');
     return { defaultFixture: true, firstGateConfirmedViaUi: firstGate, isolatedSaveKey: KEY, normalSaveUnchanged: true, offline: true };
   });
-  await check('all 20 embedded PNG atlases and the SVG icon retain source bytes and paint decoded images', async () => {
+  await check('new acquisition, settlement and image-layout modules run from inline scripts with no external imports', async () => {
+    const modules = await page.evaluate(() => ({
+      scripts: [...document.querySelectorAll('script[data-source]')].map(node => node.dataset.source),
+      styles: [...document.querySelectorAll('style[data-source]')].map(node => node.dataset.source),
+      sources: typeof window.WendaoEquipmentSources?.view,
+      rewards: typeof window.WendaoRewards?.render,
+      layout: typeof window.WendaoArtLayout?.geometry,
+      external: [...document.querySelectorAll('script[src],link[rel="stylesheet"]')].map(node => node.src || node.href)
+    }));
+    for (const name of ['equipment-sources.js', 'rewards.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
+    for (const name of ['rewards.css', 'art-layout.css']) assert.ok(modules.styles.includes(name));
+    assert.equal(modules.sources, 'function'); assert.equal(modules.rewards, 'function'); assert.equal(modules.layout, 'function');
+    assert.deepEqual(modules.external, []);
+    const acquisition = await page.evaluate(() => WendaoEquipmentSources.view(Lingqi.state(), { set: 'array', slot: 'weapon' }));
+    assert.equal(acquisition.forgeChoices.length, 6); assert.equal(acquisition.gacha.target, 'gear_array_weapon');
+    assert.ok(acquisition.bosses.length > 0 && acquisition.blueprintSources.length > 0);
+    return { ...modules, offlineAcquisitionChoices: acquisition.forgeChoices.length };
+  });
+  await check('all ' + images.length + ' PNG atlases including six complete set/quality atlases retain source bytes and paint decoded images', async () => {
+    for (const name of setAtlases) assert.ok(images.includes(name), 'complete six-quality set atlas exists: ' + name);
     const decoded = await page.evaluate(async entries => {
       const result = [];
       for (const entry of entries) {
@@ -210,7 +230,7 @@ async function chooseSkill(id) {
       }
       return result;
     }, expectedMedia.filter(entry => entry.path.endsWith('.png') || entry.path === 'icon.svg'));
-    assert.equal(decoded.length, 21);
+    assert.equal(decoded.length, images.length + 1);
     assert.ok(decoded.every(entry => entry.width > 0 && entry.height > 0));
     return decoded;
   });
@@ -361,6 +381,9 @@ async function chooseSkill(id) {
     assert.deepEqual(after.progress, before.progress);
     assert.deepEqual(after.pills, before.pills);
     assert.deepEqual(after.stats, before.stats);
+    assert.ok(await page.locator('.battle-settlement[data-settlement="practice"]').isVisible());
+    assert.equal(await page.locator('.settlement-card').count(), 0);
+    await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
     await assertRegular();
     return { dungeon: id, skillId, realCooldown: battleAfter.cooldowns[skillId], noRewards: true, music };
   });
@@ -398,6 +421,38 @@ async function chooseSkill(id) {
     await screenshot('preview-single-html-boss-victory.png');
     await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
     return { portrait: { width: box.width, height: box.height }, victory: true, realCombatDuration: after.lastBattleResult.time, practiceNoRewards: true };
+  });
+  await check('a genuine offline boss win displays committed loot cards and fitted source artwork without granting twice', async () => {
+    await page.locator('.nav-bottom button[data-page="adventure"]').click();
+    await page.locator('button[data-ui="dungeon"]:visible').first().click();
+    await page.locator('#dungeon-practice').uncheck();
+    const before = await stateOf(page);
+    await page.locator('button[data-action="startDungeon"]').click();
+    await page.waitForFunction(() => !Lingqi.state().battle && Lingqi.state().lastBattleResult?.win && !Lingqi.state().lastBattleResult.practice, null, { timeout: 45000 });
+    await page.waitForSelector('.battle-settlement[data-settlement="win"]');
+    const after = await stateOf(page), loot = after.lastBattleResult.rewards;
+    assert.equal(after.stats.manualWins, before.stats.manualWins + 1);
+    assert.equal(loot.gear.length, 1);
+    const uid = loot.gear[0].uid;
+    assert.ok(after.bag.some(gear => gear.uid === uid) || after.rewardOverflow.some(gear => gear.uid === uid));
+    assert.equal(await page.locator('.settlement-card[data-reward-kind="gear"][data-reward-id="' + uid + '"]').count(), 1);
+    const expected = await page.evaluate(() => WendaoRewards.model(Lingqi.state().lastBattleResult));
+    assert.equal(await page.locator('.settlement-card').count(), expected.items.length);
+    assert.match(await page.locator('.settlement-status').innerText(), /自动入账/);
+    if (after.lastBattleResult.first) assert.ok(await page.locator('.settlement-first').isVisible());
+    await page.waitForFunction(() => [...document.querySelectorAll('.settlement-card .art-icon')].every(node => node.classList.contains('atlas-fit')));
+    const painted = await page.locator('.settlement-card .art-icon').evaluateAll(nodes => nodes.map(node => ({ image: getComputedStyle(node).backgroundImage, fit: node.dataset.atlasFit, size: getComputedStyle(node).backgroundSize })));
+    assert.ok(painted.length > 0 && painted.every(item => /^(?:url\(["']?(?:blob:|data:image\/))/.test(item.image) && item.fit));
+    const inventory = rewards(after), saved = await savedOf(page);
+    assert.deepEqual(saved.bag, after.bag); assert.deepEqual(saved.rewardOverflow, after.rewardOverflow);
+    await page.locator('.settlement-card[data-reward-kind="gear"] .settlement-inspect').click();
+    assert.ok(await page.locator('.selection-inspect-layer [role="dialog"]').isVisible());
+    await page.locator('.selection-inspect-layer [aria-label="关闭物品详情"]').click();
+    assert.deepEqual(rewards(await stateOf(page)), inventory, 'inspection does not grant already committed loot again');
+    await screenshot('preview-single-html-real-boss-rewards.png');
+    await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
+    await assertRegular();
+    return { boss: after.lastBattleResult.entry, equipment: uid, actualRewards: expected.items.length, inlinePresentation: true, fittedEmbeddedArtwork: painted.length };
   });
   await check('the resource market shows all seven goods and both currencies settle the advertised real purchase', async () => {
     await page.locator('.nav-bottom button[data-page="heaven"]').click();
@@ -513,7 +568,7 @@ async function chooseSkill(id) {
   await check('reload restores preview equipment, configuration and real draw rewards while normal saves stay untouched', async () => {
     const before = await stateOf(page);
     // A second localhost HTML request tests actual reload and persistence. Avoid
-    // copying the 86 MB HTML through CDP route fulfillment; media stay embedded.
+    // copying the large HTML through CDP route fulfillment; media stay embedded.
     await context.setOffline(false);
     await page.reload({ waitUntil: 'load', timeout: 45000 });
     await context.setOffline(true);
@@ -543,7 +598,7 @@ async function chooseSkill(id) {
         return { imagesDecoded: imagePaths.length, mp3Decoded: audio.length };
       }, { imagePaths: ['icon.svg', ...images.map(name => 'assets/' + name)], audio: Object.values(manifest.assets) });
       assert.equal(attempts.length, 0);
-      assert.deepEqual(result, { imagesDecoded: 21, mp3Decoded: 14 });
+      assert.deepEqual(result, { imagesDecoded: images.length + 1, mp3Decoded: Object.keys(manifest.assets).length });
       return { ...result, offlineBeforeContent: true, httpRequests: 0, persistenceScope: 'Media independence only: opaque setContent origin has no writable localStorage.' };
     } finally { await offlineContext.close(); }
   });

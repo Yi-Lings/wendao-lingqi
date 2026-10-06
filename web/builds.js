@@ -163,7 +163,7 @@ function sourceStatus(s,source){
     if(source.floor){if(source.floor>s.progress.tower+1)requirements.push('先逐层推进到第'+source.floor+'层');if(Math.floor((source.floor-1)/10)>p.realm)requirements.push('当前路线境界尚未开放目标楼层');}
     if((d.type==='boss'||d.type==='cave')&&s.bag.length+(s.rewardOverflow||[]).length>=1300)requirements.push('先整理背包与奖励暂存');
   }else if(source.type==='forge'){
-    if(!s.blueprints.includes(source.id)&&!SLOT_KEYS.some(slot=>s.blueprints.includes('gear_'+source.id+'_'+slot)))requirements.push('先取得'+C.sets[source.id].name+'蓝图');
+    if(source.rarity===5&&!s.blueprints.includes(source.id))requirements.push('道品需要'+C.sets[source.id].name+'蓝图');
   }else if(source.type==='sidequest'){
     const quest=(C.sidequests||[]).find(q=>q.id===source.id);if(!quest)return {available:false,requirements:['请在任务页查看获取条件']};
     (quest.requirements||[]).forEach(r=>{if(r.key==='rank'&&K.maxRank(s)<r.count)requirements.push(r.label);if(r.key==='dungeonWins'&&((s.progress.dungeonWins||{})[r.id]||0)<r.count)requirements.push(r.label);});
@@ -178,7 +178,7 @@ function goalsFor(s,school,selected){
   if(sameHearts.length&&!own(s.techniques,school+'_heart_1'))ids.push(school+'_heart_1');
   ids.forEach(id=>{const t=C.techniques[id],source=techniqueSource(id),status=sourceStatus(s,source),role=techniqueRole(id);goals.push({id,name:t.name,kind:t.kind,reason:role.role,source,available:status.available,requirements:status.requirements});});
   const count=selected.after.sets[school]||0;
-  if(count<4){const source=s.blueprints.includes(school)?{type:'forge',id:school,label:'炼器台 · '+C.sets[school].name+'定向打造'}:Object.assign({},C.sets[school].source),status=sourceStatus(s,source);goals.push({id:'set_'+school,name:C.sets[school].name+'四件套',kind:'set',reason:'目前穿戴'+count+'件；补到四件可激活：'+C.sets[school].fourEffect+(source.type==='dungeon'?' 妖王掉落部位与品质随机，也会获得套装蓝图。':''),source,available:status.available,requirements:status.requirements});}
+  if(count<4){const source={type:'forge',id:school,rarity:3,label:'炼器台 · '+C.sets[school].name+'定向打造'},status=sourceStatus(s,source);goals.push({id:'set_'+school,name:C.sets[school].name+'四件套',kind:'set',reason:'目前穿戴'+count+'件；补到四件可激活：'+C.sets[school].fourEffect+' 非道品无需蓝图，材料齐备即可定向打造。',source,available:status.available,requirements:status.requirements});}
   const secretOrder=school==='shadow'&&selected.loadout.skills.includes('shadow_skill_2')?[1,0]:[0,1];
   secretOrder.forEach(n=>{const secret=school+'_secret_'+n;if(!own(s.techniques,secret)){const source=techniqueSource(secret),status=sourceStatus(s,source);goals.push({id:secret,name:C.techniques[secret].name,kind:'secret',reason:techniqueRole(secret).role,source,available:status.available,requirements:status.requirements});}});
   const cap=C.realms[s.paths[s.route].realm].techniqueCap;
