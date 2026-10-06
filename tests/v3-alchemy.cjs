@@ -145,7 +145,8 @@ test('UTF8 byte limit and corrupt JSON validation also apply to saves containing
 
 test('all 18 recipes queue and control with their own costs and count only the recipe tier for commissions',()=>{
  for(const [id,r] of Object.entries(C.recipes)){
-  const s=stock(5),before=money(s),pill=s.pills[id],job=queue(s,id,5),expected=Q.costs(s,'queuePill',{id,count:5});
+  const s=stock(5);K.learnRecipe(s,id,{type:'research',source:'furnace',at:NOW});
+  const before=money(s),pill=s.pills[id],job=queue(s,id,5),expected=Q.costs(s,'queuePill',{id,count:5});
   assert.equal(s.stones,before.stones-expected.stones);
   for(const [k,n] of Object.entries(expected.materials))assert.equal(s.materials[k],before.materials[k]-n);
   assert.equal(current(s,job).routeTier,5);control(s,job,3);act(s,'finishAlchemyJob',{jobId:job});

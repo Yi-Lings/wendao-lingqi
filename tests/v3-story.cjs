@@ -159,6 +159,7 @@ test('actual pill crafting credits recipe tier and cannot satisfy a higher tier 
  let r=E.act(s,{type:'craftPill',id:'qi0',count:5,control:0},NOW);assert.equal(r.ok,true,r.message);
  assert((s.stats.craftedTier0||0)>=5);assert.equal(s.stats.craftedTier1||0,0);
  deniedUnchanged(s,{type:'claimCommission',id:'alchemy'},'low recipe is not current tier');
+ r=E.act(s,{type:'researchRecipe',id:'qi1'},NOW);assert.equal(r.ok,true,r.message);
  r=E.act(s,{type:'craftPill',id:'qi1',count:5,control:0},NOW);assert.equal(r.ok,true,r.message);
  assert((s.stats.craftedTier1||0)>=5);r=E.act(s,{type:'claimCommission',id:'alchemy'},NOW);assert.equal(r.ok,true,r.message);
  assert.equal(s.sect.taskCounts['alchemy:1'],5);valid(s,'actual alchemy commission');

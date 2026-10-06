@@ -33,9 +33,10 @@ sh build-android.sh
 ## 原生接口与保存规则
 
 - `Native.persistSave(json)`：同步返回 boolean；1 MiB 上限、基础结构校验，内部使用 Android AtomicFile 写入。
-- `Native.loadSave()`：返回原始 JSON；无档或不可读取时返回空串。网页仍须完整校验。
+- `Native.loadSave()`：返回大小受限的原始文本；无档时返回空串。损坏 JSON 保留原文并交网页恢复，已有文件读取失败时返回恢复标记，避免自动新档覆盖。网页仍须完整校验。
 - `Native.maxSaveBytes()`：返回 1,048,576。
 - `Native.exportSave(json)`：先保存有效快照，然后使用系统文件选择器导出。
+- `Native.exportRecovery(text)`：使用系统文件选择器导出恢复原文为 TXT，不将损坏数据写回正式存档。
 - `Native.importSave()`：读取用户所选 content URI，不直接覆盖当前档；通过 `window.onNativeImport(json)` 交给游戏完整校验后提交。
 - `window.onNativeMessage(message)`：显示文件操作结果。
 - `window.onNativeBack()`：返回 true 时由网页处理，否则原生确认退出。

@@ -33,7 +33,11 @@ const techniques={};
 function technique(school,kind,index,name,rarity,realm,layer,description,mp,cooldown,power,rules,source){
  const id=school+'_'+kind+'_'+index;
  techniques[id]={id,name,kind,school,rarity,realm,layer,description,mp,cooldown,power,effect:id,rules:rules||{},source,maxLevel:20,
- iconSchool:school,artKey:'skill_'+school,branches:[
+ iconSchool:school,artKey:'skill_'+school,milestones:[
+ {level:5,name:'分支参悟',description:'五级开放凝练与通明分支，可在洞府免费切换。'},
+ {level:10,name:'融会贯通',description:'十级自动强化：'+(kind==='skill'?'神通伤害、状态、回复与护盾效能提高10%。':kind==='heart'?'心法伤害、资源运转与回复效能提高10%。':'秘术伤害、状态与回复效能提高10%。')},
+ {level:15,name:'圆融精进',description:'十五级自动强化：'+(kind==='skill'?'神通伤害再提高10%，冷却缩短10%。':'条件伤害与资源运转再提高10%，有间隔的触发周期缩短10%。')}
+ ],branches:[
  {id:0,name:'凝练',description:'该功法基础效果随参悟等级强化，真元消耗不变。'},
  {id:1,name:'通明',description:kind==='heart'?'五重后选择：普攻运转间隔缩短12%，更快积累心法资源。':kind==='secret'?'五重后选择：有间隔的秘术触发间隔缩短12%。':'五重后选择：伤害或回复倍率降低5%，神通冷却缩短12%。'}
  ]};
@@ -105,7 +109,7 @@ const facilities={
 
 const recipes={};
 function recipe(id,name,kind,rarity,realm,materials,stones,effect,description,source){
- recipes[id]={id,name,kind,rarity,realm,layer:1,materials,stones,effect,description,source,artKey:'pill_'+kind,iconSchool:kind==='heal'||kind==='purify'?'array':kind==='shield'?'body':'elements',yield:1};
+ recipes[id]={id,name,kind,rarity,realm,layer:1,materials,stones,effect,description,source,researchCost:{stones:100*(realm+1),materials:{insight:2*(realm+1)}},artKey:'pill_'+kind,iconSchool:kind==='heal'||kind==='purify'?'array':kind==='shield'?'body':'elements',yield:1};
 }
 recipe('qi0','聚气丹','qi',0,0,{herb:4,lotus:1},16,{xp:120},'服用后为当前路线增加120修为。溢出修为进入储备，不跳过大境试炼。',src('tutorial','start','洞府丹方教学'));
 recipe('qi1','凝元丹','qi',1,1,{herb:10,lotus:2,insight:2},80,{xp:900},'为当前路线增加900修为，适合第二境参悟。',src('dungeon','resource_herb','第二境灵草秘境'));
@@ -129,7 +133,7 @@ recipe('purify2','无垢明心丹','purify',4,3,{herb:16,lotus:4,insight:5},220,
 ].forEach((row,i)=>recipe('break'+i,row[0],'break',Math.min(5,i+1),i,
  {herb:6+i*5,ore:3+i*2,lotus:2+i,insight:i*2},32+Math.pow(i+1,2)*30,
  {trialShield:.2,trialReduction:.1,heal:.15,duration:12},row[1]+'试炼中作为可选准备丹使用，胜利不依赖它。',
- src('dungeon','trial','对应大境突破准备；药炉到境开放')));
+ src('dungeon','trial','对应大境试炼首通；同境药炉可确定研究')));
 
 const treasureRows=[
  ['青木铃','active',1,1,'摇铃清除一个负面状态并恢复30%气血，冷却24秒。',{heal:.3,purify:1,cooldown:24},sectSource('array',false)],
@@ -380,10 +384,18 @@ const gacha={
  highGuarantee:10,redGuarantee:80,softStart:51,baseRed:.01,softStep:.005,targetChance:.5,
  dustPerDraw:2,historyLimit:200,description:'先判红，再判橙保底；十连逐次执行。定向失手后下一红必为目标，换目标保留计数与状态。'
 };
+const shop={jadePerDraw:60,historyLimit:50,packages:[
+ {id:'p6',name:'初入仙途',priceYuan:6,jade:60},
+ {id:'p30',name:'云海灵匣',priceYuan:30,jade:330},
+ {id:'p68',name:'紫府玉藏',priceYuan:68,jade:780},
+ {id:'p128',name:'瑶台宝库',priceYuan:128,jade:1500},
+ {id:'p328',name:'天阙仙藏',priceYuan:328,jade:4200},
+ {id:'p648',name:'万象道藏',priceYuan:648,jade:9000}
+]};
 const limits={bag:300,overflow:1000,drawHistory:200,battleReports:20,saveBytes:1048576,number:1e12};
 const catalog={version:3,contentVersion:3,realms,routes,layerXp,realmXpFactors,rarities,slots,schools,techniques,
  facilities,recipes,treasures,sets,gearTargets,materials,dungeons,bosses,towerFloors,towerThemes,caveRooms,caves,trials,
- chapters,sidequests,companions,commissions,tasks:commissions,regions,endings,gacha,limits,
+ chapters,sidequests,companions,commissions,tasks:commissions,regions,endings,gacha,shop,limits,
  tickMs:1000,offlineCapMs:86400000,productionCapMs:604800000,sweepCapMs:28800000,
  techniqueLevelCaps:[5,8,11,14,17,20],enhanceCaps:[5,8,12,16,20,20],
  jointCost:{stones:30,materials:{herb:2}},jointCooldownMs:1800000,bondThreshold:40,jointThreshold:55,

@@ -126,6 +126,7 @@
   function eligibleTechnique(s,id){return C.techniques[id]&&available(s,C.techniques[id]);}
   function costs(s,type,a){
     a=a||{};var p=path(s),lv,g,t,n,id;
+    if(type==='exchangeJade'||type==='drawWithJade')return {jade:C.shop.jadePerDraw*(a.count===10?10:1)};
     if(type==='upgradeTechnique'){
       t=s.techniques[a.id];if(!t)return null;lv=t.level;
       return {stones:80*(lv+1)*(p.realm+1),materials:{insight:2+lv}};
@@ -157,6 +158,7 @@
       var am={essence:20*n};am['crystal'+g.tier]=120*n;
       return {stones:6000*n*(g.tier+1),dust:60*n,materials:am};
     }
+    if(type==='researchRecipe'){t=C.recipes[a.id];return t?copy(t.researchCost):null;}
     if(type==='craftPill'||type==='queuePill'){
       t=C.recipes[a.id];if(!t)return null;n=int(a.count,1,100)?a.count:1;
       var cm={};Object.keys(t.materials).forEach(function(k){cm[k]=t.materials[k]*n;});
@@ -298,6 +300,7 @@
     var jobs=s.alchemy.jobs,job,recipe,n,cost;
     if(a.type==='queuePill'){
       recipe=C.recipes[a.id];if(!recipe||!available(s,recipe))return no('丹方尚未开放');
+      if((s.learnedRecipes||[]).indexOf(a.id)<0)return no('尚未学会丹方，请从图鉴研究或通关来源副本');
       n=a.count===undefined?1:a.count;if(!int(n,1,100))return no('每批制作计划为1至100炉');
       if(jobs.length>=alchemyCapacity(s))return no('药炉队列已满，请成丹、取消或升级药炉');
       if(s.alchemy.nextId>=K.CAP)return no('炼丹计划编号已达上限');
@@ -336,6 +339,7 @@
       return yes('炼成'+recipe.name+'×'+n+(job.bonus?'，控火额外'+job.bonus+'枚':''),{id:job.recipe,count:n,bonus:job.bonus,jobId:job.id});
     }
     if(a.type==='cancelAlchemyJob'){
+      if(s.stones+job.cost.stones+job.controlCost.stones>K.CAP||Object.keys(job.cost.materials).some(function(id){return s.materials[id]+job.cost.materials[id]>K.CAP;}))return no('退款物品会超过存储上限，请先消耗对应灵石或药材');
       K.grant(s,job.cost);K.grant(s,job.controlCost);jobs.splice(jobs.indexOf(job),1);
       return yes('已取消制作计划，未成丹药材和已付控火灵石全额退回',{jobId:job.id,refunded:{cost:copy(job.cost),controlCost:copy(job.controlCost)}});
     }
@@ -346,8 +350,8 @@
     var t,id,g,lv,cost,err,n,result;
     var actions=['learnTechnique','upgradeTechnique','resetTechnique','setTechniqueBranch','setLoadout','savePreset','loadPreset',
       'equipGear','autoEquip','recycleGear','bulkRecycle','lockGear','enhanceSlot','forgeGear','recastGear','rerollGear','acceptReroll',
-      'awakenGear','craftPill','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','usePill','upgradeFacility','equipTreasure','upgradeTreasure','recycleTreasure',
-      'setGachaTarget','draw','exchangeDust','claimOverflow'];
+      'awakenGear','researchRecipe','craftPill','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','usePill','upgradeFacility','equipTreasure','upgradeTreasure','recycleTreasure',
+      'setGachaTarget','draw','drawWithJade','buyJade','exchangeJade','exchangeDust','claimOverflow'];
     if(actions.indexOf(a.type)<0)return null;
     if(['queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob'].indexOf(a.type)>=0){
       var alchemyValidation=K.validate(s);
@@ -355,7 +359,7 @@
       return alchemyHandle(s,a,now);
     }
     var combatBlocked=['learnTechnique','upgradeTechnique','resetTechnique','setTechniqueBranch','setLoadout','loadPreset',
-      'equipGear','autoEquip','enhanceSlot','recastGear','rerollGear','acceptReroll','awakenGear','equipTreasure','upgradeTreasure','usePill','draw','forgeGear','exchangeDust'];
+      'researchRecipe','equipGear','autoEquip','enhanceSlot','recastGear','rerollGear','acceptReroll','awakenGear','equipTreasure','upgradeTreasure','usePill','draw','drawWithJade','forgeGear','exchangeDust'];
     if(busy(s)&&combatBlocked.indexOf(a.type)>=0)return no('请结束当前战斗后调整养成与配置');
     if(a.type==='learnTechnique'){
       t=C.techniques[a.id];if(!t)return no('功法不存在');
@@ -501,8 +505,16 @@
       if(!pay(s,costs(s,a.type,a)))return no('觉醒材料不足');
       g.awakening=(g.awakening||0)+1;return yes('红装觉醒至'+g.awakening+'阶');
     }
+    if(a.type==='researchRecipe'){
+      t=C.recipes[a.id];if(!t||!available(s,t))return no('当前路线境界尚未达到丹方研究要求');
+      if((s.learnedRecipes||[]).indexOf(a.id)>=0)return no('已学会这份丹方');
+      cost=costs(s,a.type,a);if(!pay(s,cost))return no('研究所需灵石或参悟材料不足');
+      K.learnRecipe(s,a.id,{type:'research',source:'furnace',at:Number.isSafeInteger(now)&&now>=0?now:s.lastAt});
+      return yes('研究完成，学会'+t.name+'丹方',{id:a.id,cost:copy(cost)});
+    }
     if(a.type==='craftPill'){
       t=C.recipes[a.id];if(!t||!available(s,t))return no('丹方尚未开放');
+      if((s.learnedRecipes||[]).indexOf(a.id)<0)return no('尚未学会丹方，请从图鉴研究或通关来源副本');
       n=a.count===undefined?1:a.count;if(!int(n,1,100))return no('每批炼制1至100炉');
       var control=a.control===undefined?0:a.control;if(!int(control,0,2))return no('控火方式无效');
       if((s.pills[a.id]||0)+n>K.CAP)return no('该丹药数量已达存储上限，请先使用');
@@ -552,6 +564,33 @@
       if(!K.unlocks(s).gacha)return no('达到第二大境一层后开放定向感应');
       if(a.target!==null&&!targets(s).some(function(x){return x.id===a.target;}))return no('定向目标尚未开放或不是红色物品');
       s.gacha.target=a.target;return yes(a.target?'定向目标已更新，累计保底保留':'已取消定向，累计保底保留');
+    }
+    if(a.type==='buyJade'){
+      var pack=C.shop.packages.find(function(x){return x.id===a.packageId;});
+      if(!pack)return no('商城礼包不存在');
+      if(s.jade+pack.jade>K.CAP||s.shop.totalJade+pack.jade>K.CAP||s.shop.purchases>=K.CAP)return no('灵玉或购买记录已达存储上限');
+      s.jade+=pack.jade;s.shop.totalJade+=pack.jade;s.shop.purchases++;
+      var receipt={packageId:pack.id,amount:pack.jade,at:now,sequence:s.shop.purchases};
+      s.shop.history.push(receipt);if(s.shop.history.length>C.shop.historyLimit)s.shop.history.shift();
+      K.log(s,'模拟购入'+pack.name+'：灵玉+'+pack.jade,now);
+      return yes('购入成功，灵玉+'+pack.jade,{jade:pack.jade,receipt:copy(receipt)});
+    }
+    if(a.type==='exchangeJade'){
+      if(a.count!==1&&a.count!==10)return no('请选择兑换1张或10张感应券');
+      if(s.tickets+a.count>K.CAP)return no('感应券已达存储上限');
+      var jadeCost=a.count*C.shop.jadePerDraw;
+      if(!pay(s,{jade:jadeCost}))return no('灵玉不足，可前往商城购入');
+      s.tickets+=a.count;return yes('兑换感应券×'+a.count,{count:a.count,cost:{jade:jadeCost}});
+    }
+    if(a.type==='drawWithJade'){
+      if(a.count!==1&&a.count!==10)return no('请选择单次或十次感应');
+      if(s.tickets+a.count>K.CAP)return no('感应券已达存储上限');
+      var paidJade=a.count*C.shop.jadePerDraw;
+      if(!pay(s,{jade:paidJade}))return no('灵玉不足，可前往商城购入');
+      s.tickets+=a.count;
+      var jadeDraw=draw(s,a.count,now);
+      if(jadeDraw.ok)jadeDraw.data.jadeSpent=paidJade;
+      return jadeDraw;
     }
     if(a.type==='draw')return draw(s,a.count,now);
     if(a.type==='exchangeDust'){

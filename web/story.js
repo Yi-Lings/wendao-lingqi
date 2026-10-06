@@ -54,10 +54,34 @@ function commissionReward(s,def,tier){
   r.materials=r.materials||{};if(raw.crystal)r.materials['crystal'+tier]=raw.crystal;
   return r;
 }
+function storyDirection(s){
+  return s.story.mercy>s.story.truth?'protect':s.story.truth>s.story.mercy?'seek':'balanced';
+}
+function companionAttitudes(s){
+  const mode=storyDirection(s);
+  const lines={
+    protect:{qinglan:'你先救人的决定让我安心。山下的灯火，也是我们修行的意义。',yueheng:'救援之后仍愿追查根源，我愿与你一起把这盏灯守住。',suyan:'我记下你为受困者留下的退路，也会继续帮你追索阵图。'},
+    seek:{qinglan:'你追查阵眼时没有忘记村人，我会替你守住归来的路。',yueheng:'从源头解开灵息枯竭，才能让更多人免受同样的苦楚。',suyan:'你愿追问被隐去的真相，我愿与你继续校准这张星图。'},
+    balanced:{qinglan:'护住眼前的人，也看清远处的路。你我可以慢慢商量。',yueheng:'救人和求真都有分量，我尊重你每一次认真作出的选择。',suyan:'不同的道途都能留下自己的光，我会认真听你的判断。'}
+  };
+  return Object.fromEntries(Object.keys(C.companions).map(id=>[id,{direction:mode,label:mode==='protect'?'认可你的守护':mode==='seek'?'认可你的求真':'尊重你的道途',text:lines[mode][id]}]));
+}
+function choicePreview(s,choice){
+  const gains=choice==='protect'?{qinglan:3,yueheng:2,suyan:1}:{qinglan:1,yueheng:2,suyan:3};
+  return Object.entries(gains).map(([id,gain])=>({id,name:C.companions[id].name,affinity:Math.min(gain,100-s.companions[id].affinity)}));
+}
+function commissionFlavor(s,def){
+  const direction=storyDirection(s),names={
+    protect:{hunt:'护山巡界',alchemy:'济民丹会',boss:'镇妖安民',explore:'救援路记',study:'同道授业',tower:'守阵试塔'},
+    seek:{hunt:'灵脉勘察',alchemy:'丹炉溯源',boss:'妖核取证',explore:'古府辨图',study:'传承考据',tower:'星纹问塔'}
+  };
+  if(direction==='balanced')return {name:def.name,description:def.description,storyDirection:direction};
+  return {name:names[direction][def.id]||def.name,description:(direction==='protect'?'宗门记得你优先守护众人的选择。':'宗门记得你追查灾厄根源的选择。')+def.description,storyDirection:direction};
+}
 function commissionView(s){
   const tier=maxTier(s);return Object.values(commissionDefs).map(def=>{
     const used=s.sect.taskCounts[def.id+':'+tier]||0,current=Math.max(0,commissionMetric(s,def.id,tier)-used);
-    return {...def,current,required:def.required,ready:s.sect.joined&&current>=def.required,tier,reward:commissionReward(s,def,tier)};
+    return {...def,...commissionFlavor(s,def),current,required:def.required,ready:s.sect.joined&&current>=def.required,tier,reward:commissionReward(s,def,tier)};
   });
 }
 function view(s){
@@ -66,7 +90,7 @@ function view(s){
     const completed=s.story.sideCompleted.includes(q.id),progress=requirementView(s,q.requirements),previousReady=!q.previous||s.story.sideCompleted.includes(q.previous);
     return {...q,completed,progress,ready:!completed&&previousReady&&progress.every(x=>x.done),progressText:(q.previous&&!previousReady?'先完成前置任务；':'')+progress.map(x=>x.label+' '+x.current+'/'+x.required).join(' · ')};
   });
-  return {currentChapter:ch,chapterProgress,chapterReady:!!ch&&chapterProgress.every(x=>x.done),sidequestProgress,commissions:commissionView(s),jointCost:C.jointCost,bondThreshold:C.bondThreshold,jointThreshold:C.jointThreshold,jointCooldownMs:C.jointCooldownMs};
+  return {currentChapter:ch,chapterProgress,chapterReady:!!ch&&chapterProgress.every(x=>x.done),sidequestProgress,commissions:commissionView(s),jointCost:C.jointCost,bondThreshold:C.bondThreshold,jointThreshold:C.jointThreshold,jointCooldownMs:C.jointCooldownMs,companionAttitudes:companionAttitudes(s),storyDirection:storyDirection(s),chapterChoices:{protect:choicePreview(s,'protect'),seek:choicePreview(s,'seek')},recommendedEnding:storyDirection(s)==='protect'?'guardian':storyDirection(s)==='seek'?'wanderer':'teacher'};
 }
 function handle(s,a,now){
   if(!a||typeof a.type!=='string')return null;
@@ -97,9 +121,12 @@ function handle(s,a,now){
     if(!satisfied(s,ch.requirements))return no('章节目标尚未完成');
     grantReward(s,ch.reward);
     if(!s.story.completed.includes(ch.id))s.story.completed.push(ch.id);
+    const reactions=choicePreview(s,a.choice);
     s.story.chapter++;if(a.choice==='protect')s.story.mercy++;else s.story.truth++;
-    K.log(s,'完成《'+ch.name+'》：'+ch.after,now);
-    return yes(ch.after,{reward:ch.reward,chapter:ch.id});
+    for(const reaction of reactions)s.companions[reaction.id].affinity+=reaction.affinity;
+    const reactionText=reactions.map(x=>x.name+'信任+'+x.affinity).join('，');
+    K.log(s,'完成《'+ch.name+'》：'+ch.after+' '+reactionText,now);
+    return yes(ch.after+' '+reactionText,{reward:ch.reward,chapter:ch.id,reactions,direction:storyDirection(s)});
   }
   if(a.type==='ending'){
     if(s.story.chapter<6)return no('完成六卷主线后再选择归途');
@@ -123,7 +150,8 @@ function handle(s,a,now){
     if(a.type==='talk'){
       if(now-r.lastTalkAt<60000)return no('稍后再聊，两次问候至少相隔一分钟');
       r.lastTalkAt=now;r.affinity=Math.min(100,r.affinity+8);
-      const dialogue=c.dialogues[Math.floor(K.rng(s,'world')*c.dialogues.length)];
+      const ordinary=c.dialogues[Math.floor(K.rng(s,'world')*c.dialogues.length)],attitude=companionAttitudes(s)[a.companion];
+      const dialogue=s.story.chapter?c.name+'：'+attitude.text+' '+ordinary:ordinary;
       K.log(s,dialogue,now);return yes(dialogue);
     }
     if(a.type==='gift'){

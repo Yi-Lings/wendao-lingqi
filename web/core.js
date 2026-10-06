@@ -88,7 +88,7 @@ function addXp(s,amount,route){
 }
 function costList(s,cost){
   object(cost,'cost');const list=[];
-  for(const key of ['stones','tickets','dust'])if(own(cost,key))list.push([s,key,cost[key]]);
+  for(const key of ['stones','tickets','dust','jade'])if(own(cost,key))list.push([s,key,cost[key]]);
   if(own(cost,'contribution'))list.push([s.sect,'contribution',cost.contribution]);
   for(const field of ['materials','pills'])if(own(cost,field)){
     object(cost[field],field);
@@ -106,7 +106,7 @@ function spend(s,cost){
 }
 function grant(s,reward,route){
   object(reward,'reward');
-  for(const key of ['stones','tickets','dust'])if(own(reward,key))add(s,key,reward[key]);
+  for(const key of ['stones','tickets','dust','jade'])if(own(reward,key))add(s,key,reward[key]);
   if(own(reward,'contribution'))add(s.sect,'contribution',reward.contribution);
   for(const field of ['materials','pills'])if(own(reward,field)){
     object(reward[field],field);
@@ -123,8 +123,9 @@ function createState(now){
   now=time(now);const seed=(now>>>0)||1;
   const s={version:3,contentVersion:3,revision:0,player:{name:'无名行者',age:26},route:'magic',
     paths:{body:{realm:0,layer:1,xp:0,reserve:0},magic:{realm:0,layer:1,xp:0,reserve:0}},
-    stones:120,tickets:10,dust:0,materials:Object.fromEntries(materialIds.map(id=>[id,0])),
+    stones:120,tickets:10,dust:0,jade:0,shop:{totalJade:0,purchases:0,history:[]},materials:Object.fromEntries(materialIds.map(id=>[id,0])),
     pills:Object.fromEntries(Object.keys(C.recipes||{}).map(id=>[id,0])),
+    learnedRecipes:['qi0','heal0'],recipeProvenance:{qi0:{type:'tutorial',source:'start',at:now},heal0:{type:'tutorial',source:'start',at:now}},
     techniques:{},fragments:{universal:0},loadouts:{body:defaultLoadout(),magic:defaultLoadout()},
     presets:{body:[null,null,null],magic:[null,null,null]},bag:[starterGear('g1','weapon'),starterGear('g2','armor')],
     equipped:{weapon:'g1',armor:'g2',head:null,bracer:null,boots:null,charm:null},
@@ -136,7 +137,7 @@ function createState(now){
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
     companions:Object.fromEntries(Object.keys(C.companions||{}).map(id=>[id,{affinity:0,bond:false,cooldownUntil:0,lastTalkAt:-60000,questStep:0}])),
     story:{chapter:0,mercy:0,truth:0,ending:null,completed:[],sideCompleted:[]},
-    joint:null,battle:null,exploration:null,
+    joint:null,battle:null,exploration:null,battleReports:[],
     gacha:{highPity:0,redPity:0,target:null,fateGuarantee:false,history:[],total:0},
     rngStreams:{gacha:seed^0x9e3779b9,loot:seed^0x85ebca6b,world:seed^0xc2b2ae35},
     lastAt:now,carryMs:0,productionCarryMs:0,wisdomCarryMs:0,wisdomTickets:0,sweepMs:0,
@@ -149,6 +150,44 @@ function createState(now){
   s.pills.heal0=2;s.pills.qi0=1;
   log(s,'你已26岁，青岚山麓的洞府向你开启。先修炼至炼气二层，再选择自己的道途。',now);
   return s;
+}
+function techniqueEffects(s,id){
+  const item=s.techniques[id]||{},level=item.level||1;
+  return {level,branch:item.branch||0,effectMultiplier:level>=10?1.1:1,powerMultiplier:level>=15?1.1:1,
+    intervalMultiplier:level>=15?.9:1,cooldownMultiplier:level>=15?.9:1};
+}
+function learnRecipe(s,id,provenance){
+  catalogKey(C.recipes,id,'丹方');
+  if(!Array.isArray(s.learnedRecipes))s.learnedRecipes=[];
+  if(!s.recipeProvenance)s.recipeProvenance={};
+  if(s.learnedRecipes.includes(id))return false;
+  const p=provenance||{type:'research',source:'furnace',at:s.lastAt};
+  if(!['tutorial','legacy','research','dungeon'].includes(p.type)||typeof p.source!=='string'||p.source.length>100)throw Error('丹方来源无效');
+  integer(p.at,0,MAX_TIME,'丹方获得时间');
+  s.learnedRecipes.push(id);s.recipeProvenance[id]={type:p.type,source:p.source,at:p.at};return true;
+}
+function validateRecipes(s){
+  if(s.learnedRecipes===undefined){
+    s.learnedRecipes=[];s.recipeProvenance={};
+    for(const r of Object.values(C.recipes)){
+      if(routes.some(route=>{const p=s.paths[route];return r.realm<p.realm||r.realm===p.realm&&(r.layer||1)<=p.layer;}))
+        learnRecipe(s,r.id,{type:'legacy',source:'v3',at:s.lastAt});
+    }
+  }
+  array(s.learnedRecipes,18,'已学丹方');
+  if(new Set(s.learnedRecipes).size!==s.learnedRecipes.length)throw Error('丹方学习记录重复');
+  for(const id of s.learnedRecipes)catalogKey(C.recipes,id,'已学丹方');
+  if(s.recipeProvenance===undefined)s.recipeProvenance=Object.fromEntries(s.learnedRecipes.map(id=>[id,{type:'legacy',source:'v3',at:s.lastAt}]));
+  object(s.recipeProvenance,'丹方来源');
+  if(Object.keys(s.recipeProvenance).length!==s.learnedRecipes.length)throw Error('丹方来源与学习记录不符');
+  for(const [id,p] of Object.entries(s.recipeProvenance)){
+    catalogKey(C.recipes,id,'丹方来源');if(!s.learnedRecipes.includes(id))throw Error('未学会丹方不能记录来源');
+    object(p,'丹方来源');if(Object.keys(p).some(k=>!['type','source','at'].includes(k)))throw Error('丹方来源字段无效');
+    if(!['tutorial','legacy','research','dungeon'].includes(p.type)||typeof p.source!=='string'||p.source.length>100)throw Error('丹方来源无效');
+    if(p.type==='dungeon')catalogKey(C.dungeons,p.source,'丹方获取副本');
+    else if(p.source!==({tutorial:'start',legacy:'v3',research:'furnace'})[p.type])throw Error('丹方获取渠道无效');
+    integer(p.at,0,MAX_TIME,'丹方获得时间');
+  }
 }
 function gearStats(s,g,route){
   route=route||s.route;const tier=Math.min(g.tier,s.paths[route].realm),rarity=(C.rarities||[])[g.rarity]||{multiplier:1};
@@ -282,6 +321,7 @@ function validateAlchemy(s){
   const ids=new Set();let active=0;
   for(const j of a.jobs){
     object(j,'炼丹计划');
+    if(Object.keys(j).some(k=>!['id','recipe','count','cost','route','routeTier','status','round','score','rhythm','choices','controlCost','bonus','createdAt'].includes(k)))throw Error('炼丹计划包含未知字段');
     if(typeof j.id!=='string'||!/^a[1-9]\d{0,11}$/.test(j.id)||Number(j.id.slice(1))>=a.nextId||ids.has(j.id))throw Error('炼丹计划编号无效');
     ids.add(j.id);catalogKey(C.recipes,j.recipe,'炼丹丹方');const r=C.recipes[j.recipe];
     integer(j.count,1,100,'炼丹炉数');if(!routeOk(j.route))throw Error('炼丹路线无效');integer(j.routeTier,r.realm,5,'炼丹阶位');
@@ -315,8 +355,25 @@ function validateV3(raw){
   if(!routeOk(s.route))throw Error('修炼路线无效');object(s.paths,'双路线');
   for(const route of routes){const p=object(s.paths[route],route);integer(p.realm,0,5,'大境');integer(p.layer,1,10,'小层');integer(p.xp,0,xpNeeded(s,route),'修为');integer(p.reserve,0,CAP,'储备修为');}
   for(const key of ['stones','tickets','dust','nextUid'])integer(s[key],key==='nextUid'?1:0,CAP,key);
+  if(s.jade===undefined)s.jade=0;
+  if(s.shop===undefined)s.shop={totalJade:0,purchases:0,history:[]};
+  integer(s.jade,0,CAP,'灵玉');object(s.shop,'商城');
+  if(Object.keys(s.shop).some(k=>!['totalJade','purchases','history'].includes(k)))throw Error('商城字段无效');
+  integer(s.shop.totalJade,0,CAP,'累计灵玉');integer(s.shop.purchases,0,CAP,'模拟购买次数');
+  if(s.jade>s.shop.totalJade)throw Error('灵玉余额超过累计获得');
+  array(s.shop.history,C.shop.historyLimit,'商城购买记录');
+  if(s.shop.history.length>Math.min(C.shop.historyLimit,s.shop.purchases))throw Error('商城记录数量无效');
+  let previousPurchase=0;
+  for(const h of s.shop.history){
+    object(h,'购买记录');const pack=C.shop.packages.find(p=>p.id===h.packageId);
+    if(!pack||Object.keys(h).some(k=>!['packageId','amount','at','sequence'].includes(k)))throw Error('商城礼包记录无效');
+    integer(h.amount,pack.jade,pack.jade,'礼包灵玉');integer(h.at,0,MAX_TIME,'购买时间');
+    integer(h.sequence,1,s.shop.purchases,'购买序号');
+    if(h.sequence<=previousPurchase)throw Error('购买序号重复');previousPurchase=h.sequence;
+  }
   object(s.materials,'materials');for(const id of materialIds)integer(s.materials[id]===undefined?(s.materials[id]=0):s.materials[id],0,CAP,id);for(const id of Object.keys(s.materials))if(!materialIds.includes(id))throw Error('未知材料 ID');
   object(s.pills,'pills');for(const [id,n] of Object.entries(s.pills)){catalogKey(C.recipes,id,'丹药');integer(n,0,CAP,'丹药数');}for(const id of Object.keys(C.recipes))if(!own(s.pills,id))s.pills[id]=0;
+  validateRecipes(s);
   object(s.techniques,'techniques');for(const [id,item] of Object.entries(s.techniques)){catalogKey(C.techniques,id,'功法');object(item,'功法记录');integer(item.level,1,20,'功法等级');integer(item.branch,0,2,'功法分支');integer(item.spent,0,CAP,'参悟投入');if(item.resetUsed===undefined)item.resetUsed=false;boolean(item.resetUsed,'重置记录');}
   object(s.fragments,'残页');for(const [id,n] of Object.entries(s.fragments)){if(id!=='universal')catalogKey(C.techniques,id,'残页');integer(n,0,CAP,'残页数量');}
   array(s.bag,300,'背包');if(s.rewardOverflow===undefined)s.rewardOverflow=[];array(s.rewardOverflow,1000,'待领取');
@@ -353,9 +410,34 @@ function validateV3(raw){
   array(s.logs,60,'日志');for(const l of s.logs){object(l,'日志');integer(l.at,0,MAX_TIME,'日志时间');if(typeof l.text!=='string'||l.text.length>360)throw Error('日志文字无效');l.text=cleanText(l.text,360);}
   object(s.migrationCompensation,'传承补偿');for(const route of routes){object(s.migrationCompensation[route],'传承补偿');for(const key of ['attack','defense','maxHp'])integer(s.migrationCompensation[route][key],0,CAP,'传承属性');}
   if(s.joint!==null){const j=object(s.joint,'共修');catalogKey(C.companions,j.companion,'共修伙伴');if(!s.companions[j.companion].bond||s.companions[j.companion].affinity<55)throw Error('共修关系不足');integer(j.round,0,2,'共修轮次');integer(j.score,j.round,j.round*3,'共修得分');array(j.techniques,3,'共修功法');if(j.techniques.length!==3)throw Error('共修功法数');for(const id of j.techniques)catalogKey(C.techniques,id,'共修功法');array(j.rhythm,3,'共修节律');if(j.rhythm.length!==3||j.rhythm.some(x=>!['sun','moon','star'].includes(x)))throw Error('共修节律无效');if(j.route!==undefined&&!routeOk(j.route))throw Error('共修路线无效');}
-  validateBattle(s);validateExploration(s);
+  validateBattle(s);validateExploration(s);validateReports(s);
   if(s.rerollPending!==null&&s.rerollPending!==undefined){const p=object(s.rerollPending,'待选词条');if(!s.bag.some(g=>g.uid===p.uid))throw Error('洗炼装备不存在');const affixes=p.affixes||p.newAffixes;array(affixes,4,'待选词条');for(const f of affixes){if(!affixIds.includes(f.id))throw Error('待选词条 ID');number(f.value,0,50000,'待选词条值');}}
   return s;
+}
+function validateReports(s){
+  if(s.battleReports===undefined)s.battleReports=[];
+  array(s.battleReports,C.limits.battleReports,'最近战报');
+  for(const r of s.battleReports){
+    object(r,'战报');catalogKey(C.dungeons,r.entry,'战报入口');
+    if(!routeOk(r.route))throw Error('战报路线无效');
+    if(typeof r.realm!=='string'||r.realm.length>80)throw Error('战报境界无效');r.realm=cleanText(r.realm,80);integer(r.tier,0,5,'战报阶位');integer(r.difficulty,0,2,'战报难度');
+    boolean(r.win,'战报胜负');boolean(r.practice,'战报试阵');
+    if(!['win','defeat','exit'].includes(r.outcome)||r.win!==(r.outcome==='win'))throw Error('战报结果无效');
+    number(r.duration,0,36000,'战报时长');integer(r.at,0,MAX_TIME,'战报时间');
+    for(const field of ['entryLabel','tierLabel','name','type','reason']){
+      if(typeof r[field]!=='string'||r[field].length>600)throw Error('战报文字无效');r[field]=cleanText(r[field],600);
+    }
+    for(const field of ['mechanisms','failures']){array(r[field],60,'战报机制');for(let i=0;i<r[field].length;i++){if(typeof r[field][i]!=='string'||r[field][i].length>600)throw Error('战报机制文字无效');r[field][i]=cleanText(r[field][i],600);}}
+    const p=object(r.performance,'战报表现');for(const [key,n] of Object.entries(p)){if(!/^[a-zA-Z][a-zA-Z0-9_]{0,40}$/.test(key))throw Error('战报表现字段无效');number(n,0,CAP,'战报表现');}
+    if(r.log===undefined)r.log=[];array(r.log,100,'战报日志');for(const l of r.log){object(l,'战报日志');number(l.time,0,36000,'战报日志时间');if(typeof l.message!=='string'||l.message.length>360)throw Error('战报日志文字无效');l.message=cleanText(l.message,360);}
+    if(r.rewards!==null){
+      const reward=object(r.rewards,'战报奖励');for(const key of ['stones','xp','tickets','contribution'])if(own(reward,key))integer(reward[key],0,CAP,'战报奖励');
+      for(const field of ['materials','fragments']){object(reward[field]||{},'战报奖励');for(const [id,n] of Object.entries(reward[field]||{})){if(field==='materials'?!materialIds.includes(id):id!=='universal'&&!own(C.techniques,id))throw Error('战报奖励物品无效');integer(n,0,CAP,'战报奖励');}}
+      for(const [field,catalog] of [['techniques',C.techniques],['treasures',C.treasures],['recipes',C.recipes]]){array(reward[field]||[],48,'战报奖励');for(const id of reward[field]||[])catalogKey(catalog,id,'战报奖励');}
+      array(reward.gear||[],300,'战报装备');for(const g of reward.gear||[])validateGear(g,'战报装备');
+      array(reward.blueprints||[],100,'战报蓝图');for(const id of reward.blueprints||[])if(typeof id!=='string'||!Object.keys(C.schools).some(school=>id===school||slots.some(slot=>id==='gear_'+school+'_'+slot)))throw Error('战报蓝图无效');
+    }
+  }
 }
 function validateBattle(s){
   if(s.battle===null)return;const b=object(s.battle,'battle');catalogKey(C.dungeons,b.id,'战斗副本');if(!routeOk(b.route)||b.route!==s.route)throw Error('战斗路线无效');
@@ -368,6 +450,8 @@ function validateBattle(s){
   for(const key of ['treasureCooldown','potionCooldown','attackTimer','accumulator'])number(b[key],0,3600,'战斗 '+key);
   if(b.rng!==undefined)integer(b.rng,0,4294967295,'战斗随机流');
   array(b.queue,80,'战斗行动');array(b.log,100,'战斗日志');
+  if(b.mechanismEvents===undefined)b.mechanismEvents=[];
+  array(b.mechanismEvents,60,'机制处理记录');for(const e of b.mechanismEvents){object(e,'机制处理记录');number(e.at,0,36000,'机制时间');if(typeof e.kind!=='string'||e.kind.length>80||typeof e.message!=='string'||e.message.length>300)throw Error('机制记录文字无效');e.message=cleanText(e.message,300);if(e.handled!==null)boolean(e.handled,'机制处理结果');}
   if(b.lastSkill!==null&&b.lastSkill!==undefined)catalogKey(C.techniques,b.lastSkill,'上一神通');
 }
 function validateExploration(s){
@@ -467,5 +551,5 @@ function validate(raw){
     state=validateV3(state);return {ok:true,state,migrated,error:null,migrationReport:state.migrationReport||null};
   }catch(e){return {ok:false,state:null,migrated:false,error:cleanText(e.message,200)};}
 }
-return {catalog:C,createState,validate,attributes,view,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
+return {catalog:C,createState,validate,attributes,view,techniqueEffects,learnRecipe,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
 });

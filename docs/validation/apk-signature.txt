@@ -1,0 +1,17 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: C=CN, O=Local Development, CN=Wendao Lingqi Personal Game
+Signer #1 certificate SHA-256 digest: 7d1e538f15a8f4a12e6f37f8c16d667a0e0e6e17dc27ba7c7f35bee814022512
+Signer #1 certificate SHA-1 digest: 29b1276447ca7a2551715dabcd4f28c2dd398440
+Signer #1 certificate MD5 digest: eb25addc4e0069d2b10a634d1200f8a5
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: e06b1e384daba2ba6fffc2dcfae5db063de7ff5c016e8e2d22b1454961fe1d6d
+Signer #1 public key SHA-1 digest: 8e794a27ac515145a0a59ba9406ce358ea047c3d
+Signer #1 public key MD5 digest: 16d3fcbe137d4472d3aabddbe41eeae3
