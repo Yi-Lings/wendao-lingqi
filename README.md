@@ -38,7 +38,7 @@ python3 -m http.server 8787 --bind 127.0.0.1 --directory web
 
 打开 <http://127.0.0.1:8787/>。网页无需 npm 构建，建议使用近期 Chrome、Edge 或更新后的 Android WebView。存档按浏览器的地址、端口与用户配置隔离；切换地址前可先导出 JSON。
 
-[下载离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-preview.html`。该版本包含本轮网页改版，原 V3.0 APK 尚未更新。
+[下载离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip?revision=d8a0ee7)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-preview.html`。该版本包含本轮网页改版，原 V3.0 APK 尚未更新。
 
 角色页新增「成套装备」与「推荐配装」：六流派套装展示两件/四件激活效果，一键使用已有装备；推荐同时搭配装备、心法、神通顺序和秘术，展示用途与下一获取/参悟目标。六套各六部位、六档品级共216种装备图片映射互不复用，保留适合道品的原美术。缺件展示图片与获取入口：固定套装/部位打造、对应妖王掉落、道品抽卡定向，条件与材料缺口明确显示。胜利自动弹出真实战利品结算；自动重战在结算后暂停，点击继续再挑战。点击部位装备后选择「更换装备」，可在当前部位直接比较穿戴与背包候选，长按查看完整属性。
 
