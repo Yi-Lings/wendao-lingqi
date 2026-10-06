@@ -27,29 +27,41 @@ function itemIcon(kind,id){
  return `<span class="item-icon art-icon${kind==='pill'?' round':''}" style="background-image:url(assets/v3-items-atlas.png);background-size:600% 600%;background-position:${col*20}% ${row*20}%" aria-hidden="true"></span>`;
 }
 const inspectAttrs=(kind,id)=>`data-inspect-kind="${esc(kind)}" data-inspect-id="${esc(id)}"`;
-function card({kind,id,name,rarity,icon,subtitle='',status='',selected=false,blocked=false,action='',payload={},selection='',value='',extra=''}){
+function card({kind,id,name,rarity,icon,subtitle='',status='',selected=false,blocked=false,action='',payload={},selection='',value='',extra='',clickHint='点击选择',usage=''}){
  const command=selection?`data-selection="${selection}" data-selection-value="${esc(value)}"`:action?`data-${action==='equipGear'?'action':'ui'}="${esc(action)}" data-payload="${json(payload)}"`:'';
- return `<article class="selection-cell rarity-${rarity}${selected?' is-selected':''}${blocked?' is-unavailable':''}" ${extra}><button type="button" class="selection-tile" ${command} ${inspectAttrs(kind,id)} aria-label="${esc(name+' · '+quality({rarity})+' · '+subtitle+(status?' · '+status:'')+'；点击选择，长按查看详情')}" aria-pressed="${selected}"${blocked?' aria-disabled="true"':''}>${icon}<strong>${esc(name)}</strong><small>${esc(subtitle)}</small>${status?`<span class="selection-status">${esc(status)}</span>`:''}</button><button type="button" class="selection-info" data-selection="inspect" ${inspectAttrs(kind,id)} aria-label="查看${esc(name)}详情">详情</button></article>`;
+ return `<article class="selection-cell rarity-${rarity}${selected?' is-selected':''}${blocked?' is-unavailable':''}" ${extra}><button type="button" class="selection-tile" ${command} ${inspectAttrs(kind,id)} aria-label="${esc(name+' · '+quality({rarity})+' · '+subtitle+(usage?' · '+usage:'')+(status?' · '+status:'')+'；'+clickHint+'，长按查看详情')}" aria-pressed="${selected}"${blocked?' aria-disabled="true"':''}>${icon}<strong>${esc(name)}</strong><small>${esc(subtitle)}</small>${usage?`<span class="selection-usage">${esc(usage)}</span>`:''}${status?`<span class="selection-status">${esc(status)}</span>`:''}</button><button type="button" class="selection-info" data-selection="inspect" ${inspectAttrs(kind,id)} aria-label="查看${esc(name)}详情">详情</button></article>`;
 }
 function equipmentCard(state,gear,options={}){
- const equipped=Object.values(state.equipped).includes(gear.uid),detail=options.action==='equipment',blocked=!detail&&(equipped||!!state.battle);
- return card({kind:'gear',id:gear.uid,name:A.gearLabel(gear),rarity:gear.rarity,icon:equipmentIcon(gear),subtitle:C.slots[gear.slot]+' · '+(gear.tier+1)+'阶',status:equipped?'已装配':state.battle&&!detail?'战斗中锁定':'',selected:equipped,blocked,action:detail?'equipment':blocked?'':'equipGear',payload:{uid:gear.uid},extra:`data-gear-uid="${esc(gear.uid)}"`});
+ const equipped=Object.values(state.equipped).includes(gear.uid),detail=['equipment','gear-detail'].includes(options.action),blocked=!detail&&(equipped||!!state.battle);
+ return card({kind:'gear',id:gear.uid,name:A.gearLabel(gear),rarity:gear.rarity,icon:equipmentIcon(gear),subtitle:C.slots[gear.slot]+' · '+(gear.tier+1)+'阶',status:options.status??(equipped?'已装配':state.battle&&!detail?'战斗中锁定':''),selected:equipped,blocked,action:detail?options.action:blocked?'':'equipGear',payload:{uid:gear.uid},extra:`data-gear-uid="${esc(gear.uid)}"`,clickHint:detail?'点击查看养成':'点击替换'});
 }
 function techniqueCard(state,id,options={}){
  const t=C.techniques[id];if(!t)return '';
- const l=currentLoadout(state),equipped=options.equipped??(l.heart===id||l.skills.includes(id)||l.secrets.includes(id));
- return card({kind:'technique',id,name:t.name,rarity:t.rarity,icon:techniqueIcon(t),subtitle:C.schools[t.school].name+' · '+(state.techniques[id]?.level||1)+'级',status:equipped?'出战中':'选择出战槽',selected:equipped,action:'loadout',payload:{kind:t.kind,id}});
+ const l=currentLoadout(state),equipped=options.equipped??(l.heart===id||l.skills.includes(id)||l.secrets.includes(id)),role=techniqueRole(t,state);
+ return card({kind:'technique',id,name:t.name,rarity:t.rarity,icon:techniqueIcon(t),subtitle:C.schools[t.school].name+' · '+(state.techniques[id]?.level||1)+'级',usage:roleUsage(role),status:equipped?'出战中':role.recommended?'当前流派推荐':'选择出战槽',selected:equipped,action:'loadout',payload:{kind:t.kind,id}});
 }
+function techniqueRole(item,state){return window.WendaoBuilds?.techniqueRole(item.id,state)||{buildName:C.schools[item.school]?.name||'修行流派',tags:[],role:item.description||'',reason:'',partners:[]};}
+function roleUsage(role){return [role.buildName,...(role.tags||[]).slice(0,2)].filter(Boolean).join(' · ');}
 function pageItems(items,options){
  const size=Math.max(1,Math.min(12,Number(options.pageSize)||9)),pages=Math.max(1,Math.ceil(items.length/size)),page=Math.max(0,Math.min(pages-1,Number(options.page)||0));
  return {size,pages,page,items:items.slice(page*size,(page+1)*size)};
 }
 function pager(p){return p.pages>1?`<div class="selection-pagination"><button type="button" data-selection="page" data-selection-value="${p.page-1}"${p.page===0?' disabled':''} aria-label="上一页">‹</button><span>${p.page+1} / ${p.pages}</span><button type="button" data-selection="page" data-selection-value="${p.page+1}"${p.page===p.pages-1?' disabled':''} aria-label="下一页">›</button></div>`:'';}
-function equipmentItems(state,options={}){return state.bag.filter(g=>!options.slot||options.slot==='all'||g.slot===options.slot).slice().reverse();}
+function validGearSlot(slot){return Object.prototype.hasOwnProperty.call(C.slots,slot);}
+function equipmentItems(state,options={}){
+ const slot=validGearSlot(options.slot)?options.slot:null;
+ return state.bag.filter(g=>(!slot||g.slot===slot)&&(!slot||g.uid!==state.equipped[slot])&&(options.rarity===undefined||options.rarity===null||options.rarity==='all'||g.rarity===Number(options.rarity))&&(!options.set||options.set==='all'||g.set===options.set)).slice().reverse();
+}
 function techniqueItems(state,options={}){return Object.keys(state.techniques).filter(id=>C.techniques[id]&&(!options.kind||options.kind==='all'||C.techniques[id].kind===options.kind));}
 function renderEquipment(state,options={}){
+ if(validGearSlot(options.slot))return renderSlotEquipment(state,options);
  const p=pageItems(equipmentItems(state,options),options);
  return `<section class="selection-library" data-selection-library="gear" data-selection-options="${json({...options,page:p.page})}"><div class="selection-grid">${p.items.map(g=>equipmentCard(state,g,options)).join('')||'<p class="selection-empty">此部位尚无灵装。</p>'}</div>${options.includePager===false?'':pager(p)}</section>`;
+}
+function renderSlotEquipment(state,options={}){
+ const slot=validGearSlot(options.slot)?options.slot:Object.keys(C.slots)[0],current=state.bag.find(g=>g.uid===state.equipped[slot]),items=equipmentItems(state,{...options,slot}),p=pageItems(items,{pageSize:6,...options}),label=C.slots[slot];
+ const currentHTML=current?`<div class="selection-current-card">${equipmentCard(state,current,{action:'gear-detail',status:'当前穿戴 · 长按查看属性'})}</div>`:`<div class="selection-current-empty"><span aria-hidden="true">＋</span><strong>${esc(label)}尚未装配</strong><small>从下方背包选择一件装备</small></div>`;
+ return `<section class="selection-library selection-slot-equipment" data-selection-library="gear" data-selection-slot="${esc(slot)}" data-selection-options="${json({...options,slot,page:p.page})}"><div class="selection-equipment-current" data-equipped-slot="${esc(slot)}"><div class="selection-section-heading"><h3>当前${esc(label)}</h3><span>部位强化 +${number(state.slotLevels[slot])}</span></div>${currentHTML}</div><div class="selection-equipment-candidates"><div class="selection-section-heading"><h3>背包中的${esc(label)}</h3><span>${number(items.length)} 件可替换</span></div><div class="selection-grid">${p.items.map(g=>equipmentCard(state,g,{status:state.battle?'战斗中锁定':'点击替换 · 长按看属性'})).join('')||`<p class="selection-empty">${options.rarity&&options.rarity!=='all'||options.set&&options.set!=='all'?'当前筛选下暂无其他'+esc(label)+'，可调整筛选查看。':'背包中暂无其他'+esc(label)+'，可前往定向打造。'}</p>`}</div>${options.includePager===false?'':pager(p)}</div><p class="selection-hint" role="status">${state.battle?'战斗中不能更换装备，仍可长按查看属性。':'点图片立即替换当前部位 · 长按或点详情查看完整属性'}</p></section>`;
 }
 function renderTechnique(state,options={}){
  const p=pageItems(techniqueItems(state,options),options);
@@ -77,10 +89,10 @@ function pickItems(state,kind,index){
 }
 function pickCard(state,item,model,locked){
  const kind=model.kind,chosen=model.draft[kind][model.index]===item.id,other=model.draft[kind].findIndex((id,i)=>id===item.id&&i!==model.index),duplicate=other>=0,available=isAvailable(state,item),equipped=kind==='heart'?currentLoadout(state).heart===item.id:(currentLoadout(state)[{skill:'skills',secret:'secrets',treasure:'treasures',pill:'pills'}[kind]]||[]).includes(item.id);
- const status=chosen?'已选择':duplicate?'已在'+slotName(kind,other):!available?'境界未开放':equipped?'当前出战':'';
  const detailKind=kind==='treasure'||kind==='pill'?kind:'technique';
+ const role=detailKind==='technique'?techniqueRole(item,state):null,status=chosen?'已选择':duplicate?'已在'+slotName(kind,other):!available?'境界未开放':equipped?'当前出战':role?.recommended?'当前流派推荐':'';
  const subtitle=kind==='treasure'?(item.kind==='active'?'主动':'被动')+' · '+(state.ownedTreasures[item.id]?.level||1)+'级':kind==='pill'?'库存 '+number(state.pills[item.id]):C.schools[item.school].name+' · '+state.techniques[item.id].level+'级';
- return card({kind:detailKind,id:item.id,name:item.name,rarity:item.rarity,icon:detailKind==='technique'?techniqueIcon(item):itemIcon(detailKind,item.id),subtitle,status,selected:chosen,blocked:locked||duplicate||!available,selection:'pick',value:item.id});
+ return card({kind:detailKind,id:item.id,name:item.name,rarity:item.rarity,icon:detailKind==='technique'?techniqueIcon(item):itemIcon(detailKind,item.id),subtitle,usage:role?roleUsage(role):'',status,selected:chosen,blocked:locked||duplicate||!available,selection:'pick',value:item.id});
 }
 function editorBody(state,model){
  const kind=model.kind,lim=limits(state),locked=model.index>=lim[kind]||!!state.battle,items=pickItems(state,kind,model.index),p=pageItems(items,{page:model.page,pageSize:6});model.page=p.page;
@@ -99,17 +111,26 @@ function renderLoadout(state,options={}){
 }
 function updateEditor(root,model,state){const scroll=document.querySelector('#modal-layer .modal-body'),top=scroll?.scrollTop;cancelHold();root.innerHTML=editorBody(state,model);root.dataset.selectionModel=JSON.stringify(model);if(scroll&&Number.isFinite(top))scroll.scrollTop=top;}
 let inspectLayer=null,returnFocus=null;
-function statLines(values){return Object.entries(values||{}).filter(([id,v])=>stats[id]&&Number(v)!==0).map(([id,v])=>`<div><dt>${esc(stats[id])}</dt><dd>${ratios.has(id)?number(v*100)+'%':number(v)}</dd></div>`).join('');}
+function statLines(values){return Object.entries(values||{}).filter(([id,v])=>stats[id]&&Number(v)!==0&&!(id==='maxHp'&&values.hp!==undefined)).map(([id,v])=>`<div><dt>${esc(stats[id])}</dt><dd>${ratios.has(id)?number(v*100)+'%':number(v)}</dd></div>`).join('');}
+function gearSetDetail(state,gear){
+ const set=C.sets[gear.set],views=window.WendaoEconomy?.equipmentSetView?.(state),view=Array.isArray(views)?views.find(item=>item.id===gear.set):null,count=view?.equippedCount??Object.entries(state.equipped).filter(([slot,uid])=>state.bag.some(g=>g.uid===uid&&g.slot===slot&&g.set===gear.set)).length;
+ const effects=view?.effects||[{pieces:2,description:set?.twoEffect||'无',active:count>=2},{pieces:4,description:set?.fourEffect||'无',active:count>=4}],synergy=view?.synergy;
+ return `<h3>${esc(set?.name||'灵装')}套装 · 当前穿戴 ${number(count)} / 6</h3>${set?.description?`<p class="selection-hint">${esc(set.description)}</p>`:''}${effects.map(effect=>`<div class="selection-detail-set-effect${effect.active?' is-active':''}"><strong>${effect.pieces===2?'两件':effect.pieces===4?'四件':number(effect.pieces)+'件'} · ${effect.active?'已激活':'未激活'}</strong>${esc(effect.description)}</div>`).join('')}${synergy?`<div class="selection-build-guidance"><h3>功法配合 · 出战 ${number(synergy.matchingCount)} 门</h3><p>${esc(synergy.description)}</p>${synergy.techniques?.length?`<p class="selection-hint">${synergy.techniques.map(t=>esc(t.name)+'（'+(t.equipped?'出战中':t.owned?'已习得':t.available?'待习得':'境界未开放')+'）').join(' · ')}</p>`:''}</div>`:''}`;
+}
+function techniqueGuidance(state,item){
+ const role=techniqueRole(item,state),partners=(role.partners||[]).map(id=>C.techniques[id]?.name).filter(Boolean);
+ return `<section class="selection-build-guidance"><h3>流派配合 · ${esc(role.buildName)}</h3><p>${esc(role.role)}</p>${role.reason?`<p class="selection-hint">${esc(role.reason)}</p>`:''}${partners.length?`<p class="selection-hint">适合搭配：${partners.map(esc).join('、')}</p>`:''}</section>`;
+}
 function detailContent(state,kind,id,origin){
  if(kind==='gear'){
   const g=state.bag.find(item=>item.uid===id);if(!g)return null;const set=C.sets[g.set],equipped=Object.values(state.equipped).includes(id),attrs=K.gearStats(state,g);
-  return {name:A.gearLabel(g),rarity:g.rarity,icon:equipmentIcon(g),body:`<p class="selection-detail-meta">${esc(quality(g))} · ${esc(C.slots[g.slot])} · ${g.tier+1}阶 · ${equipped?'已装配':'背包中'}</p><dl class="selection-detail-stats">${statLines(attrs)}</dl><p>部位强化 +${number(state.slotLevels[g.slot])} · 觉醒 ${number(g.awakening)}${g.locked?' · 已保护':''}</p>${g.affixes?.length?'<p class="selection-hint">词条：'+g.affixes.map(x=>esc((window.WendaoEconomy?.affixes?.[x.id]?.name||stats[x.id]||x.id)+' '+(ratios.has(x.id)?number(x.value*100)+'%':number(x.value)))).join(' · ')+'</p>':''}<h3>${esc(set?.name||'灵装')}套装</h3><p>两件：${esc(set?.twoEffect||'无')}</p><p>四件：${esc(set?.fourEffect||'无')}</p>${g.rarity===5?'<p class="selection-red-effect">道品：'+esc(set?.redEffect||'道品专属机制')+'</p>':''}<p class="selection-hint">强化保存在部位，更换灵装继承强化。</p>`};
+  return {name:A.gearLabel(g),rarity:g.rarity,icon:equipmentIcon(g),body:`<p class="selection-detail-meta">${esc(quality(g))} · ${esc(C.slots[g.slot])} · ${g.tier+1}阶 · ${equipped?'已装配':'背包中'}</p><dl class="selection-detail-stats">${statLines(attrs)}</dl><p>部位强化 +${number(state.slotLevels[g.slot])} · 觉醒 ${number(g.awakening)}${g.locked?' · 已保护':''}</p>${g.affixes?.length?'<p class="selection-hint">词条：'+g.affixes.map(x=>esc((window.WendaoEconomy?.affixes?.[x.id]?.name||stats[x.id]||x.id)+' '+(ratios.has(x.id)?number(x.value*100)+'%':number(x.value)))).join(' · ')+'</p>':''}${gearSetDetail(state,g)}${g.rarity===5?'<p class="selection-red-effect">道品：'+esc(set?.redEffect||'道品专属机制')+'</p>':''}<p class="selection-hint">强化保存在部位，更换灵装继承强化。</p>`};
  }
  const item=(kind==='technique'?C.techniques:kind==='treasure'?C.treasures:C.recipes)[id];if(!item)return null;
  const own=kind==='technique'?state.techniques[id]:kind==='treasure'?state.ownedTreasures[id]:null,l=currentLoadout(state),equipped=kind==='technique'?l.heart===id||l.skills.includes(id)||l.secrets.includes(id):kind==='treasure'?l.treasures.includes(id):l.pills.includes(id),modelRoot=origin?.closest('.selection-loadout'),model=modelRoot?JSON.parse(modelRoot.dataset.selectionModel):null,draftSelected=model&&model.draft[model.kind][model.index]===id;
  const activeKind=kind==='technique'?kinds[item.kind]:kind==='treasure'?item.kind==='active'?'主动灵宝':'被动灵宝':'战斗丹药',realm=C.routes[state.route].realmNames[item.realm];
  const body=`<p class="selection-detail-meta">${esc(quality(item))} · ${esc(activeKind)}${own?' · '+number(own.level)+'级':''} · ${draftSelected?'本槽已选择':equipped?'当前出战':'未出战'}</p><p>${esc(item.description)}</p>${kind==='technique'&&item.kind==='skill'?`<dl class="selection-detail-stats"><div><dt>真元消耗</dt><dd>${number(item.mp)}</dd></div><div><dt>基础冷却</dt><dd>${number(item.cooldown)}秒</dd></div>${item.power?`<div><dt>基础倍率</dt><dd>${number(item.power*100)}%</dd></div>`:''}</dl>`:kind==='treasure'&&item.cooldown?`<p>基础冷却 ${number(item.cooldown)}秒</p>`:''}${kind==='pill'?`<p>当前库存 ${number(state.pills[id])} · 战斗中使用时消耗</p>`:''}${kind==='technique'&&own?.level>=5?`<h3>当前分支 · ${esc(item.branches?.[own.branch]?.name||'凝练')}</h3><p>${esc(item.branches?.[own.branch]?.description||'')}</p>`:''}${kind==='technique'?`<div class="selection-detail-milestones">${(item.milestones||[]).map(m=>`<p class="${own?.level>=m.level?'achieved':''}">${number(m.level)}级 · ${esc(m.name)}${own?.level>=m.level?' ✓':''}<small>${esc(m.description)}</small></p>`).join('')}</div>`:''}<p class="selection-hint">开放条件：${esc(realm)}${number(item.layer||1)}层</p><p class="selection-detail-source">来源：${esc(item.source?.label||'修行与历练')}</p>`;
- return {name:item.name,rarity:item.rarity,icon:kind==='technique'?techniqueIcon(item):itemIcon(kind,id),body};
+ return {name:item.name,rarity:item.rarity,icon:kind==='technique'?techniqueIcon(item):itemIcon(kind,id),body:kind==='technique'?techniqueGuidance(state,item)+body:body};
 }
 function hideDetail(){if(!inspectLayer)return false;inspectLayer.remove();inspectLayer=null;const focus=returnFocus;returnFocus=null;if(focus?.isConnected)focus.focus({preventScroll:true});return true;}
 function showDetail(origin){
@@ -148,7 +169,12 @@ document.addEventListener('click',event=>{
   }
   updateEditor(root,model,state);return;
  }
- const library=target.closest('[data-selection-library]');if(control==='page'&&library){const options={...JSON.parse(library.dataset.selectionOptions),page:Number(target.dataset.selectionValue)},top=window.scrollY;library.outerHTML=library.dataset.selectionLibrary==='gear'?renderEquipment(state,options):renderTechnique(state,options);window.scrollTo({top,behavior:'instant'});}
+ const library=target.closest('[data-selection-library]');if(control==='page'&&library){
+  const options={...JSON.parse(library.dataset.selectionOptions),page:Number(target.dataset.selectionValue)},top=window.scrollY,scroller=target.closest('.modal-body'),scrollTop=scroller?.scrollTop,parent=library.parentElement,label=target.getAttribute('aria-label'),kind=library.dataset.selectionLibrary;
+  library.outerHTML=kind==='gear'?renderEquipment(state,options):renderTechnique(state,options);
+  const replacement=parent?.querySelector(`[data-selection-library="${kind}"]`),focus=replacement&&Array.from(replacement.querySelectorAll('[data-selection="page"]')).find(button=>button.getAttribute('aria-label')===label&&!button.disabled);focus?.focus({preventScroll:true});
+  if(scroller&&Number.isFinite(scrollTop))scroller.scrollTop=scrollTop;window.scrollTo({top,behavior:'instant'});
+ }
 },{capture:true});
 document.addEventListener('keydown',event=>{
  if(!inspectLayer)return;
@@ -157,5 +183,5 @@ document.addEventListener('keydown',event=>{
 },{capture:true});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelHold();hideDetail();}});
 window.addEventListener('pagehide',()=>{cancelHold();hideDetail();});
-window.WendaoSelection=Object.freeze({equipmentIcon,techniqueIcon,equipmentCard,techniqueCard,renderEquipment,renderTechnique,renderLoadout,equipmentCount:(state,options)=>equipmentItems(state,options).length,techniqueCount:(state,options)=>techniqueItems(state,options).length,cancelHold,hideDetail});
+window.WendaoSelection=Object.freeze({equipmentIcon,techniqueIcon,equipmentCard,techniqueCard,renderEquipment,renderSlotEquipment,renderTechnique,renderLoadout,equipmentCount:(state,options)=>equipmentItems(state,options).length,techniqueCount:(state,options)=>techniqueItems(state,options).length,cancelHold,hideDetail});
 })();
