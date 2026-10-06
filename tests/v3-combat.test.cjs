@@ -66,7 +66,7 @@ test('defeat keeps realm and unspent consumables, and awards no currency or crys
 });
 
 test('repeat breakthrough practice has no economic reward and cannot itself change realm',()=>{
-  const s=state(10);const before=snapshotMoney(s);
+  const s=state(10);s.paths[s.route].xp=K.xpNeeded(s,s.route);const before=snapshotMoney(s);
   for(let i=0;i<2;i++){
     action(s,'startDungeon',{id:'trial',difficulty:0});victory(s);
     assert.equal(s.lastBattleResult.rewards,null);

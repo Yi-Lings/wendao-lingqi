@@ -1,0 +1,16 @@
+tools/android/
+tools/signing/
+qa-tools/
+delivery/
+versions/
+dist/
+android/build/
+android/app/build/
+android/.gradle/
+.gradle/
+node_modules/
+.openai/
+*.jks
+*.keystore
+local.properties
+__pycache__/

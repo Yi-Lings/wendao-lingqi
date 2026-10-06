@@ -12,7 +12,7 @@ GitHub 仓库：[Yi-Lings/wendao-lingqi](https://github.com/Yi-Lings/wendao-ling
 - **半即时战斗**：自动出招或手动施法，支持转火、打断、净化、护盾、战术暂停、自动施法条件、免费试阵及限次妖王自动重战。
 - **装备最高红色**：白、绿、蓝、紫、橙、红六品质，六部位、六套装、两件/四件组合；强化随部位保存，支持打造、洗炼二选一、锁词条、重铸、红装觉醒和分解保护。
 - **天道感应**：抽取装备、灵宝、功法、丹药和材料；公开当前奖池、概率与历史，十抽橙及以上保底、八十抽红保底、指定基础目标最坏一百六十抽。
-- **洞府养成**：18 丹方、12 灵宝、五设施；普通炼丹基础必成，可批量炼制。灵草、矿石、灵莲、参悟与炼器精华分别生产。
+- **洞府养成**：18 丹方、12 灵宝、五设施；普通炼丹基础必成，可批量炼制；支持保存炉队列、三轮控火加成与取消退款。灵草、矿石、灵莲、参悟与炼器精华分别生产。
 - **完整故事目录**：六章主线、18 支线、三结局、三位成年伙伴；宗门委托按实际行动累计，共修采用三轮灵息节律玩法。
 
 全部角色为成年人，入口要求玩家确认年满 23 岁；伙伴关系与共修使用含蓄叙事。该年龄声明不构成官方内容评级。
@@ -37,10 +37,10 @@ python3 -m http.server 8787 --bind 127.0.0.1 --directory web
 npm test
 ```
 
-也可以显式运行本次 V3 的六个测试文件：
+也可以显式运行本次 V3 的七个测试文件：
 
 ```sh
-node --test tests/v3-catalog.test.cjs tests/v3-core.test.cjs tests/v3-economy.test.cjs tests/v3-combat.test.cjs tests/v3-story.cjs tests/v3-facade.cjs
+node --test tests/v3-catalog.test.cjs tests/v3-core.test.cjs tests/v3-economy.test.cjs tests/v3-combat.test.cjs tests/v3-story.cjs tests/v3-facade.cjs tests/v3-alchemy.cjs
 ```
 
 `tests/browser-v3.cjs` 是单独的 Playwright 浏览器检查，需要额外准备 `qa-tools` 下的 Playwright、Chromium headless shell 和可用中文字体，再启动上面的本地服务。设置 `LINGQI_ROOT` 为本机仓库目录、`LINGQI_URL` 为服务地址；浏览器路径不同时使用 `LINGQI_CHROMIUM`：
@@ -87,3 +87,7 @@ V1/V2 存档可迁移：保留旧大境并落在该境一层，旧修为进入�
 目前采用原创静态插画、图集与程序绘制战斗反馈；宗门和伙伴均为本地 NPC。没有现金支付、服务器联机或真人竞技。长期经济与各流派全流程平衡仍需持续试玩。
 
 编译、签名、Node 与浏览器检查不等同于 Android 真机验证。系统文件选择器、返回手势、不同 WebView、进程恢复及连续 30 分钟运行需在实际设备上确认；验证记录由发布流程更新。
+
+## 当前上传版本
+
+2026-10-06：源码、Android 工程、十张原创美术图集与测试已提交。`npm test` 的 101 项逻辑检查通过；基础浏览器检查 26 项通过，新增炼丹与表情联动仍需最终回归。签名 APK 尚未发布，仓库中的下载路径为后续构建预留。
