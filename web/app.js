@@ -35,11 +35,12 @@ const currentView=()=>E.view(s);
 const atlasPosition=(index,cols,rows)=>((index%cols)*100/(cols-1))+'% '+(Math.floor(index/cols)*100/(rows-1))+'%';
 function artworkIcon(art,label='',cls=''){
  if(!art)return '';
- return `<div class="item-icon art-icon game-art ${esc(cls)}" style="background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" role="img" aria-label="${esc(label)}"></div>`;
+ const d=window.WendaoArtIdentity.decorate(art);
+ return `<div class="item-icon art-icon game-art ${esc(cls)} ${d.className}" ${d.attrs} style="${d.style}background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" role="img" aria-label="${esc(art.name||label)}"></div>`;
 }
 function utilityIcon(id,label='',cls=''){return artworkIcon(G.utility(id),label||mat[id]||id,'utility-icon '+cls);}
 const techniqueIcon=t=>artworkIcon(G.technique(t),t.name,'tech-art art-rarity-'+t.rarity);
-const gearIcon=g=>{const art=A.gearArt(g);return `<div class="item-icon art-icon equipment-art art-rarity-${art.rarity}" data-art-rarity="${art.rarity}" data-art-slot="${esc(art.slot)}" data-art-set="${esc(art.set)}" style="background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" role="img" aria-label="${esc(A.gearLabel(g))}"></div>`;};
+const gearIcon=g=>{const art=A.gearArt(g),d=window.WendaoArtIdentity.decorate(art);return `<div class="item-icon art-icon equipment-art art-rarity-${art.rarity} ${d.className}" ${d.attrs} data-art-slot="${esc(art.slot)}" data-art-set="${esc(art.set)}" style="${d.style}background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" role="img" aria-label="${esc(A.gearLabel(g))}"></div>`;};
 const itemIcon=(kind,id,label)=>artworkIcon(kind==='treasure'?G.treasure(id):kind==='pill'?G.pill(id):G.utility(id),label,(kind==='pill'?'round ':'')+'art-rarity-'+(kind==='treasure'?C.treasures[id]?.rarity:kind==='pill'?C.recipes[id]?.rarity:0));
 const dungeonArt=d=>{if(d.type==='boss'){const n=Number(d.bossIndex??d.id.split('_').pop());return {file:'v3-boss-atlas.png',position:atlasPosition(n,3,4),size:'300% 400%'};}let n=Number(String(d.artKey||'map_'+d.realm*2).replace('map_',''));if(!Number.isFinite(n))n=d.realm*2;n=Math.max(0,Math.min(11,n));return {file:'v3-map-atlas-'+(n<6?'a':'b')+'.png',position:atlasPosition(n%6,3,2),size:'300% 200%'};};
 const monsterIndex=(x,b)=>{const ids={boar:0,golem:1,water:2,thunder:3,shadow:4,armor:5,flower:6,star:7};if(ids[x.species]!==undefined)return ids[x.species];const label=(x.name||'')+' '+(x.id||'');if(/花|莲|flower/.test(label))return 6;if(/矿|傀|golem/.test(label))return 1;if(/雷|隼|thunder/.test(label))return 3;if(/影|狼|shadow/.test(label))return 4;if(/水|潮|water/.test(label))return 2;if(/星|阵灵|star/.test(label))return 7;if(/古甲|甲卫|armor/.test(label))return 5;const resource={resource_herb:0,resource_ore:1,resource_insight:2,resource_essence:5,resource_fate:7};if(resource[b.id]!==undefined)return resource[b.id];return (x.index+(b.tier||0))%8;};
@@ -280,7 +281,7 @@ function frame(title,body,footer=''){
 }
 function showModal(type,p={}){
  clearDrawTimers();window.WendaoSelection?.cancelHold();window.WendaoSelection?.hideDetail();app.inert=false;
- modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,'gear-detail':gearDetail,'equipment-sets':equipmentSetsModal,'gear-source':gearSourceModal,'build-recommendations':buildRecommendationsModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,'red-reveal':redRevealModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal};
+ modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,'gear-detail':gearDetail,'equipment-sets':equipmentSetsModal,'gear-source':gearSourceModal,'build-recommendations':buildRecommendationsModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,'red-reveal':redRevealModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,'activity-rewards':activityRewardsModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal};
  (fn[type]||helpModal)(p);
  updateAudioScene();
 }
@@ -379,7 +380,7 @@ function rerollModal(p){
  frame('灵装洗炼',`<p class="muted">选择希望出现的类型，九次未中，第十次保证出现。类型保底不保证最高数值。</p><label class="gap-top">定向词条${select('reroll-target',ids.map(id=>({id,name:affixName(id)})),ids[0])}</label><h3>锁定词条</h3><div class="stack">${(g.affixes||[]).map((x,i)=>`<label class="check-line"><input class="reroll-lock" type="checkbox" value="${i}">${esc(affixName(x.id))} ${affixValue(x)}</label>`).join('')||'<p class="muted">此品质无词条，先打造更高品质。</p>'}</div><p class="cost">最多锁定总数减一条。锁定越多成本越高。</p><p id="reroll-live-cost" class="cost">消耗：${esc(price(costing('rerollGear',{uid:g.uid,target:'attack',locks:[]})))}</p><p id="reroll-live-odds" class="tiny">普通态目标出现概率 ${num(g.affixes.length/10*100)}%；第十次保证目标类型。数值范围按基础值的80%–120%随机。</p><p class="tiny">连续未中 ${num(g.targetMisses)} 次。</p>`,act('洗炼并查看结果','rerollGear',{uid:g.uid},'primary',!g.affixes?.length));
 }
 function forgePreview(g){
- const copy=['铁器与粗布，朴素耐用。','精工锻造，初蕴灵意。','灵纹铭刻，锋芒初显。','紫气流转，玄光护身。','橙金辉耀，宝光凝聚。','赤金道纹，万象共鸣。'];
+ const copy=['铁器与粗布，朴素耐用。','精工锻造，初蕴灵意。','灵纹铭刻，锋芒初显。','纹饰精巧，元素灵光护身。','宝器凝华，法纹与本色交辉。','道纹共鸣，独有法相与灵光显现。'];
  return `<div class="forge-art-preview rarity-${g.rarity}">${gearIcon(g)}<div><strong>${esc(gearName(g))}</strong><p>${copy[g.rarity]}</p><small>${esc(C.sets[g.set].name)}套装 · ${esc(C.slots[g.slot])}</small></div></div>`;
 }
 function updateForgePreview(){
@@ -533,6 +534,44 @@ function showBattleSettlement(){
  if(!r.practice&&(r.rewards?.gear||[]).some(g=>g.rarity===5))Sound?.play('red-impact');
 }
 
+function activityOrigin(){
+ const body=layer.querySelector('.modal-body'),fields={};
+ if(body)for(const control of body.querySelectorAll('select[id],input[id]'))fields[control.id]=control.type==='checkbox'?control.checked:control.value;
+ return {page,modal:modal?{type:modal.type,p:JSON.parse(JSON.stringify(modal.p||{}))}:null,scroll:body?.scrollTop||0,fields};
+}
+function activityRewardsModal(p={}){
+ const value=p.value;if(!value)return closeModal();
+ const label=value.type==='sweepDungeon'?'继续扫荡':['craftPill','finishAlchemyJob','cancelAlchemyJob'].includes(value.type)?'返回丹炉':value.type==='forgeGear'?'继续打造':value.pending?'继续探索':'返回';
+ frame(value.title,window.WendaoActivityRewards.render(value,{state:s}),ui(label,'activity-return',{},'primary'));
+}
+function returnFromActivity(p=modal?.p){
+ const origin=p?.origin,value=p?.value;closeModal();if(!origin)return;
+ // The page itself was patched in place. Reopen only the originating drawer,
+ // restoring its selections and internal scroll without granting anything.
+ if(!origin.modal)return;
+ let destination=origin.modal;
+ if(destination.type==='activity-rewards')return;
+ if(destination.type==='joint'&&!s.joint)return;
+ if(destination.type==='confirm'){
+  if(value?.type==='cancelAlchemyJob')destination={type:'alchemy',p:{}};
+  else if(value?.type==='recycleGear')destination={type:'recycle',p:{}};
+  else if(value?.type==='recycleTreasure')destination={type:'treasures',p:{}};
+  else return;
+ }
+ showModal(destination.type,destination.p);
+ for(const [id,value] of Object.entries(origin.fields||{})){
+  const control=document.getElementById(id);if(!control||!layer.contains(control))continue;
+  if(control.type==='checkbox')control.checked=!!value;else control.value=value;
+ }
+ if(destination.type==='forge')updateForgePreview();
+ const body=layer.querySelector('.modal-body');if(body)body.scrollTop=origin.scroll||0;
+}
+function showActivitySettlement(value,origin){
+ clearTimeout(toastTimer);toastEl.hidden=true;showModal('activity-rewards',{value,origin});
+ Sound?.play(value.type==='sweepDungeon'?'victory':'success');
+ if(value.items.some(item=>item.kind==='gear'&&item.rarity===5))Sound?.play('red-impact');
+}
+
 function confirmModal(p){frame('确认'+p.label,`<p>${esc(p.text)}</p>`,act('确认'+p.label,p.type,p.payload||{},'danger')+ui('返回','close',{},'secondary'));}
 function offlineModal(p){const x=p.summary||{};frame('归来 · 灵气仍在',`<p>基础修行与洞府产出已结算并保存。</p><p class="muted gap-top">离线 ${num(x.elapsedMs?x.elapsedMs/3600000:(x.seconds||x.elapsedSeconds||0)/3600)} 小时 · 修为上限24小时 · 生产上限七天</p><p class="cost">${esc(price(x.reward||x.rewards||x.gains||{xp:x.xp,stones:x.stones,materials:x.materials}))}</p><p class="muted">新增悟道券储备 ${num(x.wisdomTickets)} · 历练储备 +${num((x.sweepAddedMs||0)/3600000)}h</p><p class="safe-note">新副本、剧情与大境突破仍由你主动完成。战斗已暂停，可继续或调整准备。</p>`,ui('继续仙途','close',{},'primary'));}
 function techBranch(p){const t=C.techniques[p.id],x=s.techniques[p.id];if(!t||!x)return;modal={type:'tech-branch',p};frame(t.name+' · 参悟分支',`<p>${esc(t.description)}</p><p class="muted gap-top">五级后可以选择分支，洞府切换免费。当前分支 ${esc(t.branches?.[x.branch]?.name||String(x.branch+1))}。</p>${techniqueMilestones(t,x)}<div class="stack gap-top">${(t.branches||[]).map(b=>'<p class="section-note">'+esc(b.name)+'：'+esc(b.description)+'</p>').join('')}</div><div class="grid-2 gap-top">${act(t.branches?.[0]?.name||'凝练','setTechniqueBranch',{id:p.id,branch:0},'secondary')}${act(t.branches?.[1]?.name||'通明','setTechniqueBranch',{id:p.id,branch:1},'secondary',x.level<5)}</div><p class="safe-note">重置返还90%参悟投入，教学首次重置全额返还。等级记录仅在主动重置时清除。</p>${costLine('resetTechnique',{id:p.id})}`,ui('重置此功法','confirm',{type:'resetTechnique',payload:{id:p.id},label:'重置 '+t.name,text:'功法等级退回初始，返还规则按实际投入结算。'},'ghost'));}
@@ -557,7 +596,7 @@ function payload(type,p){
 function run(type,p={},interactive=true){
  if(!s||busy)return{ok:false,message:'操作进行中'};
  if(modal?.type==='equipment'){const library=layer.querySelector('[data-selection-library=gear]');try{if(library)uiState.modalPages.equipment=JSON.parse(library.dataset.selectionOptions).page||0;}catch(e){}}
- busy=true;const before=JSON.stringify(s),previousReport=JSON.stringify(s.lastBattleResult);let r,completed=false;
+ busy=true;const before=JSON.stringify(s),previousReport=JSON.stringify(s.lastBattleResult),origin=activityOrigin();let r,completed=false;
  try{
   r=E.act(s,{type,...p},Date.now());
   if(!r?.ok){if(interactive){toast(r?.message||'当前条件尚未满足。');Sound?.play('error');}return r||{ok:false};}
@@ -565,9 +604,11 @@ function run(type,p={},interactive=true){
   completed=!!s.lastBattleResult&&(JSON.stringify(s.lastBattleResult)!==previousReport||type==='leaveBattle'||type==='finishCave'||type==='chooseCave'&&!s.exploration);
   if(completed&&s.battle){const paused=E.act(s,{type:'pauseBattle',paused:true},Date.now());if(!paused.ok)throw Error('下一场战斗暂停失败');}
   if(!persist(s)){s=JSON.parse(before);updateChrome();renderPage();renderEncounter();return{ok:false,message:'存档未成功，已撤回'};}
-  if(interactive){toast(r.message);if(['useSkill','useTreasure'].includes(type))Sound?.play('battle-skill');else if(type==='targetEnemy')Sound?.play('ui');else if(!completed&&!['draw','drawWithJade','pauseBattle','setBattleAuto'].includes(type))Sound?.play('success');}
+  const activity=!completed&&interactive&&window.WendaoActivityRewards?.supported.includes(type)?window.WendaoActivityRewards.model({type,...p},r,JSON.parse(before),s):null;
+  if(interactive){toast(r.message);if(['useSkill','useTreasure'].includes(type))Sound?.play('battle-skill');else if(type==='targetEnemy')Sound?.play('ui');else if(!completed&&!activity&&!['draw','drawWithJade','pauseBattle','setBattleAuto'].includes(type))Sound?.play('success');}
   updateChrome();renderPage();renderEncounter();
   if(completed){showBattleSettlement();}
+  else if(activity){showActivitySettlement(activity,origin);}
   else if(type==='pauseBattle'&&p.paused===false&&modal?.type==='battle-report'&&modal.p.settlement){closeModal();}
   else if(type==='draw'||type==='drawWithJade'){uiState.drawResults=r.data?.results||[];startDrawAnimation();}
   else if(type==='buyJade'||type==='exchangeJade'||type==='buyResource'){showModal('shop');}
@@ -619,6 +660,7 @@ function acceptImport(raw){
 }
 function handleUi(id,p){
  if(id==='layout-tab'||id==='layout-page')return;
+ if(id==='activity-return'||id==='close'&&modal?.type==='activity-rewards')return returnFromActivity();
  if(id==='encounter-exit')return requestEncounterExit();
  if(id==='shop-tab'){if(!['resources','jade','exchange'].includes(p.tab))return;uiState.shopTab=p.tab;showModal('shop');const body=layer.querySelector('.modal-body');if(body)body.scrollTop=0;return;}
  if(id==='modal-page'){uiState.modalPages[p.key]=Math.max(0,Number(p.index)||0);if(modal)showModal(modal.type,modal.p);const body=layer.querySelector('.modal-body');if(body)body.scrollTop=0;return;}
@@ -642,7 +684,7 @@ document.addEventListener('pointerdown',()=>{pointerHeld=true;Sound?.unlock();},
 document.addEventListener('pointerup',()=>{pointerHeld=false;});
 document.addEventListener('pointercancel',()=>{pointerHeld=false;});
 document.addEventListener('click',event=>{
- const b=event.target.closest('button');if(!b){if(event.target.classList.contains('modal-backdrop'))closeModal();return;}if(b.disabled)return;
+ const b=event.target.closest('button');if(!b){if(event.target.classList.contains('modal-backdrop')){if(modal?.type==='activity-rewards')returnFromActivity();else closeModal();}return;}if(b.disabled)return;
  Sound?.unlock();if(b.dataset.ui||b.dataset.page)Sound?.play('ui');
  if(b.dataset.page)return navigate(b.dataset.page);
  let p={};try{p=JSON.parse(b.dataset.payload||'{}');}catch(e){return toast('参数无效。');}
@@ -673,7 +715,7 @@ document.addEventListener('change',event=>{
  if(['dungeon-tier','dungeon-difficulty','dungeon-floor','dungeon-practice'].includes(id)&&uiState.selectedDungeon){const x=dungeonPreview({id:uiState.selectedDungeon,tier:Number(read('dungeon-tier')||s.paths[s.route].realm),difficulty:Number(read('dungeon-difficulty')||0),floor:Number(read('dungeon-floor')||1),practice:!!document.getElementById('dungeon-practice')?.checked});if(x)text('dungeon-live-preview',(x.practice?'试阵无奖励':'当前预览：'+price(x.rewards))+(x.requirements?' · '+(Array.isArray(x.requirements)?x.requirements.join('、'):x.requirements):''));}
  if(['forge-slot','forge-set','forge-rarity'].includes(id))updateForgePreview();
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented)closeModal();else if(e.key==='Enter'||e.key===' ')Sound?.unlock();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented){if(modal?.type==='activity-rewards')returnFromActivity();else closeModal();}else if(e.key==='Enter'||e.key===' ')Sound?.unlock();});
 fileInput.addEventListener('change',async()=>{const f=fileInput.files?.[0];if(!f)return;try{if(f.size>MAX)return toast('存档超过1 MiB。');acceptImport(await f.text());}catch(e){toast('无法读取存档。');}finally{fileInput.value='';}});
 function lifecycle(state){
  if(state==='pause')Sound?.pause();else Sound?.resume();
@@ -683,7 +725,7 @@ function lifecycle(state){
 document.addEventListener('visibilitychange',()=>lifecycle(document.hidden?'pause':'resume'));
 window.addEventListener('pagehide',()=>lifecycle('pause'));
 window.onNativeLifecycle=lifecycle;window.onNativeImport=acceptImport;window.onNativeMessage=message=>toast(String(message));
-window.onNativeBack=()=>{if(!mounted)return false;if(window.WendaoSelection?.hideDetail())return true;if(!layer.hidden){closeModal();return true;}if(s?.battle||s?.exploration){requestEncounterExit();return true;}if(page!=='cultivation'){navigate('cultivation');return true;}return false;};
+window.onNativeBack=()=>{if(!mounted)return false;if(window.WendaoSelection?.hideDetail())return true;if(!layer.hidden){if(modal?.type==='activity-rewards')returnFromActivity();else closeModal();return true;}if(s?.battle||s?.exploration){requestEncounterExit();return true;}if(page!=='cultivation'){navigate('cultivation');return true;}return false;};
 window.Lingqi={state:()=>s?JSON.parse(JSON.stringify(s)):null,view:()=>s?currentView():null,act:(type,p)=>run(type,p||{}),navigate,showModal,save:()=>persist(s),import:acceptImport};
 load();let age=false;try{age=localStorage.getItem(AGE)==='yes';}catch(e){}
 if(!age)gate();else if(recovery)recoveryScreen();else boot();

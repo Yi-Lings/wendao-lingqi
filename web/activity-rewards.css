@@ -1,0 +1,15 @@
+.activity-settlement{color:#e5eeec;min-width:0;--activity-gold:#ebd4a0}
+.activity-hero{display:flex;align-items:center;gap:14px;min-height:104px;padding:14px;border:1px solid #b69d603f;border-radius:13px;background:radial-gradient(ellipse at 6% 50%,#9e7b342b,transparent 64%),linear-gradient(140deg,#102c34,#0a1d26);overflow:hidden}
+.activity-seal{display:grid;place-items:center;flex:none;width:64px;height:64px;border:1px solid #dbc08480;border-radius:50%;color:#ffe5a8;font-family:serif;font-size:36px;box-shadow:0 0 25px #e6b64b20,inset 0 0 15px #b4894820;animation:settlement-seal-enter .5s ease-out both}
+.activity-hero-copy{min-width:0;flex:1}
+.activity-hero-copy>small{display:block;color:#ceb991;font-size:10px;line-height:1.5;letter-spacing:.12em}
+.activity-hero h3{margin:3px 0!important;font-size:22px;color:#ffe7b3;line-height:1.4;letter-spacing:.08em}
+.activity-hero p{margin:0!important;font-size:12px;line-height:1.5;color:#b6cdca;overflow-wrap:anywhere}
+.activity-note{margin:0 0 11px!important;line-height:1.6;font-size:11px;color:#c9b687}
+.activity-costs{margin-top:14px;padding:9px 0 0;border-top:1px solid #5f8a7836;color:#9eb9ae;font-size:11px;line-height:1.6}
+.activity-costs summary{display:flex;align-items:center;min-height:36px;cursor:pointer;color:#b8ccbc}
+.activity-costs p{margin:3px 0!important;overflow-wrap:anywhere}
+.activity-pending .activity-hero{border-color:#75a8aa55;background:radial-gradient(ellipse at 6% 50%,#317b8028,transparent 64%),#0e2830}
+.activity-pending .activity-seal{color:#c3e0d6;border-color:#8bbaad66;box-shadow:0 0 20px #62bba120}
+@media(max-height:600px){.activity-hero{min-height:84px;padding:10px 12px;gap:10px}.activity-seal{width:49px;height:49px;font-size:29px}.activity-hero h3{font-size:20px}.activity-hero-copy>small{font-size:9px}.activity-hero p{font-size:11px}.activity-settlement .settlement-status{margin:8px 0;padding:7px}.activity-note{margin-bottom:8px!important;font-size:10px}.activity-loot .settlement-card{padding:8px 10px;gap:8px}.activity-loot .settlement-icon{width:44px;height:44px;min-width:44px}}
+@media(prefers-reduced-motion:reduce){.activity-settlement *,.activity-settlement *:before,.activity-settlement *:after{animation:none!important;transition:none!important}}
