@@ -28,3 +28,7 @@ Node测试检查真实套装阈值、施法、装配原子性、拥有及境界�
 - HTML：86,397,437字节，SHA-256 `3321156753f74c4ac209eaebe4f102a6b0e6e704959bad8b0f9607d7a289255e`。
 - ZIP：64,664,397字节，SHA-256 `91947c9bfd918ef9267d4a73e08d68ca2e314a4342a5e2247d1b505c5b92f06e`，仅包含同一HTML及试玩说明。
 - 全部图片和音频仍内嵌原字节，清单记录当前源码及媒体哈希。
+
+## 公开交付
+
+[网页专用发布任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/37472342159)再次运行185项逻辑测试，并校验生成HTML与上述离线试玩产物完全一致，上传至[公开试玩下载](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip)。随后通过保留代理及TLS验证的匿名HTTPS请求实际下载成功（HTTP200，64,664,397字节）；ZIP摘要、CRC及内部HTML摘要全部相符。原APK及校验附件的ID、大小、摘要、更新时间未变化，远端main未改变。
