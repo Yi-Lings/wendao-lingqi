@@ -1,33 +1,63 @@
-name: Publish verified personal APK
+name: Publish verified offline web preview
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'releases/**'
-      - 'tools/assemble-apk.py'
-      - '.github/workflows/publish-apk.yml'
   workflow_dispatch:
+
 concurrency:
-  group: personal-apk-v3
+  group: wendao-web-preview-publish
   cancel-in-progress: false
+
 permissions:
-  contents: read
+  contents: write
+
 jobs:
-  publish-personal-apk:
+  publish-web-preview:
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
-      - name: Assemble and verify signed APK
-        run: python3 tools/assemble-apk.py --output "$RUNNER_TEMP/wendao-lingqi-v3.apk"
-      - name: Publish download assets
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Verify game logic
+        run: npm test
+      - name: Build offline HTML and ZIP
+        run: python3 tools/build-web-preview.py --zip
+      - name: Verify previously tested artifact bytes
+        run: |
+          python3 - <<'PY'
+          from hashlib import sha256
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          expected = {
+              'wendao-lingqi-preview.html': (86334378, '290b07b8fbd3148997a5c6c6e4de4fc93ddf30d1ab44397a134e42ba355d39b6'),
+          }
+          for name, (expected_size, expected_digest) in expected.items():
+              path = Path('dist') / name
+              raw = path.read_bytes()
+              digest = sha256(raw).hexdigest()
+              if len(raw) != expected_size or digest != expected_digest:
+                  raise SystemExit(f'Artifact mismatch: {name}, bytes={len(raw)}, sha256={digest}')
+              print(f'Verified {name}: {len(raw)} bytes, SHA-256 {digest}')
+          name = 'wendao-lingqi-preview.zip'
+          archive_path = Path('dist') / name
+          with ZipFile(archive_path) as archive:
+              assert set(archive.namelist()) == {'wendao-lingqi-preview.html', '试玩说明.txt'}
+              assert archive.testzip() is None
+              assert sha256(archive.read('wendao-lingqi-preview.html')).hexdigest() == expected['wendao-lingqi-preview.html'][1]
+          # zlib versions can change the ZIP container while its HTML stays exact.
+          digest = sha256(archive_path.read_bytes()).hexdigest()
+          print(f'Verified ZIP contents; SHA-256 {digest}')
+          (Path('dist') / (name + '.sha256')).write_text(digest + '  ' + name + '\n', encoding='utf-8')
+          PY
+      - name: Publish verified preview download
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TASK_RELEASE_TAG='v3.0.0'
-          if gh release view "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$TASK_RELEASE_TAG" "$RUNNER_TEMP/wendao-lingqi-v3.apk" releases/wendao-lingqi-v3.apk.sha256 --repo "$GITHUB_REPOSITORY" --clobber
-          else
-            gh release create "$TASK_RELEASE_TAG" "$RUNNER_TEMP/wendao-lingqi-v3.apk" releases/wendao-lingqi-v3.apk.sha256 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V3.0' --notes-file docs/RELEASE_NOTES_V3.md
-          fi
+          gh release upload v3.0.0 \
+            dist/wendao-lingqi-preview.zip \
+            dist/wendao-lingqi-preview.zip.sha256 \
+            --repo "$GITHUB_REPOSITORY" --clobber
