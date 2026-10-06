@@ -46,4 +46,10 @@ node tests/browser-preview-file.cjs
 - ZIP：64,644,954字节，SHA-256 `33c119732d2c735ffee897e191d97cfd957a5fc53729f2e0608225883c352aba`；仅包含同一HTML和试玩说明，内嵌HTML哈希与单文件一致。
 - 最终打包清单中的源码及媒体哈希均与当前工作区一致，没有源码漂移。
 
+### 公开下载交付
+
+[下载网页版试玩ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip)及[SHA-256校验文件](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip.sha256)已上传至现有发布页。工作区路径不是公开下载入口。
+
+隔离分支 `web-preview-download-20261006` 的[网页专用任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/37465835436)运行逻辑测试并生成网页包，先校验HTML与上述已测试产物完全一致，再上传ZIP；没有构建APK。通过保留代理和TLS验证的匿名HTTPS请求实际下载成功（HTTP200，64,644,954字节），ZIP摘要、CRC及内部HTML摘要均通过校验。原APK及其校验附件的ID、大小、摘要、更新时间保持原值。
+
 本环境系统Chromium管理策略禁止 `file://` 导航，该项明确跳过且未绕过策略。离线检查采用允许的本机HTTP仅加载一次HTML后断网，另用 `setContent` 在网络禁用下解码内嵌图片、音频。用户的实际浏览器打开方式和安卓系统文件选择器仍需实际体验确认。

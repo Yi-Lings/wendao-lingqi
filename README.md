@@ -38,6 +38,8 @@ python3 -m http.server 8787 --bind 127.0.0.1 --directory web
 
 打开 <http://127.0.0.1:8787/>。网页无需 npm 构建，建议使用近期 Chrome、Edge 或更新后的 Android WebView。存档按浏览器的地址、端口与用户配置隔离；切换地址前可先导出 JSON。
 
+[下载离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip)（约61.7MiB），解压后用 Chrome 或 Edge 打开 `wendao-lingqi-preview.html`。该版本包含本轮网页改版，原 V3.0 APK 尚未更新。
+
 快速试玩入口为 `/?preview=1`，使用独立进度和预置资源，首次十连可体验逐件红卡演出。生成可直接打开的离线单文件试玩：
 
 ```sh
