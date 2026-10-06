@@ -11,18 +11,18 @@ const quality=item=>C.rarities[item.rarity]?.name||'凡品';
 const currentState=()=>window.Lingqi?.state();
 const currentLoadout=state=>state.loadouts[state.route];
 function equipmentIcon(gear){
- const art=A.gearArt(gear);
- return `<span class="item-icon art-icon equipment-art art-rarity-${art.rarity}" data-art-rarity="${art.rarity}" data-art-slot="${esc(art.slot)}" data-art-set="${esc(art.set)}" style="background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;
+ const art=A.gearArt(gear),d=window.WendaoArtIdentity.decorate(art);
+ return `<span class="item-icon art-icon equipment-art art-rarity-${art.rarity} ${d.className}" ${d.attrs} data-art-slot="${esc(art.slot)}" data-art-set="${esc(art.set)}" style="${d.style}background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;
 }
 function techniqueIcon(technique){
  const art=window.WendaoGameArt?.technique(technique);
- if(art)return `<span class="item-icon art-icon" style="background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;
+ if(art){const d=window.WendaoArtIdentity.decorate(art);return `<span class="item-icon art-icon ${d.className}" ${d.attrs} style="${d.style}background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;}
  const row=['sword','body','thunder','elements','shadow','array'].indexOf(technique.school),n=Number(technique.id.split('_').pop()),col=technique.kind==='heart'?n:technique.kind==='skill'?n+2:n+6;
  return `<span class="item-icon art-icon" style="background-image:url(assets/v3-skills-atlas.png);background-size:800% 600%;background-position:${col*100/7}% ${row*100/5}%" aria-hidden="true"></span>`;
 }
 function itemIcon(kind,id){
  const art=kind==='treasure'?window.WendaoGameArt?.treasure(id):window.WendaoGameArt?.pill(id);
- if(art)return `<span class="item-icon art-icon${kind==='pill'?' round':''}" style="background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;
+ if(art){const d=window.WendaoArtIdentity.decorate(art);return `<span class="item-icon art-icon${kind==='pill'?' round':''} ${d.className}" ${d.attrs} style="${d.style}background-image:url(assets/${art.file});background-size:${art.size};background-position:${art.position}" aria-hidden="true"></span>`;}
  const n=kind==='treasure'?Number(id.slice(1)):Object.keys(C.recipes).indexOf(id),row=kind==='treasure'?1+Math.floor(n/6):3+Math.floor(n/6),col=n%6;
  return `<span class="item-icon art-icon${kind==='pill'?' round':''}" style="background-image:url(assets/v3-items-atlas.png);background-size:600% 600%;background-position:${col*20}% ${row*20}%" aria-hidden="true"></span>`;
 }

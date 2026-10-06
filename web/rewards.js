@@ -32,7 +32,9 @@ function model(report){
 }
 function icon(item){
   const art=item.kind==='gear'?A.gearArt(item.gear):item.kind==='technique'||item.kind==='fragment'&&item.id!=='universal'?G.technique(item.id):item.kind==='treasure'?G.treasure(item.id):item.kind==='recipe'?G.pill(item.id):G.utility(item.kind==='blueprint'?'blueprint':item.id==='xp'?'insight':item.id);
-  return art?`<span class="item-icon art-icon settlement-icon" style="background-image:url(assets/${art.file});background-size:${esc(art.size)};background-position:${esc(art.position)}" role="img" aria-label="${esc(item.name)}"></span>`:'<span class="settlement-icon settlement-fallback" aria-hidden="true">✦</span>';
+  if(!art)return '<span class="settlement-icon settlement-fallback" aria-hidden="true">✦</span>';
+  const I=typeof module==='object'&&module.exports?require('./art-identity.js'):globalThis.WendaoArtIdentity,d=I.decorate(art);
+  return `<span class="item-icon art-icon settlement-icon ${d.className}" ${d.attrs} style="${d.style}background-image:url(assets/${art.file});background-size:${esc(art.size)};background-position:${esc(art.position)}" role="img" aria-label="${esc(item.name)}"></span>`;
 }
 function inspect(item){
   const kind=item.kind==='fragment'&&item.id!=='universal'?'technique':['gear','technique','treasure'].includes(item.kind)?item.kind:null;
