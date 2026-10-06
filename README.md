@@ -2,7 +2,9 @@
 
 原创安卓竖屏单机修仙游戏：逐层修行、六流派功法构筑、自选副本、装备炼丹、天道感应与剧情同行。游戏资源随 APK 打包，安装后离线运行。
 
-GitHub 仓库：[Yi-Lings/wendao-lingqi](https://github.com/Yi-Lings/wendao-lingqi)。个人发布 APK 的仓库路径为 [`releases/wendao-lingqi-v3.apk`](releases/wendao-lingqi-v3.apk)，在完成发布构建后生成；源码构建输出为 `dist/lingqi-game.apk`。
+[直接下载 Android V3.0 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-v3.apk) · [画面与交付说明](docs/RELEASE_V3.md) · [GitHub 仓库](https://github.com/Yi-Lings/wendao-lingqi)
+
+个人发布 APK 约45.8MiB，最低Android8.0，沿用旧签名。源码构建输出为 `dist/lingqi-game.apk`；仓库分片可用 `python3 tools/assemble-apk.py` 合并并校验。
 
 ## 已实现的玩法
 
@@ -49,8 +51,6 @@ node --test tests/v3*.cjs
 ```sh
 LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
 ```
-
-旧版 `engine.test.cjs`、`ui.cjs` 属于 V2 回归资料，不代表 V3 验证；V3 的测试入口不执行它们。
 
 ## Android 构建
 

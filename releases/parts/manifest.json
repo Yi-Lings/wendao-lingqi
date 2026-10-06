@@ -1,0 +1,37 @@
+{
+  "fileName": "wendao-lingqi-v3.apk",
+  "size": 48035951,
+  "sha256": "7c90a5e6870b8cb1b124af1f5325b75715e0d4fb7b11519a2b64702268343597",
+  "parts": [
+    {
+      "name": "wendao-lingqi-v3.apk.part01",
+      "size": 8388606,
+      "sha256": "d74cc119c02c1685d00d1c349990b59bd6fb23af988be9ac2b5c26fb627d6a1e"
+    },
+    {
+      "name": "wendao-lingqi-v3.apk.part02",
+      "size": 8388606,
+      "sha256": "17dd2d25c281c562627bedcf978655518e1b1935bf0acfb5b35f5d763ca26571"
+    },
+    {
+      "name": "wendao-lingqi-v3.apk.part03",
+      "size": 8388606,
+      "sha256": "632a037e6609e84016628a58b9ca8702b8c6672e51bbacf0cf3631d640bde6c6"
+    },
+    {
+      "name": "wendao-lingqi-v3.apk.part04",
+      "size": 8388606,
+      "sha256": "07a5c7fe9477ff82c816daff818c289e68357296594de2cca5db795dba1ae8e4"
+    },
+    {
+      "name": "wendao-lingqi-v3.apk.part05",
+      "size": 8388606,
+      "sha256": "e66f71c20d9e9d96976a87d64c91a69b10808506218c77bea089cc07dfda2fa7"
+    },
+    {
+      "name": "wendao-lingqi-v3.apk.part06",
+      "size": 6092921,
+      "sha256": "6f86128bb8dcdac3e9ab6080a052806ebc9377c20de1f7f866d976d7b494e189"
+    }
+  ]
+}

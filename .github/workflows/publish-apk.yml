@@ -1,0 +1,33 @@
+name: Publish verified personal APK
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'releases/**'
+      - 'tools/assemble-apk.py'
+      - '.github/workflows/publish-apk.yml'
+  workflow_dispatch:
+concurrency:
+  group: personal-apk-v3
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  publish-personal-apk:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Assemble and verify signed APK
+        run: python3 tools/assemble-apk.py --output "$RUNNER_TEMP/wendao-lingqi-v3.apk"
+      - name: Publish download assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TASK_RELEASE_TAG='v3.0.0'
+          if gh release view "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TASK_RELEASE_TAG" "$RUNNER_TEMP/wendao-lingqi-v3.apk" releases/wendao-lingqi-v3.apk.sha256 --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$TASK_RELEASE_TAG" "$RUNNER_TEMP/wendao-lingqi-v3.apk" releases/wendao-lingqi-v3.apk.sha256 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V3.0' --notes-file docs/RELEASE_NOTES_V3.md
+          fi

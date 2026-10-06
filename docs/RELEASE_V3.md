@@ -2,7 +2,7 @@
 
 2026-10-06，离线单机Android版本3.0。最低Android8.0。个人发布包沿用旧签名；源码、生成美术、玩法文档与验证脚本均在仓库。
 
-[下载个人发布APK](../releases/wendao-lingqi-v3.apk) · [SHA-256](../releases/wendao-lingqi-v3.apk.sha256) · [完整设计计划](../plan.md) · [玩法说明](GAMEPLAY_V3.md)
+[下载个人发布APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-v3.apk) · [SHA-256](../releases/wendao-lingqi-v3.apk.sha256) · [完整设计计划](../plan.md) · [玩法说明](GAMEPLAY_V3.md)
 
 ## 本次完成
 
@@ -20,6 +20,8 @@
 ## 验证证据与边界
 
 125/125项Node逻辑测试通过，32/32项真实浏览器检查通过，14张PNG解码成功，没有页面/控制台错误、失败请求、HTTP错误或外部请求。商城与抽卡演出另外定向复核2/2通过。
+
+[GitHub自动检查与标准Android构建](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/37447879649)均通过。
 
 两路线从全新状态经正式操作零抽卡完成各60层级、12妖王、塔60层、六章和结局，没有注入资源或敌人血量；最高穿戴紫装。模拟时间推进用于验证经济可达性，并非实测多日游玩。
 

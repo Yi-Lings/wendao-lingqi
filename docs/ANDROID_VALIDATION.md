@@ -19,7 +19,7 @@
 
 125/125逻辑检查、32/32真实浏览器检查及两路线零抽卡合法通关均已通过。浏览器另复核商城、抽卡跳过和动画中刷新。详见其他验证记录；浏览器结果不能代替原生系统行为验证。
 
-标准工程提供AGP8.7.3、Gradle8.9、Java17和API35构建路径；GitHub Actions生成独立debug APK，不使用个人发布签名。工作流状态以仓库Actions实际结果为准。
+标准工程提供AGP8.7.3、Gradle8.9、Java17和API35构建路径；GitHub Actions生成独立debug APK，不使用个人发布签名。源码提交54af5f3的[GitHub工作流](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/37447879649)已通过125项逻辑检查和标准Gradle debug构建，并上传debug APK。
 
 ## 仍需实体设备检查
 
