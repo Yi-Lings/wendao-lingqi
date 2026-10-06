@@ -65,6 +65,57 @@
   function busy(s){return !!s.battle;}
   function qualityName(r){return C.rarities[r].name;}
   function gearTitle(g){return K.gearName?K.gearName(g):qualityName(g.rarity)+'·'+C.sets[g.set].name+C.slots[g.slot];}
+  var SET_SYNERGIES={
+    sword:{description:'先用裂空剑破甲，再接剑术连击或归一斩；青锋四件使破甲目标额外承受15%剑术伤害。归一剑经用普攻积剑意，太清剑谱用连续命中积破绽。',ids:['sword_heart_0','sword_heart_1','sword_skill_0','sword_skill_1','sword_skill_3','sword_secret_0']},
+    body:{description:'镇骨甲提供护盾，不动金身诀把吸收的伤害转为震劲，再以回山震消耗震劲反击。玄武四件提高护盾15%，破盾后获得4秒12%减伤。',ids:['body_heart_0','body_skill_1','body_skill_2','body_skill_3','body_secret_0']},
+    thunder:{description:'引雷诀与五雷印积累雷印，以藏雷真解保留雷印，再用天罚引爆；雷霄四件在消耗雷印时追加40%攻击雷击，每5秒最多一次。',ids:['thunder_heart_1','thunder_heart_0','thunder_skill_0','thunder_skill_2','thunder_skill_3','thunder_secret_1']},
+    elements:{description:'五行合道经配合青藤缚→火莲→寒潮轮转，产生燃生与蒸腾；离火四件在反应发生时延长已有燃烧2秒，最长10秒。火莲后接寒潮可延续燃烧。',ids:['elements_heart_0','elements_skill_0','elements_skill_1','elements_skill_2','elements_secret_0']},
+    shadow:{description:'蚀魄印与幽火叠加持续伤害，再以断魂引爆并打断；太虚二件提高闪避与回元，四件在成功闪避后缩短主动灵宝冷却1秒，每3秒最多一次。',ids:['shadow_heart_0','shadow_heart_1','shadow_skill_0','shadow_skill_1','shadow_skill_2','thunder_skill_1']},
+    array:{description:'聚灵阵持续回元，太素丹阵经在阵中强化治疗；回春四件配合净尘诀成功净化时恢复5真元，并缩短回春术与护命诀冷却1秒，每6秒最多一次。',ids:['array_heart_0','array_skill_2','array_skill_0','array_skill_1','body_skill_3','array_secret_0']}
+  };
+  var SET_STAT_NAMES={attack:'攻击',defense:'防御',hp:'最大气血',crit:'暴击率',critDamage:'暴击伤害',dodge:'闪避率',mpRegen:'每秒真元回复',healing:'治疗效率',penetration:'穿透',dotDamage:'持续伤害',shieldPower:'护盾效能',cooldownReduction:'冷却缩减'};
+  function setStatDescription(stats){
+    return Object.keys(stats||{}).map(function(id){var value=stats[id],label=SET_STAT_NAMES[id]||id;return label+'+'+(id==='mpRegen'?value:Number((value*100).toFixed(4))+'%');}).join('，');
+  }
+  function gearEligible(s,g){return !!g&&g.tier<=path(s).realm;}
+  function equippedAttributes(s,equipped){return K.attributes(Object.assign({},s,{equipped:equipped}));}
+  function gearTieScore(s,g){var a=K.gearStats(s,g);return (a.crit||0)*80+(a.critDamage||0)*30+(a.dodge||0)*70+(a.cooldownReduction||0)*80+(a.healing||0)*50+(a.penetration||0)*80+(a.mpRegen||0)*4;}
+  function setRecommendation(s,setId){
+    var equipped=copy(s.equipped),candidates=[],slots=[],changed=0;
+    SLOT_KEYS.forEach(function(slot){
+      var owned=s.bag.filter(function(g){return g.slot===slot&&g.set===setId;});
+      var list=owned.filter(function(g){return gearEligible(s,g)||s.equipped[slot]===g.uid;});
+      var best=null,bestPower=-Infinity,bestTie=-Infinity;
+      list.forEach(function(g){
+        var trial=copy(equipped);trial[slot]=g.uid;
+        var power=equippedAttributes(s,trial).power,tie=gearTieScore(s,g)+(g.rarity===5?.001:0);
+        if(power>bestPower||power===bestPower&&(tie>bestTie||tie===bestTie&&g.uid===s.equipped[slot])){best=g;bestPower=power;bestTie=tie;}
+      });
+      if(best){equipped[slot]=best.uid;candidates.push({slot:slot,uid:best.uid,power:bestPower,name:gearTitle(best)});if(best.uid!==s.equipped[slot])changed++;}
+      slots.push({slot:slot,name:C.slots[slot],currentUid:s.equipped[slot],candidateUid:best?best.uid:null,ownedCount:owned.length,eligibleCount:list.length});
+    });
+    var before=K.attributes(s),after=equippedAttributes(s,equipped),setCount=after.sets[setId]||0;
+    return {equipped:equipped,candidates:candidates,slots:slots,replaceCount:changed,setCount:setCount,power:after.power,powerDelta:after.power-before.power,
+      canEquip:!busy(s)&&candidates.length>0,reason:busy(s)?'请结束当前战斗后调整配装':!candidates.length?'背包没有当前境界可用的'+C.sets[setId].name+'套装':changed?'将更换'+changed+'个部位，其余部位保留':'当前已采用本套装的推荐装备'};
+  }
+  function equipmentSetView(s,setId){
+    if(setId!==undefined&&!Object.prototype.hasOwnProperty.call(C.sets,setId))return null;
+    var load=s.loadouts[s.route],u=K.unlocks(s),configured=[load.heart].concat(load.skills.slice(0,u.skillSlots),load.secrets.slice(0,u.secretSlots));
+    var attrs=K.attributes(s);
+    function entry(id){
+      var item=C.sets[id],rec=setRecommendation(s,id),count=attrs.sets[id]||0,owned=s.bag.filter(function(g){return g.set===id;}),synergy=SET_SYNERGIES[id];
+      var redActive=Object.keys(s.equipped).some(function(slot){var g=gear(s,s.equipped[slot]);return g&&g.rarity===5&&(g.special||g.set)===id;});
+      return {id:id,name:item.name,schoolName:C.schools[id].name,description:item.description,equippedCount:count,ownedCount:owned.length,
+        ownedSlots:rec.slots.filter(function(slot){return slot.ownedCount>0;}).map(function(slot){return slot.slot;}),
+        availableSlots:rec.slots.filter(function(slot){return slot.candidateUid;}).map(function(slot){return slot.slot;}),
+        missingSlots:rec.slots.filter(function(slot){return !slot.candidateUid;}).map(function(slot){return slot.slot;}),slots:rec.slots,
+        effects:[{pieces:2,description:item.twoEffect,stats:copy(item.twoStats),statDescription:setStatDescription(item.twoStats),active:count>=2},{pieces:4,description:item.fourEffect,stats:copy(item.fourStats),statDescription:setStatDescription(item.fourStats),active:count>=4}],
+        redEffect:item.redEffect,redActive:redActive,source:copy(item.source),recommendation:rec,
+        synergy:{description:synergy.description,matchingCount:configured.filter(function(techId){return C.techniques[techId]&&C.techniques[techId].school===id;}).length,
+          techniques:synergy.ids.map(function(techId){var t=C.techniques[techId];return {id:techId,name:t.name,kind:t.kind,school:t.school,description:t.description,owned:learned(s,techId),equipped:configured.indexOf(techId)>=0,available:available(s,t),source:copy(t.source)};})}};
+    }
+    return setId===undefined?Object.keys(C.sets).map(entry):entry(setId);
+  }
   function addMaterial(s,id,n){K.add(s.materials,id,n);}
   function protect(s,uid){
     if(K.protectedGear&&K.protectedGear(s,uid))return true;
@@ -140,6 +191,7 @@
   function eligibleTechnique(s,id){return C.techniques[id]&&available(s,C.techniques[id]);}
   function costs(s,type,a){
     a=a||{};var p=path(s),lv,g,t,n,id;
+    if(type==='equipSet'||type==='equipRecommendedBuild')return {};
     if(type==='buyResource'){
       t=RESOURCE_MARKET.find(function(x){return x.id===a.item;});
       if(!t||a.currency!=='jade'&&a.currency!=='dust'||!int(a.count,1,99))return null;
@@ -364,11 +416,11 @@
     }
     return null;
   }
-  function handle(s,a,now){
+  function handle(s,a,now,buildPlanner){
     if(!a||typeof a.type!=='string')return null;
     var t,id,g,lv,cost,err,n,result;
     var actions=['learnTechnique','upgradeTechnique','resetTechnique','setTechniqueBranch','setLoadout','savePreset','loadPreset',
-      'equipGear','autoEquip','recycleGear','bulkRecycle','lockGear','enhanceSlot','forgeGear','recastGear','rerollGear','acceptReroll',
+      'equipGear','autoEquip','equipSet','equipRecommendedBuild','recycleGear','bulkRecycle','lockGear','enhanceSlot','forgeGear','recastGear','rerollGear','acceptReroll',
       'awakenGear','researchRecipe','craftPill','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','usePill','upgradeFacility','equipTreasure','upgradeTreasure','recycleTreasure',
       'setGachaTarget','draw','drawWithJade','buyJade','buyResource','exchangeJade','exchangeDust','claimOverflow'];
     if(actions.indexOf(a.type)<0)return null;
@@ -378,7 +430,7 @@
       return alchemyHandle(s,a,now);
     }
     var combatBlocked=['learnTechnique','upgradeTechnique','resetTechnique','setTechniqueBranch','setLoadout','loadPreset',
-      'researchRecipe','equipGear','autoEquip','enhanceSlot','recastGear','rerollGear','acceptReroll','awakenGear','equipTreasure','upgradeTreasure','usePill','draw','drawWithJade','forgeGear','exchangeDust'];
+      'researchRecipe','equipGear','autoEquip','equipSet','equipRecommendedBuild','enhanceSlot','recastGear','rerollGear','acceptReroll','awakenGear','equipTreasure','upgradeTreasure','usePill','draw','drawWithJade','forgeGear','exchangeDust'];
     if(busy(s)&&combatBlocked.indexOf(a.type)>=0)return no('请结束当前战斗后调整养成与配置');
     if(a.type==='learnTechnique'){
       t=C.techniques[a.id];if(!t)return no('功法不存在');
@@ -435,6 +487,35 @@
     if(a.type==='equipGear'){
       g=gear(s,a.uid);if(!g)return no('装备不存在');
       s.equipped[g.slot]=g.uid;return yes('已装备'+gearTitle(g));
+    }
+    if(a.type==='equipSet'){
+      if(typeof a.set!=='string'||!Object.prototype.hasOwnProperty.call(C.sets,a.set))return no('套装不存在');
+      var setPlan=setRecommendation(s,a.set);
+      if(!setPlan.canEquip)return no(setPlan.reason);
+      s.equipped=copy(setPlan.equipped);
+      return yes(setPlan.replaceCount?'已装配'+C.sets[a.set].name+'套装·'+setPlan.setCount+'件，更换'+setPlan.replaceCount+'个部位':'当前已采用'+C.sets[a.set].name+'套装的推荐装备',
+        {set:a.set,equippedCount:setPlan.setCount,changed:setPlan.replaceCount,equipped:copy(s.equipped),power:setPlan.power,powerDelta:setPlan.powerDelta});
+    }
+    if(a.type==='equipRecommendedBuild'){
+      if(a.school!==undefined&&a.school!=='auto'&&(typeof a.school!=='string'||!Object.prototype.hasOwnProperty.call(C.schools,a.school)))return no('推荐流派不存在');
+      if(!buildPlanner||typeof buildPlanner.plan!=='function')return no('推荐配置尚未准备完成');
+      var buildPlan;
+      try{buildPlan=buildPlanner.plan(s,a.school==='auto'?undefined:a.school);}catch(e){return no('推荐配置暂时不可用');}
+      if(!buildPlan||typeof buildPlan.school!=='string'||!Object.prototype.hasOwnProperty.call(C.schools,buildPlan.school)||!buildPlan.equipped||!buildPlan.loadout||SLOT_KEYS.some(function(slot){return !Object.prototype.hasOwnProperty.call(buildPlan.equipped,slot);})||Object.keys(buildPlan.equipped).some(function(slot){return !Object.prototype.hasOwnProperty.call(C.slots,slot);}))return no('推荐配置不完整');
+      for(var bi=0;bi<SLOT_KEYS.length;bi++){
+        var buildSlot=SLOT_KEYS[bi],buildUid=buildPlan.equipped[buildSlot];
+        if(buildUid===null){if(s.equipped[buildSlot]!==null)return no('推荐配置不能卸下现有装备');continue;}
+        g=typeof buildUid==='string'||Number.isSafeInteger(buildUid)&&buildUid>0?gear(s,buildUid):null;
+        if(!g||g.slot!==buildSlot||!gearEligible(s,g)&&s.equipped[buildSlot]!==g.uid)return no('推荐装备未拥有或当前境界不可用');
+      }
+      var buildLoad=copy(buildPlan.loadout),currentLoad=s.loadouts[s.route];
+      if(JSON.stringify(buildLoad.treasures)!==JSON.stringify(currentLoad.treasures)||JSON.stringify(buildLoad.pills)!==JSON.stringify(currentLoad.pills))return no('推荐装配仅调整装备与功法');
+      err=checkLoadout(s,buildLoad);if(err)return no(err);
+      var beforeBuild=K.attributes(s),buildChanged=SLOT_KEYS.some(function(slot){return s.equipped[slot]!==buildPlan.equipped[slot];})||['heart','skills','secrets'].some(function(field){return JSON.stringify(currentLoad[field])!==JSON.stringify(buildLoad[field]);});
+      s.equipped=copy(buildPlan.equipped);s.loadouts[s.route]=buildLoad;
+      var afterBuild=K.attributes(s);
+      return yes(buildChanged?'已一键装配推荐装备与功法':'当前已采用推荐配置',
+        {school:buildPlan.school,changed:buildChanged,equipped:copy(s.equipped),loadout:copy(buildLoad),power:afterBuild.power,powerDelta:afterBuild.power-beforeBuild.power});
     }
     if(a.type==='autoEquip'){
       var changed=0;
@@ -661,7 +742,7 @@
     handle:handle,draw:draw,createGear:createGear,addGear:addGear,costs:costs,
     alchemyCapacity:alchemyCapacity,alchemyView:alchemyView,alchemyBonus:alchemyBonus,
     targets:targets,gachaPool:pools,gachaTable:TABLE,affixes:AFFIXES,exchangeList:EXCHANGES,
-    checkLoadout:checkLoadout,resourceMarket:RESOURCE_MARKET,limits:{bag:MAX_BAG,overflow:MAX_OVERFLOW,history:200},
+    checkLoadout:checkLoadout,equipmentSetView:equipmentSetView,resourceMarket:RESOURCE_MARKET,limits:{bag:MAX_BAG,overflow:MAX_OVERFLOW,history:200},
     redChance:function(pity){var n=pity+1;return n>=80?1:n>50?0.01+(n-50)*0.005:0.01;}
   };
 });

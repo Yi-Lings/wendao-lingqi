@@ -9,9 +9,9 @@ test('preview prepares a valid unlocked fixture with real equipment forging and 
   assert.equal(checked.ok,true,checked.error);
   assert.equal(s.training,true);assert.equal(s.autoSmall,false);
   assert(v.unlocks.gacha&&v.unlocks.cave&&v.unlocks.tower,'the preview can immediately explore and draw');
-  assert.equal(s.stats.forged,16);
-  assert.equal(s.bag.length,18,'two starter items plus sixteen genuine forge results');
-  assert.equal(s.nextUid,19,'equipment IDs are allocated by the engine');
+  assert.equal(s.stats.forged,19);
+  assert.equal(s.bag.length,21,'two starter items plus nineteen genuine forge results');
+  assert.equal(s.nextUid,22,'equipment IDs are allocated by the engine');
   assert.deepEqual(Object.keys(s.equipped).map(slot=>s.bag.find(g=>g.uid===s.equipped[slot]).rarity),[0,1,2,3,4,5]);
   for(const [set,slot,name] of [['sword','weapon','铁剑'],['thunder','weapon','铁枪'],['sword','armor','粗布衣']]){
     const gear=s.bag.find(g=>g.set===set&&g.slot===slot&&g.rarity===0&&Number(g.uid.slice(1))>=3);
@@ -24,6 +24,7 @@ test('preview prepares a valid unlocked fixture with real equipment forging and 
   assert.deepEqual(s.loadouts.magic.skills,['sword_skill_3','thunder_skill_3','body_skill_1','array_skill_0']);
   assert.deepEqual(s.loadouts.magic.treasures,['t10','t1','t11']);
   assert.deepEqual(s.loadouts.magic.pills,['heal1','shield1','purify1']);
+  for(const set of ['sword','body'])assert(E.modules.economy.equipmentSetView(s,set).recommendation.setCount>=4,'preview can try a genuine four-piece '+set+' set');
 });
 
 test('the first actual ten-pull saves multiple red rewards while leaving all game rules active',()=>{

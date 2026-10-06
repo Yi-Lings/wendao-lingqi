@@ -247,6 +247,43 @@ async function chooseSkill(id) {
     assert.ok((await page.evaluate(() => LingqiAudio.diagnostics())).unlocked);
     return advanceMusic('home');
   });
+  await check('the offline bundle activates a real four-piece set using only its forged inventory', async () => {
+    const before = await stateOf(page);
+    await page.locator('button[data-ui="equipment-sets"]').first().click();
+    await page.locator('#modal-layer button[data-ui="equipment-sets"]').filter({ hasText: '玄武' }).click();
+    assert.match(await page.locator('#modal-layer').innerText(), /护盾|震劲/);
+    await page.locator('#modal-layer button[data-action="equipSet"]').click();
+    const after = await stateOf(page), attrs = E.attributes(after);
+    assert.ok(attrs.sets.body >= 4);
+    assert.equal(attrs.shieldPower, .15);
+    assert.deepEqual(after.bag, before.bag);
+    assert.equal(after.stones, before.stones);
+    assert.deepEqual((await savedOf(page)).equipped, after.equipped);
+    assert.ok(await page.locator('#modal-layer .build-effect.active').count() >= 2);
+    await page.locator('#modal-layer button[data-ui="close"]').click();
+    return { pieces: attrs.sets.body, shieldPower: attrs.shieldPower };
+  });
+  await check('the offline bundle recommends real school roles and atomically saves all build components', async () => {
+    await page.locator('button[data-ui="build-recommendations"]').first().click();
+    await page.locator('#modal-layer button[data-ui="build-recommendations"]').filter({ hasText: '剑意' }).click();
+    const before = await stateOf(page);
+    const planned = await page.evaluate(() => WendaoBuilds.plan(Lingqi.state(), 'sword'));
+    assert.match(await page.locator('#modal-layer').innerText(), /破甲|剑意|破绽/);
+    assert.ok(planned.skills.every(item => item.tags.length && item.reason));
+    if (planned.changed) await page.locator('#modal-layer button[data-action="equipRecommendedBuild"]').click();
+    const after = await stateOf(page), saved = await savedOf(page);
+    assert.deepEqual(after.equipped, planned.equipped);
+    assert.deepEqual(after.loadouts[after.route], planned.loadout);
+    assert.deepEqual(saved.equipped, after.equipped);
+    assert.deepEqual(saved.loadouts, after.loadouts);
+    assert.equal(after.stones, before.stones);
+    assert.deepEqual(after.bag, before.bag);
+    assert.ok(await page.locator('#modal-layer button[data-action="equipRecommendedBuild"]').isDisabled(), 'applied offline recommendation remains stable instead of asking for the same equipment again');
+    await page.locator('#modal-layer button[data-ui="build-tab"]').filter({ hasText: '提升目标' }).click();
+    assert.ok(await page.locator('#modal-layer .build-goals article').count() > 0);
+    await page.locator('#modal-layer button[data-ui="close"]').click();
+    return { school: planned.school, skills: after.loadouts[after.route].skills };
+  });
   await check('short-clicking an equipment picture equips its actual UID and preserves page position', async () => {
     await page.setViewportSize({ width: 390, height: 640 });
     await page.locator('.nav-bottom button[data-page="character"]').click();

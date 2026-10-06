@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds);
   if(node)module.exports=api;else root.IdleEngine=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const no=message=>({ok:false,message,error:message});
@@ -67,7 +67,7 @@ function act(state,action,now){
   const candidate=copy(state);
   try{
     let result=baseHandle(candidate,action,now);
-    if(result===null)result=Q.handle(candidate,action,now);
+    if(result===null)result=Q.handle(candidate,action,now,R);
     if(result===null)result=B.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
     if(result===null)return no('未识别的操作');
@@ -91,5 +91,5 @@ function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(resul
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
-  modules:{core:K,economy:Q,combat:B,story:S}};
+  modules:{core:K,economy:Q,combat:B,story:S,builds:R}};
 });

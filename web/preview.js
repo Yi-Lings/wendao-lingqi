@@ -54,7 +54,11 @@ function createState(now){
     {slot:'armor',set:'sword',rarity:0},
     {slot:'armor',set:'body',rarity:0},
     ...Object.keys(C.schools).map(set=>({slot:'weapon',set,rarity:5})),
-    {slot:'armor',set:'body',rarity:5}
+    {slot:'armor',set:'body',rarity:5},
+    // Real forged samples let players try two distinct four-piece effects.
+    {slot:'head',set:'sword',rarity:3},
+    {slot:'bracer',set:'sword',rarity:3},
+    {slot:'boots',set:'body',rarity:3}
   ];
   for(const options of samples)act(Object.assign({type:'forgeGear'},options));
   act({type:'setLoadout',

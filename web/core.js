@@ -215,11 +215,11 @@ function attributes(s,route){
   const a={attack:(body?18:22)+rank*(body?2.6:3),defense:(body?8:5)+rank*(body?1.25:.9),
     maxHp:(body?140:110)+rank*(body?16:13),maxMp:100+rank*3,
     crit:.05,critDamage:1.5,dodge:.02,cooldownReduction:0,damageReduction:0,healing:0,penetration:0,
-    attackSpeed:1,mpRegen:3+s.facilities.array*.15,lifesteal:0,dotDamage:0,elementalDamage:0,
+    attackSpeed:1,mpRegen:3+s.facilities.array*.15,lifesteal:0,dotDamage:0,elementalDamage:0,shieldPower:0,
     sets:{},redEffects:[],heart:load.heart,secrets:(load.secrets||[]).slice(0,u.secretSlots),treasures:(load.treasures||[]).slice(0,u.treasureSlots).filter(Boolean)};
   for(const slot of slots){const g=s.bag.find(x=>x.uid===s.equipped[slot]);if(!g)continue;const t=gearStats(s,g,route);
     for(const [k,v] of Object.entries(t))if(k==='hp')a.maxHp+=v;else if(k!=='maxHp')a[k]=(a[k]||0)+v;
-    a.sets[g.set]=(a.sets[g.set]||0)+1;if(g.rarity===5&&g.special&&!a.redEffects.includes(g.special))a.redEffects.push(g.special);}
+    a.sets[g.set]=(a.sets[g.set]||0)+1;const redEffect=g.special||g.set;if(g.rarity===5&&!a.redEffects.includes(redEffect))a.redEffects.push(redEffect);}
   const percent={attack:0,defense:0,maxHp:0,maxMp:0};
   function stats(values){for(const [key,val] of Object.entries(values||{})){const k=key==='hp'?'maxHp':key;if(own(percent,k))percent[k]+=val;else if(typeof a[k]==='number')a[k]+=val;}}
   const heart=C.techniques[load.heart],heartInfo=s.techniques[load.heart];
