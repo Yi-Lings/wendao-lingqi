@@ -1,0 +1,349 @@
+{
+  "screenshots": [
+    "world-runtime-realm-0.png",
+    "world-runtime-realm-1.png",
+    "world-runtime-realm-2.png",
+    "world-runtime-heaven_gate.png",
+    "world-runtime-immortal_0.png",
+    "world-runtime-immortal_hunt_0.png",
+    "world-runtime-immortal_1.png",
+    "world-runtime-immortal_hunt_1.png",
+    "world-runtime-immortal_2.png",
+    "world-runtime-immortal_hunt_2.png",
+    "world-runtime-boss_4.png",
+    "world-runtime-boss_6.png",
+    "world-runtime-boss_7.png",
+    "world-runtime-boss_8.png"
+  ],
+  "errors": [],
+  "artFrames": [
+    {
+      "name": "world-runtime-realm-0",
+      "frames": [
+        {
+          "name": null,
+          "crop": "0.3333333333333333,0.5,0.3333333333333333,0.5",
+          "atlasFit": "3,2,1,1,1536,1024",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-map-atlas-b.png\")",
+          "frame": {
+            "width": 390,
+            "height": 844
+          },
+          "picture": null
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-realm-1",
+      "frames": [
+        {
+          "name": null,
+          "crop": "0,0.5,0.3333333333333333,0.5",
+          "atlasFit": "3,2,0,1,1536,1024",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-map-atlas-b.png\")",
+          "frame": {
+            "width": 390,
+            "height": 844
+          },
+          "picture": null
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-realm-2",
+      "frames": [
+        {
+          "name": null,
+          "crop": "0.6666666666666666,0.5,0.3333333333333333,0.5",
+          "atlasFit": "3,2,2,1,1536,1024",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-map-atlas-b.png\")",
+          "frame": {
+            "width": 390,
+            "height": 844
+          },
+          "picture": null
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-heaven_gate",
+      "frames": [
+        {
+          "name": "天门镇界狮",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.0007974481658692185,0.0007974481658692185,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,0,0,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_0",
+      "frames": [
+        {
+          "name": "霜天玄鹤",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.5007974481658692,0.0007974481658692185,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,1,0,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_hunt_0",
+      "frames": [
+        {
+          "name": "霜天玄鹤",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.5007974481658692,0.0007974481658692185,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,1,0,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_1",
+      "frames": [
+        {
+          "name": "星海苍龙",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.0007974481658692185,0.5007974481658692,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,0,1,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_hunt_1",
+      "frames": [
+        {
+          "name": "星海苍龙",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.0007974481658692185,0.5007974481658692,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,0,1,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_2",
+      "frames": [
+        {
+          "name": "太初玄凰",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.5007974481658692,0.5007974481658692,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,1,1,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-immortal_hunt_2",
+      "frames": [
+        {
+          "name": "太初玄凰",
+          "file": "v7-immortal-beasts-atlas.png",
+          "crop": "0.5007974481658692,0.5007974481658692,0.4984051036682616,0.4984051036682616",
+          "atlasFit": "2,2,1,1,1254,1254",
+          "background": "url(\"http://127.0.0.1:8787/assets/v7-immortal-beasts-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 265,
+            "backgroundSize": "531.696px 531.696px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-boss_4",
+      "frames": [
+        {
+          "name": "寒鸦真人",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.34990791896869244,0.25,0.3149171270718232,0.25",
+          "atlasFit": "3,4,1,0.999999,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 250,
+            "height": 265,
+            "backgroundSize": "795px 1060px"
+          }
+        },
+        {
+          "name": "寒鸦分身",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.34990791896869244,0.25,0.3149171270718232,0.25",
+          "atlasFit": "3,4,1,0.999999,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 34,
+            "height": 34
+          },
+          "picture": {
+            "width": 30,
+            "height": 32,
+            "backgroundSize": "96px 128px"
+          }
+        },
+        {
+          "name": "寒鸦分身",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.34990791896869244,0.25,0.3149171270718232,0.25",
+          "atlasFit": "3,4,1,0.999999,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 34,
+            "height": 34
+          },
+          "picture": {
+            "width": 30,
+            "height": 32,
+            "backgroundSize": "96px 128px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-boss_6",
+      "frames": [
+        {
+          "name": "缚灵树王",
+          "file": "v3-boss-atlas.png",
+          "crop": "0,0.4930939226519337,0.3333333333333333,0.24102209944751382",
+          "atlasFit": "3,4,0,2.000001,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 255,
+            "backgroundSize": "795px 1060px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-boss_7",
+      "frames": [
+        {
+          "name": "影卫·日",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.3416206261510129,0.5082872928176796,0.1464088397790055,0.15883977900552487",
+          "atlasFit": "3,4,1,2.000001,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 183,
+            "height": 265,
+            "backgroundSize": "1251.26px 1668.35px"
+          }
+        },
+        {
+          "name": "影卫·月",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.5064456721915286,0.5075966850828729,0.1574585635359116,0.15883977900552487",
+          "atlasFit": "3,4,1,2.000001,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 34,
+            "height": 34
+          },
+          "picture": {
+            "width": 24,
+            "height": 32,
+            "backgroundSize": "151.096px 201.461px"
+          }
+        }
+      ]
+    },
+    {
+      "name": "world-runtime-boss_8",
+      "frames": [
+        {
+          "name": "熔炉傀儡",
+          "file": "v3-boss-atlas.png",
+          "crop": "0.6694290976058932,0.5041436464088398,0.3305709023941068,0.23825966850828728",
+          "atlasFit": "3,4,2,2.000001,1086,1448",
+          "background": "url(\"http://127.0.0.1:8787/assets/v3-boss-atlas.png\")",
+          "frame": {
+            "width": 265.1875,
+            "height": 265.1875
+          },
+          "picture": {
+            "width": 265,
+            "height": 255,
+            "backgroundSize": "801.643px 1068.86px"
+          }
+        }
+      ]
+    }
+  ],
+  "normalAssetFiles": []
+}

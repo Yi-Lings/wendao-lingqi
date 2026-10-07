@@ -1,0 +1,713 @@
+{
+  "bosses": [
+    {
+      "id": "boss_0",
+      "name": "青甲山君",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 0,
+        "row": 0,
+        "name": "青甲山君",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "0% 0%",
+        "crop": [
+          0,
+          0,
+          0.3259668508287293,
+          0.2472375690607735
+        ]
+      }
+    },
+    {
+      "id": "boss_1",
+      "name": "赤莲妖后",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 0,
+        "name": "赤莲妖后",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 0%",
+        "crop": [
+          0.3342541436464088,
+          0,
+          0.3324125230202578,
+          0.24861878453038674
+        ]
+      }
+    },
+    {
+      "id": "boss_2",
+      "name": "雷渊蛟",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 2,
+        "row": 0,
+        "name": "雷渊蛟",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "100% 0%",
+        "crop": [
+          0.6666666666666666,
+          0,
+          0.3333333333333333,
+          0.25
+        ]
+      }
+    },
+    {
+      "id": "boss_3",
+      "name": "镜湖玄龟",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 0,
+        "row": 1,
+        "name": "镜湖玄龟",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "0% 33.333333333333336%",
+        "crop": [
+          0,
+          0.2513812154696133,
+          0.3324125230202578,
+          0.24033149171270718
+        ]
+      }
+    },
+    {
+      "id": "boss_4",
+      "name": "寒鸦真人",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 1,
+        "name": "寒鸦真人",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 33.333333333333336%",
+        "crop": [
+          0.34990791896869244,
+          0.25,
+          0.3149171270718232,
+          0.25
+        ]
+      }
+    },
+    {
+      "id": "boss_5",
+      "name": "无相心魔",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 2,
+        "row": 1,
+        "name": "无相心魔",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "100% 33.333333333333336%",
+        "crop": [
+          0.6675874769797422,
+          0.2534530386740331,
+          0.3324125230202578,
+          0.24654696132596685
+        ]
+      }
+    },
+    {
+      "id": "boss_6",
+      "name": "缚灵树王",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 0,
+        "row": 2,
+        "name": "缚灵树王",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "0% 66.66666666666667%",
+        "crop": [
+          0,
+          0.4930939226519337,
+          0.3333333333333333,
+          0.24102209944751382
+        ]
+      }
+    },
+    {
+      "id": "boss_7",
+      "name": "双生影卫",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 2,
+        "name": "双生影卫",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 66.66666666666667%",
+        "crop": [
+          0.3360957642725598,
+          0.5041436464088398,
+          0.3305709023941068,
+          0.23964088397790057
+        ]
+      }
+    },
+    {
+      "id": "boss_8",
+      "name": "熔炉傀儡",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 2,
+        "row": 2,
+        "name": "熔炉傀儡",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "100% 66.66666666666667%",
+        "crop": [
+          0.6694290976058932,
+          0.5041436464088398,
+          0.3305709023941068,
+          0.23825966850828728
+        ]
+      }
+    },
+    {
+      "id": "boss_9",
+      "name": "月蚀灵狐",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 0,
+        "row": 3,
+        "name": "月蚀灵狐",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "0% 100%",
+        "crop": [
+          0,
+          0.7348066298342542,
+          0.3333333333333333,
+          0.26519337016574585
+        ]
+      }
+    },
+    {
+      "id": "boss_10",
+      "name": "玄河守将",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 3,
+        "name": "玄河守将",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 100%",
+        "crop": [
+          0.3342541436464088,
+          0.744475138121547,
+          0.3324125230202578,
+          0.255524861878453
+        ]
+      }
+    },
+    {
+      "id": "boss_11",
+      "name": "天隙劫兽",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 2,
+        "row": 3,
+        "name": "天隙劫兽",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "100% 100%",
+        "crop": [
+          0.6685082872928176,
+          0.7458563535911602,
+          0.3314917127071823,
+          0.2541436464088398
+        ]
+      }
+    }
+  ],
+  "battleRoleArt": [
+    {
+      "id": "boss_7_day",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 2,
+        "name": "影卫·日",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 66.66666666666667%",
+        "crop": [
+          0.3416206261510129,
+          0.5082872928176796,
+          0.1464088397790055,
+          0.15883977900552487
+        ]
+      }
+    },
+    {
+      "id": "boss_7_moon",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 2,
+        "name": "影卫·月",
+        "kind": "boss",
+        "size": "300% 400%",
+        "position": "50% 66.66666666666667%",
+        "crop": [
+          0.5064456721915286,
+          0.5075966850828729,
+          0.1574585635359116,
+          0.15883977900552487
+        ]
+      }
+    },
+    {
+      "id": "boss_4_clone",
+      "art": {
+        "file": "v3-boss-atlas.png",
+        "cols": 3,
+        "rows": 4,
+        "col": 1,
+        "row": 1,
+        "name": "寒鸦分身",
+        "kind": "clone",
+        "size": "300% 400%",
+        "position": "50% 33.333333333333336%",
+        "crop": [
+          0.34990791896869244,
+          0.25,
+          0.3149171270718232,
+          0.25
+        ]
+      }
+    }
+  ],
+  "episodeArt": [
+    {
+      "id": "chapter_0",
+      "title": "荒山入道",
+      "location": "青岚山麓 · 雪夜药圃",
+      "art": {
+        "file": "v3-chapter-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "chapter_1",
+      "title": "宗门立身",
+      "location": "宗门斗技场 · 三轮登名台",
+      "art": {
+        "file": "story-arena.png",
+        "cols": 1,
+        "rows": 1,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "chapter_2",
+      "title": "古府疑云",
+      "location": "雾海秘境 · 三关争魁道",
+      "art": {
+        "file": "story-secret.png",
+        "cols": 1,
+        "rows": 1,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "chapter_3",
+      "title": "劫火人间",
+      "location": "赤霄地脉 · 被根须缚住的市街",
+      "art": {
+        "file": "v3-chapter-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 1
+      }
+    },
+    {
+      "id": "chapter_4",
+      "title": "天道裂隙",
+      "location": "星桥断面 · 熔炉与月蚀双阵",
+      "art": {
+        "file": "v3-chapter-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 1
+      }
+    },
+    {
+      "id": "chapter_5",
+      "title": "自证大道",
+      "location": "长明凌渊 · 镇山钟的最后一道缝",
+      "art": {
+        "file": "v3-chapter-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 1
+      }
+    },
+    {
+      "id": "qinglan_0",
+      "title": "钟片微光",
+      "location": "青岚山麓 · 融雪石阶",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "qinglan_1",
+      "title": "山门旧愿",
+      "location": "青岚山麓 · 山君巡界碑",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "qinglan_2",
+      "title": "并肩而行",
+      "location": "镜湖云府 · 双人巡路亭",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 0
+      }
+    },
+    {
+      "id": "qinglan_3",
+      "title": "云外之路",
+      "location": "赤霄地脉 · 新巡山人的第一夜",
+      "art": {
+        "file": "v3-map-atlas-b.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "yueheng_0",
+      "title": "一炉温药",
+      "location": "镜湖云府 · 炼丹房",
+      "art": {
+        "file": "v8-interiors-atlas.png",
+        "cols": 2,
+        "rows": 1,
+        "col": 1,
+        "row": 0,
+        "crop": [
+          0.5005636978579482,
+          0,
+          0.49943630214205187,
+          1
+        ]
+      }
+    },
+    {
+      "id": "yueheng_1",
+      "title": "疑方求证",
+      "location": "镜湖云府 · 被退回的药箱",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 0
+      }
+    },
+    {
+      "id": "yueheng_2",
+      "title": "共守灯火",
+      "location": "镜湖医舍 · 雨夜轮值桌",
+      "art": {
+        "file": "story-infirmary-night.png",
+        "cols": 1,
+        "rows": 1,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "yueheng_3",
+      "title": "医道长明",
+      "location": "长明书院 · 丹典试读桌",
+      "art": {
+        "file": "v8-interiors-atlas.png",
+        "cols": 2,
+        "rows": 1,
+        "col": 0,
+        "row": 0,
+        "crop": [
+          0,
+          0,
+          0.49943630214205187,
+          1
+        ]
+      }
+    },
+    {
+      "id": "suyan_0",
+      "title": "星图初识",
+      "location": "沉星矿洞外 · 倒转的罗盘",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 0
+      }
+    },
+    {
+      "id": "suyan_1",
+      "title": "缺失一页",
+      "location": "云隐古府 · 被拆开的阵书",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 1
+      }
+    },
+    {
+      "id": "suyan_2",
+      "title": "自由回环",
+      "location": "雾海残墟 · 新回路试阵台",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 1
+      }
+    },
+    {
+      "id": "suyan_3",
+      "title": "星桥归途",
+      "location": "长明凌渊 · 最后一盏渡口灯",
+      "art": {
+        "file": "v3-map-atlas-b.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 1
+      }
+    },
+    {
+      "id": "world_forge",
+      "title": "器道修复",
+      "location": "镜湖云府 · 六印古器台",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 0
+      }
+    },
+    {
+      "id": "world_sect",
+      "title": "六门问道",
+      "location": "宗门学舍外 · 六张旁听席",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "world_tower",
+      "title": "雷霄余响",
+      "location": "问道塔外 · 雷痕拓碑",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 1
+      }
+    },
+    {
+      "id": "world_garden",
+      "title": "旧圃新生",
+      "location": "青岚灵圃 · 没有长叶的畦",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0
+      }
+    },
+    {
+      "id": "world_relic",
+      "title": "失落传承",
+      "location": "星桥裂隙 · 三府书匣架",
+      "art": {
+        "file": "v3-map-atlas-a.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 1
+      }
+    },
+    {
+      "id": "world_escort",
+      "title": "河桥长明",
+      "location": "玄河旧桥 · 阵心护送队",
+      "art": {
+        "file": "v3-map-atlas-b.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 1
+      }
+    }
+  ],
+  "illustrationArchive": [
+    {
+      "id": "painting_0",
+      "file": "v3-skills-atlas.png",
+      "name": "灵纹初解",
+      "description": "书院留存的旧灵纹摹本。剑意、雷光与行气图仍可辨认，前人的笔迹在卷边相互补注。",
+      "index": 0
+    },
+    {
+      "id": "painting_1",
+      "file": "v4-weapons-atlas.png",
+      "name": "山海古兵谱",
+      "description": "散修走过山河后留下的兵器画卷。铁与玉、木与铜，各有曾守住的归途。",
+      "index": 1
+    },
+    {
+      "id": "painting_2",
+      "file": "v4-armor-atlas.png",
+      "name": "守山衣甲录",
+      "description": "旧衣、护冠与甲片排在同一张案上。画师记下的不只有光彩，也有每一道缝补。",
+      "index": 2
+    },
+    {
+      "id": "painting_3",
+      "file": "v4-utilities-atlas.png",
+      "name": "百物拾遗",
+      "description": "药材、矿石与行旅杂物的旧抄图。许多不起眼的小物，曾让一炉药、一盏灯得以续下去。",
+      "index": 3
+    },
+    {
+      "id": "painting_4",
+      "file": "v4-treasures-atlas.png",
+      "name": "百宝旧图",
+      "description": "山门曾收藏的灵宝摹本。炉、灯、镜、塔各自留下纹路，等后来者读懂用途。",
+      "index": 4
+    },
+    {
+      "id": "painting_5",
+      "file": "v4-pills-atlas.png",
+      "name": "丹心旧录",
+      "description": "丹师的旧画册以色泽和纹理辨药。月衡把它留在藏画阁，供来者对照前人的心得。",
+      "index": 5
+    },
+    {
+      "id": "painting_6",
+      "file": "v4-basic-skills-atlas.png",
+      "name": "入门手札",
+      "description": "六派启蒙时画下的口诀与招式。那些最初学会的运转，仍藏在后来的每次出手里。",
+      "index": 6
+    },
+    {
+      "id": "painting_7",
+      "file": "v5-gear-quality-0.png",
+      "name": "行旅器谱 · 初卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 7
+    },
+    {
+      "id": "painting_8",
+      "file": "v5-gear-quality-1.png",
+      "name": "行旅器谱 · 青卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 8
+    },
+    {
+      "id": "painting_9",
+      "file": "v5-gear-quality-2.png",
+      "name": "行旅器谱 · 玄卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 9
+    },
+    {
+      "id": "painting_10",
+      "file": "v5-gear-quality-3.png",
+      "name": "行旅器谱 · 紫卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 10
+    },
+    {
+      "id": "painting_11",
+      "file": "v5-gear-quality-4.png",
+      "name": "行旅器谱 · 天卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 11
+    },
+    {
+      "id": "painting_12",
+      "file": "v5-gear-quality-5.png",
+      "name": "行旅器谱 · 道卷",
+      "description": "六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。",
+      "index": 12
+    }
+  ]
+}

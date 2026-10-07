@@ -8,12 +8,12 @@
 
 | 编号 | 原严重程度 | 原问题与证据 | 本轮处理与当前状态 |
 |---|---|---|---|
-| WA-01 | P1 | `v3-boss-atlas.png` 被严格按 362×362 均格切；寒鸦左缘夹入玄龟碎片，树王/双卫/熔炉底缘夹入下一行的狐、将与劫兽。透明原图合成后的 [修前联系表](../../../dist/audit-v4/world-bosses-12.png) 可见。 | [monster-art.js:14](../../../web/monster-art.js#L14) 改为逐 Boss 的实测原生矩形；[修后联系表](../../../dist/audit-v4/world-bosses-12-after.png) 已检查。原 PNG 字节不改。 |
-| WA-02 | P1 | chapter_1/2 后增斗技与争魁剧情，但仍沿用验炉/查档旧章图；山君巡界碑用晶矿、镜湖用紫雷崖、书院用熔岩炉，雨夜医舍用白昼湖景。 | story-scenes.js 已按场所改图；斗技用 `story-arena.png`、争魁用 `story-secret.png`，支线按山麓/镜湖/古府/雷崖重接；丹房与书院补 `v8-interiors-atlas.png`，雨夜医舍补 `story-infirmary-night.png`。见 [主线修前](../../../dist/audit-v4/world-story-main.png)、[主线修后](../../../dist/audit-v4/world-story-main-after.png)、[支线修前](../../../dist/audit-v4/world-story-side.png)、[支线最终](../../../dist/audit-v4/world-story-side-after.png)。 |
+| WA-01 | P1 | `v3-boss-atlas.png` 被严格按 362×362 均格切；寒鸦左缘夹入玄龟碎片，树王/双卫/熔炉底缘夹入下一行的狐、将与劫兽。透明原图合成后的 [修前联系表](evidence/world-bosses-12.png) 可见。 | [monster-art.js:14](../../../web/monster-art.js#L14) 改为逐 Boss 的实测原生矩形；[修后联系表](evidence/world-bosses-12-after.png) 已检查。原 PNG 字节不改。 |
+| WA-02 | P1 | chapter_1/2 后增斗技与争魁剧情，但仍沿用验炉/查档旧章图；山君巡界碑用晶矿、镜湖用紫雷崖、书院用熔岩炉，雨夜医舍用白昼湖景。 | story-scenes.js 已按场所改图；斗技用 `story-arena.png`、争魁用 `story-secret.png`，支线按山麓/镜湖/古府/雷崖重接；丹房与书院补 `v8-interiors-atlas.png`，雨夜医舍补 `story-infirmary-night.png`。见 [主线修前](evidence/world-story-main.png)、[主线修后](evidence/world-story-main-after.png)、[支线修前](evidence/world-story-side.png)、[支线最终](evidence/world-story-side-after.png)。 |
 | WA-03 | P2 | 两个剧情 renderer 的字符串别名将 smile/joy 映到肃然，worried 映到微笑，determined/serious 映到担忧。数字表情多数路径未触发此潜伏问题。 | [story-screen.js:36](../../../web/story-screen.js#L36)、[ascension-screen.js:44](../../../web/ascension-screen.js#L44) 按实图 `平静/欢欣/肃然/担忧` 四行统一别名；数字值保持原语义。 |
 | WA-04 | P1 | `ascension-scenes.js` 已为三个仙阶提供独立 art，但 renderer 只读取未提供的 `view.background` 字符串，三阶实际全部显示天门图。 | [ascension-screen.js:106](../../../web/ascension-screen.js#L106) 接 `realmNarrative.art`；三阶真实浏览器均为各自地图 ROI，见 `world-runtime-realm-0/1/2.png`。 |
-| WA-05 | P2 | 双卫两个目标都显示整张双人画；寒鸦分身显示无脸水晶镜影，不能从图认出施法者。 | [monster-art.js:43](../../../web/monster-art.js#L43) 分别取日/月上身肖像，入口保留完整共生组图；寒鸦分身复用寒鸦本人。根代理已使主卡走 enemyArt、添加分身/共生标识。见 [角色联系表](../../../dist/audit-v4/world-battle-roles-after.png)、[双卫实战](../../../dist/audit-v4/world-runtime-boss_7.png)、[寒鸦实战](../../../dist/audit-v4/world-runtime-boss_4.png)。 |
-| WA-06 | P2 | 仙界道劫、巡猎与天门守关底部统称“山海妖王”。 | 根代理按 `ascensionKind` 区分天门守关、仙界道劫与仙域巡猎；实际敌名仍来自 species，未把玄律等剧情 NPC 冒作仙兽敌人。见 [太初道劫](../../../dist/audit-v4/world-runtime-immortal_2.png)。 |
+| WA-05 | P2 | 双卫两个目标都显示整张双人画；寒鸦分身显示无脸水晶镜影，不能从图认出施法者。 | [monster-art.js:43](../../../web/monster-art.js#L43) 分别取日/月上身肖像，入口保留完整共生组图；寒鸦分身复用寒鸦本人。根代理已使主卡走 enemyArt、添加分身/共生标识。见 [角色联系表](evidence/world-battle-roles-after.png)、[双卫实战](evidence/world-runtime-boss_7.png)、[寒鸦实战](evidence/world-runtime-boss_4.png)。 |
+| WA-06 | P2 | 仙界道劫、巡猎与天门守关底部统称“山海妖王”。 | 根代理按 `ascensionKind` 区分天门守关、仙界道劫与仙域巡猎；实际敌名仍来自 species，未把玄律等剧情 NPC 冒作仙兽敌人。见 [太初道劫](evidence/world-runtime-immortal_2.png)。 |
 | WA-07 | P1 | 已赢 arena_2 但尚未第二境时，任务画面继续突出已完成的竞技目标，按钮泛称“前往当前目标”。 | [story-screen.js:54](../../../web/story-screen.js#L54) 展示剩余条件、实际计数和逐项入口；主按钮命名首项未完成目标。新测试用合法首境十层、三场已赢存档，验证下一项为突破 rank，而非再去 arena。 |
 | WA-08 | P2 | 43 张旧 PNG 中 13 张仅保留在包内，正常玩家路径没有使用；其中 v3-skills 只有失效数据时的回退引用。 | 根代理新增设置 → 藏画阁，收录 13 张历史图，避免强绑不相符的现行装备；原 v3-items 仍有正常的相符装备映射。见下面的正常资源覆盖说明。 |
 | WA-09 | P1 | 原故事背景把 atlas 设成 `cols×100% rows×100%`，正方形源格随 390×844 画面被纵向拉长；新内景若按等分两格取图，还会包含 x=886/887 白中缝。 | [story-screen.js:25](../../../web/story-screen.js#L25) 与 [ascension-screen.js:111](../../../web/ascension-screen.js#L111) 输出真实 ROI 与 cover；[art-layout.js:12](../../../web/art-layout.js#L12) 用源图尺寸统一缩放，两个内景测量隔缝。正式截图及四视口矩形证据见下面。 |
@@ -26,16 +26,16 @@ P1 表示明确错图、邻格混入或玩家目标误导；P2 表示角色/身�
 
 | 内容 | 覆盖 | 联系表 |
 |---|---:|---|
-| 原怪物 + 新遭遇 + 仙兽 | 20/20 | [world-monsters-20.png](../../../dist/audit-v4/world-monsters-20.png) |
-| 竞技对手 | 6/6 | [world-rivals-6.png](../../../dist/audit-v4/world-rivals-6.png) |
-| 人界 Boss 全身组图 | 12/12 | [world-bosses-12-after.png](../../../dist/audit-v4/world-bosses-12-after.png) |
-| 原伙伴立绘 | 3/3 | [world-companions-3.png](../../../dist/audit-v4/world-companions-3.png) |
-| 原伙伴表情 | 12/12 | [world-companion-expressions-12.png](../../../dist/audit-v4/world-companion-expressions-12.png) |
-| 仙界 NPC 表情 | 12/12 | [world-immortal-mentors-12.png](../../../dist/audit-v4/world-immortal-mentors-12.png) |
-| 主线/支线场景 | 6 + 18 | [主线](../../../dist/audit-v4/world-story-main-after.png)、[支线](../../../dist/audit-v4/world-story-side-after.png) |
-| 天门与仙阶场所 | 1 + 3 | [world-ascension-scenes-after.png](../../../dist/audit-v4/world-ascension-scenes-after.png) |
-| 竞技正式战斗背景 | 2 | [world-tournament-scenes.png](../../../dist/audit-v4/world-tournament-scenes.png) |
-| 共生组图与个体/分身 | 4 | [world-battle-roles-after.png](../../../dist/audit-v4/world-battle-roles-after.png) |
+| 原怪物 + 新遭遇 + 仙兽 | 20/20 | [world-monsters-20.png](evidence/world-monsters-20.png) |
+| 竞技对手 | 6/6 | [world-rivals-6.png](evidence/world-rivals-6.png) |
+| 人界 Boss 全身组图 | 12/12 | [world-bosses-12-after.png](evidence/world-bosses-12-after.png) |
+| 原伙伴立绘 | 3/3 | [world-companions-3.png](evidence/world-companions-3.png) |
+| 原伙伴表情 | 12/12 | [world-companion-expressions-12.png](evidence/world-companion-expressions-12.png) |
+| 仙界 NPC 表情 | 12/12 | [world-immortal-mentors-12.png](evidence/world-immortal-mentors-12.png) |
+| 主线/支线场景 | 6 + 18 | [主线](evidence/world-story-main-after.png)、[支线](evidence/world-story-side-after.png) |
+| 天门与仙阶场所 | 1 + 3 | [world-ascension-scenes-after.png](evidence/world-ascension-scenes-after.png) |
+| 竞技正式战斗背景 | 2 | [world-tournament-scenes.png](evidence/world-tournament-scenes.png) |
+| 共生组图与个体/分身 | 4 | [world-battle-roles-after.png](evidence/world-battle-roles-after.png) |
 
 20 种实图核对：青岚灵獠为覆藤野猪，晶甲石傀为晶石傀儡，镜湖灵鹿有鹿角与水珠，紫霄雷隼为雷羽猛禽，噬影幽狼为黑紫狼，古甲执戈卫持长戈，赤莲噬灵花为火莲，星桥灵螭为盘绕星轨的灵螭；八种新遭遇依次为翠甲虫、碑纹石灵、浊水妖、灵蛾、短枪方盾机关卫、活根、无面镜片衣影、橙焰浮石。四仙兽对应白金狮、赤顶霜鹤、蓝色苍龙、黑白羽金焰玄凰。
 
@@ -56,18 +56,18 @@ P1 表示明确错图、邻格混入或玩家目标误导；P2 表示角色/身�
 | immortal_1 / immortal_hunt_1 | 星海苍龙 | 同图 0,1 |
 | immortal_2 / immortal_hunt_2 | 太初玄凰 | 同图 1,1 |
 
-正式 Chromium 共捕获 14 张 390×844 运行图：三阶场所、以上七个仙界战斗、寒鸦/树王/双卫/熔炉。截图采用明确的已验证存档 fixture，战斗是实际引擎入场后暂停的状态，不作为自然经济或真实时间通关证明。运行中 0 pageerror。原始 frame/crop/atlasFit 数据保存在 [world-runtime-report.json](../../../dist/audit-v4/world-runtime-report.json)。
+正式 Chromium 共捕获 14 张 390×844 运行图：三阶场所、以上七个仙界战斗、寒鸦/树王/双卫/熔炉。截图采用明确的已验证存档 fixture，战斗是实际引擎入场后暂停的状态，不作为自然经济或真实时间通关证明。运行中 0 pageerror。原始 frame/crop/atlasFit 数据保存在 [world-runtime-report.json](evidence/world-runtime-report.json)。
 
-另从正式 `openStory` 入口实拍 [丹房](../../../dist/audit-v4/world-runtime-yueheng_0.png) 和 [书院](../../../dist/audit-v4/world-runtime-yueheng_3.png)。两个背景均 absolute、无 contain 内层，390×844 frame 内的整张 atlas 显示为 1688×844，即原生横纵比例完全一致；所选两个独立 ROI 不含白中缝。源数据及藏画阁结果见 [world-interiors-gallery-report.json](../../../dist/audit-v4/world-interiors-gallery-report.json)。
+另从正式 `openStory` 入口实拍 [丹房](evidence/world-runtime-yueheng_0.png) 和 [书院](evidence/world-runtime-yueheng_3.png)。两个背景均 absolute、无 contain 内层，390×844 frame 内的整张 atlas 显示为 1688×844，即原生横纵比例完全一致；所选两个独立 ROI 不含白中缝。源数据及藏画阁结果见 [world-interiors-gallery-report.json](evidence/world-interiors-gallery-report.json)。
 
-雨夜医舍用合法已完成前两章伙伴支线的 fixture，经 `openStory → beginStory` 到真实 intro。图为 1024×1536：暖灯药案、药碗/病榻和窗外蓝色雨夜与对白、地点相符。以下四张截图均实际查看，Image.decode 正常、0 pageerror、无横向溢出，背景与 narrative-screen 矩形一致且 absolute；可见源矩形始终在原图边界内。详细比例与可见矩形见 [world-night-report.json](../../../dist/audit-v4/world-night-report.json)。
+雨夜医舍用合法已完成前两章伙伴支线的 fixture，经 `openStory → beginStory` 到真实 intro。图为 1024×1536：暖灯药案、药碗/病榻和窗外蓝色雨夜与对白、地点相符。以下四张截图均实际查看，Image.decode 正常、0 pageerror、无横向溢出，背景与 narrative-screen 矩形一致且 absolute；可见源矩形始终在原图边界内。详细比例与可见矩形见 [world-night-report.json](evidence/world-night-report.json)。
 
 | 视口 | 实际故事 frame | 背景统一缩放尺寸 | 实拍 |
 |---|---|---|---|
-| 390×844 | 390×844 | 562.66667×844 | [竖屏](../../../dist/audit-v4/world-runtime-yueheng_2-390x844.png) |
-| 360×480 | 360×480 | 360×540 | [短屏](../../../dist/audit-v4/world-runtime-yueheng_2-360x480.png) |
-| 844×390 | 620×390 | 620×930 | [横屏](../../../dist/audit-v4/world-runtime-yueheng_2-844x390.png) |
-| 1280×720 | 620×720 | 620×930 | [桌面](../../../dist/audit-v4/world-runtime-yueheng_2-1280x720.png) |
+| 390×844 | 390×844 | 562.66667×844 | [竖屏](evidence/world-runtime-yueheng_2-390x844.png) |
+| 360×480 | 360×480 | 360×540 | [短屏](evidence/world-runtime-yueheng_2-360x480.png) |
+| 844×390 | 620×390 | 620×930 | [横屏](evidence/world-runtime-yueheng_2-844x390.png) |
+| 1280×720 | 620×720 | 620×930 | [桌面](evidence/world-runtime-yueheng_2-1280x720.png) |
 
 横屏与桌面按产品布局将故事宽度限制为 620px，表中验证的是实际 frame；`cover` 按同一比例裁切，无非等比拉伸。Chromium computed style 会把 562.66667px 显示为 562.667px，复核同时记录原始 CSS 变量，避免把字符串舍入误报为图像变形。累计正式浏览器截图为 22 张（14 实战/仙界、2 内景、2 藏画阁、4 雨夜视口）。
 
@@ -89,7 +89,7 @@ node --test tests/v3-world-art-alignment.cjs tests/v3-monster-art.cjs tests/v3-a
 - `v4-armor-atlas.png`、`v4-basic-skills-atlas.png`、`v4-pills-atlas.png`、`v4-treasures-atlas.png`、`v4-utilities-atlas.png`、`v4-weapons-atlas.png`：正式 runtime 无引用。
 - `v5-gear-quality-0.png` 至 `v5-gear-quality-5.png`：正式 runtime 无引用。
 
-根代理把以上 13 张收录为设置里的藏画阁画卷。实际点开设置 → 藏画阁，顺次翻完 13 卷；13 张文件互不重复、各自 Image.decode 正常且页宽不超过 390px。见 [第一卷](../../../dist/audit-v4/world-runtime-gallery-0.png)、[第十三卷](../../../dist/audit-v4/world-runtime-gallery-12.png) 与完整 [13 项结果](../../../dist/audit-v4/world-interiors-gallery-report.json)。新补的 `v8-interiors-atlas.png` 和 `story-infirmary-night.png` 均用于真实剧情，当前图数量为 45；图鉴展示与正式图标身份分别说明，旧图不冒作不相符的新装备。`v3-items-atlas.png` 仍用于青锋剑、蚀魄刃、天灵宝甲和灵木扇等正确旧物图位；整图已使用，不应再标“完全未用”。`v3-forge` 的洞府 hero-scene、`v3-world` 的默认/伙伴 hero-scene、`v3-shop` 的灵玉商城、`v3-summon` 的感应、`v3-cardback` 的抽卡背面均有实际 DOM 入口。
+根代理把以上 13 张收录为设置里的藏画阁画卷。实际点开设置 → 藏画阁，顺次翻完 13 卷；13 张文件互不重复、各自 Image.decode 正常且页宽不超过 390px。见 [第一卷](evidence/world-runtime-gallery-0.png)、[第十三卷](evidence/world-runtime-gallery-12.png) 与完整 [13 项结果](evidence/world-interiors-gallery-report.json)。新补的 `v8-interiors-atlas.png` 和 `story-infirmary-night.png` 均用于真实剧情，当前图数量为 45；图鉴展示与正式图标身份分别说明，旧图不冒作不相符的新装备。`v3-items-atlas.png` 仍用于青锋剑、蚀魄刃、天灵宝甲和灵木扇等正确旧物图位；整图已使用，不应再标“完全未用”。`v3-forge` 的洞府 hero-scene、`v3-world` 的默认/伙伴 hero-scene、`v3-shop` 的灵玉商城、`v3-summon` 的感应、`v3-cardback` 的抽卡背面均有实际 DOM 入口。
 
 ## 边界与尚需持续复核
 

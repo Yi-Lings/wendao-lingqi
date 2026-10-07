@@ -56,6 +56,8 @@ jobs:
               assert archive.read('wendao-lingqi-preview.html') == html
           Path('dist/wendao-lingqi-v4-1-preview.apk.sha256').write_text(manifest['sha256'] + '  wendao-lingqi-v4-1-preview.apk\n')
           zip_bytes = Path('dist/wendao-lingqi-preview.zip').read_bytes()
+          assert len(zip_bytes) == expected['zip']['bytes']
+          assert sha256(zip_bytes).hexdigest() == expected['zip']['sha256']
           Path('dist/wendao-lingqi-preview.zip.sha256').write_text(sha256(zip_bytes).hexdigest() + '  wendao-lingqi-preview.zip\n')
           PY
       - name: Publish verified experience files

@@ -1,0 +1,194 @@
+{
+  "episode": "yueheng_2",
+  "frames": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": "intro",
+      "position": "absolute",
+      "crop": "0,0,1,1",
+      "fit": "cover",
+      "atlasFit": "1,1,0,0,1024,1536",
+      "file": "story-infirmary-night.png",
+      "decoded": {
+        "width": 1024,
+        "height": 1536
+      },
+      "backgroundSize": [
+        562.66667,
+        844
+      ],
+      "backgroundPosition": [
+        -86.33333,
+        0
+      ],
+      "computedBackgroundSize": "562.667px 844px",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "children": 0,
+      "documentWidth": 390,
+      "visibleNative": [
+        157.1184764151749,
+        0,
+        709.7630289705983,
+        1535.9999909004741
+      ],
+      "title": "共守灯火",
+      "screenshot": "world-runtime-yueheng_2-390x844.png"
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 480
+      },
+      "stage": "intro",
+      "position": "absolute",
+      "crop": "0,0,1,1",
+      "fit": "cover",
+      "atlasFit": "1,1,0,0,1024,1536",
+      "file": "story-infirmary-night.png",
+      "decoded": {
+        "width": 1024,
+        "height": 1536
+      },
+      "backgroundSize": [
+        360,
+        540
+      ],
+      "backgroundPosition": [
+        0,
+        -30
+      ],
+      "computedBackgroundSize": "360px 540px",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 480
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 480
+      },
+      "children": 0,
+      "documentWidth": 360,
+      "visibleNative": [
+        0,
+        85.33333333333333,
+        1024,
+        1365.3333333333333
+      ],
+      "title": "共守灯火",
+      "screenshot": "world-runtime-yueheng_2-360x480.png"
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": "intro",
+      "position": "absolute",
+      "crop": "0,0,1,1",
+      "fit": "cover",
+      "atlasFit": "1,1,0,0,1024,1536",
+      "file": "story-infirmary-night.png",
+      "decoded": {
+        "width": 1024,
+        "height": 1536
+      },
+      "backgroundSize": [
+        620,
+        930
+      ],
+      "backgroundPosition": [
+        0,
+        -270
+      ],
+      "computedBackgroundSize": "620px 930px",
+      "frame": {
+        "x": 112,
+        "y": 0,
+        "width": 620,
+        "height": 390
+      },
+      "screen": {
+        "x": 112,
+        "y": 0,
+        "width": 620,
+        "height": 390
+      },
+      "children": 0,
+      "documentWidth": 844,
+      "visibleNative": [
+        0,
+        445.93548387096774,
+        1024,
+        644.1290322580645
+      ],
+      "title": "共守灯火",
+      "screenshot": "world-runtime-yueheng_2-844x390.png"
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "stage": "intro",
+      "position": "absolute",
+      "crop": "0,0,1,1",
+      "fit": "cover",
+      "atlasFit": "1,1,0,0,1024,1536",
+      "file": "story-infirmary-night.png",
+      "decoded": {
+        "width": 1024,
+        "height": 1536
+      },
+      "backgroundSize": [
+        620,
+        930
+      ],
+      "backgroundPosition": [
+        0,
+        -105
+      ],
+      "computedBackgroundSize": "620px 930px",
+      "frame": {
+        "x": 330,
+        "y": 0,
+        "width": 620,
+        "height": 720
+      },
+      "screen": {
+        "x": 330,
+        "y": 0,
+        "width": 620,
+        "height": 720
+      },
+      "children": 0,
+      "documentWidth": 1280,
+      "visibleNative": [
+        0,
+        173.41935483870967,
+        1024,
+        1189.1612903225807
+      ],
+      "title": "共守灯火",
+      "screenshot": "world-runtime-yueheng_2-1280x720.png"
+    }
+  ],
+  "errors": []
+}

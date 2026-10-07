@@ -1,0 +1,33 @@
+PASS fresh: age confirmation, one-layer start and initial assets
+PASS fresh: freely chosen resource dungeon starts, pauses, resumes and wins
+PASS fresh: earned or crafted XP advances exactly one small layer
+PASS fresh: current account persists across reload
+PASS fixture: six pages and mobile dialogs render without overflow
+PASS fixture: 48 techniques and school/type filter plus source link
+PASS fixture: 18 alchemy recipes; crafting and qi use
+PASS fixture: red forging, six slots, protection and enhancement
+PASS fixture: loadout selects skills and presets retain configuration
+PASS fixture: gacha probabilities, target selection, hard red and reload
+PASS fixture: simulated jade shop direct credit exchange reload and failed-save rollback
+PASS fixture: animated jade ten-pull skip and mid-animation reload preserve prizes and pity
+PASS fixture: six dungeon families selectable and all can begin
+PASS fixture: manual skill, target, tactical pause and battle reload
+PASS fixture: story choice and sect action persist
+PASS fixture: adult companion bond and complete joint session with reload
+PASS fixture: export download, valid import and invalid-import protection
+PASS fixture: Native persistence failure rolls back reward and RNG
+PASS fixture: both cultivation routes preserve progress and unlock auto-small by highest path
+PASS fixture: completed trial permits one major breakthrough and preserves route
+PASS fixture: passive XP unlocks advancement button without navigation
+PASS fixture: two-hour offline summary agrees with HUD and never clears challenges
+PASS fixture: 360 px HUD handles large inventories without horizontal overflow
+PASS fixture: alchemy UI queue, three fire rounds, reload, reward once and storage rollback
+PASS fixture: alchemy capacity, ordinary payout and cancellation refund
+PASS fixture: terminal trial links to final chapter, all three endings persist and no seventh realm
+PASS recovery: corrupt stored data retained and exportable without overwrite
+PASS fixture: collection pages screenshots and readable red UI
+PASS responsive: 360 px six pages and probability dialog
+PASS responsive: 412 px six pages and probability dialog
+PASS responsive: 1440 px six pages and probability dialog
+PASS asset integrity: local resources and browser diagnostics
+{"passed":true,"tests":32,"failed":[],"pageErrors":[],"badResponses":0,"screenshots":["v3-mobile-shop.png","v3-mobile-summon.png","v3-mobile-draw.png","v3-mobile-battle.png","v3-mobile-conversation.png","v3-mobile-alchemy.png","v3-mobile-home.png","v3-mobile-dungeons.png","v3-mobile-forge.png","v3-mobile-heaven.png","v3-mobile-companions.png","v3-desktop-home.png"]}

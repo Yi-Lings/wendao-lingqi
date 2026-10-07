@@ -1,0 +1,614 @@
+{
+  "fileName": "wendao-lingqi-v4-1-preview.apk",
+  "packageId": "com.lingqi.game.preview",
+  "versionCode": 5,
+  "versionName": "4.1",
+  "sourceCommit": "d1519c3b4b122fd3f8f41da5c95d189c42219a9f",
+  "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
+  "parts": [
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part01",
+      "size": 25165824,
+      "sha256": "efd0d75d365df6b4c914378391da0e941081fbb98e955b3ddfcc08de03f67f3e"
+    },
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part02",
+      "size": 25165824,
+      "sha256": "0ed92aada8f63c58df7f23b0933cf82fc9bfe29ed5d568cf9a95e796cd88bae3"
+    },
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part03",
+      "size": 25165824,
+      "sha256": "a2e9c4034df5afb82cce7a6f8ed531c1dad26bc3f1980f33a6420896a01635a9"
+    },
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part04",
+      "size": 25165824,
+      "sha256": "e396839de27c24586426ec7cc8d04c6b9c6b5456e7c49ccc7823fbe3d0128a7f"
+    },
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part05",
+      "size": 25165824,
+      "sha256": "ffa31820f2088ef9e12503f140cc9ac5368cc74ccdb8c419d4f37de5a2b6bc6c"
+    },
+    {
+      "name": "wendao-lingqi-v4-1-preview.apk.part06",
+      "size": 6354664,
+      "sha256": "ea8cec82983acb42a370d2183cc738c74c4d607b720158722772c17a080aa0a5"
+    }
+  ],
+  "buildInputs": [
+    {
+      "path": "android/app/build.gradle",
+      "size": 936,
+      "sha256": "d942f6d3989a21b913c5c0b91e605d4d3166b4de19ad4a25883e01c6916b3e40"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml",
+      "size": 936,
+      "sha256": "1d7c7791b435ec537fb3530e58bb42fdb7bc55542edfbbecfb8dac2be9252f36"
+    },
+    {
+      "path": "android/app/src/main/java/com/lingqi/game/MainActivity.java",
+      "size": 18738,
+      "sha256": "42d084e58bc720bb4d6d4e9e0d61cf4da5582bbfa9378c9bedf4535c04eae3d4"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/ic_launcher.xml",
+      "size": 597,
+      "sha256": "6dc1f17cb40fc834c8df299fa9003304591b0a433704fa796794615f88718c21"
+    },
+    {
+      "path": "android/app/src/main/res/values/styles.xml",
+      "size": 558,
+      "sha256": "05439fe5fc764d71e669db70b33c453c03fb165091e6e57d58b9c13dfb814402"
+    },
+    {
+      "path": "android/build.gradle",
+      "size": 73,
+      "sha256": "c3c0cf04da0fc239f391c774554d97d890018ab6e37e87cc62f6070d0c8c9909"
+    },
+    {
+      "path": "android/gradle.properties",
+      "size": 103,
+      "sha256": "ee19172495eeb88e6bee91310fdd473767203b380403287afba729579917ba52"
+    },
+    {
+      "path": "android/settings.gradle",
+      "size": 284,
+      "sha256": "ec8834bfcd9fed79fbdebdd8a9b6cb98d91c9a8eb6e56d32a3c734098542a869"
+    },
+    {
+      "path": "web/activity-rewards.css",
+      "size": 2254,
+      "sha256": "a1fae00cb07f48d582ef84d416845c2d5097c4dd39ce021e6e1f2fff92dd7077"
+    },
+    {
+      "path": "web/activity-rewards.js",
+      "size": 13350,
+      "sha256": "54a9dac7eab79da065d2c34ebd9a708729d4cdc5b44b68f23ce20eea5d4695ab"
+    },
+    {
+      "path": "web/app.js",
+      "size": 149820,
+      "sha256": "9c858850e397a92cbbfddc404fe92ea8a6e97497daeba9ef1844176b9b379675"
+    },
+    {
+      "path": "web/art-collection.js",
+      "size": 2815,
+      "sha256": "32ff062144e8d4fa0e0b7ac4b5b7c6b7c1d91f3d15fc78800f81c6d51bcec81b"
+    },
+    {
+      "path": "web/art-crops.js",
+      "size": 3380,
+      "sha256": "e76f181078df9133216c238c630a949131c391787b1037cbf7ee52495184c261"
+    },
+    {
+      "path": "web/art-identity.js",
+      "size": 6867,
+      "sha256": "d084fc47d2790a8ef006f6a4cdc54bda0a4861d01cfd4e42e56ac8f4a961ca84"
+    },
+    {
+      "path": "web/art-layout.css",
+      "size": 1989,
+      "sha256": "076df7e7db35a2d8b84007024f65cc9af27cffdcce081bee48558ad08b1d7864"
+    },
+    {
+      "path": "web/art-layout.js",
+      "size": 7170,
+      "sha256": "4eed39c1eeb42495585e51c045baea302f85e8366fdf32455f6c2a7827c6ff04"
+    },
+    {
+      "path": "web/ascension-scenes.js",
+      "size": 20912,
+      "sha256": "f0baf3859bea275d6c37b9cfbb4377eda133e49ff74aa23898b8fcb6eb75cb81"
+    },
+    {
+      "path": "web/ascension-screen.css",
+      "size": 13899,
+      "sha256": "5bfefb1b1152a6278fd9b24460f59f7392c954d632239ebe33e00276339cdf5a"
+    },
+    {
+      "path": "web/ascension-screen.js",
+      "size": 15969,
+      "sha256": "89dbd7cb2b0f755ee2a44c22b6bbef60c57c71debc0fb6542843f263fd994775"
+    },
+    {
+      "path": "web/ascension.js",
+      "size": 17038,
+      "sha256": "ce10b6ad5a422ae1f2e986a1203e35ec90f5c17e665e9cf8895933528cf33b38"
+    },
+    {
+      "path": "web/assets/audio/ascension-manifest.json",
+      "size": 6453,
+      "sha256": "04eef5f260a11db6463b238488b9f889e952d9df02e566fcef0f4d010d7fd58b"
+    },
+    {
+      "path": "web/assets/audio/ascension-rise.mp3",
+      "size": 109922,
+      "sha256": "f10ec3f0cec0a347ff0134b5a59009c0790a9f3891477c64ec7c4bd97626b497"
+    },
+    {
+      "path": "web/assets/audio/battle-hit.mp3",
+      "size": 6491,
+      "sha256": "5ea9e8e44f1789781d7d8b84a83f97a77316d232beae5d21484d1dabfe1dc198"
+    },
+    {
+      "path": "web/assets/audio/battle-skill.mp3",
+      "size": 17917,
+      "sha256": "8dd23b2abb3be90ec369c665f9505c65d831dd9f9c2ed52a63f6d73697c73a7c"
+    },
+    {
+      "path": "web/assets/audio/bgm-ascension.mp3",
+      "size": 1536834,
+      "sha256": "2c57edc0b80b35a040980af5be044a1f430215999e59546f1f7bda33d0327861"
+    },
+    {
+      "path": "web/assets/audio/bgm-battle.mp3",
+      "size": 612299,
+      "sha256": "bbfefba51a6e30a08f9d22fc0baba82b84d0430151e21ae9cc0a1f7d13396c84"
+    },
+    {
+      "path": "web/assets/audio/bgm-heaven.mp3",
+      "size": 708731,
+      "sha256": "dcd80ee7b4f1b8b06d5c31d38f6a1c9ce3af599e04632d8d7d18e2f6e0b308ab"
+    },
+    {
+      "path": "web/assets/audio/bgm-home.mp3",
+      "size": 673113,
+      "sha256": "cd3d56aa148982ca990edc4464297334ff5f570be8be4a2ec83b60478b16bc32"
+    },
+    {
+      "path": "web/assets/audio/defeat.mp3",
+      "size": 34039,
+      "sha256": "7fe39acde7bebda50088c47b82b36be82ba7c111dd3a4864fe7ae91047a511b8"
+    },
+    {
+      "path": "web/assets/audio/error.mp3",
+      "size": 7830,
+      "sha256": "79da02ade4b19444b0c0f1372b299020f85bd27165ab1674e6715fa6cd9ef801"
+    },
+    {
+      "path": "web/assets/audio/manifest.json",
+      "size": 4621,
+      "sha256": "021ea2ac4059e930449614e844c3f1e2eed4d67170ef1643faefcef3af2244c7"
+    },
+    {
+      "path": "web/assets/audio/red-awaken.mp3",
+      "size": 48827,
+      "sha256": "3617569b6f54cf4a8a8f96908fb517e74d6864de18081fa682e77c1648253824"
+    },
+    {
+      "path": "web/assets/audio/red-impact.mp3",
+      "size": 59915,
+      "sha256": "a51f6a2ae5deb0957edfdd3a3e1b31a4369148eac684a12bee8a51769f98868f"
+    },
+    {
+      "path": "web/assets/audio/reveal.mp3",
+      "size": 20935,
+      "sha256": "f9db83c9efdfbee5e243a54059488289f66e0f178363f697ad57e48cd8b81052"
+    },
+    {
+      "path": "web/assets/audio/success.mp3",
+      "size": 16568,
+      "sha256": "4c94ddc664e0471e1b76908ba7ca832815caf1324290c24a711309960da833a4"
+    },
+    {
+      "path": "web/assets/audio/summon-rise.mp3",
+      "size": 54540,
+      "sha256": "07fc962d70f2ea0af4af986ca51440d5893c12ff14fd3124c1c9f691c91ca78b"
+    },
+    {
+      "path": "web/assets/audio/ui.mp3",
+      "size": 3795,
+      "sha256": "4cf36334b9efe0214917d1e9932c708d14ecea5adb883b14ee23a7041c13a742"
+    },
+    {
+      "path": "web/assets/audio/victory.mp3",
+      "size": 46136,
+      "sha256": "ce99a99b95c21e9fefea36f04c7d11231c7da207b45a771a51e0dd1bf6405608"
+    },
+    {
+      "path": "web/assets/story-arena.png",
+      "size": 3397476,
+      "sha256": "cc1f6087e7a44babadf1979e7a43137f7c254f325a132d701145ad1b832fde60"
+    },
+    {
+      "path": "web/assets/story-heaven.png",
+      "size": 3311737,
+      "sha256": "3425b8872846a05edc4272dc0f383877bac3240270d73f94603f02ad839c52d7"
+    },
+    {
+      "path": "web/assets/story-infirmary-night.png",
+      "size": 2384384,
+      "sha256": "6c7a11574332d3590780add72e6f43722f0563aa1df72e356e971d85cb1c696b"
+    },
+    {
+      "path": "web/assets/story-secret.png",
+      "size": 3491255,
+      "sha256": "eff4b2627bf21be69cd6aa67820ef7f0b1fcbd481ff17755318f88484c83ee6b"
+    },
+    {
+      "path": "web/assets/v3-boss-atlas.png",
+      "size": 3764241,
+      "sha256": "44eab227875b14f222041928625a8248ece132fd435faf8bcc5c832b0f3fa636"
+    },
+    {
+      "path": "web/assets/v3-cardback.png",
+      "size": 3449815,
+      "sha256": "397176d5c979adf75f81d2d078da1d15ff2436a3acaf7961392b0902380dfff1"
+    },
+    {
+      "path": "web/assets/v3-chapter-atlas.png",
+      "size": 3877451,
+      "sha256": "0c92a9967915e9b8258da3407c98588b2c8ebcdeaad124c254b7bc1b04813b47"
+    },
+    {
+      "path": "web/assets/v3-forge.png",
+      "size": 3267994,
+      "sha256": "de6cbea983b22f9bac14a4dfb000e57ce474447e029f452b498e4377b2e1a36d"
+    },
+    {
+      "path": "web/assets/v3-hero-expressions.png",
+      "size": 3313431,
+      "sha256": "1c4250e6fabd351e983f2c8f630e02703ae02ad242b8aec436186591b44f9fd5"
+    },
+    {
+      "path": "web/assets/v3-heroes.png",
+      "size": 3623076,
+      "sha256": "22881ef1575d96a3a5ac799022fe98062c67e591c43bf80a4c8b5c7971c37cbd"
+    },
+    {
+      "path": "web/assets/v3-items-atlas.png",
+      "size": 3097567,
+      "sha256": "b529d1d02d1404da934121d5754c746ec410202c5bd7de86beb3775b975bc682"
+    },
+    {
+      "path": "web/assets/v3-map-atlas-a.png",
+      "size": 3741606,
+      "sha256": "8672f15e6e83a4d055afdc413603147b867c95b3309bcd0869c2838e1554eefa"
+    },
+    {
+      "path": "web/assets/v3-map-atlas-b.png",
+      "size": 3745999,
+      "sha256": "c3a2f19fe4af059e1b255069b23de45a33eb7c968bc6dd46032b9986b23a61d0"
+    },
+    {
+      "path": "web/assets/v3-monster-atlas.png",
+      "size": 3444184,
+      "sha256": "d0244da185015909077092ff246d70137c127149a20d408e37ab3c3e6f744b34"
+    },
+    {
+      "path": "web/assets/v3-shop.png",
+      "size": 3271795,
+      "sha256": "f6c1f2201bc03a6b20a8b8c85bfca0abc729b5507de6910181c0f6b22e38704f"
+    },
+    {
+      "path": "web/assets/v3-skills-atlas.png",
+      "size": 3328791,
+      "sha256": "82461241caa0be798fd123359c7ebfe2324bb81a78542900dabfca6a63746ac3"
+    },
+    {
+      "path": "web/assets/v3-summon.png",
+      "size": 3024109,
+      "sha256": "3a726730585736377cbf427a6ee4687beefa90138ef627403657011ab13a1adb"
+    },
+    {
+      "path": "web/assets/v3-world.png",
+      "size": 2931600,
+      "sha256": "60cc4021afe1793518d44ab67986bdd375439dd1031daccda2ef5408923c51a0"
+    },
+    {
+      "path": "web/assets/v4-armor-atlas.png",
+      "size": 2472998,
+      "sha256": "f898e51bd56db508a1f4013488abe0c0267dc7fc5fec648ffc86061e396bb591"
+    },
+    {
+      "path": "web/assets/v4-basic-skills-atlas.png",
+      "size": 2343251,
+      "sha256": "41feafd53aeebb207bb32a6610591deb7e109dcdbbc97a2d527bbf46e26937e2"
+    },
+    {
+      "path": "web/assets/v4-pills-atlas.png",
+      "size": 2373638,
+      "sha256": "b6fe16de1e065e3ecf324e0bd6e88d11063b5b36b8df5cb8227b65676dc15ee0"
+    },
+    {
+      "path": "web/assets/v4-treasures-atlas.png",
+      "size": 2446131,
+      "sha256": "38593628f1064dd44d56a656578e370fe47676236c31ed127d2c8c14a51d2816"
+    },
+    {
+      "path": "web/assets/v4-utilities-atlas.png",
+      "size": 2514627,
+      "sha256": "18cf3df94862623c8b84b9596c28c5e69c9523d670131adb0dafe9f5dd2d51f6"
+    },
+    {
+      "path": "web/assets/v4-weapons-atlas.png",
+      "size": 1994741,
+      "sha256": "d9ec3830e052e72a983fb62519ddad0799acedb08a608ea80ed95b3925bb217b"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-0.png",
+      "size": 2046574,
+      "sha256": "9dadf69fea35d250a427c20533dc1d6a6020d6dc36fa34bd5f7fb085905d3c7b"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-1.png",
+      "size": 2063098,
+      "sha256": "1a94c3b76a47a81a3b109551e952615dd42b266fb9775a7a1b8086d86600c1f4"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-2.png",
+      "size": 2233465,
+      "sha256": "2c999b6ca8128d38e75163846a34fbbb9de83816c7aefd3f17c517481b3bf703"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-3.png",
+      "size": 2320813,
+      "sha256": "2610b1033e58e645a6bff7a1987e1c31b3704932bf53136c5037dd08aa503197"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-4.png",
+      "size": 2466761,
+      "sha256": "e9db9384e7ef286095dc8de41a621a4c3c593c6b1e0ddc6de83017302a80da95"
+    },
+    {
+      "path": "web/assets/v5-gear-quality-5.png",
+      "size": 2516192,
+      "sha256": "cf8742b5eddc0ab7228c073d8a4aeb569ab3841615c0bb89237c19c74360b9b7"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-0.png",
+      "size": 1879955,
+      "sha256": "833b5754a8003d02435018db4399c68e79b8110d4cf20a7791c4f376d6c014c1"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-1.png",
+      "size": 2188879,
+      "sha256": "4d83821b39846121fc5d3ec11c693109f82784dc8d2d0ae068cce897fc1ac963"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-2.png",
+      "size": 2516134,
+      "sha256": "c8392cdb6119652a014373ebd7de95c63fd9537e9e89871eb9d97a075d15c68f"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-3.png",
+      "size": 2828949,
+      "sha256": "73b7cc9752a86c5f88a6ffc4ac313dc224bb30697cd53fb339fb26463ff7c598"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-4.png",
+      "size": 3004651,
+      "sha256": "514619508f16526b455479cf6670c567af49649f6c1745292db1fd1c183310e1"
+    },
+    {
+      "path": "web/assets/v6-gear-quality-5.png",
+      "size": 2810196,
+      "sha256": "127582018b941d934a9d2a3ba9c3cc4ef7bd74e12ae2e750eba3d5d4a66df157"
+    },
+    {
+      "path": "web/assets/v6-pills-atlas.png",
+      "size": 2243665,
+      "sha256": "d085ab42532ca7c9e32cae95a3555129c818e9a6f07b03a47702fd197047cfa1"
+    },
+    {
+      "path": "web/assets/v6-techniques-atlas.png",
+      "size": 2787505,
+      "sha256": "3ef98f376efec4ae529b2d7ec7cf70796cfe241759e262edc5dcddb639be86cd"
+    },
+    {
+      "path": "web/assets/v6-treasures-atlas.png",
+      "size": 2396861,
+      "sha256": "a79055b3119ab525472db44c6b3389602be58259d248772caf413b7f62ccffc8"
+    },
+    {
+      "path": "web/assets/v6-utilities-atlas.png",
+      "size": 2553478,
+      "sha256": "063d56dc582381fa4d3ff1aa8dc70725132d85af2a05e619b97caa538004827b"
+    },
+    {
+      "path": "web/assets/v7-encounters-atlas.png",
+      "size": 2823154,
+      "sha256": "e5357b72bf47bda6c3bc7c5ab5ae06e4346fb3ef7f4eb7ad1beef892bf123db7"
+    },
+    {
+      "path": "web/assets/v7-immortal-beasts-atlas.png",
+      "size": 3336553,
+      "sha256": "c81138eb077ac8edcaf44f1833feaaa8ff1ffa1ed724c012241fb371013acc96"
+    },
+    {
+      "path": "web/assets/v7-immortal-mentors-atlas.png",
+      "size": 2962921,
+      "sha256": "1f7ce0a6375655b87d2552135807a173fe0582c9fe68b8a11c2a8cf6cae50aa6"
+    },
+    {
+      "path": "web/assets/v7-rivals-atlas.png",
+      "size": 2284199,
+      "sha256": "bf911627333c60019e92bafae9fe59546914e073e3be8abb249c53c68a44b834"
+    },
+    {
+      "path": "web/assets/v8-interiors-atlas.png",
+      "size": 2934345,
+      "sha256": "abec37b8fec38d09ae68832830958aecad145dea786ece49b629ee4852cfca51"
+    },
+    {
+      "path": "web/audio.js",
+      "size": 10592,
+      "sha256": "6718c15feef35d46cf5f5e0f6a2a292d71fdc98bd419f039a309738b6d076c71"
+    },
+    {
+      "path": "web/battle.css",
+      "size": 42221,
+      "sha256": "5857facf8f94133143078a9a29d5b513e7d86f507b62a6bd3a612d36403ce64f"
+    },
+    {
+      "path": "web/breakthrough-ritual.js",
+      "size": 34740,
+      "sha256": "373ba51c20eb7dd03b25fbaad4aa85751bdc37e754e4c3fa3717aaa4dfff57c9"
+    },
+    {
+      "path": "web/builds.css",
+      "size": 5497,
+      "sha256": "ab048fc0ddf3f02ad7e9430ddd33504a9b3d4e7f7ea703ed36ea8683a49b5845"
+    },
+    {
+      "path": "web/builds.js",
+      "size": 32133,
+      "sha256": "94476e038ee2e98ff3cb1e22a326c6bc1f8e7c31e1af7c047365c86e44a44038"
+    },
+    {
+      "path": "web/combat.js",
+      "size": 86446,
+      "sha256": "ad53cfa700e012401f8c69bf7a7df50062300b1d63e6c71f1ebbe1ade2adf353"
+    },
+    {
+      "path": "web/core.js",
+      "size": 65693,
+      "sha256": "ab99c99fb2bc6897c949f7cac649cb2ade7b70f6b98bff91bdf1247c2be44a2b"
+    },
+    {
+      "path": "web/data.js",
+      "size": 76531,
+      "sha256": "08dfc87ee261469dc2563b4ae1f27442cc84987fa8a70b5f846013dac2451151"
+    },
+    {
+      "path": "web/economy.js",
+      "size": 51053,
+      "sha256": "af0c8cf4ecf9fd8aa7b6e5879e89489d7a04dabc468cdcc81f0aa7a3be7432ef"
+    },
+    {
+      "path": "web/engine.js",
+      "size": 7401,
+      "sha256": "6076960e3206ea602912e9e602904c2a937c2065f84c0e518e727a35f8fc5def"
+    },
+    {
+      "path": "web/equipment-art.js",
+      "size": 4907,
+      "sha256": "2ceb51343ff8aa68105acc007a6630cd6d7f5517aba25d1a1bffea7108123f64"
+    },
+    {
+      "path": "web/equipment-sources.js",
+      "size": 3635,
+      "sha256": "6b49143b36b3447f8d318af1bfcadd5621767e6930869e4700b05c54aef9df4a"
+    },
+    {
+      "path": "web/game-art.js",
+      "size": 2338,
+      "sha256": "892e9991ef92734d8e4f33c8f836b8a61a2c6ec333c95c7f14b5ab7942580deb"
+    },
+    {
+      "path": "web/icon.svg",
+      "size": 486,
+      "sha256": "aca84f427c3e63ef19bbec39649730ba1def337aa993ac5ab0843dfd8600f0df"
+    },
+    {
+      "path": "web/index.html",
+      "size": 2169,
+      "sha256": "edeebfdb0f382cf399d57ba26a609ef594ae80c4505abee51d51bd4479056ae7"
+    },
+    {
+      "path": "web/item-art.css",
+      "size": 3533,
+      "sha256": "4bafb92d6d212a71f11d4c92de51f60edce9ab2ab5349432ac173c9d33339be5"
+    },
+    {
+      "path": "web/layout.css",
+      "size": 14539,
+      "sha256": "7b5abb98e0dc23a835ec971eda56007cfdaea1c7fe6035502dffc70a5706413e"
+    },
+    {
+      "path": "web/mentor-art.js",
+      "size": 2065,
+      "sha256": "aab613155994a500e59a95da063e998a87f052a5b888f6b960a4ce72d4f6cf5a"
+    },
+    {
+      "path": "web/monster-art.js",
+      "size": 5868,
+      "sha256": "073e62453979143420694b718412cf15034729e34a9c6b533b758437e30ef098"
+    },
+    {
+      "path": "web/preview.js",
+      "size": 5125,
+      "sha256": "d7c89abfa4d7b2bb72665aaa964e28b83ddcd905df2b037139990b5e00f506ee"
+    },
+    {
+      "path": "web/rewards.css",
+      "size": 7106,
+      "sha256": "49c8067e2702abff66216eafd9093ac3ae58169851f9a171110442e8fb105faf"
+    },
+    {
+      "path": "web/rewards.js",
+      "size": 8510,
+      "sha256": "b151f7dcdd2b3e9b7fe7ea10aebf89de9ac4c66108936e065d3a29d5789456f7"
+    },
+    {
+      "path": "web/ritual-screen.css",
+      "size": 10767,
+      "sha256": "61a3e06c560a767e1359d0170fb3e232a0ed45476062a117d9cdb21937a0150f"
+    },
+    {
+      "path": "web/ritual-screen.js",
+      "size": 12516,
+      "sha256": "7f57efe149284526eae12b5f179a74ca54f7d5d83b415f8be3395c858a14d29e"
+    },
+    {
+      "path": "web/selection.css",
+      "size": 9700,
+      "sha256": "0907369d0626bb5830788f40e1b5eb34b648ad992275c2d145d9d68439f01b89"
+    },
+    {
+      "path": "web/selection.js",
+      "size": 29487,
+      "sha256": "fe3cdb12e924fc8e5ef94e4945c2e67b0f891a678bb861e76de2f66b481adeeb"
+    },
+    {
+      "path": "web/story-scenes.js",
+      "size": 97907,
+      "sha256": "ece2727c59482e3502af7551f976839a0229d5f0374e5898dce1fdc6c0e0c8df"
+    },
+    {
+      "path": "web/story-screen.css",
+      "size": 11237,
+      "sha256": "0b69a8234639b034bc258fd946da5a764c80b80e367c9f46eaa0acda2d01ba1c"
+    },
+    {
+      "path": "web/story-screen.js",
+      "size": 13437,
+      "sha256": "af96a1313989fd8040473fc889e2ee494de08ac2c5b16d72c5cbb49b0bfb71be"
+    },
+    {
+      "path": "web/story.js",
+      "size": 24144,
+      "sha256": "4f5ec94c01388d9607a35cc31b4a11e200954d53ce6209e2325691f9346efa4f"
+    },
+    {
+      "path": "web/style.css",
+      "size": 48727,
+      "sha256": "9ac6fb008a8b933175c8a5183d39778c56713368cf8121adccbd4f309d233556"
+    }
+  ],
+  "size": 132183784,
+  "sha256": "59a32e09cbeb06547c4c36c1a5e1332bf0e172e557f6c8da0b1cf1348d47f4e6"
+}

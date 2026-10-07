@@ -27,7 +27,7 @@
 - 提交后异常使用标记 `LINGQI_QA_EXPECTED_POSTCOMMIT_MODEL_FAILURE`。恰好一条对应 console error 为预期；其它 console error、page error、HTTP 错误或请求失败均会使套件失败。
 - 测试进程返回 **exit 0**。未重复原版 297 项逻辑全量回归；统一逻辑回归由本轮总验证负责。
 
-完整日志：[browser-v4-integrity.log](../../../dist/audit-v4/browser-v4-integrity.log)。结构化结果、源文件摘要与每案详情：[browser-v4-integrity.json](../../../dist/audit-v4/browser-v4-integrity.json)。
+完整日志：[browser-v4-integrity.log](evidence/browser-v4-integrity.log)。结构化结果、源文件摘要与每案详情：[browser-v4-integrity.json](evidence/browser-v4-integrity.json)。
 
 截图已保存并抽查橙装实际结算和登仙二层结果：
 

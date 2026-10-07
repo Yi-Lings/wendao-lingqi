@@ -1,0 +1,24 @@
+PASS actual file URL navigation obeys the managed browser policy
+PASS one HTML boots the isolated preview after its age confirmation without loading normal saves
+PASS acquisition, battle and production settlement, named art and image-layout modules run from inline scripts with no external imports
+PASS all 45 PNG atlases including all ten named art atlases and preserved original media retain source bytes and paint decoded images
+PASS all 16 embedded MP3s retain source hashes and decode metadata plus audible PCM
+PASS a real click unlocks audible BGM with its media clock advancing offline
+PASS the offline bundle activates a real four-piece set using only its forged inventory
+PASS the offline bundle recommends real school roles and atomically saves all build components
+PASS short-clicking an equipment picture equips its actual UID and preserves page position
+PASS long-press opens actual equipment properties without accidental equip or scroll reset
+PASS picture-based skill selection commits the real four-slot loadout
+PASS offline production results show saved pills and gear with painted named art and return to original inputs
+PASS entering free practice and clicking a spell executes real combat without rewards
+PASS boss artwork dominates its arena and actual auto-combat reaches a genuine practice victory
+PASS a genuine offline boss win displays committed loot cards and fitted source artwork without granting twice
+PASS the resource market shows all seven goods and both currencies settle the advertised real purchase
+PASS the real ten-draw commits exactly the predicted costs, inventory, RNG and pity before animation
+PASS each genuine red reward receives its own full-screen animation and matching embedded artwork
+PASS offline interaction performs no secondary HTTP request or external network access
+PASS reload restores preview equipment, configuration and real draw rewards while normal saves stay untouched
+PASS same-origin formal, human and heavenly previews boot and switch through real buttons while preserving all three independent saves
+PASS desktop and small-mobile preview layouts have no horizontal document overflow
+PASS the completed offline session has zero JavaScript errors and zero audio playback failures
+PASS all embedded media decode from the complete HTML blob with the browser network offline

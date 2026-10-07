@@ -1,0 +1,226 @@
+{
+  "android-export-v4-1.txt": {
+    "bytes": 273,
+    "sha256": "385461c2530b4bf9af378774e5ec42541918dff46c63e629677b89319f6cdbd2"
+  },
+  "apk-check-v4-1.txt": {
+    "bytes": 2101,
+    "sha256": "cc846b02e89d030de62eb00fc54e7436037bf89baa792efaa3ccd1877640829c"
+  },
+  "apk-signature-v4-1.txt": {
+    "bytes": 955,
+    "sha256": "6efea9c2fb7dca24b126e441303ffc2f19b97d62d8855778fb525529f7e5c9d3"
+  },
+  "art-runtime.json": {
+    "bytes": 16789,
+    "sha256": "e858a0dc17c5623bbdf925836568d2c8fa822f6cff9d222b3601ffd5a614edf4"
+  },
+  "ascension-regression.log": {
+    "bytes": 530,
+    "sha256": "3944c9ff934292974463ba26181145f558a6d95ba0e95e4b5434fbbb4c00764f"
+  },
+  "browser-ascension-report.json": {
+    "bytes": 164958,
+    "sha256": "a586903a9e2188e3ea3f4759466cd9e89e37bbf12420d26c0d36eecae05eb980"
+  },
+  "browser-preview-file-report.json": {
+    "bytes": 63010,
+    "sha256": "f7105bcd62797ec023e98ca757f4a94eb3ce31cca6b05c1fc0d88003793331ea"
+  },
+  "browser-story-ritual-report.json": {
+    "bytes": 14184,
+    "sha256": "36d88bc4e03f33885987af3b876f00d769c8be1db8a3b1f91421b964b8accdc6"
+  },
+  "browser-v3-report.json": {
+    "bytes": 9523,
+    "sha256": "995139059c7dc59186627ff07b82c0cd38d8354a57d2b9f7361a85edc4f96640"
+  },
+  "browser-v4-audit-ui-report.json": {
+    "bytes": 43197,
+    "sha256": "b36804a85b7498f73a22d393c1aef9cc2025440e1f49cdbe8b9a9f2cfb6cc9d8"
+  },
+  "browser-v4-integrity.json": {
+    "bytes": 7422,
+    "sha256": "a3e349ebd95bd6881b1fc7fb0e12318bbb60261872446b92ea35e81fbae08420"
+  },
+  "browser-v4-integrity.log": {
+    "bytes": 1473,
+    "sha256": "35878c2845a6f0f4af2ce1c9d38158cbdc3170a012f08f53755bc8a2696825b1"
+  },
+  "equipment-runtime-records.json": {
+    "bytes": 517541,
+    "sha256": "50778db5e06a9e35f4cc4596996b0781896e30b6a931d012129392a3c3e1c7a4"
+  },
+  "final-node.log": {
+    "bytes": 35794,
+    "sha256": "c877c3aea663535b0db12283b4596aeaf8cbc341251f70ca409c21b906889332"
+  },
+  "final-ui.log": {
+    "bytes": 843,
+    "sha256": "4b9a430434c0c9983bb5d8b245c1249501846006aeeb125c1420698e5b565b1b"
+  },
+  "general-regression.log": {
+    "bytes": 2650,
+    "sha256": "d2b8a7eeb5494d8a9a550d6777b9bb8bacde131286e5b8529cd4bb8c83713aeb"
+  },
+  "gradle-v4-1.log": {
+    "bytes": 2190,
+    "sha256": "a1353e9ed3293fbc3d1da9a9e98375c4402de8863a51a08f89265cfdb05ef505"
+  },
+  "integrity-artifacts.json": {
+    "bytes": 1325,
+    "sha256": "61bcfefb4e199d0cd9258631411891d70f12799ec8ff1c180735332790698107"
+  },
+  "integrity-behavior.json": {
+    "bytes": 5449,
+    "sha256": "fb2f2b2c3359cd7301d1d849de8d75fd216adc8fb85256a46b4d41fa8f4a8758"
+  },
+  "integrity-regression.log": {
+    "bytes": 1473,
+    "sha256": "35878c2845a6f0f4af2ce1c9d38158cbdc3170a012f08f53755bc8a2696825b1"
+  },
+  "offline-final.log": {
+    "bytes": 2336,
+    "sha256": "a8436e630b49e56a29663381f58b1a82e0037dd6bdceacfe18486624b1cd6c5c"
+  },
+  "old-export-rejection.txt": {
+    "bytes": 324,
+    "sha256": "c5756caa2ba43b9b81a22dd39a3d3b879cf2ca81283af4d891d4d7a62cc373dc"
+  },
+  "provenance-v4-1.txt": {
+    "bytes": 112,
+    "sha256": "497ed626175f8694479e7cee2505f00ef5ac89011f76b3f3d85c67a23a1d5519"
+  },
+  "red-art-report.json": {
+    "bytes": 29501,
+    "sha256": "f7370cdae5790c59c4a97a4f01cfe081876c9a28b8e7191a19b33630252f6150"
+  },
+  "red-regression.log": {
+    "bytes": 588,
+    "sha256": "02b5b7eab3fac1728828015c7326bbbd511087c12a8f58c8ce40ab04705d0079"
+  },
+  "story-ritual-regression.log": {
+    "bytes": 905,
+    "sha256": "71a8c667572f4f189f3d61e30abab17f4ecce675bec25e084c62cb7bec2a89bc"
+  },
+  "ui-diagnostic.json": {
+    "bytes": 639987,
+    "sha256": "ffb1dd069d49a169926e42eaf5d882f71c7fb6025e38632114c5213e0eccd2e7"
+  },
+  "web-build.log": {
+    "bytes": 424,
+    "sha256": "45103cbda1022981342aa77884a4b675436946de897ea1e67337e8a526286f8e"
+  },
+  "world-ascension-scenes-after.png": {
+    "bytes": 705145,
+    "sha256": "f017fc05ef3c7da47a3514653cb4267138b37c80d33487c740b2c838edcde9c2"
+  },
+  "world-battle-roles-after.png": {
+    "bytes": 497312,
+    "sha256": "a018730ad159a25ef999c6e224a25f1e836ce6414b0f55026a4abb2b95aed17e"
+  },
+  "world-bosses-12-after.png": {
+    "bytes": 2285368,
+    "sha256": "4a6f2980441feda2be6b5011707b67ed4a81079a91f7ae1b51e107af3080a01b"
+  },
+  "world-bosses-12.png": {
+    "bytes": 2309047,
+    "sha256": "e03d065352ef64ca81e549930c70e907b92b97253de8b83efd9511ae3b374680"
+  },
+  "world-companion-expressions-12.png": {
+    "bytes": 1777823,
+    "sha256": "66b6759410ae9c8305d280e537427788eb224d0f33f3483daf4350801c06c784"
+  },
+  "world-companions-3.png": {
+    "bytes": 536261,
+    "sha256": "55877ae6b980cc1a4cb02753670c23d32bd6fbbca5d86096cb154de62fad9a16"
+  },
+  "world-immortal-mentors-12.png": {
+    "bytes": 1544991,
+    "sha256": "f190e7816753797f40d6545a14a2d4f96035502022d6db69745f77267220e26e"
+  },
+  "world-interiors-gallery-report.json": {
+    "bytes": 2801,
+    "sha256": "f574198445b230fbe16370a7f4e28ed32654f0ddb2ea99461e734b43283162cc"
+  },
+  "world-monsters-20.png": {
+    "bytes": 2711901,
+    "sha256": "beb041f9a22b9b28f55bc9cab8d5a122c103966ccbad5cb5dbb5a760265d5948"
+  },
+  "world-night-report.json": {
+    "bytes": 3977,
+    "sha256": "3e959e9b7769ac12b5ed5161029c6e912e4a8525469c897143319ae3e6cfdc78"
+  },
+  "world-rivals-6.png": {
+    "bytes": 823623,
+    "sha256": "370d24b559749affcf7bfb5d4ed3d8ce07a19a2d5c039d6799f5e38a6a495684"
+  },
+  "world-runtime-boss_4.png": {
+    "bytes": 299098,
+    "sha256": "36671ad4ad9ca85146a774a3525bc294ec091a030a22db97fbd8cdfe0ea6a64b"
+  },
+  "world-runtime-boss_7.png": {
+    "bytes": 294412,
+    "sha256": "517bc0d760f22d8f18c0733f14bb3e305e5e27f79671fbef3a531d75b8b0b2f5"
+  },
+  "world-runtime-gallery-0.png": {
+    "bytes": 269729,
+    "sha256": "c71c1ea9e3adb4358bcbbe5cb0af3509c24303e296ea802b5219fc918aaeebca"
+  },
+  "world-runtime-gallery-12.png": {
+    "bytes": 280331,
+    "sha256": "d4117eb1a6640974d23b22d0bb3799686e7977b98df066d3937f7693c4cebebd"
+  },
+  "world-runtime-immortal_2.png": {
+    "bytes": 310889,
+    "sha256": "a32f5323e201bfa80f4c5f6046872e99bfba86da1f634f2fd2a406a6b9600255"
+  },
+  "world-runtime-report.json": {
+    "bytes": 10526,
+    "sha256": "0c086e0605abe09bd83648f6fa7adc30a52a1c021226b2295db85e6143ed71c9"
+  },
+  "world-runtime-yueheng_0.png": {
+    "bytes": 467242,
+    "sha256": "bd2c1acfb9a2e9a087b313d3ec60770eab60372053b2dacd9bcf7a50903551c1"
+  },
+  "world-runtime-yueheng_2-1280x720.png": {
+    "bytes": 686989,
+    "sha256": "3996adaad08cf6f64be3dac69de45031c797a24f65b1d3d1f3b0e525ee60f4ad"
+  },
+  "world-runtime-yueheng_2-360x480.png": {
+    "bytes": 233484,
+    "sha256": "97694c85598db9228c5df90b7b7e4c2d9354fc5524b58e5802f3e838f12e3ee4"
+  },
+  "world-runtime-yueheng_2-390x844.png": {
+    "bytes": 434761,
+    "sha256": "d94227b7d3c9107661490b7996e3f78bf7b023e03cac1a6b674c351999ed0cee"
+  },
+  "world-runtime-yueheng_2-844x390.png": {
+    "bytes": 319838,
+    "sha256": "159e9e84c486d772dc0321bd2c1aaa09db2cb9f45ddba905083bd7fb71396fc0"
+  },
+  "world-runtime-yueheng_3.png": {
+    "bytes": 413145,
+    "sha256": "a5ab5b2d96c418d1f06c590fa0635fe05982a0c2f0075dd0384f91b576d1a473"
+  },
+  "world-story-main-after.png": {
+    "bytes": 959359,
+    "sha256": "c39bd26cc7283defd82c5dc3e137ee51c3edbe3160c9237dceff453264d1131b"
+  },
+  "world-story-main.png": {
+    "bytes": 834398,
+    "sha256": "b8667ee542bea638310d2524db5730849e5ac52b689965c726b258cf75194293"
+  },
+  "world-story-side-after.png": {
+    "bytes": 2124633,
+    "sha256": "4e5fb2c7dd4900367055dc558fc64b526aa4fbaeb0b4e80bf3a2bf794c17d0a0"
+  },
+  "world-story-side.png": {
+    "bytes": 2469119,
+    "sha256": "c342e0751d714d57081781be942237327d2a46cea8fee6b6969a8f218b1e35a1"
+  },
+  "world-tournament-scenes.png": {
+    "bytes": 570940,
+    "sha256": "7f59d091cedc7b1199239a785ceb49bd50ad10f488a27cbc801a719312d2c126"
+  }
+}

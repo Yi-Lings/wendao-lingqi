@@ -1,0 +1,11 @@
+PASS story is a full scene, saves line and clues, and requires a fresh victory after a promise
+PASS scene clue and decision save failures preserve the original line and can retry a different genuine choice
+PASS story viewport 360x640 keeps dialogue and action visible
+PASS story viewport 390x844 keeps dialogue and action visible
+PASS story viewport 1440x900 keeps dialogue and action visible
+PASS mandatory main pill guide uses deterministic research and paid crafting; wrong cues and save recovery never charge twice
+PASS failed native and browser saves roll back ritual reservation and progress before any stage feedback
+PASS ritual viewport 360x640 keeps preparation, heart and controls visible
+PASS ritual viewport 390x844 keeps preparation, heart and controls visible
+PASS ritual viewport 1440x900 keeps preparation, heart and controls visible
+{"passed":true,"tests":10,"failed":[],"pageErrors":[]}

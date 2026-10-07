@@ -1,9 +1,9 @@
 {
   "method": "Runtime-exported, reachable narrative only; overwritten draft branches excluded. Characters use Unicode code points. Text includes punctuation; Han count separate. Titles, labels, descriptions and summaries excluded. Clues and optional celestial letters separate.",
   "snapshotSha256": {
-    "web/story-scenes.js": "22bc98404ad803786518e63864a9db33a6653744580bed62cc782d6bb73f12f2",
+    "web/story-scenes.js": "ece2727c59482e3502af7551f976839a0229d5f0374e5898dce1fdc6c0e0c8df",
     "web/ascension-scenes.js": "f0baf3859bea275d6c37b9cfbb4377eda133e49ff74aa23898b8fcb6eb75cb81",
-    "web/story.js": "b983f968aa51f7c0b59ef7288aa3947f7cab2353861e06ec499cfc2cd5220e50",
+    "web/story.js": "4f5ec94c01388d9607a35cc31b4a11e200954d53ce6209e2325691f9346efa4f",
     "web/ascension.js": "ce10b6ad5a422ae1f2e986a1203e35ec90f5c17e665e9cf8895933528cf33b38"
   },
   "chapters": {
@@ -132,5 +132,13 @@
       "hanCharacters": 805,
       "uniqueTextCount": 23
     }
-  ]
+  ],
+  "originalAuditSnapshotSha256": {
+    "web/story-scenes.js": "22bc98404ad803786518e63864a9db33a6653744580bed62cc782d6bb73f12f2",
+    "web/ascension-scenes.js": "f0baf3859bea275d6c37b9cfbb4377eda133e49ff74aa23898b8fcb6eb75cb81",
+    "web/story.js": "b983f968aa51f7c0b59ef7288aa3947f7cab2353861e06ec499cfc2cd5220e50",
+    "web/ascension.js": "ce10b6ad5a422ae1f2e986a1203e35ec90f5c17e665e9cf8895933528cf33b38"
+  },
+  "finalFrozenSourceCommit": "d1519c3b4b122fd3f8f41da5c95d189c42219a9f",
+  "finalRecheck": "Runtime main and sidequest totals recomputed after interior/night-scene wiring; exact audited counts unchanged. Ascension dialogue source remains byte-identical to its audit snapshot."
 }

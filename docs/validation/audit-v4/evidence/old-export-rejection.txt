@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/wendao-lingqi/tools/check-android-export.py", line 44, in <module>
+    assert '.writeInternalSave:' not in export, 'Export must not overwrite a formal character'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Export must not overwrite a formal character

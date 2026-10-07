@@ -1,0 +1,124 @@
+{
+  "interiors": [
+    {
+      "id": "yueheng_0",
+      "position": "absolute",
+      "crop": "0.5005636978579482,0,0.49943630214205187,1",
+      "fit": "cover",
+      "atlasFit": "2,1,1,0,1774,887",
+      "background": "url(\"http://127.0.0.1:8787/assets/v8-interiors-atlas.png\")",
+      "backgroundSize": "1688px 844px",
+      "backgroundPosition": "-1071.48px 0px",
+      "width": 390,
+      "height": 844,
+      "children": 0
+    },
+    {
+      "id": "yueheng_3",
+      "position": "absolute",
+      "crop": "0,0,0.49943630214205187,1",
+      "fit": "cover",
+      "atlasFit": "2,1,0,0,1774,887",
+      "background": "url(\"http://127.0.0.1:8787/assets/v8-interiors-atlas.png\")",
+      "backgroundSize": "1688px 844px",
+      "backgroundPosition": "-226.524px 0px",
+      "width": 390,
+      "height": 844,
+      "children": 0
+    }
+  ],
+  "gallery": [
+    {
+      "id": "painting_0",
+      "file": "v3-skills-atlas.png",
+      "width": 1448,
+      "height": 1086,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_1",
+      "file": "v4-weapons-atlas.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_2",
+      "file": "v4-armor-atlas.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_3",
+      "file": "v4-utilities-atlas.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_4",
+      "file": "v4-treasures-atlas.png",
+      "width": 2172,
+      "height": 724,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_5",
+      "file": "v4-pills-atlas.png",
+      "width": 1774,
+      "height": 887,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_6",
+      "file": "v4-basic-skills-atlas.png",
+      "width": 1448,
+      "height": 1086,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_7",
+      "file": "v5-gear-quality-0.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_8",
+      "file": "v5-gear-quality-1.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_9",
+      "file": "v5-gear-quality-2.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_10",
+      "file": "v5-gear-quality-3.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_11",
+      "file": "v5-gear-quality-4.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    },
+    {
+      "id": "painting_12",
+      "file": "v5-gear-quality-5.png",
+      "width": 1254,
+      "height": 1254,
+      "documentWidth": 390
+    }
+  ],
+  "errors": []
+}
