@@ -494,3 +494,17 @@ v2 迁移：
 旧发布私钥未随环境恢复，V4体验包使用独立包名与debug签名，保留旧版安装与存档。无需用户批准即可完成当前已授权构建和交付；不能宣称同签名升级或Android真机验收。最终交付状态见 HANDOFF.md 与 docs/validation/V4_ASCENSION_APK_2026-10-07.md。
 
 V4交付已完成：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk)、[网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)。Actions37583120786成功；两者匿名HTTP200下载、公开checksum、SHA与本地已测字节一致，ZIP CRC及内部HTML完整。APK126858599字节，SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。源码/发布检查点c82b7b1，最终文档/证据同步不会改变已验收源码和安装包。
+
+## 21. 全需求与美术对齐自查（2026-10-07，进行中）
+
+用户要求自查全部内容/美术和需求符合程度，迭代完善方案。以V4公开验收源码为基准进行独立审计，不把逻辑测试通过、资源数量或安装包大小当作所有体验需求已满足。
+
+- [ ] 整理原需求、后续覆盖指令与可检查验收标准，建立 docs/REQUIREMENTS_TRACEABILITY.md。
+- [ ] 逐图核对330物品图位、20怪物、6竞技对手、12人界Boss、伙伴/仙界人物、剧情背景；核对实际战斗和对白的名字/角色/元素，保留原图。
+- [ ] 真实浏览器检查六主页、独立场景、短屏、滚动/输入/返回、装备部位与套装推荐、活动结算、红品与声音。
+- [ ] 核对多幕剧情和实际目标一致，所有剩余章节条件有直接获取入口；区分内容长度、真实可达性与玩家心流。
+- [ ] 核查旧档兼容、三存档隔离、真实奖励唯一性、后台音乐/战斗、APK资产及公开发布完整性。
+- [ ] 按证据修复本轮可完成缺陷，验证并提交GitHub；完善方案分开写本轮改进与下一阶段内容，真机/新环境/旧会话未验证保持明确。
+- [ ] 有实际源变更则交付独立版本体验更新，保留已发布V4及原V3，匿名下载核验。
+
+审计由六个独立任务并行开展，根代理汇总并统一接线/提交。审计报告在 docs/validation/audit-v4/，设计与交付更新以最新 handoff 为准。
