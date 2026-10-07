@@ -33,7 +33,7 @@ jobs:
           from zipfile import ZipFile
 
           expected = {
-              'wendao-lingqi-preview.html': (104627736, '88e6c7cd5724a988ae3af41789d0ccfd68e9a68bd3bc9ec09d2b92d29e51e5af'),
+              'wendao-lingqi-preview.html': (138278189, 'de1f18e605a6741f24ec48fca3aa55616c4a1fe8dc0a3335c65819d55f9d29d4'),
           }
           for name, (expected_size, expected_digest) in expected.items():
               path = Path('dist') / name
