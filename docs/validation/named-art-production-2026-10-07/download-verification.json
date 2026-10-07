@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-07",
+  "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-preview.zip?revision=6c9da80",
+  "anonymousHttpStatus": 200,
+  "workflowRun": 37575167224,
+  "workflowHead": "6c9da807b9934add2daf62a1123d7d139e633a40",
+  "jobs": [
+    "publish-web-preview"
+  ],
+  "zip": {
+    "bytes": 103600843,
+    "sha256": "5104910e4cd3d42d75bd9679dbf94e3a5b07dca5f121f07d54f833a6fa1f75b3",
+    "assetId": 617650150,
+    "crcPassed": true,
+    "checksumFileMatched": true
+  },
+  "html": {
+    "bytes": 138278189,
+    "sha256": "de1f18e605a6741f24ec48fca3aa55616c4a1fe8dc0a3335c65819d55f9d29d4",
+    "identicalToBrowserTestedArtifact": true
+  },
+  "apkUnchanged": {
+    "id": 615156452,
+    "size": 48035951,
+    "digest": "sha256:7c90a5e6870b8cb1b124af1f5325b75715e0d4fb7b11519a2b64702268343597",
+    "updated_at": "2026-10-06T10:12:59Z"
+  },
+  "apkChecksumUnchanged": {
+    "id": 615156454,
+    "size": 87,
+    "digest": "sha256:7078e1d69f3d70916cf2ca518d265d882f85024032336e1edb952d6299e859ee",
+    "updated_at": "2026-10-06T10:12:57Z"
+  }
+}
