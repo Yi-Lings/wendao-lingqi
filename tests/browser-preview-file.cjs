@@ -650,10 +650,14 @@ async function chooseSkill(id) {
   await check('same-origin formal, human and heavenly previews boot and switch through real buttons while preserving all three independent saves', async () => {
     // This uses the same HTTP document/origin, including actual query-based
     // navigation. The opaque Blob check below remains media-only.
+    const fixedNow=Date.now();
+    // Flush the original page's real lifecycle settlement before its baseline.
+    // A fixed clock then prevents pagehide's legitimate lastAt/carry update
+    // from being mistaken for another chapter overwriting this save.
+    await page.evaluate(now=>{Date.now=()=>now;window.onNativeLifecycle('pause');},fixedNow);
     const keys=[REGULAR_KEY,KEY,ASCENSION_KEY];
     const initial=await page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
     await page.close();
-    const fixedNow=Date.now();
     await context.addInitScript(now=>{Date.now=()=>now;},fixedNow);
     page=await context.newPage();observe(page,'three-isolated-chapters');
     const storage=()=>page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
@@ -700,8 +704,10 @@ async function chooseSkill(id) {
     await page.locator('button[data-ui="ascension-open"]').click();
     await page.waitForSelector('[data-narrative=ascension]');
     assert.equal(await page.locator('button[data-action="beginAscension"]').isEnabled(),true,'the independent heavenly preview can actually begin its ceremony');
-    const music=await advanceMusic('ascension');
     await page.locator('button[data-action="beginAscension"]').click();await page.locator('button[data-action="advanceAscension"]').click();
+    // With the save clock fixed, the real reading action (rather than the next
+    // passive one-second update) refreshes the scene's actual music selection.
+    const music=await advanceMusic('ascension');
     const ascendedPreview=await stateOf(page),celestial=(await storage())[ASCENSION_KEY];
     assert.equal(ascendedPreview.ascension.stage,'invitation');assert.equal(ascendedPreview.ascension.line,1);
     assert.deepEqual(JSON.parse(celestial),ascendedPreview,'the actual heavenly reading position is committed independently');
