@@ -11,7 +11,7 @@ const TONES={
   jade:['#89dfb8','#e2fff4','wind'],cloud:['#c5e9f7','#f4ffff','wind'],earth:['#c9a76a','#e9d8ad','shield'],
   lightning:['#83caff','#c3a5ff','lightning'],wood:['#83dfa3','#d6ffe1','leaf'],water:['#84dcff','#e5fcff','frost'],
   fire:['#ffa15c','#ffdb9d','flame'],violet:['#c6a0ef','#e5d4ff','mist'],moon:['#cfdae8','#93c7ca','mist'],tortoise:['#8bbfa5','#d6d4a7','shield'],
-  soul:['#ba9aff','#8cdddc','mist'],star:['#96bfff','#d9f1ff','star'],lotus:['#b0ecd1','#f5fff1','leaf'],
+  soul:['#ba9aff','#8cdddc','mist'],ghostfire:['#8be3d5','#bba0f2','flame'],star:['#96bfff','#d9f1ff','star'],lotus:['#b0ecd1','#f5fff1','leaf'],
   amber:['#e8ba73','#fff1bf','halo'],elements:['#96d8ba','#8ecfff','elements']
 };
 // Each named Dao-quality item has its own material and magic identity. Quality
@@ -21,8 +21,8 @@ const DAO={
   body:['earth','tortoise','earth','earth','earth','earth'],
   thunder:['lightning','lightning','lightning','lightning','lightning','lightning'],
   elements:['elements','fire','wood','water','earth','elements'],
-  shadow:['soul','moon','soul','moon','moon','soul'],
-  array:['star','lotus','lotus','star','lotus','amber']
+  shadow:['soul','moon','ghostfire','moon','moon','soul'],
+  array:['star','lotus','lotus','jade','lotus','amber']
 };
 const SCHOOL={sword:'jade',body:'earth',thunder:'lightning',elements:'elements',shadow:'soul',array:'star'};
 const TREASURE=['wood','jade','amber','water','cloud','earth','soul','lotus','lightning','lotus','star','jade'];
@@ -45,7 +45,9 @@ function gear(value,name=''){
   else if(rarity===3&&slot==='weapon'&&set==='sword')tone='violet';
   else if(slot==='weapon'&&set==='elements')tone=rarity>=3?'fire':'wood';
   else if(slot==='weapon'&&set==='shadow'&&rarity>=3)tone='moon';
-  return descriptor('gear-'+set+'-'+slot+'-'+rarity,name,rarity,tone);
+  const d=descriptor('gear-'+set+'-'+slot+'-'+rarity,name,rarity,tone);
+  if(rarity===5&&set==='array'&&slot==='bracer')d.auraSecondary=TONES.star[0];
+  return d;
 }
 function technique(value){
   const t=typeof value==='string'&&own(C.techniques,value)?C.techniques[value]:value;
@@ -54,6 +56,7 @@ function technique(value){
   if(item.school==='elements')tone=({elements_skill_0:'wood',elements_skill_1:'fire',elements_skill_2:'water',elements_skill_3:'earth',elements_secret_0:'wood'})[item.id]||'elements';
   if(item.school==='array')tone=/星罗/.test(item.name)?'star':/清心|净尘|回春/.test(item.name)?'lotus':'jade';
   if(item.school==='shadow'&&/残烬/.test(item.name))tone='violet';
+  if(item.school==='shadow'&&item.id==='shadow_skill_1')tone='ghostfire';
   return descriptor(item.id,item.name,item.rarity,tone);
 }
 function treasure(id){if(!own(C.treasures,id))return null;const t=C.treasures[id],d=descriptor(id,t.name,t.rarity,TREASURE[Number(id.slice(1))]);if(id==='t11')d.auraSecondary=TONES.star[0];return d;}
