@@ -1,8 +1,8 @@
 (function(root,factory){
-  const api=factory(typeof module==='object'&&module.exports?require('./data.js'):root.WendaoData);
+  const api=factory(typeof module==='object'&&module.exports?require('./data.js'):root.WendaoData,typeof module==='object'&&module.exports?require('./art-crops.js'):root.WendaoArtCrops);
   if(typeof module==='object'&&module.exports)module.exports=api;
   else root.WendaoArtIdentity=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,Crops){
 'use strict';
 const SETS=['sword','body','thunder','elements','shadow','array'],SLOTS=['weapon','armor','head','bracer','boots','charm'];
 const own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k);
@@ -66,7 +66,10 @@ function decorate(value){
   const a=value&&typeof value==='object'?value:{},hex=v=>typeof v==='string'&&/^#[\da-f]{6}$/i.test(v)?v:'#a6aeb6';
   const effect=['none','wind','shield','lightning','leaf','frost','flame','mist','star','halo','elements'].includes(a.effect)?a.effect:'none';
   const identity=typeof a.identity==='string'&&/^[a-z0-9_-]{1,80}$/i.test(a.identity)?a.identity:'item',rarity=quality(a.rarity);
-  return {className:'named-item art-fx-'+effect,attrs:'data-art-identity="'+identity+'" data-art-palette="'+(own(TONES,a.palette)?a.palette:'iron')+'" data-art-effect="'+effect+'" data-art-rarity="'+rarity+'"',style:'--item-aura:'+hex(a.aura)+';--item-aura-secondary:'+hex(a.auraSecondary)+';'};
+  const size=typeof a.size==='string'?a.size.split(' ').map(parseFloat):[],position=typeof a.position==='string'?a.position.split(' ').map(parseFloat):[];
+  const cols=size[0]/100,rows=size[1]/100,col=position[0]/100*(cols-1),row=position[1]/100*(rows-1);
+  const crop=Crops?.crop(a.file,col,row,cols,rows),cropAttr=crop?' data-art-crop="'+crop.join(',')+'"':'';
+  return {className:'named-item art-fx-'+effect,attrs:'data-art-identity="'+identity+'" data-art-palette="'+(own(TONES,a.palette)?a.palette:'iron')+'" data-art-effect="'+effect+'" data-art-rarity="'+rarity+'"'+cropAttr,style:'--item-aura:'+hex(a.aura)+';--item-aura-secondary:'+hex(a.auraSecondary)+';'};
 }
 return Object.freeze({gear,technique,treasure,pill,utility,decorate});
 });
