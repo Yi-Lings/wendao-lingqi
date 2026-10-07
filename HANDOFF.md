@@ -1,12 +1,12 @@
 # 问道·灵契 V4 接手说明
 
-更新：2026-10-07。用户最新要求先大量研究、头脑风暴，再制作并直接构建APK；该要求覆盖历史“不构建APK”指令。当前游戏内容与主要QA完成，正在构建及公开交付，未把历史下载当作新版。
+更新：2026-10-07。用户最新要求先大量研究、头脑风暴，再制作并直接构建APK；该要求覆盖历史“不构建APK”指令。当前V4游戏内容、QA、APK构建与公開交付全部完成。
 
 ## 源码与当前交付
 
-仓库 Yi-Lings/wendao-lingqi，目录 /workspace/wendao-lingqi，工作分支 work，所有代理共享此checkout；不创建worktree。先检查git status并保留当前变化。首批已推送786cb2e，随后飞升/研究/音画/测试与打包文件正在统一提交。main的历史V3源码保留，不依赖main拿本轮内容。
+仓库 Yi-Lings/wendao-lingqi，目录 /workspace/wendao-lingqi，工作分支 work，所有代理共享此checkout；不创建worktree。先检查git status并保留当前变化。首批已推送786cb2e，随后飞升/研究/音画/测试与打包文件全部提交；源码1caa5c7、APK分片c7338a2、发布修正c82b7b1。main的历史V3源码保留，不依赖main拿本轮内容。
 
-V4发布目标是 v4.0.0-preview：APK wendao-lingqi-v4-preview.apk 与离线ZIP wendao-lingqi-preview.zip。APK包名com.lingqi.game.preview、版本4.0/code4、最低Android8.0；本环境缺旧发布私钥，使用Gradle调试签名，可与旧com.lingqi.game并排安装。旧角色从旧应用导出JSON后在体验包导入。不要声称覆盖升级。最终大小、SHA、Actions与匿名下载证据将写入 docs/validation/V4_ASCENSION_APK_2026-10-07.md。
+V4发布目标是 v4.0.0-preview：APK wendao-lingqi-v4-preview.apk 与离线ZIP wendao-lingqi-preview.zip。APK包名com.lingqi.game.preview、版本4.0/code4、最低Android8.0；本环境缺旧发布私钥，使用Gradle调试签名，可与旧com.lingqi.game并排安装。旧角色从旧应用导出JSON后在体验包导入。不要声称覆盖升级。最终大小、SHA、Actions与匿名下载证据已写入 docs/validation/V4_ASCENSION_APK_2026-10-07.md。
 
 历史V3资源和发布保留，历史网页交付分支web-preview-download-20261006、本轮之前ZIP103600843字节/HTML138278189字节均不是V4。旧APK48,035,951字节，SHA7c90a5e6870b8cb1b124af1f5325b75715e0d4fb7b11519a2b64702268343597；本轮独立包不替换此asset。
 
@@ -33,7 +33,7 @@ story.journeys保存阶段、线索、抉择、基线、任务索引。ritual/ri
 
 297逻辑、32通用浏览器、29美术/生产、10故事/闭关、4飞升专项通过；95仙界布局组合全按钮完整可见，零脚本/缺资源错误。装备、功法、灵宝三类红品在9个视口/物品组合验证实际裁片像素。双路线真实动作无注入、无抽卡、最高紫装跑完六境、终章、三仙阶及金仙圆满；等待模拟每次最多跳七日，不能把其4200/4368小时当最低通关时长。首次30分钟的可复核引擎节奏另见FIRST30文档，动作3秒假设不是真人阅读时间。
 
-原生实际Java入口19组URL检查通过。待最终单文件/APK结果以V4文档为准。没有adb、模拟器或Android设备，不能把Linux编译、签名和浏览器通过当作真机/WebView/文件选择器/返回手势/30分钟稳定性验收。
+原生实际Java入口19组URL检查通过。最终单文件24通过/0失败/1受管file跳过，APK编译/v2签名/对齐/103文件字节审计通过；三存档真实按钮切换与天门实播通过，结果见V4文档。没有adb、模拟器或Android设备，不能把Linux编译、签名和浏览器通过当作真机/WebView/文件选择器/返回手势/30分钟稳定性验收。
 
 ## 本地恢复与构建
 
@@ -50,3 +50,13 @@ python3 tools/build-web-preview.py --zip生成单文件，browser-preview-file�
 .github/workflows/publish-apk.yml在work版本仅手动运行，--ref work；default/main同名流程仍属历史V3，必须核对ref与实际job=verify-and-publish。它跑npm，重组确切APK，重建HTML并比对releases/v4-artifact-manifest.json固定hash，审计全源码assets/包名/版本/v2签名/证书，再创建独立预发布。通过后匿名HTTPS下载APK/ZIP与checksum，核对SHA、ZIP CRC和内部HTML；更新plan/handoff。直接gh release upload曾被平台代理BadContentLength拒绝，使用Actions上传，不索取新令牌。复用平台代理认证/CA，不输出凭证、不关闭TLS。
 
 旧会话无法加载的原因尚未证实；现有仓库、历史提交和资源已足以继续，当前无代码/资源依赖旧对话。
+
+## 最终公开交付
+
+- [V4 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk)，126858599字节，SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。
+- [V4网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)，126923094字节，SHA 1a4d7514ef944bdb4b71a5eee696690ea0a09f8f5cd6512e2fb6a470e5e600ec。
+- HTML169592222字节，SHA8dc05b1acb52c787661b1d970363776c426723e2085a925ce590852b3473cb38。62媒体/图标/manifest资源原字节内嵌。
+- Actions37583120786/job verify-and-publish成功，发布目标c82b7b1；匿名下载HTTP200、公开checksum、全包SHA、ZIP CRC与内部HTML逐字节核验通过。原V3 asset615156452、main基准均保持。
+- 资源、脚本、测试、研究、音画、APK分片和最终证据全部在GitHub work；工作树不留待提交游戏项。APK内设置「天门·飞升与仙界」为独立快速体验，不影响正式角色。
+
+下一轮先依据真实试玩继续扩展剧情/仙界与心流，设备验证尚未执行。设计文档中灵兽养成/法则/更大世界是后续规划，不把NPC模拟当真人联网，不以空文件凑体量。

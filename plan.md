@@ -488,7 +488,9 @@ v2 迁移：
 - [x] 红品演出显示实际图标；图集完整等比例取图，小屏场景与大Boss独立舞台。仙界人物来信按真实进度开放。
 - [x] 297逻辑检查、32通用浏览器、29美术/生产、10故事/闭关、4飞升流程通过。95飞升布局组合及全部按钮矩形检查通过，真实完整双路线无需抽卡/红装可达金仙圆满。加速策略的粗等待步长不表示最低游玩时长。
 - [x] Android入口白名单支持三模式切换，实际Java方法19组合法/非法URL检查通过；正式、人界、天门存档相互隔离。
-- [ ] 最终单文件离线检验，构建 com.lingqi.game.preview V4.0 签名体验APK，核验源码资源、签名、对齐、公开下载。
-- [ ] 全部源码/美术/音频/测试/文档与APK分片提交 GitHub work，经手动V4发布工作流交付APK和网页ZIP，匿名核验后记录大小、SHA和run。
+- [x] 最终单文件离线检验24通过/0失败/1受管file跳过，构建 com.lingqi.game.preview V4.0 签名体验APK，核验源码资源、签名、对齐、公开下载。
+- [x] 全部源码/美术/音频/测试/文档与APK分片提交 GitHub work，经手动V4发布工作流交付APK和网页ZIP，匿名核验后记录大小、SHA和run。
 
 旧发布私钥未随环境恢复，V4体验包使用独立包名与debug签名，保留旧版安装与存档。无需用户批准即可完成当前已授权构建和交付；不能宣称同签名升级或Android真机验收。最终交付状态见 HANDOFF.md 与 docs/validation/V4_ASCENSION_APK_2026-10-07.md。
+
+V4交付已完成：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk)、[网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)。Actions37583120786成功；两者匿名HTTP200下载、公开checksum、SHA与本地已测字节一致，ZIP CRC及内部HTML完整。APK126858599字节，SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。源码/发布检查点c82b7b1，最终文档/证据同步不会改变已验收源码和安装包。

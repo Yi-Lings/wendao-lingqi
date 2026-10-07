@@ -13,6 +13,7 @@
 | 飞升浏览器 | 4 / 4 | `tests/browser-ascension.cjs`；`dist/browser-ascension-report.json` |
 | 飞升布局 | 19 个实际阶段 × 5 视口 = 95 组通过 | 上述飞升报告含逐组矩形与命中结果 |
 | 双路线无注入全流程 | 修法 159 战、炼体 157 战，全胜 | `tests/v3-playthrough.cjs`；`dist/playthrough-v3-report.json` |
+| 最终单文件离线浏览器 | 24 通过、0 失败、1 跳过 | `tests/browser-preview-file.cjs`；`dist/browser-preview-file-report.json` |
 
 浏览器检查没有脚本异常、控制台错误或缺失本地资源。原界面最终日志为 `/tmp/story-qa-browser-v3-final.log`，飞升最终日志为 `/tmp/story-qa-ascension-browser.log`。
 
@@ -63,3 +64,15 @@ node tests/browser-preview-file.cjs
 ```
 
 源页面浏览器检查使用从 `web/` 启动的 8787 服务。单文件浏览器测试自行创建仅传输完整 HTML 的临时本地服务，然后关闭网络验证实际媒体与交互；其最终结果另附下方。
+
+## 最终单文件验证
+
+2026-10-07 06:44 UTC 完成最终整套测试，退出码 0；24 项通过，0 项失败，1 项跳过。被跳过的是系统 Chromium 策略禁止的 `file://` 双击启动及持久化，不能声称此方式或安卓真机已经通过。系统策略保持不变。同源 HTTP 的完整 HTML 启动、真实离线交互和独立不透明 Blob 的纯媒体解码是分别验证的证据。
+
+验证的 HTML 为 169592222 字节，SHA-256 为 `8dc05b1acb52c787661b1d970363776c426723e2085a925ce590852b3473cb38`。43 张 PNG 和 SVG 均与源文件逐字节一致，并实际绘制和解码；旧图完整保留。全部 16 首 MP3 包含新增仙界配乐及飞升音效，源哈希一致、时长正确、解码后 PCM 非静音。进入天门并实际开始阅读后，仙界配乐时钟真实前进，长度 96 秒。脚本异常、控制台错误、请求失败、外部请求和音频播放失败均为 0。
+
+同一 HTTP 源分别启动 `?preview=0` 正式仙途、`?preview=1` 人界试玩、`?preview=1&immortal=1` 天门试玩，使用真实设置按钮完成五次切换。`lingqi-save-v2`、`lingqi-preview-save-v1`、`lingqi-ascension-preview-save-v1` 三个钥匙各自保存实际改名，并严格比较其他钥匙完整原文。人界已执行的十抽与配装保留；天门真实阅读到来信第 1 句，切换与重新加载均恢复。为避免把页面离开时正常补算的毫秒计入跨存档写入，测试先执行真实生命周期保存，再固定该组页面时钟；未直接授予资源或写入剧情阶段。
+
+完整 HTML 的不透明 Blob 另在浏览器网络预先关闭的情况下解码 44 个图像和 16 个 MP3，0 HTTP 请求，传输字节及哈希也与原 HTML 一致。该检查只证明媒体独立性，不验证不透明源的存档或查询参数导航。
+
+最终日志为 `/tmp/story-qa-preview-final.log`，同源隔离截图为 `dist/preview-single-html-isolated-heaven.png`。所有断言保留真实资源、事务、图像绘制和保存行为，未因发布进度而减少检查。

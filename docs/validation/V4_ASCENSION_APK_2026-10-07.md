@@ -2,7 +2,7 @@
 
 ## 当前结果
 
-游戏源码与资源检查点：`1caa5c7`，已推送 GitHub `work`。最新用户要求构建APK，覆盖早前网页交付限制。资料研究、头脑风暴、多幕故事/突破/斗技/秘境/飞升与新增音画已完成；APK构建、签名、源资源审计通过，正在进行公开发布及匿名下载核验。
+游戏源码与资源检查点：`1caa5c7`，已推送 GitHub `work`。最新用户要求构建APK，覆盖早前网页交付限制。资料研究、头脑风暴、多幕故事/突破/斗技/秘境/飞升与新增音画已完成；APK构建、签名、源资源审计、公开发布及匿名下载核验全部通过。
 
 ## 研究和有效内容
 
@@ -43,11 +43,15 @@ APK以6片（每片最多24MiB）保存releases/parts-v4，逐片和最终SHA核
 
 ## 离线网页与发布
 
-最终HTML字节：169592222，SHA-256：`8dc05b1acb52c787661b1d970363776c426723e2085a925ce590852b3473cb38`，62原字节内嵌媒体/图标/manifest资源。默认人界试玩，设置可切换天门及正式；三个存档键独立。单文件最终测试进行中，file://受平台Chromium策略禁止，不能宣称双击协议通过；HTTP载入后断网、预先断网opaque Blob媒体检查分别记录。
+最终HTML字节：169592222，SHA-256：`8dc05b1acb52c787661b1d970363776c426723e2085a925ce590852b3473cb38`，62原字节内嵌媒体/图标/manifest资源。默认人界试玩，设置可切换天门及正式；三个存档键独立。单文件最终24通过、0失败、1项file://受平台Chromium策略禁止的跳过；不宣称双击协议通过。三个钥匙经过5次真实设置按钮切换、改名、既有十抽/装备保留、天门读到line1并重载恢复，源字节/实际音乐时钟全部通过；HTTP载入后断网、预先断网opaque Blob解码44图标/图片及16音频也通过。
 
 本地ZIP字节：126923094，SHA-256：`1a4d7514ef944bdb4b71a5eee696690ea0a09f8f5cd6512e2fb6a470e5e600ec`。CI要求内部HTML与已测SHA完全一致、ZIP CRC正常；ZIP容器若因压缩库版本差异不同，以公开文件checksum与内部HTML为依据。
 
-手动Actions `.github/workflows/publish-apk.yml` 的work版本重组确切APK、跑297逻辑检查、重建HTML比对固定SHA、审计资源/证书/v2签名/对齐后发布v4.0.0-preview。default/main同名流程仍是历史V3，必须指定--ref work并核对job=verify-and-publish。公开下载完成后补充实际run、URL与匿名字节验证结果。
+手动Actions `.github/workflows/publish-apk.yml` 的work版本重组确切APK、跑297逻辑检查、重建HTML比对固定SHA、审计资源/证书/v2签名/对齐后发布v4.0.0-preview。default/main同名流程仍是历史V3，必须指定--ref work并核对job=verify-and-publish。最终成功 run [37583120786](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/37583120786)，源码/发布target为c82b7b1。首次run仅因漏生成ZIP checksum在上传前停止，补齐后所有步骤成功。
+
+匿名HTTPS下载APK和ZIP均HTTP200，分别126858599/126923094字节，SHA与本地已测文件和公开checksum完全一致；ZIP CRC正常，内部169592222字节HTML与浏览器所验文件逐字节相同。机器证据 `v4-2026-10-07/public-download-verification.json`、GitHub run/asset元数据一并提交。旧V3 APK的id/大小/SHA/更新时间及main保持基准不变。
+
+[APK下载](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk) · [网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)
 
 ## 验证限制与云环境
 
