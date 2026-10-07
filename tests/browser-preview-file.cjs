@@ -195,13 +195,15 @@ async function chooseSkill(id) {
       activityRewards: typeof window.WendaoActivityRewards?.render,
       activityModel: typeof window.WendaoActivityRewards?.model,
       artIdentity: typeof window.WendaoArtIdentity?.decorate,
+      artCrop: typeof window.WendaoArtCrops?.crop,
       layout: typeof window.WendaoArtLayout?.geometry,
       external: [...document.querySelectorAll('script[src],link[rel="stylesheet"]')].map(node => node.src || node.href)
     }));
-    for (const name of ['equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-identity.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
+    for (const name of ['equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-crops.js', 'art-identity.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
     for (const name of ['rewards.css', 'activity-rewards.css', 'item-art.css', 'art-layout.css']) assert.ok(modules.styles.includes(name));
     assert.equal(modules.sources, 'function'); assert.equal(modules.rewards, 'function'); assert.equal(modules.layout, 'function');
     assert.equal(modules.activityRewards, 'function'); assert.equal(modules.activityModel, 'function'); assert.equal(modules.artIdentity, 'function');
+    assert.equal(modules.artCrop, 'function');
     assert.deepEqual(modules.external, []);
     const acquisition = await page.evaluate(() => WendaoEquipmentSources.view(Lingqi.state(), { set: 'array', slot: 'weapon' }));
     assert.equal(acquisition.forgeChoices.length, 6); assert.equal(acquisition.gacha.target, 'gear_array_weapon');
@@ -369,12 +371,15 @@ async function chooseSkill(id) {
     async function assertPaintedNamedResult() {
       await page.waitForFunction(() => [...document.querySelectorAll('.activity-settlement .art-icon')].every(icon => icon.dataset.atlasFit));
       return page.locator('.activity-settlement .art-icon').evaluateAll(async icons => Promise.all(icons.map(async icon => {
-        const css = getComputedStyle(icon), source = css.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1];
+        const picture = icon.querySelector(':scope > [data-atlas-picture]') || icon;
+        const css = getComputedStyle(picture), source = css.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1];
         if (!source || !/^(blob:|data:image\/)/.test(source)) throw Error('Production icon uses an external or missing image');
         const image = new Image(); image.src = source; await image.decode();
         if (!image.naturalWidth || !icon.dataset.artIdentity || !icon.dataset.atlasFit) throw Error('Production icon lost its named identity or native cell');
         if (css.filter !== 'none') throw Error('Production art is recolored instead of using the named source');
-        return { identity: icon.dataset.artIdentity, palette: icon.dataset.artPalette, fit: icon.dataset.atlasFit, width: image.naturalWidth, height: image.naturalHeight };
+        const outer = icon.getBoundingClientRect(), inner = picture.getBoundingClientRect();
+        if (icon.dataset.artCrop && (picture === icon || inner.x < outer.x - .1 || inner.y < outer.y - .1 || inner.right > outer.right + .1 || inner.bottom > outer.bottom + .1)) throw Error('Complete named crop extends beyond its frame');
+        return { identity: icon.dataset.artIdentity, palette: icon.dataset.artPalette, fit: icon.dataset.atlasFit, crop: icon.dataset.artCrop || null, width: image.naturalWidth, height: image.naturalHeight, paintedWidth: inner.width, paintedHeight: inner.height };
       })));
     }
     const pillArt = await assertPaintedNamedResult();
@@ -635,26 +640,6 @@ async function chooseSkill(id) {
     await assertRegular();
     return { realReload: true, additionalHtmlRequests: 1, previewSaveRestored: true, normalSaveUnchanged: true };
   });
-  await check('all embedded media decode with setContent and the browser network offline', async () => {
-    const offlineContext = await browser.newContext();
-    await offlineContext.setOffline(true);
-    const offlinePage = await offlineContext.newPage();
-    observe(offlinePage, 'opaque-offline-media');
-    const attempts = [];
-    offlinePage.on('request', request => { if (/^https?:/.test(request.url())) attempts.push(urlSummary(request.url())); });
-    try {
-      await offlinePage.setContent(html, { waitUntil: 'load', timeout: 45000 });
-      const result = await offlinePage.evaluate(async ({ imagePaths, audio }) => {
-        for (const name of imagePaths) { const image = new Image(); image.src = WendaoAssetURLs(name); await image.decode(); }
-        const decoder = new OfflineAudioContext(2, 24000, 24000);
-        for (const info of audio) await decoder.decodeAudioData(await (await fetch(WendaoAssetURLs('assets/audio/' + info.file))).arrayBuffer());
-        return { imagesDecoded: imagePaths.length, mp3Decoded: audio.length };
-      }, { imagePaths: ['icon.svg', ...images.map(name => 'assets/' + name)], audio: Object.values(manifest.assets) });
-      assert.equal(attempts.length, 0);
-      assert.deepEqual(result, { imagesDecoded: images.length + 1, mp3Decoded: Object.keys(manifest.assets).length });
-      return { ...result, offlineBeforeContent: true, httpRequests: 0, persistenceScope: 'Media independence only: opaque setContent origin has no writable localStorage.' };
-    } finally { await offlineContext.close(); }
-  });
   await check('desktop and small-mobile preview layouts have no horizontal document overflow', async () => {
     const results = [];
     for (const viewport of [{ width: 320, height: 568 }, { width: 1280, height: 800 }]) {
@@ -673,6 +658,64 @@ async function chooseSkill(id) {
     const audio = await page.evaluate(() => LingqiAudio.diagnostics());
     assert.equal(audio.playbackFailures, 0);
     return { javascriptErrors: 0, consoleErrors: 0, playbackFailures: 0 };
+  });
+  await check('all embedded media decode from the complete HTML blob with the browser network offline', async () => {
+    // Release the interactive session before the independent opaque-origin check.
+    await context.close(); context = null; page = null;
+    await browser.close();
+    browser = await chromium.launch({ headless: true, executablePath: '/usr/bin/chromium',
+      args: ['--no-sandbox', '--disable-gpu', '--autoplay-policy=user-gesture-required'] });
+    const offlineContext = await browser.newContext();
+    await offlineContext.setOffline(true);
+    const offlinePage = await offlineContext.newPage();
+    observe(offlinePage, 'opaque-offline-media');
+    const attempts = [];
+    offlinePage.on('request', request => { if (/^https?:/.test(request.url())) attempts.push(urlSummary(request.url())); });
+    try {
+      // The 138 MB HTML exceeds one CDP/pipe message's practical size. Transfer
+      // every character in bounded messages, then navigate its exact HTML Blob.
+      // This retains an opaque origin and starts with all browser networking off.
+      await offlinePage.evaluate(() => { window.__offlineHtmlChunks = []; });
+      const chunkSize = 8 * 1024 * 1024;
+      let chunks = 0;
+      for (let offset = 0; offset < html.length;) {
+        let end = Math.min(offset + chunkSize, html.length);
+        // Never split a UTF-16 surrogate pair, which Blob's UTF-8 encoder would alter.
+        if (end < html.length && /[\uD800-\uDBFF]/.test(html[end - 1]) && /[\uDC00-\uDFFF]/.test(html[end])) end--;
+        await offlinePage.evaluate(chunk => window.__offlineHtmlChunks.push(chunk), html.slice(offset, end));
+        offset = end; chunks++;
+      }
+      const transfer = await offlinePage.evaluate(() => {
+        const blob = new Blob(window.__offlineHtmlChunks, { type: 'text/html;charset=utf-8' });
+        window.__offlineHtmlChunks = null;
+        window.__offlineHtmlBlob = blob;
+        return { url: URL.createObjectURL(blob), bytes: blob.size };
+      });
+      assert.equal(transfer.bytes, report.htmlBytes);
+      // Opaque about:blank has no crypto.subtle. Independently hash the browser's
+      // encoded Blob bytes via bounded returns, rather than trusting the input strings.
+      const transportedHash = crypto.createHash('sha256');
+      for (let offset = 0; offset < transfer.bytes; offset += chunkSize) {
+        const encoded = await offlinePage.evaluate(async ({ offset, size }) => {
+          const bytes = new Uint8Array(await window.__offlineHtmlBlob.slice(offset, offset + size).arrayBuffer()), parts = [];
+          for (let index = 0; index < bytes.length; index += 32768) parts.push(String.fromCharCode(...bytes.subarray(index, index + 32768)));
+          return btoa(parts.join(''));
+        }, { offset, size: chunkSize });
+        transportedHash.update(Buffer.from(encoded, 'base64'));
+      }
+      transfer.sha256 = transportedHash.digest('hex');
+      assert.equal(transfer.sha256, report.sha256, 'bounded transfer retains every original HTML byte');
+      await offlinePage.goto(transfer.url, { waitUntil: 'load', timeout: 45000 });
+      const result = await offlinePage.evaluate(async ({ imagePaths, audio }) => {
+        for (const name of imagePaths) { const image = new Image(); image.src = WendaoAssetURLs(name); await image.decode(); }
+        const decoder = new OfflineAudioContext(2, 24000, 24000);
+        for (const info of audio) await decoder.decodeAudioData(await (await fetch(WendaoAssetURLs('assets/audio/' + info.file))).arrayBuffer());
+        return { imagesDecoded: imagePaths.length, mp3Decoded: audio.length };
+      }, { imagePaths: ['icon.svg', ...images.map(name => 'assets/' + name)], audio: Object.values(manifest.assets) });
+      assert.equal(attempts.length, 0);
+      assert.deepEqual(result, { imagesDecoded: images.length + 1, mp3Decoded: Object.keys(manifest.assets).length });
+      return { ...result, offlineBeforeContent: true, httpRequests: 0, htmlBytes: transfer.bytes, htmlSha256: transfer.sha256, transportChunks: chunks, persistenceScope: 'Media independence only: opaque HTML Blob origin has no writable localStorage.' };
+    } finally { await offlineContext.close(); }
   });
 })().catch(error => { report.fatal = safe(error.stack || error); console.error(safe(error.stack || error)); }).finally(async () => {
   if (context) await context.close();

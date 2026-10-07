@@ -1,0 +1,897 @@
+{
+  "date": "2026-10-07",
+  "testedSource": "72bcc1891ced993667a510229c14aeaf8c100174",
+  "node": {
+    "tests": 231,
+    "passed": 231,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": [
+    {
+      "report": "browser-v3-report.json",
+      "startedAt": "2026-10-07T04:55:53.248Z",
+      "completedAt": "2026-10-07T04:57:46.645Z",
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "notes": "通用玩法在精确取图前验证，其余报告验证最终取图代码及 HTML。",
+      "tests": [
+        {
+          "name": "fresh: age confirmation, one-layer start and initial assets",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fresh: freely chosen resource dungeon starts, pauses, resumes and wins",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fresh: earned or crafted XP advances exactly one small layer",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fresh: current account persists across reload",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: six pages and mobile dialogs render without overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: 48 techniques and school/type filter plus source link",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: 18 alchemy recipes; crafting and qi use",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: red forging, six slots, protection and enhancement",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: loadout selects skills and presets retain configuration",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: gacha probabilities, target selection, hard red and reload",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: simulated jade shop direct credit exchange reload and failed-save rollback",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: animated jade ten-pull skip and mid-animation reload preserve prizes and pity",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: six dungeon families selectable and all can begin",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: manual skill, target, tactical pause and battle reload",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: story choice and sect action persist",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: adult companion bond and complete joint session with reload",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: export download, valid import and invalid-import protection",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: Native persistence failure rolls back reward and RNG",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: both cultivation routes preserve progress and unlock auto-small by highest path",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: completed trial permits one major breakthrough and preserves route",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: passive XP unlocks advancement button without navigation",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: two-hour offline summary agrees with HUD and never clears challenges",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: 360 px HUD handles large inventories without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: alchemy UI queue, three fire rounds, reload, reward once and storage rollback",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: alchemy capacity, ordinary payout and cancellation refund",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: terminal trial links to final chapter, all three endings persist and no seventh realm",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "recovery: corrupt stored data retained and exportable without overwrite",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fixture: collection pages screenshots and readable red UI",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "responsive: 360 px six pages and probability dialog",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "responsive: 412 px six pages and probability dialog",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "responsive: 1440 px six pages and probability dialog",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "asset integrity: local resources and browser diagnostics",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    },
+    {
+      "report": "browser-equipment-builds-report.json",
+      "startedAt": "2026-10-07T05:08:24.759Z",
+      "completedAt": "2026-10-07T05:09:38.948Z",
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "notes": "",
+      "tests": [
+        {
+          "name": "all six character slots open their exact replacement screen through equipment details",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "long-press shows full current and candidate attributes without accidental replacement",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "pointer movement cancels inspection and replacement",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "candidate replacement updates current slot and persistent save while preserving page position",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "empty slot explains empty inventory without fabricated equipment",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "current-only slot explains empty inventory without fabricated equipment",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "sets entry presents real 2/4-piece activation, school synergy and all owned pieces",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "one-click owned set changes all six slots and activates genuine attribute effects",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "six school recommendations explain roles, rotations and technique purposes",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "one-click recommendation atomically saves equipment, heart, skills and secrets with real persisted identities",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "improvement goals show future unlocks, sources and navigation from an incomplete build",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "fresh account recommendations respect starter ownership and locked skill/secret slots",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "upgrade growth goal spends its exact cost, saves the new level and refreshes the next upgrade",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "forge growth goal opens the correct school and missing slot without spending resources",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "save failure rolls back the entire set change and keeps previous durable save",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "save failure rolls back the entire recommendation change and keeps previous durable save",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "save failure rolls back the entire slot change and keeps previous durable save",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "paused battle locks gear, sets and recommendations while leaving gear inspection available",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "character, sets, recommendations and slot replacement fit 375px with screenshots",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "character, sets, recommendations and slot replacement fit 390px with screenshots",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "character, sets, recommendations and slot replacement fit 1280px with screenshots",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all exercised browser surfaces have zero script, console, network or external request failures",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    },
+    {
+      "report": "browser-audio-layout-report.json",
+      "startedAt": "2026-10-07T05:08:27.544Z",
+      "completedAt": "2026-10-07T05:10:13.728Z",
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "notes": "",
+      "tests": [
+        {
+          "name": "first real gesture unlocks actual music playback and its advancing media clock",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "settings music/effects/mute controls persist across reload and muted playback stays paused",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "home/heaven/battle music follows real scenes and rapid navigation bounds concurrency",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "native background pause freezes audio and resume restarts the selected music",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "real red draw schedules audible awaken/impact and skipping cancels remaining red sounds",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "six navigation targets and compact tabs remain reachable at 360×640",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "six navigation targets and compact tabs remain reachable at 390×480",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "six navigation targets and compact tabs remain reachable at 1440×900",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "an in-place facility action retains main scroll and unrelated DOM controls",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "shop modal refresh retains its body scroll while a real purchase is saved",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "resource market purchases a real batch with jade and preserves its scrolled position",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "resource market purchases a real batch with dust and preserves its scrolled position",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "resource market insufficient currency disables purchase and rejected real actions leave inventory intact",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "real resource market clicks roll back both currencies and all inventory when Native persistence fails",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "short-clicking a character equipment icon equips and persists its actual UID",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "long press and keyboard details describe equipment without equipping it",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "paged icon skill selection saves four real skills, rejects duplicates and survives reload",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "real mobile battle fills the screen; pause/exit freezes combat and restores its original page/scroll",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "real battle victory settles once and restores the adventure page and scroll",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "actual exploration node artwork and choice enter combat, return to exploration, and exit to the original page",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "large boss art and real combat controls fit 360×640",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "large boss art and real combat controls fit 1440×900",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "large boss art and real combat controls fit 360×640 with reduced motion",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all image and audio assets decode with correct MIME; offline PCM renders positive RMS",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    },
+    {
+      "report": "browser-sources-rewards.json",
+      "startedAt": "2026-10-07T05:08:26.196Z",
+      "completedAt": "2026-10-07T05:09:59.998Z",
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "notes": "",
+      "tests": [
+        {
+          "name": "all six missing sets show six illustrated named pieces and usable acquisition controls",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all 216 actual set-quality-slot illustrations decode and preserve selected native atlas cells",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "missing piece directs to exact gacha target without automatically drawing or consuming tickets",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "missing piece routes to correct same-set boss and forge keeps the requested set and physical slot",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "locked sources still explain unlock conditions, and higher-tier owned gear is clearly distinguished from missing",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "low-grade full sets activate real two/four-piece effects and one-click equip all six slots",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "missing gear long press explains genuine base attributes and shortage text names currencies in Chinese",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "resource_herb actual victory opens illustrated rewards, saves once and history never duplicates loot",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "boss_4 actual victory opens illustrated rewards, saves once and history never duplicates loot",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "cave room victory labels pending loot without granting it; final treasure pays only once",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "cave defeat preserves and displays only previously banked real rewards, excluding lost pending loot",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "full backpack sends the actual boss reward to overflow and long press still shows its complete attributes",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "practice victory never claims loot or first clear; defeat gives a clear outcome without rewards",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "formal realm trial celebrates progression without inventing economic loot",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "automatic boss retry stays paused behind settlement and resumes only on explicit continue",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "ordinary equip and pause/resume after a victory never reopen old rewards, and a removed historical item still has real snapshot attributes",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "failed persistence rolls back settlement, preserves inventory and never shows a paid reward screen",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "360x640 source, reward, portraits, maps and boss preserve cell proportions without adjacent tile bleed",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "360x640 actual boss settlement rewards fit and preserve source art pixel ratios",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "390x844 source, reward, portraits, maps and boss preserve cell proportions without adjacent tile bleed",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "390x844 actual boss settlement rewards fit and preserve source art pixel ratios",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "1440x900 source, reward, portraits, maps and boss preserve cell proportions without adjacent tile bleed",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "1440x900 actual boss settlement rewards fit and preserve source art pixel ratios",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "browser and offline asset requests stay clean",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    },
+    {
+      "report": "browser-activity-named-art.json",
+      "startedAt": "2026-10-07T05:09:59.561Z",
+      "completedAt": "2026-10-07T05:10:44.999Z",
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "notes": "",
+      "tests": [
+        {
+          "name": "production sweep saves actual batch, tier and cost, returns selections, and never grants first-clear loot twice",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production batch alchemy saves actual pills and expenses then returns the selected batch and inner scroll",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production queued alchemy and three-round control celebrate only the single saved completion including bonus",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production forging displays its real new UID in inventory and supports actual attribute inspection",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production forging displays its real new UID in overflow and supports actual attribute inspection",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production reward dismissal via button restores forge inputs and source scroll without regranting",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production reward dismissal via escape restores forge inputs and source scroll without regranting",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production reward dismissal via close restores forge inputs and source scroll without regranting",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production reward dismissal via native restores forge inputs and source scroll without regranting",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production reward dismissal via backdrop restores forge inputs and source scroll without regranting",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production browser save failure rolls back inventory and never presents a false success, then retry succeeds once",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production native save failure rolls back inventory and never presents a false success, then retry succeeds once",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production failed recipe/forge conditions preserve inputs and show no earned-loot overlay",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production commissions save real current-tier rewards and cannot reclaim the same progress after closing",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production chapter collection reports actual newly acquired techniques or duplicate fragments and returns to the story",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production sidequest grants only newly learned blueprints, saves its completion and disables duplicate collection",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production wisdom collection saves actual tickets and does not reopen an old battle report",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production routine market purchases keep the market open for repeated purchases and never interrupt with loot overlay",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production original combat victory keeps its own battle settlement priority and saved rewards",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production sweep 360x640 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production alchemy 360x640 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production forge 360x640 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production sweep 390x844 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production alchemy 390x844 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production forge 390x844 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production sweep 1440x900 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production alchemy 1440x900 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "production forge 1440x900 first earned card and return footer fit without horizontal overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "named art all 330 cells decode actual native pixels, are distinct and preserve crop geometry with no object colour filters",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "named art mobile actual forge and equipment details expose their name palette and preserve native cell proportions",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "named art crop fitting becomes stable at idle and never loops on unchanged icon classes",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "browser asset requests and JavaScript stay clean",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    },
+    {
+      "report": "browser-preview-file-report.json",
+      "startedAt": "2026-10-07T05:09:07.441Z",
+      "completedAt": "2026-10-07T05:10:14.504Z",
+      "passed": 23,
+      "failed": 0,
+      "skipped": 1,
+      "notes": "",
+      "tests": [
+        {
+          "name": "double-click file URL startup and persistence",
+          "passed": null,
+          "skipped": true
+        },
+        {
+          "name": "actual file URL navigation obeys the managed browser policy",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "one HTML boots the isolated preview after its age confirmation without loading normal saves",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "acquisition, battle and production settlement, named art and image-layout modules run from inline scripts with no external imports",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all 36 PNG atlases including all ten named art atlases and preserved original media retain source bytes and paint decoded images",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all 14 embedded MP3s retain source hashes and decode metadata plus audible PCM",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "a real click unlocks audible BGM with its media clock advancing offline",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "the offline bundle activates a real four-piece set using only its forged inventory",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "the offline bundle recommends real school roles and atomically saves all build components",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "short-clicking an equipment picture equips its actual UID and preserves page position",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "long-press opens actual equipment properties without accidental equip or scroll reset",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "picture-based skill selection commits the real four-slot loadout",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "offline production results show saved pills and gear with painted named art and return to original inputs",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "entering free practice and clicking a spell executes real combat without rewards",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "boss artwork dominates its arena and actual auto-combat reaches a genuine practice victory",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "a genuine offline boss win displays committed loot cards and fitted source artwork without granting twice",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "the resource market shows all seven goods and both currencies settle the advertised real purchase",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "the real ten-draw commits exactly the predicted costs, inventory, RNG and pity before animation",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "each genuine red reward receives its own full-screen animation and matching embedded artwork",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "offline interaction performs no secondary HTTP request or external network access",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "reload restores preview equipment, configuration and real draw rewards while normal saves stay untouched",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "desktop and small-mobile preview layouts have no horizontal document overflow",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "the completed offline session has zero JavaScript errors and zero audio playback failures",
+          "passed": true,
+          "skipped": false
+        },
+        {
+          "name": "all embedded media decode from the complete HTML blob with the browser network offline",
+          "passed": true,
+          "skipped": false
+        }
+      ]
+    }
+  ],
+  "artifact": {
+    "output": "wendao-lingqi-preview.html",
+    "bytes": 138278189,
+    "sha256": "de1f18e605a6741f24ec48fca3aa55616c4a1fe8dc0a3335c65819d55f9d29d4",
+    "downloadZip": {
+      "file": "wendao-lingqi-preview.zip",
+      "bytes": 103600843,
+      "sha256": "5104910e4cd3d42d75bd9679dbf94e3a5b07dca5f121f07d54f833a6fa1f75b3"
+    },
+    "offline": true,
+    "assetEncoding": "Unmodified source bytes as base64 data URIs. Images become in-memory Blob URLs, avoiding browser CSS variable size limits; no auxiliary files or network requests."
+  },
+  "artwork": {
+    "gear": 216,
+    "techniques": 48,
+    "treasures": 12,
+    "pills": 18,
+    "utilities": 36,
+    "uniqueNativeCells": 330,
+    "preservedOriginalPngs": 26,
+    "newAtlases": 10,
+    "totalPngs": 36,
+    "audioMp3": 14
+  },
+  "limits": [
+    "管理策略阻止 file://，该项明确跳过；实测单文件载入后断网交互及预先断网 Blob 解码。",
+    "使用校验过的试玩/中期存档，不代表自然经济平衡或 Android 真机验证。",
+    "未构建 APK。"
+  ]
+}

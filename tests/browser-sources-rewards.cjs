@@ -224,13 +224,17 @@ async function atlasChecks(page, label) {
     const visible = [...document.querySelectorAll('[data-atlas-fit]')].filter(n => n.clientWidth > 0 && n.clientHeight > 0);
     return Promise.all(visible.map(async n => {
       const [cols, rows, col, row, nativeW, nativeH] = n.dataset.atlasFit.split(',').map(Number);
-      const css = getComputedStyle(n), urls = [...css.backgroundImage.matchAll(/url\(["']?([^"')]+)["']?\)/g)];
+      const picture = n.querySelector(':scope > [data-atlas-picture]') || n;
+      const css = getComputedStyle(picture), urls = [...css.backgroundImage.matchAll(/url\(["']?([^"')]+)["']?\)/g)];
       const url = urls.at(-1)?.[1];
       const im = new Image(); im.src = url; await im.decode();
       const last = s => s.split(',').at(-1).trim().split(/\s+/).map(parseFloat);
+      const outer = n.getBoundingClientRect(), inner = picture.getBoundingClientRect();
       return { className: n.className, cols, rows, col, row, nativeW, nativeH, measuredW: im.naturalWidth,
-        measuredH: im.naturalHeight, width: n.clientWidth, height: n.clientHeight, size: last(css.backgroundSize),
-        position: last(css.backgroundPosition), file: url.split('/').at(-1) };
+        measuredH: im.naturalHeight, width: picture !== n ? inner.width : n.clientWidth, height: picture !== n ? inner.height : n.clientHeight, size: last(css.backgroundSize),
+        position: last(css.backgroundPosition), file: url.split('/').at(-1), crop: n.dataset.artCrop || null,
+        hasPicture: picture !== n, outer: { x: outer.x, y: outer.y, right: outer.right, bottom: outer.bottom },
+        inner: { x: inner.x, y: inner.y, right: inner.right, bottom: inner.bottom } };
     }));
   });
   assert.ok(rows.length >= 1, label + ' has actual fitted atlas cells');
@@ -238,10 +242,24 @@ async function atlasChecks(page, label) {
     assert.equal(r.nativeW, r.measuredW); assert.equal(r.nativeH, r.measuredH);
     const xScale = r.size[0] / r.nativeW, yScale = r.size[1] / r.nativeH;
     assert.ok(Math.abs(xScale - yScale) <= .00002, label + ' preserves original pixels in both axes: ' + JSON.stringify(r));
-    const cellW = r.size[0] / r.cols, cellH = r.size[1] / r.rows;
-    const left = r.position[0] + r.col * cellW, top = r.position[1] + r.row * cellH;
-    assert.ok(left <= .1 && top <= .1 && left + cellW >= r.width - .1 && top + cellH >= r.height - .1,
-      label + ' shows only the requested cell, never adjacent artwork: ' + JSON.stringify(r));
+    if (r.crop) {
+      const crop = r.crop.startsWith('[') ? JSON.parse(r.crop) : r.crop.split(',').map(Number);
+      assert.equal(crop.length, 4, label + ' crop contains the full source rectangle');
+      assert.ok(crop.every(Number.isFinite) && crop[0] >= 0 && crop[1] >= 0 && crop[2] > 0 && crop[3] > 0 &&
+        crop[0] + crop[2] <= 1.00001 && crop[1] + crop[3] <= 1.00001, label + ' source crop stays inside original image');
+      assert.equal(r.hasPicture, true, label + ' measured crop paints through its clipped picture');
+      const cropW = crop[2] * r.size[0], cropH = crop[3] * r.size[1],
+        left = r.position[0] + crop[0] * r.size[0], top = r.position[1] + crop[1] * r.size[1];
+      assert.ok(Math.abs(left) <= .02 && Math.abs(top) <= .02 && Math.abs(cropW - r.width) <= .02 && Math.abs(cropH - r.height) <= .02,
+        label + ' picture shows exactly the requested source crop without neighbor art: ' + JSON.stringify(r));
+      assert.ok(r.inner.x >= r.outer.x - .1 && r.inner.y >= r.outer.y - .1 && r.inner.right <= r.outer.right + .1 && r.inner.bottom <= r.outer.bottom + .1,
+        label + ' complete fitted picture stays inside its original frame');
+    } else {
+      const cellW = r.size[0] / r.cols, cellH = r.size[1] / r.rows;
+      const left = r.position[0] + r.col * cellW, top = r.position[1] + r.row * cellH;
+      assert.ok(left <= .1 && top <= .1 && left + cellW >= r.width - .1 && top + cellH >= r.height - .1,
+        label + ' shows only the requested cell, never adjacent artwork: ' + JSON.stringify(r));
+    }
     assert.ok(r.col >= 0 && r.col < r.cols && r.row >= 0 && r.row < r.rows, label + ' has valid tile index');
   }
   report.art.push({ label, rows });
