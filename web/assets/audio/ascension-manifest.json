@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "provenance": "Original 32-bar D yu pentatonic score and modal synthesis for 问道·灵契; no external samples or copied melodies.",
+  "generator": "tools/audio/compose-ascension.py",
+  "score": "tools/audio/ascension-score.json",
+  "license": "Project original assets; distributable with the game.",
+  "originalManifest": {
+    "file": "manifest.json",
+    "bytes": 4621,
+    "sha256": "021ea2ac4059e930449614e844c3f1e2eed4d67170ef1643faefcef3af2244c7",
+    "assets": {
+      "home": {
+        "file": "bgm-home.mp3",
+        "kind": "music",
+        "duration": 48.0,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.74,
+        "rms": 0.17215,
+        "bytes": 673113,
+        "sha256": "cd3d56aa148982ca990edc4464297334ff5f570be8be4a2ec83b60478b16bc32",
+        "bpm": 80,
+        "loop": true,
+        "boundaryDelta": 0.01316
+      },
+      "battle": {
+        "file": "bgm-battle.mp3",
+        "kind": "music",
+        "duration": 43.6363,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.74,
+        "rms": 0.16575,
+        "bytes": 612299,
+        "sha256": "bbfefba51a6e30a08f9d22fc0baba82b84d0430151e21ae9cc0a1f7d13396c84",
+        "bpm": 88,
+        "loop": true,
+        "boundaryDelta": 0.02673
+      },
+      "heaven": {
+        "file": "bgm-heaven.mp3",
+        "kind": "music",
+        "duration": 50.5263,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.74,
+        "rms": 0.19205,
+        "bytes": 708731,
+        "sha256": "dcd80ee7b4f1b8b06d5c31d38f6a1c9ce3af599e04632d8d7d18e2f6e0b308ab",
+        "bpm": 76,
+        "loop": true,
+        "boundaryDelta": 0.03799
+      },
+      "ui": {
+        "file": "ui.mp3",
+        "kind": "effect",
+        "duration": 0.19,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.33048,
+        "bytes": 3795,
+        "sha256": "4cf36334b9efe0214917d1e9932c708d14ecea5adb883b14ee23a7041c13a742"
+      },
+      "success": {
+        "file": "success.mp3",
+        "kind": "effect",
+        "duration": 1.1,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.20044,
+        "bytes": 16568,
+        "sha256": "4c94ddc664e0471e1b76908ba7ca832815caf1324290c24a711309960da833a4"
+      },
+      "error": {
+        "file": "error.mp3",
+        "kind": "effect",
+        "duration": 0.48,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.2667,
+        "bytes": 7830,
+        "sha256": "79da02ade4b19444b0c0f1372b299020f85bd27165ab1674e6715fa6cd9ef801"
+      },
+      "battle-hit": {
+        "file": "battle-hit.mp3",
+        "kind": "effect",
+        "duration": 0.38,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.26117,
+        "bytes": 6491,
+        "sha256": "5ea9e8e44f1789781d7d8b84a83f97a77316d232beae5d21484d1dabfe1dc198"
+      },
+      "battle-skill": {
+        "file": "battle-skill.mp3",
+        "kind": "effect",
+        "duration": 1.18,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.17102,
+        "bytes": 17917,
+        "sha256": "8dd23b2abb3be90ec369c665f9505c65d831dd9f9c2ed52a63f6d73697c73a7c"
+      },
+      "victory": {
+        "file": "victory.mp3",
+        "kind": "effect",
+        "duration": 3.2,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.18227,
+        "bytes": 46136,
+        "sha256": "ce99a99b95c21e9fefea36f04c7d11231c7da207b45a771a51e0dd1bf6405608"
+      },
+      "defeat": {
+        "file": "defeat.mp3",
+        "kind": "effect",
+        "duration": 2.35,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.22201,
+        "bytes": 34039,
+        "sha256": "7fe39acde7bebda50088c47b82b36be82ba7c111dd3a4864fe7ae91047a511b8"
+      },
+      "summon-rise": {
+        "file": "summon-rise.mp3",
+        "kind": "effect",
+        "duration": 3.8,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.18793,
+        "bytes": 54540,
+        "sha256": "07fc962d70f2ea0af4af986ca51440d5893c12ff14fd3124c1c9f691c91ca78b"
+      },
+      "reveal": {
+        "file": "reveal.mp3",
+        "kind": "effect",
+        "duration": 1.4,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.20385,
+        "bytes": 20935,
+        "sha256": "f9db83c9efdfbee5e243a54059488289f66e0f178363f697ad57e48cd8b81052"
+      },
+      "red-awaken": {
+        "file": "red-awaken.mp3",
+        "kind": "effect",
+        "duration": 3.4,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.22365,
+        "bytes": 48827,
+        "sha256": "3617569b6f54cf4a8a8f96908fb517e74d6864de18081fa682e77c1648253824"
+      },
+      "red-impact": {
+        "file": "red-impact.mp3",
+        "kind": "effect",
+        "duration": 4.2,
+        "sampleRate": 24000,
+        "channels": 2,
+        "peak": 0.8,
+        "rms": 0.17763,
+        "bytes": 59915,
+        "sha256": "a51f6a2ae5deb0957edfdd3a3e1b31a4369148eac684a12bee8a51769f98868f"
+      }
+    }
+  },
+  "assets": {
+    "ascension": {
+      "file": "bgm-ascension.mp3",
+      "kind": "music",
+      "duration": 96.0,
+      "sampleRate": 44100,
+      "channels": 2,
+      "peak": 0.74,
+      "rms": 0.19705,
+      "bytes": 1536834,
+      "sha256": "2c57edc0b80b35a040980af5be044a1f430215999e59546f1f7bda33d0327861",
+      "bitrate": 128000,
+      "decodedPeak": 0.69335,
+      "decodedRms": 0.1872,
+      "decodedSamples": 4233600,
+      "bpm": 80,
+      "loop": true,
+      "boundaryDelta": 0.0
+    },
+    "ascension-rise": {
+      "file": "ascension-rise.mp3",
+      "kind": "effect",
+      "duration": 6.8,
+      "sampleRate": 44100,
+      "channels": 2,
+      "peak": 0.8,
+      "rms": 0.15241,
+      "bytes": 109922,
+      "sha256": "f10ec3f0cec0a347ff0134b5a59009c0790a9f3891477c64ec7c4bd97626b497",
+      "bitrate": 128000,
+      "decodedPeak": 0.76298,
+      "decodedRms": 0.1448,
+      "decodedSamples": 299880
+    }
+  },
+  "mixRecommendation": {
+    "musicSceneGain": 0.64,
+    "effectLevel": 0.88,
+    "effectPriority": 3,
+    "musicDefaultSlider": 0.42,
+    "effectDefaultSlider": 0.55
+  },
+  "validation": {
+    "oldAssetsByteIdentical": 14,
+    "scoredBars": 32,
+    "uniqueDecodedBars": 32,
+    "minimumBarRms": 0.03723,
+    "maximumBarRms": 0.26045
+  }
+}

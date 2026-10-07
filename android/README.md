@@ -1,6 +1,6 @@
-# 问道灵契 Android V3
+# 问道灵契 Android V4
 
-包名 `com.lingqi.game`，versionCode 3、versionName 3.0，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
+包名 `com.lingqi.game`，versionCode 4、versionName 4.0，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
 
 ## 标准 Gradle 构建
 
@@ -11,13 +11,13 @@ node --test tests/v3*.cjs
 gradle --no-daemon -p android :app:assembleDebug
 ```
 
-Android Gradle Plugin 固定为 8.7.3。Web 资源直接从 `web/` 打包，无需 npm 安装。Debug APK 在 `android/app/build/outputs/apk/debug/app-debug.apk`，使用本机生成的调试签名。Gradle release 默认不签名，禁止把私钥加入工程。
+Android Gradle Plugin 固定为 8.7.3。Web 资源直接从 `web/` 打包，无需 npm 安装。本轮debug体验包使用独立包名 `com.lingqi.game.preview` 和应用名「问道·灵契·体验」，可以与旧 `com.lingqi.game` 发布版并排安装；原发布私钥在本环境缺失，不宣称能够覆盖升级。Debug APK 在 `android/app/build/outputs/apk/debug/app-debug.apk`，使用本机生成的调试签名。Gradle release 默认不签名，禁止把私钥加入工程。
 
-`.github/workflows/android.yml` 在 push、pull request 或手动触发时运行 V3 游戏测试并生成 debug APK；工作流不使用发布私钥。Debug APK 无法覆盖原个人发布签名的安装包，应在独立测试设备安装或先备份再卸载旧包。
+`.github/workflows/android.yml` 在 push、pull request 或手动触发时运行逻辑测试并生成 debug APK；工作流不使用发布私钥。V4 debug 包使用独立包名，可以保留旧版并排安装。
 
 ## 保持旧签名的个人发布包
 
-当前设备保留了原精简工具链：
+恢复旧发布私钥及完整精简工具链后可使用：
 
 ```sh
 python3 tools/prepare-tools.py
@@ -54,4 +54,11 @@ sh build-android.sh
 
 ## 验证边界
 
-原生源码已在现有 ECJ/API35 工具链编译通过。当前连接的是 Linux VPS，没有 adb、Android 设备或模拟器，因此没有真机验证。最终构建、签名、浏览器与逻辑测试结果记录在 `docs/ANDROID_VALIDATION.md`；它们不能替代 Android 文件选择器、系统返回、进程恢复、API35 布局和 30 分钟持续运行测试。
+历史原生源码已用 ECJ/API35 编译通过，本轮采用 Gradle/JDK17/API35。当前连接的是 Linux VPS，没有 adb、Android 设备或模拟器，因此没有真机验证。V4最终构建、签名、浏览器与逻辑测试记录见 `../docs/validation/V4_ASCENSION_APK_2026-10-07.md`；它们不能替代 Android 文件选择器、系统返回、进程恢复和 30 分钟持续运行测试。
+
+
+## V4 本轮构建验证
+
+恢复后的现有Gradle8.9/JDK17/API35工具链无需下载即可使用；2026-10-07离线Gradle任务配置检查成功。最终 `assembleDebug` 在游戏、飞升、音画资源全部冻结与测试后执行，具体APK大小、SHA、证书与资源审计以本轮验证文档为准。旧精简工具链接不完整，不能把 `aapt2` 单独存在当作release工具或旧私钥齐全。
+
+体验包设置提供「正式仙途」「人界配装试玩」「天门飞升试玩」。三个存档隔离，后两者明示资源/修为夹具，不能声称试玩种子是自然取得的进度。旧发布版导出的JSON可在体验包导入以延续旧角色。

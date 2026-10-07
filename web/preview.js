@@ -81,5 +81,16 @@ function createState(now){
   if(!verified.ok)throw Error('试玩存档校验失败：'+verified.error);
   return verified.state;
 }
-return Object.freeze({createState});
+function createAscensionState(now){
+ const at=now===undefined?Date.now():now,s=createState(at),C=E.catalog;
+ // This separate demo starts at the heavenly gate. It is a supplied playtest
+ // save, not evidence of naturally completing the human campaign.
+ s.player.name='天门试玩行者';s.paths.magic={realm:5,layer:10,xp:Math.round(C.layerXp[9]*C.realmXpFactors[5]),reserve:0};
+ s.story.chapter=6;s.story.mercy=3;s.story.truth=3;s.story.completed=C.chapters.map(ch=>ch.id);
+ s.progress.trialWins['magic:5']=true;s.progress.endingTrials.magic=true;s.ritualLegacyWins['magic:5']=true;
+ s.migrationCompensation.magic={attack:12000,defense:5000,maxHp:120000};
+ const checked=E.validate(s);if(!checked.ok)throw Error('天门试玩准备失败：'+checked.error);
+ return checked.state;
+}
+return Object.freeze({createState,createAscensionState});
 });

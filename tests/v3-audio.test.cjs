@@ -154,3 +154,15 @@ test('all original offline tracks and effects match the manifest and comfortable
     if (info.kind === 'music') { assert.ok(info.duration >= 40 && info.duration <= 60); assert.equal(info.loop, true); }
   }
 });
+
+test('heavenly music yields to battle and resumes with one voice; the ascent stinger obeys mute and lifecycle', async () => {
+  const f=fixture();f.api.setScene({ascension:true});assert.equal(f.sounds.length,0);await f.api.unlock();f.advance(1000);await flush();assert.match(f.audible()[0].src,/bgm-ascension\.mp3$/);
+  f.api.setScene({battle:true,ascension:true});f.advance(1000);await flush();assert.equal(f.audible().length,1);assert.match(f.audible()[0].src,/bgm-battle\.mp3$/);
+  f.api.setScene({ascension:true});f.advance(1000);await flush();assert.equal(f.audible().length,1);assert.equal(f.api.play('ascension-rise'),true);assert.equal(f.api.play('ascension-rise'),false,'rapid repeat is bounded');
+  f.api.pause();assert.equal(f.audible().length,0);f.api.resume();f.advance(1000);await flush();assert.equal(f.audible().length,1,'effect does not replay after returning');f.api.setPreferences({muted:true});assert.equal(f.api.play('ascension-rise'),false);assert.equal(f.audible().length,0);
+});
+
+test('new celestial score preserves every original audio asset and has its own verified source manifest', () => {
+  const dir=path.join(__dirname,'../web/assets/audio'),m=JSON.parse(fs.readFileSync(path.join(dir,'ascension-manifest.json')));assert.equal(Object.keys(m.assets).length,2);
+  for(const info of Object.values(m.assets)){const bytes=fs.readFileSync(path.join(dir,info.file));assert.equal(bytes.length,info.bytes);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),info.sha256);assert.equal(info.sampleRate,44100);assert.equal(info.channels,2);assert.ok(info.peak<=.81&&info.rms>.005&&info.rms<.4);if(info.kind==='music'){assert.ok(info.duration>=90&&info.duration<=120);assert.equal(info.loop,true);}}
+});

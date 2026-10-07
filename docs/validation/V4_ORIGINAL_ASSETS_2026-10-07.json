@@ -1,0 +1,410 @@
+{
+  "version": "V4",
+  "date": "2026-10-07",
+  "baselineCommit": "c0fb103bdcf6298fa385dc44e1b5436116242329",
+  "method": "SHA-256 and byte-count comparison against git show baselineCommit:path; assets are read only.",
+  "passed": true,
+  "counts": {
+    "originalPng": 36,
+    "originalMp3": 14,
+    "byteIdentical": 50,
+    "newPng": 7,
+    "newMp3": 2,
+    "newIndependentAudioManifest": 1,
+    "totalPng": 43,
+    "totalMp3": 16,
+    "monsters": 20,
+    "tournamentRivals": 6,
+    "immortalMentors": 3,
+    "mentorExpressions": 12,
+    "narrativeBackgrounds": 3
+  },
+  "originals": [
+    {
+      "path": "web/assets/audio/battle-hit.mp3",
+      "bytes": 6491,
+      "sha256": "5ea9e8e44f1789781d7d8b84a83f97a77316d232beae5d21484d1dabfe1dc198",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/battle-skill.mp3",
+      "bytes": 17917,
+      "sha256": "8dd23b2abb3be90ec369c665f9505c65d831dd9f9c2ed52a63f6d73697c73a7c",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/bgm-battle.mp3",
+      "bytes": 612299,
+      "sha256": "bbfefba51a6e30a08f9d22fc0baba82b84d0430151e21ae9cc0a1f7d13396c84",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/bgm-heaven.mp3",
+      "bytes": 708731,
+      "sha256": "dcd80ee7b4f1b8b06d5c31d38f6a1c9ce3af599e04632d8d7d18e2f6e0b308ab",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/bgm-home.mp3",
+      "bytes": 673113,
+      "sha256": "cd3d56aa148982ca990edc4464297334ff5f570be8be4a2ec83b60478b16bc32",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/defeat.mp3",
+      "bytes": 34039,
+      "sha256": "7fe39acde7bebda50088c47b82b36be82ba7c111dd3a4864fe7ae91047a511b8",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/error.mp3",
+      "bytes": 7830,
+      "sha256": "79da02ade4b19444b0c0f1372b299020f85bd27165ab1674e6715fa6cd9ef801",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/red-awaken.mp3",
+      "bytes": 48827,
+      "sha256": "3617569b6f54cf4a8a8f96908fb517e74d6864de18081fa682e77c1648253824",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/red-impact.mp3",
+      "bytes": 59915,
+      "sha256": "a51f6a2ae5deb0957edfdd3a3e1b31a4369148eac684a12bee8a51769f98868f",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/reveal.mp3",
+      "bytes": 20935,
+      "sha256": "f9db83c9efdfbee5e243a54059488289f66e0f178363f697ad57e48cd8b81052",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/success.mp3",
+      "bytes": 16568,
+      "sha256": "4c94ddc664e0471e1b76908ba7ca832815caf1324290c24a711309960da833a4",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/summon-rise.mp3",
+      "bytes": 54540,
+      "sha256": "07fc962d70f2ea0af4af986ca51440d5893c12ff14fd3124c1c9f691c91ca78b",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/ui.mp3",
+      "bytes": 3795,
+      "sha256": "4cf36334b9efe0214917d1e9932c708d14ecea5adb883b14ee23a7041c13a742",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/audio/victory.mp3",
+      "bytes": 46136,
+      "sha256": "ce99a99b95c21e9fefea36f04c7d11231c7da207b45a771a51e0dd1bf6405608",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-boss-atlas.png",
+      "bytes": 3764241,
+      "sha256": "44eab227875b14f222041928625a8248ece132fd435faf8bcc5c832b0f3fa636",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-cardback.png",
+      "bytes": 3449815,
+      "sha256": "397176d5c979adf75f81d2d078da1d15ff2436a3acaf7961392b0902380dfff1",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-chapter-atlas.png",
+      "bytes": 3877451,
+      "sha256": "0c92a9967915e9b8258da3407c98588b2c8ebcdeaad124c254b7bc1b04813b47",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-forge.png",
+      "bytes": 3267994,
+      "sha256": "de6cbea983b22f9bac14a4dfb000e57ce474447e029f452b498e4377b2e1a36d",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-hero-expressions.png",
+      "bytes": 3313431,
+      "sha256": "1c4250e6fabd351e983f2c8f630e02703ae02ad242b8aec436186591b44f9fd5",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-heroes.png",
+      "bytes": 3623076,
+      "sha256": "22881ef1575d96a3a5ac799022fe98062c67e591c43bf80a4c8b5c7971c37cbd",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-items-atlas.png",
+      "bytes": 3097567,
+      "sha256": "b529d1d02d1404da934121d5754c746ec410202c5bd7de86beb3775b975bc682",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-map-atlas-a.png",
+      "bytes": 3741606,
+      "sha256": "8672f15e6e83a4d055afdc413603147b867c95b3309bcd0869c2838e1554eefa",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-map-atlas-b.png",
+      "bytes": 3745999,
+      "sha256": "c3a2f19fe4af059e1b255069b23de45a33eb7c968bc6dd46032b9986b23a61d0",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-monster-atlas.png",
+      "bytes": 3444184,
+      "sha256": "d0244da185015909077092ff246d70137c127149a20d408e37ab3c3e6f744b34",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-shop.png",
+      "bytes": 3271795,
+      "sha256": "f6c1f2201bc03a6b20a8b8c85bfca0abc729b5507de6910181c0f6b22e38704f",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-skills-atlas.png",
+      "bytes": 3328791,
+      "sha256": "82461241caa0be798fd123359c7ebfe2324bb81a78542900dabfca6a63746ac3",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-summon.png",
+      "bytes": 3024109,
+      "sha256": "3a726730585736377cbf427a6ee4687beefa90138ef627403657011ab13a1adb",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v3-world.png",
+      "bytes": 2931600,
+      "sha256": "60cc4021afe1793518d44ab67986bdd375439dd1031daccda2ef5408923c51a0",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-armor-atlas.png",
+      "bytes": 2472998,
+      "sha256": "f898e51bd56db508a1f4013488abe0c0267dc7fc5fec648ffc86061e396bb591",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-basic-skills-atlas.png",
+      "bytes": 2343251,
+      "sha256": "41feafd53aeebb207bb32a6610591deb7e109dcdbbc97a2d527bbf46e26937e2",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-pills-atlas.png",
+      "bytes": 2373638,
+      "sha256": "b6fe16de1e065e3ecf324e0bd6e88d11063b5b36b8df5cb8227b65676dc15ee0",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-treasures-atlas.png",
+      "bytes": 2446131,
+      "sha256": "38593628f1064dd44d56a656578e370fe47676236c31ed127d2c8c14a51d2816",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-utilities-atlas.png",
+      "bytes": 2514627,
+      "sha256": "18cf3df94862623c8b84b9596c28c5e69c9523d670131adb0dafe9f5dd2d51f6",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v4-weapons-atlas.png",
+      "bytes": 1994741,
+      "sha256": "d9ec3830e052e72a983fb62519ddad0799acedb08a608ea80ed95b3925bb217b",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-0.png",
+      "bytes": 2046574,
+      "sha256": "9dadf69fea35d250a427c20533dc1d6a6020d6dc36fa34bd5f7fb085905d3c7b",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-1.png",
+      "bytes": 2063098,
+      "sha256": "1a94c3b76a47a81a3b109551e952615dd42b266fb9775a7a1b8086d86600c1f4",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-2.png",
+      "bytes": 2233465,
+      "sha256": "2c999b6ca8128d38e75163846a34fbbb9de83816c7aefd3f17c517481b3bf703",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-3.png",
+      "bytes": 2320813,
+      "sha256": "2610b1033e58e645a6bff7a1987e1c31b3704932bf53136c5037dd08aa503197",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-4.png",
+      "bytes": 2466761,
+      "sha256": "e9db9384e7ef286095dc8de41a621a4c3c593c6b1e0ddc6de83017302a80da95",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v5-gear-quality-5.png",
+      "bytes": 2516192,
+      "sha256": "cf8742b5eddc0ab7228c073d8a4aeb569ab3841615c0bb89237c19c74360b9b7",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-0.png",
+      "bytes": 1879955,
+      "sha256": "833b5754a8003d02435018db4399c68e79b8110d4cf20a7791c4f376d6c014c1",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-1.png",
+      "bytes": 2188879,
+      "sha256": "4d83821b39846121fc5d3ec11c693109f82784dc8d2d0ae068cce897fc1ac963",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-2.png",
+      "bytes": 2516134,
+      "sha256": "c8392cdb6119652a014373ebd7de95c63fd9537e9e89871eb9d97a075d15c68f",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-3.png",
+      "bytes": 2828949,
+      "sha256": "73b7cc9752a86c5f88a6ffc4ac313dc224bb30697cd53fb339fb26463ff7c598",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-4.png",
+      "bytes": 3004651,
+      "sha256": "514619508f16526b455479cf6670c567af49649f6c1745292db1fd1c183310e1",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-gear-quality-5.png",
+      "bytes": 2810196,
+      "sha256": "127582018b941d934a9d2a3ba9c3cc4ef7bd74e12ae2e750eba3d5d4a66df157",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-pills-atlas.png",
+      "bytes": 2243665,
+      "sha256": "d085ab42532ca7c9e32cae95a3555129c818e9a6f07b03a47702fd197047cfa1",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-techniques-atlas.png",
+      "bytes": 2787505,
+      "sha256": "3ef98f376efec4ae529b2d7ec7cf70796cfe241759e262edc5dcddb639be86cd",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-treasures-atlas.png",
+      "bytes": 2396861,
+      "sha256": "a79055b3119ab525472db44c6b3389602be58259d248772caf413b7f62ccffc8",
+      "unchanged": true
+    },
+    {
+      "path": "web/assets/v6-utilities-atlas.png",
+      "bytes": 2553478,
+      "sha256": "063d56dc582381fa4d3ff1aa8dc70725132d85af2a05e619b97caa538004827b",
+      "unchanged": true
+    }
+  ],
+  "originalAudioManifest": {
+    "path": "web/assets/audio/manifest.json",
+    "bytes": 4621,
+    "sha256": "021ea2ac4059e930449614e844c3f1e2eed4d67170ef1643faefcef3af2244c7",
+    "unchanged": true
+  },
+  "newResources": [
+    {
+      "path": "web/assets/audio/ascension-manifest.json",
+      "bytes": 6453,
+      "sha256": "04eef5f260a11db6463b238488b9f889e952d9df02e566fcef0f4d010d7fd58b"
+    },
+    {
+      "path": "web/assets/audio/ascension-rise.mp3",
+      "bytes": 109922,
+      "sha256": "f10ec3f0cec0a347ff0134b5a59009c0790a9f3891477c64ec7c4bd97626b497"
+    },
+    {
+      "path": "web/assets/audio/bgm-ascension.mp3",
+      "bytes": 1536834,
+      "sha256": "2c57edc0b80b35a040980af5be044a1f430215999e59546f1f7bda33d0327861"
+    },
+    {
+      "path": "web/assets/story-arena.png",
+      "bytes": 3397476,
+      "sha256": "cc1f6087e7a44babadf1979e7a43137f7c254f325a132d701145ad1b832fde60",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/story-heaven.png",
+      "bytes": 3311737,
+      "sha256": "3425b8872846a05edc4272dc0f383877bac3240270d73f94603f02ad839c52d7",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/story-secret.png",
+      "bytes": 3491255,
+      "sha256": "eff4b2627bf21be69cd6aa67820ef7f0b1fcbd481ff17755318f88484c83ee6b",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/v7-encounters-atlas.png",
+      "bytes": 2823154,
+      "sha256": "e5357b72bf47bda6c3bc7c5ab5ae06e4346fb3ef7f4eb7ad1beef892bf123db7",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "path": "web/assets/v7-immortal-beasts-atlas.png",
+      "bytes": 3336553,
+      "sha256": "c81138eb077ac8edcaf44f1833feaaa8ff1ffa1ed724c012241fb371013acc96",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "path": "web/assets/v7-immortal-mentors-atlas.png",
+      "bytes": 2962921,
+      "sha256": "1f7ce0a6375655b87d2552135807a173fe0582c9fe68b8a11c2a8cf6cae50aa6",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "path": "web/assets/v7-rivals-atlas.png",
+      "bytes": 2284199,
+      "sha256": "bf911627333c60019e92bafae9fe59546914e073e3be8abb249c53c68a44b834",
+      "width": 1536,
+      "height": 1024
+    }
+  ],
+  "mentorExpressionDialogueUses": {
+    "xuanlv:2": 1,
+    "xuanlv:3": 2,
+    "xuanlv:1": 1,
+    "xuanlv:0": 2,
+    "chizhaochuan:2": 1,
+    "chizhaochuan:0": 1,
+    "chizhaochuan:3": 1,
+    "chizhaochuan:1": 1,
+    "shangfenyue:2": 1,
+    "shangfenyue:0": 1,
+    "shangfenyue:3": 1,
+    "shangfenyue:1": 1
+  }
+}

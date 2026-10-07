@@ -1,0 +1,66 @@
+name: Publish verified V4 experience APK and web preview
+on:
+  workflow_dispatch:
+concurrency:
+  group: wendao-v4-experience-publish
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Verify game logic
+        run: npm test
+      - name: Assemble exact locally tested APK and build offline web preview
+        run: |
+          python3 tools/assemble-apk.py --parts releases/parts-v4 --output dist/wendao-lingqi-v4-preview.apk --checksum releases/wendao-lingqi-v4-preview.apk.sha256
+          python3 tools/build-web-preview.py --zip
+      - name: Audit source assets and Android package
+        run: |
+          TASK_SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          TASK_BUILD_TOOLS="$TASK_SDK_ROOT/build-tools/35.0.0"
+          test -x "$TASK_BUILD_TOOLS/aapt2"
+          mkdir -p tools/android
+          ln -s "$TASK_BUILD_TOOLS/aapt2" tools/android/aapt2
+          ln -s "$TASK_BUILD_TOOLS/lib64" tools/android/lib64
+          python3 audit-apk.py dist/wendao-lingqi-v4-preview.apk --package-id com.lingqi.game.preview --version-code 4 --version-name 4.0 --report dist/apk-check-v4.txt
+          "$TASK_BUILD_TOOLS/zipalign" -c -p 4 dist/wendao-lingqi-v4-preview.apk
+          "$TASK_BUILD_TOOLS/apksigner" verify --verbose --print-certs dist/wendao-lingqi-v4-preview.apk > dist/apk-signature-v4.txt
+          python3 - <<'PY'
+          from hashlib import sha256
+          import json, re
+          from pathlib import Path
+          from zipfile import ZipFile
+          manifest = json.loads(Path('releases/parts-v4/manifest.json').read_text())
+          signature = Path('dist/apk-signature-v4.txt').read_text()
+          certs = re.findall(r'certificate SHA-256 digest: ([0-9a-fA-F]+)', signature)
+          assert len(certs) == 1 and certs[0].lower() == manifest['signerCertificateSha256']
+          assert re.search(r'Verified using v2 scheme[^\n]*: true', signature)
+          expected = json.loads(Path('releases/v4-artifact-manifest.json').read_text())
+          html = Path('dist/wendao-lingqi-preview.html').read_bytes()
+          assert len(html) == expected['html']['bytes']
+          assert sha256(html).hexdigest() == expected['html']['sha256']
+          with ZipFile('dist/wendao-lingqi-preview.zip') as archive:
+              assert set(archive.namelist()) == {'wendao-lingqi-preview.html', '试玩说明.txt'}
+              assert archive.testzip() is None
+              assert archive.read('wendao-lingqi-preview.html') == html
+          Path('dist/wendao-lingqi-v4-preview.apk.sha256').write_text(manifest['sha256'] + '  wendao-lingqi-v4-preview.apk\n')
+          PY
+      - name: Publish verified experience files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TASK_RELEASE_TAG='v4.0.0-preview'
+          if gh release view "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TASK_RELEASE_TAG" dist/wendao-lingqi-v4-preview.apk dist/wendao-lingqi-v4-preview.apk.sha256 dist/wendao-lingqi-preview.zip dist/wendao-lingqi-preview.zip.sha256 --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$TASK_RELEASE_TAG" dist/wendao-lingqi-v4-preview.apk dist/wendao-lingqi-v4-preview.apk.sha256 dist/wendao-lingqi-preview.zip dist/wendao-lingqi-preview.zip.sha256 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V4.0 飞升体验版' --notes-file docs/RELEASE_NOTES_V4.md --prerelease --latest=false
+          fi

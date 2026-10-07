@@ -10,6 +10,7 @@ const B = E.modules.combat;
 const K = E.modules.core;
 const C = E.catalog;
 const S = require('../web/story.js');
+const A = require('../web/ascension.js');
 const {toMission,finishJourney}=require('./story-fixtures.cjs');
 const {toTrial}=require('./ritual-fixtures.cjs');
 const START = 1700000000000;
@@ -17,6 +18,7 @@ const HOUR = 3600000;
 const CAPS = [5, 8, 11, 14, 17, 20];
 const SLOT_CAPS = [5, 8, 12, 16, 20, 20];
 const copy = x => JSON.parse(JSON.stringify(x));
+const CAMPAIGN_METHOD={method:'accelerated legal engine actions; no real-time browser/device claim',offlineSamplingStepHours:168,waitHoursAreMinimum:false,limitation:'Repeated seven-day resource waits establish legal reachability, not an optimized schedule, minimum completion time or human flow.'};
 
 class Campaign {
   constructor(route) {
@@ -28,6 +30,7 @@ class Campaign {
     this.failures = [];
     this.processingStories=false;
     this.visitedRanks = new Set([0]);
+    this.visitedCelestial=new Set();
     this.originalOtherPath = copy(this.state.paths[route === 'magic' ? 'body' : 'magic']);
     if (route !== this.state.route) this.act({type:'switchRoute', route});
   }
@@ -40,7 +43,7 @@ class Campaign {
     this.recordRank();
     return r;
   }
-  recordRank() { this.visitedRanks.add(K.pathRank(this.state, this.route)); }
+  recordRank() { this.visitedRanks.add(K.pathRank(this.state, this.route));if(this.state.ascension?.stage==='ascended')this.visitedCelestial.add(this.state.ascension.realm*10+this.state.ascension.layer-1); }
   save() {
     const verified = E.validate(E.serialize(this.state));
     assert.ok(verified.ok, verified.error);
@@ -49,6 +52,7 @@ class Campaign {
     this.counts.saves++;
   }
   wait(hours) {
+    // Coarse seven-day resource waits prove reachability, not minimum waiting.
     // Consecutive settlements each obey the game 24-hour cultivation and seven-day production caps.
     const ms = Math.round(hours * HOUR);
     this.now += ms;
@@ -248,6 +252,47 @@ class Campaign {
     this.combat(a,true);
     this.configure();
   }
+  fly() {
+    for(let guard=0;guard<100&&this.state.ascension?.stage!=='ascended';guard++) {
+      const v=A.view(this.state);
+      if(v.stage==='preparation')this.act({type:'beginAscension'});
+      else if(v.stage==='vow'&&!this.state.ascension.choice)this.act({type:'chooseAscension',choice:'promise'});
+      else if(v.stage==='ready')this.act({type:'completeAscension'});
+      else if(v.stage==='trial'&&this.state.ascension.line===v.trialLines.length-1&&!v.mission.done)this.clearWithRetry({id:'heaven_gate'});
+      else {
+        let r=this.act({type:'advanceAscension'},true);
+        if(!r.ok&&v.stage==='condense'){this.wait(168);r=this.act({type:'advanceAscension'});}
+        assert(r.ok,'Actual ascension scene progression: '+r.message);
+      }
+      this.save();
+    }
+    assert.equal(this.state.ascension.stage,'ascended','fresh real gate victory and complete return dialogue lead into the new realm');
+    for(let realm=0;realm<3;realm++) {
+      assert.equal(this.state.ascension.realm,realm);
+      for(let layer=1;layer<=10;layer++) {
+        assert.equal(this.state.ascension.layer,layer);let guard=0;
+        while(this.state.ascension.xp<A.xpNeeded(this.state.ascension)) {
+          assert(++guard<120,'ordinary immortal meditation/hunt can reach each layer');
+          const r=this.act({type:'celestialMeditate',count:1},true);
+          if(!r.ok){
+            const hunt='immortal_hunt_'+realm;
+            if(E.previewDungeon(this.state,{id:hunt}).allowed)this.clearWithRetry({id:hunt});
+            else this.wait(168);
+          }
+        }
+        if(layer<10)this.act({type:'advanceCelestial'});
+        this.save();
+      }
+      this.clearWithRetry({id:'immortal_'+realm});
+      let advanced=this.act({type:'celestialBreakthrough'},true),guard=0;
+      while(!advanced.ok&&guard++<40){this.clearWithRetry({id:'immortal_hunt_'+realm});advanced=this.act({type:'celestialBreakthrough'},true);}
+      assert(advanced.ok,'actual fresh immortal trial and resources support advancement: '+advanced.message);this.save();
+    }
+    assert.equal(this.visitedCelestial.size,30,'every immortal small layer was visited through its actual action');
+    assert.equal(this.state.ascension.perfected,true,'third immortal realm is truly complete, not just a label');
+    assert.equal(this.state.ascension.breakthroughs,3);
+    const before=E.serialize(this.state),again=E.act(this.state,{type:'completeAscension'},this.now);assert.equal(again.ok,false);assert.equal(E.serialize(this.state),before,'flight is granted once');
+  }
   run() {
     // The initial herb fight proves entry from the untouched starter save.
     this.combat({id:'resource_herb'});
@@ -301,15 +346,19 @@ class Campaign {
     assert.equal(Object.keys(this.state.progress.bossWins).length,12);
     assert.equal(this.state.progress.endingTrials[this.route],true);
     assert.equal(this.visitedRanks.size,60,'Every cultivation node reached');
+    this.fly();
+    assert.deepEqual(this.state.paths[this.route==='magic'?'body':'magic'],this.originalOtherPath,'flying preserves the untrained other path');
+    assert.equal(this.state.gacha.total,0,'new realm still needs no draws');
+    assert.equal(this.counts.maxEquippedRarity,3,'new realm still retains actual purple equipment');
     this.save();
     return this.summary();
   }
   summary() {
-    return {route:this.route,startTimestamp:START,seed:START>>>0,...this.counts,simulatedHours:this.counts.waitHours,realm:K.realmLabel(this.state),secondaryRoute:this.state.paths[this.route==='magic'?'body':'magic'],visitedNodes:this.visitedRanks.size,tower:this.state.progress.tower,uniqueBosses:Object.keys(this.state.progress.bossWins).length,chapter:this.state.story.chapter,ending:this.state.story.ending?.id||this.state.story.ending?.title||null,draws:this.state.gacha.total,redGearEquipped:0,redTreasuresEquipped:this.state.loadouts[this.route].treasures.filter(id=>id&&C.treasures[id].rarity===5).length,steps:this.steps,failures:this.failures};
+    return {route:this.route,startTimestamp:START,seed:START>>>0,...this.counts,simulatedHours:this.counts.waitHours,realm:K.realmLabel(this.state),secondaryRoute:this.state.paths[this.route==='magic'?'body':'magic'],visitedNodes:this.visitedRanks.size,immortalNodes:this.visitedCelestial.size,immortalRealm:this.state.ascension?A.view(this.state).realmLabel:null,ascended:this.state.ascension?.stage==='ascended',perfected:!!this.state.ascension?.perfected,tower:this.state.progress.tower,uniqueBosses:Object.keys(this.state.progress.bossWins).length,chapter:this.state.story.chapter,ending:this.state.story.ending?.id||this.state.story.ending?.title||null,draws:this.state.gacha.total,redGearEquipped:0,redTreasuresEquipped:this.state.loadouts[this.route].treasures.filter(id=>id&&C.treasures[id].rarity===5).length,steps:this.steps,failures:this.failures};
   }
 }
 
-test('zero-draw legal actions reach all 120 independent route nodes and each guardian ending', {timeout:120000}, () => {
+test('zero-draw legal actions reach 120 mortal nodes, both endings, true flight and all 60 immortal nodes', {timeout:120000}, () => {
   fs.mkdirSync(path.join(__dirname,'../dist'),{recursive:true});
   const results=[];
   for(const route of ['magic','body']) {
@@ -317,11 +366,11 @@ test('zero-draw legal actions reach all 120 independent route nodes and each gua
     try {results.push(campaign.run());}
     catch(error) {
       results.push({...campaign.summary(),status:'blocked',error:error.message});
-      fs.writeFileSync(path.join(__dirname,'../dist/playthrough-v3-report.json'),JSON.stringify({method:'accelerated legal engine actions',results},null,2));
+      fs.writeFileSync(path.join(__dirname,'../dist/playthrough-v3-report.json'),JSON.stringify({...CAMPAIGN_METHOD,results},null,2));
       console.log('PLAYTHROUGH '+JSON.stringify(results.at(-1)));
       throw error;
     }
   }
-  fs.writeFileSync(path.join(__dirname,'../dist/playthrough-v3-report.json'),JSON.stringify({method:'accelerated legal engine actions; no real-time browser/device claim',results},null,2));
+  fs.writeFileSync(path.join(__dirname,'../dist/playthrough-v3-report.json'),JSON.stringify({...CAMPAIGN_METHOD,results},null,2));
   for(const r of results)console.log('PLAYTHROUGH '+JSON.stringify({...r,steps:undefined,failures:undefined}));
 });

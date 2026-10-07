@@ -14,6 +14,7 @@ const DIST = path.join(ROOT, 'dist');
 const { chromium } = require(path.join(ROOT, 'qa-tools/node_modules/playwright'));
 const E = require(path.join(ROOT, 'web/engine.js'));
 const C = E.catalog;
+const {readyJourneyFixture}=require('./story-fixtures.cjs');
 const KEY = 'lingqi-save-v2';
 const NOW = Date.now();
 const report = { startedAt: new Date().toISOString(), url: BASE, filter: FILTER || null,
@@ -37,8 +38,8 @@ function fixture(o = {}) {
     assert.ok(E.act(s, { type: 'joinSect', school: 'sword' }, NOW).ok);
     s.stats.craftedTier2 = 5;
   }
-  if (o.chapter) { s.progress.dungeonWins.resource_herb = 1; }
-  if (o.sidequest) { s.progress.dungeonWins.resource_ore = 3; }
+  if (o.chapter) { s.progress.dungeonWins.resource_herb = 1; readyJourneyFixture(s,'chapter_0','protect',NOW); }
+  if (o.sidequest) { s.progress.dungeonWins.resource_ore = 3; readyJourneyFixture(s,'world_forge','protect',NOW); }
   if (o.poor) { s.stones = 0; for (const id of Object.keys(s.materials)) s.materials[id] = 0; }
   if (o.battle) {
     assert.ok(E.act(s, { type: 'startDungeon', id: 'boss_4', tier: 2 }, NOW).ok);
@@ -283,7 +284,7 @@ async function visibleReward(page) {
   }));
 
   await test('production chapter collection reports actual newly acquired techniques or duplicate fragments and returns to the story', () => withPage({ chapter: true }, async page => {
-    await pageNav(page, 'fate'); const before = await stateOf(page); await action(page, 'claimChapter', p => p.choice === 'protect'); await settlement(page, 'claimChapter');
+    await pageNav(page, 'fate'); await ui(page,'story-open',p=>p.episode==='chapter_0'); const before = await stateOf(page); await action(page, 'claimChapter', p => p.choice === 'protect'); await settlement(page, 'claimChapter');
     const after = await stateOf(page); assert.equal(after.story.chapter, before.story.chapter + 1);
     for (const id of C.chapters[0].reward.techniques) {
       if (!before.techniques[id]) { assert.ok(after.techniques[id]); await card(page, 'technique', id, 1); }
@@ -299,11 +300,13 @@ async function visibleReward(page) {
     await pageNav(page, 'fate'); await ui(page, 'fate-tab', p => p.id === 'side');
     const index = Math.floor(C.sidequests.findIndex(q => q.id === 'world_forge') / 2);
     for (let i = 1; i <= index; i++) await ui(page, 'layout-page', p => p.key === 'fate-side' && p.index === i);
+    await ui(page,'story-open',p=>p.episode==='world_forge');
     const before = await stateOf(page); await action(page, 'claimSidequest', p => p.id === 'world_forge'); await settlement(page, 'claimSidequest');
     const after = await stateOf(page); assert.ok(after.story.sideCompleted.includes('world_forge'));
     for (const set of Object.keys(C.sets)) { assert.ok(!before.blueprints.includes(set)); assert.ok(after.blueprints.includes(set)); await card(page, 'blueprint', set, 1); }
     await saved(page); await returnNoGrant(page);
-    assert.equal(await (await button(page, 'button[data-action=claimSidequest]', p => p.id === 'world_forge')).isDisabled(), true);
+    assert.equal(await page.locator('button[data-action=claimSidequest]:visible').count(),0,'completed story exposes no collection action');
+    const duplicateBefore=holdings(await stateOf(page));const duplicate=await page.evaluate(()=>window.Lingqi.act('claimSidequest',{id:'world_forge'}));assert.equal(duplicate.ok,false);assert.deepEqual(holdings(await stateOf(page)),duplicateBefore,'completed story cannot issue a duplicate reward');
     return { newPermanentBlueprints: 6, completionSaved: true, duplicateDisabled: true };
   }));
 

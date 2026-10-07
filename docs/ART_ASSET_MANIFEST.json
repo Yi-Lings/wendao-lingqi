@@ -10457,15 +10457,15 @@
     },
     {
       "id": "break0",
-      "name": "护脉丹",
+      "name": "筑基丹",
       "rarity": 1,
-      "intent": "护脉丹玉青草药，经络细纹",
+      "intent": "筑基丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
         "position": "0% 100%",
         "identity": "break0",
-        "name": "护脉丹",
+        "name": "筑基丹",
         "rarity": 1,
         "palette": "jade",
         "aura": "#89dfb8",
@@ -10486,15 +10486,15 @@
     },
     {
       "id": "break1",
-      "name": "固基丹",
+      "name": "凝金丹",
       "rarity": 2,
-      "intent": "固基丹岩灰/暖褐，基础稳固细纹",
+      "intent": "凝金丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
         "position": "20% 100%",
         "identity": "break1",
-        "name": "固基丹",
+        "name": "凝金丹",
         "rarity": 2,
         "palette": "earth",
         "aura": "#c9a76a",
@@ -10515,15 +10515,15 @@
     },
     {
       "id": "break2",
-      "name": "归藏丹",
+      "name": "凝婴丹",
       "rarity": 3,
-      "intent": "归藏丹墨青/玉白守护识海，紫仅可少量",
+      "intent": "凝婴丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
         "position": "40% 100%",
         "identity": "break2",
-        "name": "归藏丹",
+        "name": "凝婴丹",
         "rarity": 3,
         "palette": "moon",
         "aura": "#cfdae8",
@@ -10544,15 +10544,15 @@
     },
     {
       "id": "break3",
-      "name": "玉清丹",
+      "name": "化神丹",
       "rarity": 4,
-      "intent": "玉清丹玉白/青绿清灵色，不必橙金",
+      "intent": "化神丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
         "position": "60% 100%",
         "identity": "break3",
-        "name": "玉清丹",
+        "name": "化神丹",
         "rarity": 4,
         "palette": "jade",
         "aura": "#89dfb8",
@@ -10575,7 +10575,7 @@
       "id": "break4",
       "name": "渡厄丹",
       "rarity": 5,
-      "intent": "渡厄丹白蓝/紫雷纹，护劫雷火多色，不是全红",
+      "intent": "渡厄丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
@@ -10602,15 +10602,15 @@
     },
     {
       "id": "break5",
-      "name": "太一复元丹",
+      "name": "道心丹",
       "rarity": 5,
-      "intent": "太一复元丹玉白/淡金/柔绿阴阳回元光，不是全红",
+      "intent": "道心丹，同境护脉与护道主药；保留原独立丹药图位，不按品级染红。",
       "currentArt": {
         "file": "v6-pills-atlas.png",
         "size": "600% 300%",
         "position": "100% 100%",
         "identity": "break5",
-        "name": "太一复元丹",
+        "name": "道心丹",
         "rarity": 5,
         "palette": "lotus",
         "aura": "#b0ecd1",
@@ -11749,5 +11749,1224 @@
     }
   ],
   "updated": "2026-10-07",
-  "direction": "品级由边框、徽记和揭示表现；物体的造型、材质、颜色和光效依据实际名称。保留原始资源。"
+  "direction": "品级由边框、徽记和揭示表现；物体的造型、材质、颜色和光效依据实际名称。保留原始资源。",
+  "monsters": [
+    {
+      "id": "boar",
+      "name": "青岚灵獠",
+      "description": "药圃外围的灵獠，藤叶覆背，双獠外翻。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 0,
+        "row": 0,
+        "name": "青岚灵獠",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "0% 0%",
+        "crop": [
+          0.004509582863585118,
+          0.010146561443066516,
+          0.2452085682074408,
+          0.48928974069898534
+        ]
+      }
+    },
+    {
+      "id": "golem",
+      "name": "晶甲石傀",
+      "description": "矿脉凝成的石傀，胸肩嵌着绿色晶簇。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 1,
+        "row": 0,
+        "name": "晶甲石傀",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "33.333333333333336% 0%",
+        "crop": [
+          0.25422773393461107,
+          0.010146561443066516,
+          0.24577226606538896,
+          0.48928974069898534
+        ]
+      }
+    },
+    {
+      "id": "water",
+      "name": "镜湖灵鹿",
+      "description": "守护灵泉的白蓝灵鹿，角间托着一颗水珠。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 2,
+        "row": 0,
+        "name": "镜湖灵鹿",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "66.66666666666667% 0%",
+        "crop": [
+          0.5045095828635852,
+          0.010146561443066516,
+          0.2463359639233371,
+          0.48928974069898534
+        ]
+      }
+    },
+    {
+      "id": "thunder",
+      "name": "紫霄雷隼",
+      "description": "紫羽雷隼，振翼时显出金色雷纹。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 3,
+        "row": 0,
+        "name": "紫霄雷隼",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "100% 0%",
+        "crop": [
+          0.7553551296505073,
+          0.010146561443066516,
+          0.24013528748590757,
+          0.48928974069898534
+        ]
+      }
+    },
+    {
+      "id": "shadow",
+      "name": "噬影幽狼",
+      "description": "黑紫幽狼沿破碎长廊出没，眼中燃着魂火。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 0,
+        "row": 1,
+        "name": "噬影幽狼",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "0% 100%",
+        "crop": [
+          0.004509582863585118,
+          0.5084554678692221,
+          0.2452085682074408,
+          0.48252536640360766
+        ]
+      }
+    },
+    {
+      "id": "armor",
+      "name": "古甲执戈卫",
+      "description": "披覆旧青铜甲的守卫，执一杆青玉长戈。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 1,
+        "row": 1,
+        "name": "古甲执戈卫",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "33.333333333333336% 100%",
+        "crop": [
+          0.25422773393461107,
+          0.5084554678692221,
+          0.24577226606538896,
+          0.48252536640360766
+        ]
+      }
+    },
+    {
+      "id": "flower",
+      "name": "赤莲噬灵花",
+      "description": "花核燃金，赤红巨莲借根须汲取地脉。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 2,
+        "row": 1,
+        "name": "赤莲噬灵花",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "66.66666666666667% 100%",
+        "crop": [
+          0.5045095828635852,
+          0.5084554678692221,
+          0.2463359639233371,
+          0.48252536640360766
+        ]
+      }
+    },
+    {
+      "id": "star",
+      "name": "星桥灵螭",
+      "description": "白金灵螭盘绕星轨，身旁浮着蓝色阵珠。",
+      "art": {
+        "file": "v3-monster-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 3,
+        "row": 1,
+        "name": "星桥灵螭",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "100% 100%",
+        "crop": [
+          0.7553551296505073,
+          0.5084554678692221,
+          0.24013528748590757,
+          0.48252536640360766
+        ]
+      }
+    },
+    {
+      "id": "siphon_beetle",
+      "name": "汲灵虫",
+      "description": "六足翠甲灵虫，腹部会随汲取药圃灵息而发光。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 0,
+        "row": 0,
+        "name": "汲灵虫",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "0% 0%",
+        "crop": [
+          0.0005636978579481398,
+          0.0011273957158962795,
+          0.24859075535512964,
+          0.4983089064261556
+        ]
+      }
+    },
+    {
+      "id": "tablet_spirit",
+      "name": "碑纹石灵",
+      "description": "刻纹石碑所化的矮小石灵，头顶留着完整青蓝阵纹。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 1,
+        "row": 0,
+        "name": "碑纹石灵",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "33.333333333333336% 0%",
+        "crop": [
+          0.2502818489289741,
+          0.0011273957158962795,
+          0.2491544532130778,
+          0.4983089064261556
+        ]
+      }
+    },
+    {
+      "id": "spring_wraith",
+      "name": "灵泉浊妖",
+      "description": "被旧阵污染的水息聚成浊妖，净化后会还原清泉。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 2,
+        "row": 0,
+        "name": "灵泉浊妖",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "66.66666666666667% 0%",
+        "crop": [
+          0.5005636978579482,
+          0.0011273957158962795,
+          0.24859075535512964,
+          0.4983089064261556
+        ]
+      }
+    },
+    {
+      "id": "blight_moth",
+      "name": "蚀莲灵蛾",
+      "description": "夜里掠过莲池的灵蛾，翅粉会侵蚀药草生机。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 3,
+        "row": 0,
+        "name": "蚀莲灵蛾",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "100% 0%",
+        "crop": [
+          0.7502818489289741,
+          0.0011273957158962795,
+          0.2491544532130778,
+          0.4983089064261556
+        ]
+      }
+    },
+    {
+      "id": "bronze_sentinel",
+      "name": "青铜门卫",
+      "description": "古府门前的铜玉机关卫，持短枪与方盾。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 0,
+        "row": 1,
+        "name": "青铜门卫",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "0% 100%",
+        "crop": [
+          0.0005636978579481398,
+          0.5016910935738444,
+          0.24859075535512964,
+          0.4971815107102593
+        ]
+      }
+    },
+    {
+      "id": "root_tendril",
+      "name": "缚灵根须",
+      "description": "树王分出的活根，木壳之下露出青色灵眼。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 1,
+        "row": 1,
+        "name": "缚灵根须",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "33.333333333333336% 100%",
+        "crop": [
+          0.2502818489289741,
+          0.5016910935738444,
+          0.2491544532130778,
+          0.4971815107102593
+        ]
+      }
+    },
+    {
+      "id": "mirror_phantom",
+      "name": "镜月幻影",
+      "description": "镜片聚成的无面衣影，与有实体的修士区分。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 2,
+        "row": 1,
+        "name": "镜月幻影",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "66.66666666666667% 100%",
+        "crop": [
+          0.5005636978579482,
+          0.5016910935738444,
+          0.24859075535512964,
+          0.4971815107102593
+        ]
+      }
+    },
+    {
+      "id": "ember_golem",
+      "name": "碎焰石灵",
+      "description": "火脉里诞生的浮石灵，黑岩裂隙间透出橙色熔焰。",
+      "art": {
+        "file": "v7-encounters-atlas.png",
+        "cols": 4,
+        "rows": 2,
+        "col": 3,
+        "row": 1,
+        "name": "碎焰石灵",
+        "kind": "monster",
+        "size": "400% 200%",
+        "position": "100% 100%",
+        "crop": [
+          0.7502818489289741,
+          0.5016910935738444,
+          0.2491544532130778,
+          0.4971815107102593
+        ]
+      }
+    },
+    {
+      "id": "gate_lion",
+      "name": "天门镇界狮",
+      "description": "玉白神狮镇守天门，金玉甲上留着历代飞升者的洗尘纹。",
+      "art": {
+        "file": "v7-immortal-beasts-atlas.png",
+        "cols": 2,
+        "rows": 2,
+        "col": 0,
+        "row": 0,
+        "name": "天门镇界狮",
+        "kind": "monster",
+        "size": "200% 200%",
+        "position": "0% 0%",
+        "crop": [
+          0.0007974481658692185,
+          0.0007974481658692185,
+          0.4984051036682616,
+          0.4984051036682616
+        ]
+      }
+    },
+    {
+      "id": "frost_crane",
+      "name": "霜天玄鹤",
+      "description": "赤顶白羽的仙鹤，灵息化雪，守住初入仙域者的最后一道寒关。",
+      "art": {
+        "file": "v7-immortal-beasts-atlas.png",
+        "cols": 2,
+        "rows": 2,
+        "col": 1,
+        "row": 0,
+        "name": "霜天玄鹤",
+        "kind": "monster",
+        "size": "200% 200%",
+        "position": "100% 0%",
+        "crop": [
+          0.5007974481658692,
+          0.0007974481658692185,
+          0.4984051036682616,
+          0.4984051036682616
+        ]
+      }
+    },
+    {
+      "id": "star_ocean_dragon",
+      "name": "星海苍龙",
+      "description": "苍蓝仙龙游过星海，潮汐随龙息起落，长角之间凝着一片澄澈星空。",
+      "art": {
+        "file": "v7-immortal-beasts-atlas.png",
+        "cols": 2,
+        "rows": 2,
+        "col": 0,
+        "row": 1,
+        "name": "星海苍龙",
+        "kind": "monster",
+        "size": "200% 200%",
+        "position": "0% 100%",
+        "crop": [
+          0.0007974481658692185,
+          0.5007974481658692,
+          0.4984051036682616,
+          0.4984051036682616
+        ]
+      }
+    },
+    {
+      "id": "primordial_phoenix",
+      "name": "太初玄凰",
+      "description": "黑白双羽的玄凰收束阴阳，金焰不焚肉身，却照见修士最深的执念。",
+      "art": {
+        "file": "v7-immortal-beasts-atlas.png",
+        "cols": 2,
+        "rows": 2,
+        "col": 1,
+        "row": 1,
+        "name": "太初玄凰",
+        "kind": "monster",
+        "size": "200% 200%",
+        "position": "100% 100%",
+        "crop": [
+          0.5007974481658692,
+          0.5007974481658692,
+          0.4984051036682616,
+          0.4984051036682616
+        ]
+      }
+    }
+  ],
+  "rivals": [
+    {
+      "id": "hanyue",
+      "name": "韩岳",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 0,
+        "name": "韩岳",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "0% 0%",
+        "crop": [
+          0,
+          0,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "yejinghong",
+      "name": "叶惊鸿",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 0,
+        "name": "叶惊鸿",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "50% 0%",
+        "crop": [
+          0.3333333333333333,
+          0,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "luojingxing",
+      "name": "骆景行",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 0,
+        "name": "骆景行",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "100% 0%",
+        "crop": [
+          0.6666666666666666,
+          0,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "xuzhao",
+      "name": "许照",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 0,
+        "row": 1,
+        "name": "许照",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "0% 100%",
+        "crop": [
+          0,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "jilingchuan",
+      "name": "季凌川",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 1,
+        "row": 1,
+        "name": "季凌川",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "50% 100%",
+        "crop": [
+          0.3333333333333333,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "luojingxing_plain",
+      "name": "骆景行·守殿之约",
+      "art": {
+        "file": "v7-rivals-atlas.png",
+        "cols": 3,
+        "rows": 2,
+        "col": 2,
+        "row": 1,
+        "name": "骆景行·守殿之约",
+        "kind": "rival",
+        "size": "300% 200%",
+        "position": "100% 100%",
+        "crop": [
+          0.6666666666666666,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ]
+      }
+    }
+  ],
+  "narrativeBackgrounds": [
+    {
+      "file": "story-arena.png",
+      "use": "山门斗技扬名与三轮比试",
+      "path": "web/assets/story-arena.png",
+      "bytes": 3397476,
+      "sha256": "cc1f6087e7a44babadf1979e7a43137f7c254f325a132d701145ad1b832fde60",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "story-secret.png",
+      "use": "沉星秘境夺魁与原档争夺",
+      "path": "web/assets/story-secret.png",
+      "bytes": 3491255,
+      "sha256": "eff4b2627bf21be69cd6aa67820ef7f0b1fcbd481ff17755318f88484c83ee6b",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "story-heaven.png",
+      "use": "六境圆满叩开天门、飞升道誓与三仙阶天路",
+      "path": "web/assets/story-heaven.png",
+      "bytes": 3311737,
+      "sha256": "3425b8872846a05edc4272dc0f383877bac3240270d73f94603f02ad839c52d7",
+      "width": 1536,
+      "height": 1024
+    }
+  ],
+  "immortalMentors": [
+    {
+      "id": "xuanlv",
+      "name": "玄律",
+      "role": "天门执律",
+      "expressions": [
+        {
+          "expression": 0,
+          "name": "平静",
+          "dialogueUses": 2,
+          "art": {
+            "speakerId": "xuanlv",
+            "name": "玄律",
+            "role": "天门执律",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 0,
+            "row": 0,
+            "expression": 0,
+            "expressionName": "平静",
+            "size": "300% 400%",
+            "position": "0% 0%",
+            "crop": [
+              0,
+              0,
+              0.3324125230202578,
+              0.24930939226519336
+            ]
+          }
+        },
+        {
+          "expression": 1,
+          "name": "认可",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "xuanlv",
+            "name": "玄律",
+            "role": "天门执律",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 0,
+            "row": 1,
+            "expression": 1,
+            "expressionName": "认可",
+            "size": "300% 400%",
+            "position": "0% 33.333333333333336%",
+            "crop": [
+              0,
+              0.2506906077348066,
+              0.3324125230202578,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 2,
+          "name": "审视",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "xuanlv",
+            "name": "玄律",
+            "role": "天门执律",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 0,
+            "row": 2,
+            "expression": 2,
+            "expressionName": "审视",
+            "size": "300% 400%",
+            "position": "0% 66.66666666666667%",
+            "crop": [
+              0,
+              0.5006906077348067,
+              0.3324125230202578,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 3,
+          "name": "坚定",
+          "dialogueUses": 2,
+          "art": {
+            "speakerId": "xuanlv",
+            "name": "玄律",
+            "role": "天门执律",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 0,
+            "row": 3,
+            "expression": 3,
+            "expressionName": "坚定",
+            "size": "300% 400%",
+            "position": "0% 100%",
+            "crop": [
+              0,
+              0.7506906077348067,
+              0.3324125230202578,
+              0.24930939226519336
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "chizhaochuan",
+      "name": "池照川",
+      "role": "云海真君",
+      "expressions": [
+        {
+          "expression": 0,
+          "name": "平静",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "chizhaochuan",
+            "name": "池照川",
+            "role": "云海真君",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 1,
+            "row": 0,
+            "expression": 0,
+            "expressionName": "平静",
+            "size": "300% 400%",
+            "position": "50% 0%",
+            "crop": [
+              0.3342541436464088,
+              0,
+              0.3314917127071823,
+              0.24930939226519336
+            ]
+          }
+        },
+        {
+          "expression": 1,
+          "name": "认可",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "chizhaochuan",
+            "name": "池照川",
+            "role": "云海真君",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 1,
+            "row": 1,
+            "expression": 1,
+            "expressionName": "认可",
+            "size": "300% 400%",
+            "position": "50% 33.333333333333336%",
+            "crop": [
+              0.3342541436464088,
+              0.2506906077348066,
+              0.3314917127071823,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 2,
+          "name": "审视",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "chizhaochuan",
+            "name": "池照川",
+            "role": "云海真君",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 1,
+            "row": 2,
+            "expression": 2,
+            "expressionName": "审视",
+            "size": "300% 400%",
+            "position": "50% 66.66666666666667%",
+            "crop": [
+              0.3342541436464088,
+              0.5006906077348067,
+              0.3314917127071823,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 3,
+          "name": "坚定",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "chizhaochuan",
+            "name": "池照川",
+            "role": "云海真君",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 1,
+            "row": 3,
+            "expression": 3,
+            "expressionName": "坚定",
+            "size": "300% 400%",
+            "position": "50% 100%",
+            "crop": [
+              0.3342541436464088,
+              0.7506906077348067,
+              0.3314917127071823,
+              0.24930939226519336
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "shangfenyue",
+      "name": "商焚岳",
+      "role": "星海镇将",
+      "expressions": [
+        {
+          "expression": 0,
+          "name": "平静",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "shangfenyue",
+            "name": "商焚岳",
+            "role": "星海镇将",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 2,
+            "row": 0,
+            "expression": 0,
+            "expressionName": "平静",
+            "size": "300% 400%",
+            "position": "100% 0%",
+            "crop": [
+              0.6675874769797422,
+              0,
+              0.3324125230202578,
+              0.24930939226519336
+            ]
+          }
+        },
+        {
+          "expression": 1,
+          "name": "认可",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "shangfenyue",
+            "name": "商焚岳",
+            "role": "星海镇将",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 2,
+            "row": 1,
+            "expression": 1,
+            "expressionName": "认可",
+            "size": "300% 400%",
+            "position": "100% 33.333333333333336%",
+            "crop": [
+              0.6675874769797422,
+              0.2506906077348066,
+              0.3324125230202578,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 2,
+          "name": "审视",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "shangfenyue",
+            "name": "商焚岳",
+            "role": "星海镇将",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 2,
+            "row": 2,
+            "expression": 2,
+            "expressionName": "审视",
+            "size": "300% 400%",
+            "position": "100% 66.66666666666667%",
+            "crop": [
+              0.6675874769797422,
+              0.5006906077348067,
+              0.3324125230202578,
+              0.24861878453038674
+            ]
+          }
+        },
+        {
+          "expression": 3,
+          "name": "坚定",
+          "dialogueUses": 1,
+          "art": {
+            "speakerId": "shangfenyue",
+            "name": "商焚岳",
+            "role": "星海镇将",
+            "file": "v7-immortal-mentors-atlas.png",
+            "cols": 3,
+            "rows": 4,
+            "col": 2,
+            "row": 3,
+            "expression": 3,
+            "expressionName": "坚定",
+            "size": "300% 400%",
+            "position": "100% 100%",
+            "crop": [
+              0.6675874769797422,
+              0.7506906077348067,
+              0.3324125230202578,
+              0.24930939226519336
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "audio": {
+    "originalManifest": {
+      "path": "web/assets/audio/manifest.json",
+      "bytes": 4621,
+      "sha256": "021ea2ac4059e930449614e844c3f1e2eed4d67170ef1643faefcef3af2244c7",
+      "unchanged": true,
+      "assetCount": 14,
+      "assets": {
+        "home": {
+          "file": "bgm-home.mp3",
+          "kind": "music",
+          "duration": 48,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.74,
+          "rms": 0.17215,
+          "bytes": 673113,
+          "sha256": "cd3d56aa148982ca990edc4464297334ff5f570be8be4a2ec83b60478b16bc32",
+          "bpm": 80,
+          "loop": true,
+          "boundaryDelta": 0.01316
+        },
+        "battle": {
+          "file": "bgm-battle.mp3",
+          "kind": "music",
+          "duration": 43.6363,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.74,
+          "rms": 0.16575,
+          "bytes": 612299,
+          "sha256": "bbfefba51a6e30a08f9d22fc0baba82b84d0430151e21ae9cc0a1f7d13396c84",
+          "bpm": 88,
+          "loop": true,
+          "boundaryDelta": 0.02673
+        },
+        "heaven": {
+          "file": "bgm-heaven.mp3",
+          "kind": "music",
+          "duration": 50.5263,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.74,
+          "rms": 0.19205,
+          "bytes": 708731,
+          "sha256": "dcd80ee7b4f1b8b06d5c31d38f6a1c9ce3af599e04632d8d7d18e2f6e0b308ab",
+          "bpm": 76,
+          "loop": true,
+          "boundaryDelta": 0.03799
+        },
+        "ui": {
+          "file": "ui.mp3",
+          "kind": "effect",
+          "duration": 0.19,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.33048,
+          "bytes": 3795,
+          "sha256": "4cf36334b9efe0214917d1e9932c708d14ecea5adb883b14ee23a7041c13a742"
+        },
+        "success": {
+          "file": "success.mp3",
+          "kind": "effect",
+          "duration": 1.1,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.20044,
+          "bytes": 16568,
+          "sha256": "4c94ddc664e0471e1b76908ba7ca832815caf1324290c24a711309960da833a4"
+        },
+        "error": {
+          "file": "error.mp3",
+          "kind": "effect",
+          "duration": 0.48,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.2667,
+          "bytes": 7830,
+          "sha256": "79da02ade4b19444b0c0f1372b299020f85bd27165ab1674e6715fa6cd9ef801"
+        },
+        "battle-hit": {
+          "file": "battle-hit.mp3",
+          "kind": "effect",
+          "duration": 0.38,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.26117,
+          "bytes": 6491,
+          "sha256": "5ea9e8e44f1789781d7d8b84a83f97a77316d232beae5d21484d1dabfe1dc198"
+        },
+        "battle-skill": {
+          "file": "battle-skill.mp3",
+          "kind": "effect",
+          "duration": 1.18,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.17102,
+          "bytes": 17917,
+          "sha256": "8dd23b2abb3be90ec369c665f9505c65d831dd9f9c2ed52a63f6d73697c73a7c"
+        },
+        "victory": {
+          "file": "victory.mp3",
+          "kind": "effect",
+          "duration": 3.2,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.18227,
+          "bytes": 46136,
+          "sha256": "ce99a99b95c21e9fefea36f04c7d11231c7da207b45a771a51e0dd1bf6405608"
+        },
+        "defeat": {
+          "file": "defeat.mp3",
+          "kind": "effect",
+          "duration": 2.35,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.22201,
+          "bytes": 34039,
+          "sha256": "7fe39acde7bebda50088c47b82b36be82ba7c111dd3a4864fe7ae91047a511b8"
+        },
+        "summon-rise": {
+          "file": "summon-rise.mp3",
+          "kind": "effect",
+          "duration": 3.8,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.18793,
+          "bytes": 54540,
+          "sha256": "07fc962d70f2ea0af4af986ca51440d5893c12ff14fd3124c1c9f691c91ca78b"
+        },
+        "reveal": {
+          "file": "reveal.mp3",
+          "kind": "effect",
+          "duration": 1.4,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.20385,
+          "bytes": 20935,
+          "sha256": "f9db83c9efdfbee5e243a54059488289f66e0f178363f697ad57e48cd8b81052"
+        },
+        "red-awaken": {
+          "file": "red-awaken.mp3",
+          "kind": "effect",
+          "duration": 3.4,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.22365,
+          "bytes": 48827,
+          "sha256": "3617569b6f54cf4a8a8f96908fb517e74d6864de18081fa682e77c1648253824"
+        },
+        "red-impact": {
+          "file": "red-impact.mp3",
+          "kind": "effect",
+          "duration": 4.2,
+          "sampleRate": 24000,
+          "channels": 2,
+          "peak": 0.8,
+          "rms": 0.17763,
+          "bytes": 59915,
+          "sha256": "a51f6a2ae5deb0957edfdd3a3e1b31a4369148eac684a12bee8a51769f98868f"
+        }
+      }
+    },
+    "extensions": [
+      {
+        "path": "web/assets/audio/ascension-manifest.json",
+        "bytes": 6453,
+        "sha256": "04eef5f260a11db6463b238488b9f889e952d9df02e566fcef0f4d010d7fd58b",
+        "independent": true,
+        "provenance": "Original 32-bar D yu pentatonic score and modal synthesis for 问道·灵契; no external samples or copied melodies.",
+        "generator": "tools/audio/compose-ascension.py",
+        "score": "tools/audio/ascension-score.json",
+        "license": "Project original assets; distributable with the game.",
+        "assets": {
+          "ascension": {
+            "file": "bgm-ascension.mp3",
+            "kind": "music",
+            "duration": 96,
+            "sampleRate": 44100,
+            "channels": 2,
+            "peak": 0.74,
+            "rms": 0.19705,
+            "bytes": 1536834,
+            "sha256": "2c57edc0b80b35a040980af5be044a1f430215999e59546f1f7bda33d0327861",
+            "bitrate": 128000,
+            "decodedPeak": 0.69335,
+            "decodedRms": 0.1872,
+            "decodedSamples": 4233600,
+            "bpm": 80,
+            "loop": true,
+            "boundaryDelta": 0
+          },
+          "ascension-rise": {
+            "file": "ascension-rise.mp3",
+            "kind": "effect",
+            "duration": 6.8,
+            "sampleRate": 44100,
+            "channels": 2,
+            "peak": 0.8,
+            "rms": 0.15241,
+            "bytes": 109922,
+            "sha256": "f10ec3f0cec0a347ff0134b5a59009c0790a9f3891477c64ec7c4bd97626b497",
+            "bitrate": 128000,
+            "decodedPeak": 0.76298,
+            "decodedRms": 0.1448,
+            "decodedSamples": 299880
+          }
+        }
+      }
+    ],
+    "totalMp3": 16
+  },
+  "assetRevision": "V4",
+  "originalPreservation": {
+    "baselineCommit": "c0fb103bdcf6298fa385dc44e1b5436116242329",
+    "originalPngCount": 36,
+    "originalMp3Count": 14,
+    "allByteIdentical": true,
+    "audioManifestByteIdentical": true,
+    "report": "docs/validation/V4_ORIGINAL_ASSETS_2026-10-07.json"
+  },
+  "newResources": [
+    {
+      "path": "web/assets/audio/ascension-manifest.json",
+      "bytes": 6453,
+      "sha256": "04eef5f260a11db6463b238488b9f889e952d9df02e566fcef0f4d010d7fd58b"
+    },
+    {
+      "path": "web/assets/audio/ascension-rise.mp3",
+      "bytes": 109922,
+      "sha256": "f10ec3f0cec0a347ff0134b5a59009c0790a9f3891477c64ec7c4bd97626b497"
+    },
+    {
+      "path": "web/assets/audio/bgm-ascension.mp3",
+      "bytes": 1536834,
+      "sha256": "2c57edc0b80b35a040980af5be044a1f430215999e59546f1f7bda33d0327861"
+    },
+    {
+      "path": "web/assets/story-arena.png",
+      "bytes": 3397476,
+      "sha256": "cc1f6087e7a44babadf1979e7a43137f7c254f325a132d701145ad1b832fde60",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/story-heaven.png",
+      "bytes": 3311737,
+      "sha256": "3425b8872846a05edc4272dc0f383877bac3240270d73f94603f02ad839c52d7",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/story-secret.png",
+      "bytes": 3491255,
+      "sha256": "eff4b2627bf21be69cd6aa67820ef7f0b1fcbd481ff17755318f88484c83ee6b",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "path": "web/assets/v7-encounters-atlas.png",
+      "bytes": 2823154,
+      "sha256": "e5357b72bf47bda6c3bc7c5ab5ae06e4346fb3ef7f4eb7ad1beef892bf123db7",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "path": "web/assets/v7-immortal-beasts-atlas.png",
+      "bytes": 3336553,
+      "sha256": "c81138eb077ac8edcaf44f1833feaaa8ff1ffa1ed724c012241fb371013acc96",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "path": "web/assets/v7-immortal-mentors-atlas.png",
+      "bytes": 2962921,
+      "sha256": "1f7ce0a6375655b87d2552135807a173fe0582c9fe68b8a11c2a8cf6cae50aa6",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "path": "web/assets/v7-rivals-atlas.png",
+      "bytes": 2284199,
+      "sha256": "bf911627333c60019e92bafae9fe59546914e073e3be8abb249c53c68a44b834",
+      "width": 1536,
+      "height": 1024
+    }
+  ]
 }

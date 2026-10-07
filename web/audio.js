@@ -4,7 +4,7 @@
   // The game deliberately waits for a gesture; rejected playback stays silent.
   var STORAGE = 'lingqi_audio_v1';
   var DEFAULTS = { music: 0.42, effects: 0.55, muted: false };
-  var MUSIC = { home: 'bgm-home.mp3', battle: 'bgm-battle.mp3', heaven: 'bgm-heaven.mp3' };
+  var MUSIC = { home: 'bgm-home.mp3', battle: 'bgm-battle.mp3', heaven: 'bgm-heaven.mp3', ascension: 'bgm-ascension.mp3' };
   var EFFECTS = {
     'ui': { gap: 95, level: 0.44, priority: 0 },
     'success': { gap: 250, level: 0.72, priority: 1 },
@@ -16,7 +16,8 @@
     'summon-rise': { gap: 800, level: 0.74, priority: 2 },
     'reveal': { gap: 200, level: 0.76, priority: 2 },
     'red-awaken': { gap: 600, level: 0.88, priority: 3 },
-    'red-impact': { gap: 900, level: 0.94, priority: 3 }
+    'red-impact': { gap: 900, level: 0.94, priority: 3 },
+    'ascension-rise': { gap: 1800, level: 0.78, priority: 3 }
   };
   var pref = Object.assign({}, DEFAULTS), unlocked = false, scene = 'home';
   var suspended = false, away = false, current = null, fade = null;
@@ -177,7 +178,7 @@
     return Promise.resolve(typeof root.Audio === 'function');
   }
   function setScene(value) {
-    var next = value && typeof value === 'object' ? (value.battle ? 'battle' : value.heaven ? 'heaven' : 'home') : value;
+    var next = value && typeof value === 'object' ? (value.battle ? 'battle' : value.ascension ? 'ascension' : value.heaven ? 'heaven' : 'home') : value;
     if (!Object.prototype.hasOwnProperty.call(MUSIC, next)) next = 'home';
     if (scene !== next) { scene = next; updateMusic(); }
     return scene;

@@ -6,10 +6,13 @@ ROOT = pathlib.Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('apk', nargs='?', default=str(ROOT / 'dist/lingqi-game.apk'))
 parser.add_argument('--report', default=str(ROOT / 'dist/apk-check.txt'))
+parser.add_argument('--package-id', default='com.lingqi.game')
+parser.add_argument('--version-code', default='3')
+parser.add_argument('--version-name', default='3.0')
 args = parser.parse_args()
 apk = pathlib.Path(args.apk)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'monster-art.js', 'story-scenes.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'app.js']
+modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'monster-art.js', 'story-scenes.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
        'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',
@@ -19,12 +22,12 @@ art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png
        'v5-gear-quality-3.png', 'v5-gear-quality-4.png', 'v5-gear-quality-5.png',
        'v6-gear-quality-0.png', 'v6-gear-quality-1.png', 'v6-gear-quality-2.png',
        'v6-gear-quality-3.png', 'v6-gear-quality-4.png', 'v6-gear-quality-5.png',
-       'v6-techniques-atlas.png', 'v6-treasures-atlas.png', 'v6-pills-atlas.png', 'v6-utilities-atlas.png', 'story-arena.png', 'story-secret.png', 'v7-rivals-atlas.png', 'v7-encounters-atlas.png']
+       'v6-techniques-atlas.png', 'v6-treasures-atlas.png', 'v6-pills-atlas.png', 'v6-utilities-atlas.png', 'story-arena.png', 'story-secret.png', 'v7-rivals-atlas.png', 'v7-encounters-atlas.png', 'v7-immortal-beasts-atlas.png', 'v7-immortal-mentors-atlas.png', 'story-heaven.png']
 audio = ['bgm-home', 'bgm-battle', 'bgm-heaven', 'ui', 'success', 'error',
          'battle-hit', 'battle-skill', 'victory', 'defeat', 'summon-rise', 'reveal',
-         'red-awaken', 'red-impact']
+         'red-awaken', 'red-impact', 'bgm-ascension', 'ascension-rise']
 assets = [p for p in sorted((ROOT / 'web').rglob('*')) if p.is_file()]
-required = modules + ['index.html', 'style.css', 'item-art.css', 'selection.css', 'layout.css', 'battle.css', 'builds.css', 'rewards.css', 'activity-rewards.css', 'art-layout.css', 'story-screen.css', 'ritual-screen.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json']
+required = modules + ['index.html', 'style.css', 'item-art.css', 'selection.css', 'layout.css', 'battle.css', 'builds.css', 'rewards.css', 'activity-rewards.css', 'art-layout.css', 'story-screen.css', 'ritual-screen.css', 'ascension-screen.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json', 'assets/audio/ascension-manifest.json']
 assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required game asset missing'
 
 def digest(stream):
@@ -50,8 +53,8 @@ result = subprocess.run([str(tools / 'aapt2'), 'dump', 'badging', str(apk)],
                         env={**os.environ, 'LD_LIBRARY_PATH': str(tools / 'lib64')},
                         check=True, text=True, capture_output=True)
 badging = result.stdout
-assert "name='com.lingqi.game'" in badging
-assert "versionCode='3'" in badging and "versionName='3.0'" in badging
+assert "name='" + args.package_id + "'" in badging
+assert "versionCode='" + args.version_code + "'" in badging and "versionName='" + args.version_name + "'" in badging
 assert "sdkVersion:'26'" in badging or "minSdkVersion:'26'" in badging
 assert "targetSdkVersion:'35'" in badging
 assert 'uses-permission:' not in badging, 'APK declares a permission'

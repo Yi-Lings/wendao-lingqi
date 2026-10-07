@@ -1,8 +1,8 @@
 (function (root, factory) {
   'use strict';
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./data.js'), require('./core.js'), require('./economy.js'));
-  else root.WendaoCombat = factory(root.WendaoData, root.WendaoCore, root.WendaoEconomy);
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (C, K, Economy) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./data.js'), require('./core.js'), require('./economy.js'), require('./ascension.js'));
+  else root.WendaoCombat = factory(root.WendaoData, root.WendaoCore, root.WendaoEconomy, root.WendaoAscension);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (C, K, Economy, Ascension) {
   'use strict';
   var resourceNames = {sword:'剑意',body:'山势',thunder:'雷印',elements:'五行轮转',shadow:'蚀魄',array:'阵力'};
   var clamp = function(v,a,b){return Math.max(a,Math.min(b,Number(v)||0));};
@@ -202,6 +202,10 @@
     if(c.kind==='blockade'){damagePlayer(s,b,e.attack*.8,'封河封锁');mechanicEvent(b,c.kind,'两名封锁卫兵进场，需转火或群攻');}
     if(c.kind==='cataclysm'){damagePlayer(s,b,e.attack*2.3,'天隙雷劫');handledMechanic(b,c,before>e.attack?'预留护盾承住一段天隙雷劫':'一段天隙雷劫未打断且护盾不足',before>e.attack);}
     if(c.kind==='rift'){damagePlayer(s,b,e.attack*1.5,'裂隙爆发');addNegative(s,b,'burn',5,e.attack*.08,1);effect(e.statuses,'vulnerable',5,.3);effect(e.statuses,'armorBreak',5,.3);mechanicEvent(b,c.kind,'裂隙结束：净化灼烧并在5秒破绽爆发');}
+    if(c.kind==='heaven_pressure'){damagePlayer(s,b,e.attack*1.8,'天门洗尘');effect(e.statuses,'vulnerable',6,.25);handledMechanic(b,c,before>e.attack?'护盾承住天门洗尘，六秒破绽已开':'天门灵压未打断且护盾不足；劫后破绽可反击',before>e.attack);}
+    if(c.kind==='frost_feathers'){damagePlayer(s,b,e.attack*1.6,'雪羽封息');addNegative(s,b,'root',3,0,1);effect(e.statuses,'vulnerable',5,.2);handledMechanic(b,c,status(p.statuses,'root')?'雪羽封息未打断，净化束缚再反击':'抗性挡住雪羽束缚，反击窗口已开',!status(p.statuses,'root'));}
+    if(c.kind==='star_tide'){p.mp=Math.max(0,p.mp-p.maxMp*.2);damagePlayer(s,b,e.attack*1.6,'星潮噬灵');effect(e.statuses,'vulnerable',5,.2);handledMechanic(b,c,!!status(p.statuses,'manaArray')?'聚灵阵稳住星潮后的真元运转':'星潮未打断，流失20%真元；保留低耗神通或聚灵阵',!!status(p.statuses,'manaArray'));}
+    if(c.kind==='primal_flame'){damagePlayer(s,b,e.attack*1.8,'阴阳归火');addNegative(s,b,'burn',6,e.attack*.08,1);effect(e.statuses,'vulnerable',5,.3);mechanicEvent(b,c.kind,'阴阳归火已附灼烧；净化后借五秒收焰破绽反击');}
     if(c.kind.indexOf('resource_')===0||c.kind.indexOf('sect_')===0||c.kind.indexOf('tower_')===0){var move=e.mechanicSpec?c.name:'守阵蓄力';damagePlayer(s,b,e.attack*1.5,move);handledMechanic(b,c,before>e.attack?'护盾承住'+move:move+'未打断且护盾不足',before>e.attack);if(c.kind==='resource_herb')addNegative(s,b,'poison',5,e.attack*.05,1);if(c.kind==='resource_insight')addNegative(s,b,'weak',5,.1,1);if(c.kind==='resource_essence')addNegative(s,b,'burn',5,e.attack*.06,1);if(c.kind==='resource_crystal')e.shield=e.maxHp*.05;if(c.kind==='sect_body')e.shield=e.maxHp*.1;if(c.kind==='sect_array')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.04);if(c.kind==='sect_thunder')addNegative(s,b,'thunder',6,0,2);if(c.kind==='sect_elements')addNegative(s,b,'burn',6,e.attack*.06,1);if(c.kind==='sect_shadow')addNegative(s,b,'drain',6,1,1);}
     if(b.type==='trial'&&b.protect){var protectedTrial=before>0||status(p.statuses,'guard');b.protect.hp=Math.max(0,b.protect.hp-b.protect.maxHp*(protectedTrial?.025:.06));}
     var boss=Number.isInteger(e.bossIndex)&&C.bosses[e.bossIndex];e.mechanicTimer=e.mechanicInterval||primaryInterval(e.bossIndex)||(boss&&boss.mechanics[0].interval)||12;e.casting=null;
@@ -322,12 +326,13 @@
     var r=battleRewards(s,b),first=s.progress.firstClears.indexOf(b.firstKey)<0;
     if(first)learnDungeonRecipes(s,r,b.id,b.route);grantReward(s,r,b.route);if(first)s.progress.firstClears.push(b.firstKey);
     s.progress.dungeonWins[b.id]=(s.progress.dungeonWins[b.id]||0)+1;s.progress.dungeonWins[b.id+':'+b.tier+':'+b.difficulty]=(s.progress.dungeonWins[b.id+':'+b.tier+':'+b.difficulty]||0)+1;
+    if(b.type==='ascension'){var celestial=Ascension.rewardBattle(s,C.dungeons[b.id]);if(celestial)r.celestial=celestial;}
     s.stats['winsTier'+b.tier]=(s.stats['winsTier'+b.tier]||0)+1;if(b.type==='boss'){s.stats['bossesTier'+b.tier]=(s.stats['bossesTier'+b.tier]||0)+1;s.progress.bossWins[b.id]=(s.progress.bossWins[b.id]||0)+1;}
     if(b.type==='sect'&&s.progress.sectTrials.indexOf(b.id)<0)s.progress.sectTrials.push(b.id);
     if(b.type==='tower')s.progress.tower=Math.max(s.progress.tower,b.floor);
     var stars=b.player.hp/b.player.maxHp>=.45&&b.performance.missed===0?3:b.player.hp/b.player.maxHp>=.2?2:1;s.progress.stars[b.firstKey]=Math.max(s.progress.stars[b.firstKey]||0,stars);
     s.lastBattleResult=publicResult(b,true,r);s.lastBattleResult.first=first;s.lastBattleResult.stars=stars;
-    if(b.type==='arena'){var contest=C.dungeons[b.id];s.lastBattleResult.reason=contest.closing||'胜者继续晋级';s.lastBattleResult.trophy=contest.title||null;}
+    if(b.type==='arena'||b.type==='ascension'){var contest=C.dungeons[b.id];s.lastBattleResult.reason=contest.closing||'胜者继续晋级';s.lastBattleResult.trophy=contest.title||null;}
     recordResult(s,b,s.lastBattleResult);s.battle=null;K.log(s,'完成'+b.name+'：'+r.stones+'灵石、'+r.xp+'修为'+(r.tickets?'、'+r.tickets+'感应券':''));
     var retry=s.autoRetry;if(b.type==='boss'&&retry&&retry.enabled){retry.runs=(retry.runs||0)+1;var red=r.gear.some(function(g){return g.rarity===5;});if(retry.runs>=retry.maxRuns||(retry.stopOnRed&&red)||s.bag.length+(s.rewardOverflow||[]).length>=1300){retry.enabled=false;K.log(s,'自动重战停止：次数、红装或储存条件已满足');}else createBattle(s,C.dungeons[b.id],b.tier,b.difficulty,{name:b.name});}
   }
@@ -339,7 +344,8 @@
     return out;
   }
   function dungeonEnemy(d,tier,difficulty,floor,bossIndex){var out=enemyFor(Number.isInteger(bossIndex)?bossIndex:d.bossIndex,tier,difficulty,d.type,floor),rival=d.type==='arena'&&d.enemy;
-    if(rival){var scale=1+difficulty*.28;out.id=d.id+'_rival';out.name=rival.name;out.rivalId=rival.rivalId;out.hp=out.maxHp=Math.round(rival.maxHp*scale);out.attack=rival.attack*scale;out.defense=rival.defense;out.mechanicSpec=Object.assign({},rival.mechanic);out.genericMechanic=rival.mechanic.kind;out.mechanicInterval=rival.mechanicInterval||12;out.mechanicTimer=out.mechanicInterval;}
+    if(d.type==='ascension')rival=d.enemy;
+    if(rival){var scale=1+difficulty*.28;out.id=d.id+(d.type==='arena'?'_rival':'_guardian');out.name=rival.name;out.rivalId=rival.rivalId||null;out.species=rival.species||null;out.hp=out.maxHp=Math.round(rival.maxHp*scale);out.attack=rival.attack*scale;out.defense=rival.defense;out.mechanicSpec=Object.assign({},rival.mechanic);out.genericMechanic=rival.mechanic.kind;out.mechanicInterval=rival.mechanicInterval||12;out.mechanicTimer=out.mechanicInterval;}
     if(d.type==='sect'){out.rivalId={sword:'luojingxing',body:'hanyue',thunder:'jilingchuan',elements:'yejinghong',array:'xuzhao'}[d.school]||null;if(out.rivalId)out.name=C.rivals[out.rivalId].name+'·传法演武';else setSpecies(out,'mirror_phantom','玄冥照影·试阵傀儡');}
     if(d.type==='cave'&&!Number.isInteger(out.bossIndex))setSpecies(out,{cave_0:'bronze_sentinel',cave_1:'ember_golem',cave_2:'mirror_phantom'}[d.id]||'armor');
     return out;
@@ -362,9 +368,10 @@
     (loadout(s).pills||[]).forEach(function(id){b.practicePills[id]=3;});
     b.firstKey=firstKey(b);note(b,'进入'+b.name+(b.practice?'（免费试阵，无奖励与进度）':'')+'；战术暂停停止双方所有计时');if(d.opening)note(b,d.opening);s.battle=b;return b;
   }
-  function checkDungeon(s,d,tier,difficulty,floor){if(s.battle)return '当前战斗尚未结束';if(s.exploration)return '当前洞天尚未结束';if(!d)return '副本不存在';if((d.type==='boss'||d.type==='cave'||d.type==='arena'&&d.firstGear&&!(s.progress.dungeonWins[d.id]>0))&&s.bag.length+(s.rewardOverflow||[]).length>=1300)return '背包与奖励暂存已满，请先整理以保留装备奖励';var p=s.paths[s.route],rank=K.pathRank(s),req=(Number(d.realm)||0)*10+(Number(d.layer)||1)-1,u=K.unlocks(s);
+  function checkDungeon(s,d,tier,difficulty,floor,practice){if(s.battle)return '当前战斗尚未结束';if(s.exploration)return '当前洞天尚未结束';if(!d)return '副本不存在';if((d.type==='boss'||d.type==='cave'||d.type==='arena'&&d.firstGear&&!(s.progress.dungeonWins[d.id]>0))&&s.bag.length+(s.rewardOverflow||[]).length>=1300)return '背包与奖励暂存已满，请先整理以保留装备奖励';var p=s.paths[s.route],rank=K.pathRank(s),req=(Number(d.realm)||0)*10+(Number(d.layer)||1)-1,u=K.unlocks(s);
     if(rank<req)return '需要'+C.routes[s.route].realmNames[d.realm||0]+(d.layer||1)+'层';
     if(tier>p.realm)return '当前路线尚未达到该阶位';
+    if(d.type==='ascension'){if(!Ascension)return '仙界道途尚未加载';var immortalRequirement=Ascension.dungeonRequirement(s,d,!!practice);if(immortalRequirement)return immortalRequirement;}
     if(d.type==='arena'&&d.previous&&!(s.progress.dungeonWins[d.previous]>0))return '先正式赢下'+C.dungeons[d.previous].name+'；免费试阵不计晋级';
     if(d.type==='resource'&&d.id!=='resource_herb'&&!u.resources)return '三层开放资源秘境';
     if(d.type==='sect'&&!u.sect)return '五层开放宗门试炼';
@@ -428,8 +435,9 @@
     if(a.type==='setBattleRules'){var old=s.battleRules||{healBelow:.45,reserveInterrupt:true,shieldBeforeBurst:true};s.battleRules={healBelow:a.healBelow===undefined?old.healBelow:clamp(a.healBelow,.1,.8),reserveInterrupt:a.reserveInterrupt===undefined?old.reserveInterrupt:!!a.reserveInterrupt,shieldBeforeBurst:a.shieldBeforeBurst===undefined?old.shieldBeforeBurst:!!a.shieldBeforeBurst};if(b)b.rules=Object.assign({},s.battleRules);return {ok:true,message:'自动施法条件已保存'};}
     if(a.type==='setAutoRetry'){if(a.enabled&&b&&(b.type!=='boss'||b.practice))return {ok:false,message:'自动重战只用于正式妖王讨伐'};s.autoRetry={enabled:!!a.enabled,maxRuns:Math.floor(clamp(a.maxRuns||a.runs||3,1,10)),runs:0,stopOnRed:a.stopOnRed!==false,stopOnDefeat:true,stopWhenBagFull:true};return {ok:true,message:a.enabled?'自动重战已开启；失败与暂存满必停':'自动重战已停止'};}
     if(a.type==='startDungeon'){var d=C.dungeons[a.id],p=s.paths[s.route],difficulty=Number.isInteger(a.difficulty)?a.difficulty:0,floor=Number(a.floor)||Math.min(60,s.progress.tower+1),tier=d&&d.type==='resource'?(Number.isInteger(a.tier)?a.tier:p.realm):d&&d.type==='trial'?p.realm:d&&d.type==='tower'?Math.floor((floor-1)/10):d&&Number(d.realm)||0;
-      if(difficulty<0||difficulty>2||tier<0||tier>5||!Number.isInteger(floor))return {ok:false,message:'副本参数无效'};var error=checkDungeon(s,d,tier,difficulty,floor);if(error)return {ok:false,message:error};
+      if(difficulty<0||difficulty>2||tier<0||tier>5||!Number.isInteger(floor))return {ok:false,message:'副本参数无效'};var error=checkDungeon(s,d,tier,difficulty,floor,!!a.practice);if(error)return {ok:false,message:error};
       if(d.type==='trial'&&!a.practice&&p.xp<K.xpNeeded(s))return {ok:false,message:'圆满十层修为填满后可参加正式突破试炼；可以先免费试阵'};
+      if(d.type==='ascension'&&!a.practice){var prepared=Ascension.prepareBattle(s,d);if(!prepared.ok)return prepared;}
       if(s.autoRetry){s.autoRetry.runs=0;if(d.type!=='boss'||a.practice)s.autoRetry.enabled=false;}
       if(d.type==='cave'){var ca=C.caves.find(function(x){return x.id===d.id;}),attr=K.attributes(s);s.exploration={id:d.id,name:d.name,tier:tier,difficulty:difficulty,route:s.route,startedAt:s.lastAt,realmLabel:K.realmLabel(s,s.route),duration:0,node:0,total:ca.nodes,room:null,choices:[],pending:rewardShell(),banked:rewardShell(),modifiers:{attack:0,defense:0,maxHp:0,healing:0,shield:0,dodge:0},vitals:{hp:attr.maxHp,maxHp:attr.maxHp,mp:attr.maxMp||100,maxMp:attr.maxMp||100},history:[],awaiting:true,status:'choosing',practice:!!a.practice,seed:Math.floor(K.rng(s,'world')*4294967296)||1};caveChoices(s,s.exploration);return {ok:true,message:'进入'+d.name+'；失败仅保留确认携出的常规材料'};}
       createBattle(s,d,tier,difficulty,{floor:d.type==='tower'?floor:null,practice:!!a.practice,name:d.type==='tower'?d.name+'·第'+floor+'层':d.type==='trial'?C.routes[s.route].realmNames[tier]+'圆满试炼':d.name});return {ok:true,message:'进入'+s.battle.name};
@@ -453,7 +461,7 @@
 
   function previewDungeon(s,a){a=a||{};var d=C.dungeons[a.id];if(!d)return {allowed:false,requirements:['副本不存在'],rewards:{},firstRewards:{}};var p=s.paths[s.route],floor=Number(a.floor)||Math.min(60,s.progress.tower+1),tier=d.type==='resource'?(Number.isInteger(a.tier)?a.tier:p.realm):d.type==='trial'?p.realm:d.type==='tower'?Math.floor((floor-1)/10):d.realm,difficulty=Number.isInteger(a.difficulty)?a.difficulty:0,copy=JSON.parse(JSON.stringify(s));copy.battle=null;copy.exploration=null;
     if(tier<0||tier>5||difficulty<0||difficulty>2||!Number.isInteger(floor))return {allowed:false,requirements:['副本参数无效'],rewards:{},firstRewards:{}};
-    var error=checkDungeon(copy,d,tier,difficulty,floor);if(d.type==='trial'&&!a.practice&&p.xp<K.xpNeeded(s))error='十层修为填满后参加正式突破试炼';
+    var error=checkDungeon(copy,d,tier,difficulty,floor,!!a.practice);if(d.type==='trial'&&!a.practice&&p.xp<K.xpNeeded(s))error='十层修为填满后参加正式突破试炼';
     var fake={id:d.id,type:d.type,tier:tier,difficulty:difficulty,floor:floor,bossIndex:Number.isInteger(d.bossIndex)?d.bossIndex:0,performance:{handled:0}},key=d.type==='tower'?'tower_'+floor:d.id+':'+tier+':'+difficulty;fake.firstKey=key;
     var repeat=rewardShell(),first=rewardShell(),isFirst=s.progress.firstClears.indexOf(key)<0;
     if(!a.practice&&d.type!=='trial'){
@@ -463,7 +471,7 @@
       repeat.gearCount=repeat.gearCount||(repeat.gear||[]).length;repeat.gear=[];first.gear=[];first.techniques=(first.techniques||[]).filter(function(id){if(s.techniques[id]){first.fragments.universal=(first.fragments.universal||0)+5;return false;}return true;});
     }
     var lootRates=d.type==='boss'||d.type==='cave'?[{rarity:2,probability:[.65,.5,.35][difficulty]},{rarity:3,probability:[.25,.35,.45][difficulty]},{rarity:4,probability:[.095,.14,.18][difficulty]},{rarity:5,probability:[.005,.01,.02][difficulty]}]:null,enemy=dungeonEnemy(d,tier,difficulty,d.type==='tower'?floor:null);
-    return {allowed:!error,requirements:error?[error]:[],attributes:{attack:Math.round(enemy.attack),defense:Math.round(enemy.defense),maxHp:Math.round(enemy.maxHp)},rewards:repeat,firstRewards:first,lootRates:lootRates,set:d.school||null,slotWeights:Object.fromEntries(Object.keys(C.slots).map(function(id){return [id,1];})),firstClear:!isFirst,stars:s.progress.stars[key]||0,practice:!!a.practice,consumption:{},failure:d.type==='cave'?'失败只保留归途阵门确认携出的常规材料；不发晶与券':'失败退出不发奖励、不降层、不毁装',performanceRewards:d.type==='trial'||a.practice?'无经济奖励':'成功处理机制可额外获得10%灵石与1参悟砂',note:d.type==='cave'?'这里展示最终通关奖励；途中房间会在选择前展示独立收益':''};
+    return {allowed:!error,requirements:error?[error]:[],attributes:{attack:Math.round(enemy.attack),defense:Math.round(enemy.defense),maxHp:Math.round(enemy.maxHp)},rewards:repeat,firstRewards:first,lootRates:lootRates,set:d.school||null,slotWeights:Object.fromEntries(Object.keys(C.slots).map(function(id){return [id,1];})),firstClear:!isFirst,stars:s.progress.stars[key]||0,practice:!!a.practice,consumption:d.type==='ascension'&&!a.practice?Ascension.battleCost(s,d):{},failure:d.type==='cave'?'失败只保留归途阵门确认携出的常规材料；不发晶与券':d.type==='ascension'&&!a.practice?'失败退出保留境界与装备，不发仙修或仙元；已投入出征材料不退':'失败退出不发奖励、不降层、不毁装',performanceRewards:d.type==='trial'||a.practice?'无经济奖励':'成功处理机制可额外获得10%灵石与1参悟砂',note:d.type==='cave'?'这里展示最终通关奖励；途中房间会在选择前展示独立收益':''};
   }
   return {handle:handle,advanceBattle:advanceBattle,battleView:battleView,battleReportsView:battleReportsView,dungeonView:dungeonView,competitionsView:competitionsView,previewDungeon:previewDungeon,roomTypes:roomTypes};
 });

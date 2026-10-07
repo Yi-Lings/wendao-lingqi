@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import tempfile
 
@@ -15,7 +16,7 @@ parser.add_argument('--checksum', type=Path, default=ROOT / 'releases/wendao-lin
 args = parser.parse_args()
 manifest = json.loads((args.parts / 'manifest.json').read_text(encoding='utf-8'))
 name = manifest['fileName']
-if name != 'wendao-lingqi-v3.apk' or not manifest['parts']:
+if not re.fullmatch(r'[a-z0-9-]+\.apk', name) or not manifest['parts']:
     raise SystemExit('Unexpected APK manifest')
 expected = args.checksum.read_text(encoding='utf-8').split()
 if expected != [manifest['sha256'], name]:

@@ -16,6 +16,7 @@
 .ritual-check.done { color: #c3f2cd; background: #4b956133; border-color: #aad9a578; }
 .ritual-pill-plinth .ritual-pill-acquire { flex: none; padding: 8px 7px; min-height: 39px; font-size: 10px; }
 .ritual-preparation-lore { padding: 10px 3px 11px; color: #d2dcc5; font-size: 11px; line-height: 1.85; }
+.ritual-material-heading { font-size: 9px; line-height: 1.65; color: #d9d0ae; margin: 0 2px 7px; }
 .ritual-materials { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .ritual-material { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 8px; border: 1px solid #9cb38d40; border-radius: 5px; background: #0a222ae0; }
 .ritual-material.missing { border-color: #cbbc7f68; }

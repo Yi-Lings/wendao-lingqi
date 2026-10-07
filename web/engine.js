@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension);
   if(node)module.exports=api;else root.IdleEngine=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const no=message=>({ok:false,message,error:message});
@@ -74,6 +74,7 @@ function act(state,action,now){
     if(action.type==='startDungeon'&&action.id==='trial'&&!action.practice){if(action.route&&action.route!==candidate.route)return no('先转修对应路线再进入其护道试炼');const ritual=T.view(candidate,action.route||candidate.route);if(!ritual.canTrial&&!ritual.legacyReady)return no('先在修行页进入闭关，备丹、吐纳、护阵与问心后再入劫');}
     result=baseHandle(candidate,action,now);
     if(result===null)result=T.handle(candidate,action,now);
+    if(result===null){result=A.handle(candidate,action,now);if(result?.ok&&result.data?.battleRequest){const started=B.handle(candidate,{type:'startDungeon',...result.data.battleRequest},now);if(!started?.ok)return started||no('仙界出征未能开始');result.data=Object.assign({},result.data,started.data||{});}}
     if(result===null)result=Q.handle(candidate,action,now,R);
     if(result===null)result=B.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
@@ -88,7 +89,7 @@ function act(state,action,now){
 }
 function view(s){
   const core=K.view(s),story=S.view(s);
-  return Object.assign({},core,story,{battle:B.battleView(s),breakthroughCost:breakthroughCost(s),canBreakthrough:T.view(s).canBreakthrough,ritual:T.view(s),competitions:B.competitionsView?B.competitionsView(s):[],gachaTargets:Q.targets?Q.targets(s):[],rewardOverflow:s.rewardOverflow||[]});
+  return Object.assign({},core,story,{battle:B.battleView(s),breakthroughCost:breakthroughCost(s),canBreakthrough:T.view(s).canBreakthrough,ritual:T.view(s),ascension:A.view(s),competitions:B.competitionsView?B.competitionsView(s):[],gachaTargets:Q.targets?Q.targets(s):[],rewardOverflow:s.rewardOverflow||[]});
 }
 function tick(s,seconds){
   if(typeof seconds!=='number'||!Number.isFinite(seconds)||seconds<0)return no('战斗时间无效');
@@ -98,5 +99,5 @@ function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(resul
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
-  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T}};
+  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A}};
 });

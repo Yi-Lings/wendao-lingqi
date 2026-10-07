@@ -23,7 +23,8 @@ CSS_URL = re.compile(r"url\(\s*(['\"]?)(assets/[^)'\"\s]+)\1\s*\)")
 STYLE_LINK = re.compile(r'<link\s+rel="stylesheet"\s+href="([^"<>]+)"\s*>')
 SCRIPT_LINK = re.compile(r'<script\s+src="([^"<>]+)"\s*>\s*</script>')
 ICON_LINK = re.compile(r'(<link\s+rel="icon"\s+href=")([^"<>]+)("[^>]*>)')
-PREVIEW_EXPRESSION = "const PREVIEW=new URLSearchParams(location.search).get('preview')==='1';"
+PREVIEW_EXPRESSION = "const PREVIEW=new URLSearchParams(location.search).get('preview')==='1',ASCENSION_PREVIEW=PREVIEW&&new URLSearchParams(location.search).get('immortal')==='1';"
+STANDALONE_PREVIEW_EXPRESSION = "const PREVIEW=new URLSearchParams(location.search).get('preview')!=='0',ASCENSION_PREVIEW=PREVIEW&&new URLSearchParams(location.search).get('immortal')==='1';"
 
 
 def sha256(value: bytes) -> str:
@@ -73,7 +74,10 @@ def compile_js(name: str, source: str, asset_vars: dict[str, str]) -> tuple[str,
     if name == 'app.js':
         if source.count(PREVIEW_EXPRESSION) != 1:
             raise ValueError('Preview gate changed; review isolated preview adaptation')
-        source = source.replace(PREVIEW_EXPRESSION, 'const PREVIEW=true;', 1)
+        # The standalone file opens in the human preview, while ?preview=0
+        # explicitly restores the formal save. The immortal preview has its
+        # own save key in both the source application and this offline file.
+        source = source.replace(PREVIEW_EXPRESSION, STANDALONE_PREVIEW_EXPRESSION, 1)
         counts['isolated_preview_gate'] = 1
     if re.search(r'url\(\s*[\'\"]?assets/', source):
         raise ValueError(f'{name}: an unadapted art URL remains')
@@ -168,6 +172,7 @@ def main() -> None:
         'sha256': sha256(final),
         'preview': True,
         'saveKey': 'lingqi-preview-save-v1',
+        'saveKeys': {'formal': 'lingqi-save-v2', 'humanPreview': 'lingqi-preview-save-v1', 'ascensionPreview': 'lingqi-ascension-preview-save-v1'},
         'offline': True,
         'assetEncoding': 'Unmodified source bytes as base64 data URIs. Images become in-memory Blob URLs, avoiding browser CSS variable size limits; no auxiliary files or network requests.',
         'assets': assets,
@@ -182,7 +187,8 @@ def main() -> None:
                         '首次进入需确认年龄；点击按钮后音乐才开始播放，声音可在设置里调整。\n'
                         '试玩使用单独存档，预置材料和已开放内容方便体验，不代表正式流程的自然进度。\n'
                         '十连感应可体验独立红色道品动画；角色页面可点图片装配，长按或点详情查看说明。\n'
-                        '本次交付为网页试玩，没有生成 Android 安装包。\n')
+                        '设置内可切换人界配装、天门飞升试玩与正式仙途，三个存档相互独立。\n'
+                        '同一发布页另提供 V4 Android 体验安装包，可与旧版并排安装。\n')
         with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
             for name, raw in [(output.name, final), ('试玩说明.txt', instructions.encode('utf-8'))]:
                 info = zipfile.ZipInfo(name, date_time=(2026, 1, 1, 0, 0, 0))

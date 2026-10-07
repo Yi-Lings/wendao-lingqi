@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const C=require('../web/data.js'),K=require('../web/core.js'),B=require('../web/combat.js'),Q=require('../web/economy.js');
+const C=require('../web/data.js'),K=require('../web/core.js'),B=require('../web/combat.js'),Q=require('../web/economy.js'),A=require('../web/ascension.js');
 const NOW=1700000000000,copy=x=>JSON.parse(JSON.stringify(x));
 function state(layer=10){const s=K.createState(NOW);s.paths.magic.layer=layer;return s;}
 function start(s,id,extra={}){const r=B.handle(s,{type:'startDungeon',id,...extra},NOW);assert.equal(r.ok,true,r.message);return s.battle;}
@@ -81,4 +81,52 @@ test('the introductory duel can be won by an unboosted three-layer starting load
  const s=state(3);start(s,'arena_0');for(let i=0;i<1200&&s.battle;i++)B.advanceBattle(s,.1);
  assert.equal(s.battle,null,'the duel has an actual finite outcome');assert.equal(s.lastBattleResult.win,true,JSON.stringify(s.lastBattleResult));
  assert.equal(s.progress.dungeonWins.arena_0,1);assert.ok(s.lastBattleResult.time>2,'real combat should take more than a button click');
+});
+
+function gateFixture(){
+ const s=state();s.paths.magic.realm=5;s.paths.magic.xp=K.xpNeeded(s);s.progress.endingTrials.magic=true;s.ritualLegacyWins['magic:5']=true;
+ s.story.chapter=6;s.story.completed=[0,1,2,3,4,5];s.story.ending='guardian';s.stones=1000000;Object.keys(s.materials).forEach(id=>s.materials[id]=10000);
+ function act(type,extra={}){const r=A.handle(s,{type,...extra},NOW);assert.equal(r.ok,true,r.message);return r;}
+ act('beginAscension');
+ for(let i=0;i<100;i++){
+  const p=s.ascension;if(p.stage==='trial'&&!A.dungeonRequirement(s,C.dungeons.heaven_gate))break;
+  if(p.stage==='vow'&&!p.choice)act('chooseAscension',{choice:'promise'});else act('advanceAscension');
+ }
+ assert.equal(A.dungeonRequirement(s,C.dungeons.heaven_gate),null);return {s,act};
+}
+function immortalFixture(){const {s,act}=gateFixture();start(s,'heaven_gate');victory(s);for(let i=0;i<100&&s.ascension.stage!=='ready';i++)act('advanceAscension');act('completeAscension');return {s,act};}
+
+test('the celestial gate requires genuine prepared narrative and a fresh real victory',()=>{
+ const empty=state(10);empty.paths.magic.realm=5;assert.match(fails(empty,'heaven_gate').message,/天门来信/);
+ const {s,act}=gateFixture(),before=copy(s.ascension);start(s,'heaven_gate',{practice:true});victory(s);
+ assert.deepEqual(s.ascension,before);assert.equal(s.progress.dungeonWins.heaven_gate,undefined);
+ assert.equal(A.handle(s,{type:'advanceAscension'},NOW).ok,false,'dialogue cannot substitute for a gate win');
+ const battle=start(s,'heaven_gate');assert.equal(battle.enemies[0].species,'gate_lion');assert.equal(battle.enemies[0].mechanicSpec.name,'天门洗尘');
+ victory(s);assert.equal(s.progress.dungeonWins.heaven_gate,1);assert.equal(s.lastBattleResult.rewards.celestial,undefined,'mortal gate does not prematurely mint immortal currency');
+ act('advanceAscension');assert.equal(s.ascension.stage,'return');assert.equal(A.validate(s),s);
+});
+
+test('immortal hunts prepay once and grant actual immortal resources exactly once after victory',()=>{
+ const {s}=immortalFixture(),stones=s.stones,xp=s.ascension.xp,yuan=s.ascension.yuan,wins=s.ascension.huntWins;
+ const preview=B.previewDungeon(s,{id:'immortal_hunt_0'});assert.equal(preview.allowed,true);assert.deepEqual(preview.consumption,{stones:1000});
+ start(s,'immortal_hunt_0');assert.equal(s.stones,stones-1000);assert.equal(s.ascension.xp,xp);assert.equal(s.ascension.yuan,yuan);
+ const r=victory(s);assert.equal(r.rewards.celestial.xp,180);assert.equal(r.rewards.celestial.yuan,12);assert.equal(s.ascension.xp,xp+180);assert.equal(s.ascension.yuan,yuan+12);
+ assert.equal(s.ascension.huntWins,wins+1);assert.equal(s.progress.dungeonWins.immortal_hunt_0,1);assert.equal(A.validate(s),s);
+ const settled=copy(s);B.advanceBattle(s,60);assert.deepEqual(s,settled);assert.match(fails(s,'immortal_hunt_1').message,/下一重仙界/);
+});
+
+test('immortal practice stays free with an empty wallet while failed formal hunts retain only their cost',()=>{
+ const {s}=immortalFixture();s.stones=0;const before=copy(s.ascension),progress=copy(s.progress);start(s,'immortal_hunt_0',{practice:true});victory(s);
+ assert.equal(s.stones,0);assert.deepEqual(s.ascension,before);assert.deepEqual(s.progress,progress);assert.match(fails(s,'immortal_hunt_0').message,/资源不足/);
+ s.stones=3000;start(s,'immortal_hunt_0');s.battle.auto=false;s.battle.player.hp=1;s.battle.enemies[0].attack=1e6;s.battle.enemies[0].attackTimer=0;B.advanceBattle(s,.1);
+ assert.equal(s.lastBattleResult.win,false);assert.equal(s.stones,2000);assert.deepEqual(s.ascension,before);assert.deepEqual(s.progress,progress);
+});
+
+test('each immortal promotion challenge needs current ten-layer fullness and charges immortal currency once',()=>{
+ const {s}=immortalFixture();assert.match(fails(s,'immortal_0').message,/仙修圆满/);
+ s.ascension.layer=10;s.ascension.xp=A.xpNeeded(s.ascension);const yuan=s.ascension.yuan;
+ const preview=B.previewDungeon(s,{id:'immortal_0'});assert.equal(preview.allowed,true);assert.deepEqual(preview.consumption,{yuan:20});
+ start(s,'immortal_0');assert.equal(s.ascension.yuan,yuan-20);victory(s);
+ assert.equal(s.ascension.yuan,yuan-20+35);assert.equal(s.progress.dungeonWins.immortal_0,1);assert.equal(s.lastBattleResult.rewards.celestial.xp,400);
+ assert.equal(A.view(s).trialFresh,true);assert.equal(A.validate(s),s);
 });

@@ -19,11 +19,18 @@ const DIST = path.join(ROOT, 'dist');
 const FILE = process.env.LINGQI_PREVIEW_FILE || path.join(DIST, 'wendao-lingqi-preview.html');
 const KEY = 'lingqi-preview-save-v1';
 const REGULAR_KEY = 'lingqi-save-v2';
+const ASCENSION_KEY = 'lingqi-ascension-preview-save-v1';
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/assets/audio/manifest.json'), 'utf8'));
+const ascensionManifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/assets/audio/ascension-manifest.json'), 'utf8'));
+const audioAssets = { ...manifest.assets, ...ascensionManifest.assets };
+assert.equal(Object.keys(audioAssets).length, 16, 'fourteen original tracks and both new ascension tracks retain separate identities');
 const images = fs.readdirSync(path.join(ROOT, 'web/assets')).filter(name => /\.png$/i.test(name));
 const setAtlases = Array.from({ length: 6 }, (_, rarity) => 'v6-gear-quality-' + rarity + '.png');
 const namedAtlases = [...setAtlases, ...['techniques', 'treasures', 'pills', 'utilities'].map(kind => 'v6-' + kind + '-atlas.png')];
-const sourceMedia = ['icon.svg', ...images.map(name => 'assets/' + name), ...Object.values(manifest.assets).map(info => 'assets/audio/' + info.file)];
+const preservedImages = ['boss-atlas', 'cardback', 'chapter-atlas', 'forge', 'hero-expressions', 'heroes', 'items-atlas', 'map-atlas-a', 'map-atlas-b', 'monster-atlas', 'shop', 'skills-atlas', 'summon', 'world'].map(name => 'v3-' + name + '.png')
+  .concat(['armor', 'basic-skills', 'pills', 'treasures', 'utilities', 'weapons'].map(name => 'v4-' + name + '-atlas.png'), Array.from({ length: 6 }, (_, i) => 'v5-gear-quality-' + i + '.png'));
+const newJourneyImages = ['story-arena.png', 'story-secret.png', 'story-heaven.png', 'v7-encounters-atlas.png', 'v7-rivals-atlas.png', 'v7-immortal-beasts-atlas.png', 'v7-immortal-mentors-atlas.png'];
+const sourceMedia = ['icon.svg', ...images.map(name => 'assets/' + name), ...Object.values(audioAssets).map(info => 'assets/audio/' + info.file)];
 const expectedMedia = sourceMedia.map(name => {
   const bytes = fs.readFileSync(path.join(ROOT, 'web', name));
   return { path: name, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
@@ -141,7 +148,7 @@ async function chooseSkill(id) {
   });
   server = http.createServer((request, response) => {
     report.serverRequests.push(request.url);
-    if (request.url === '/wendao-lingqi-preview.html') {
+    if (new URL(request.url, 'http://127.0.0.1').pathname === '/wendao-lingqi-preview.html') {
       response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       response.end(html);
     } else { response.writeHead(404); response.end('No auxiliary resources served'); }
@@ -199,7 +206,7 @@ async function chooseSkill(id) {
       layout: typeof window.WendaoArtLayout?.geometry,
       external: [...document.querySelectorAll('script[src],link[rel="stylesheet"]')].map(node => node.src || node.href)
     }));
-    for (const name of ['equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-crops.js', 'art-identity.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
+    for (const name of ['equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-crops.js', 'art-identity.js', 'art-layout.js', 'story-scenes.js', 'story-screen.js', 'breakthrough-ritual.js', 'ritual-screen.js', 'ascension-scenes.js', 'ascension.js', 'mentor-art.js', 'ascension-screen.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
     for (const name of ['rewards.css', 'activity-rewards.css', 'item-art.css', 'art-layout.css']) assert.ok(modules.styles.includes(name));
     assert.equal(modules.sources, 'function'); assert.equal(modules.rewards, 'function'); assert.equal(modules.layout, 'function');
     assert.equal(modules.activityRewards, 'function'); assert.equal(modules.activityModel, 'function'); assert.equal(modules.artIdentity, 'function');
@@ -211,8 +218,8 @@ async function chooseSkill(id) {
     return { ...modules, offlineAcquisitionChoices: acquisition.forgeChoices.length };
   });
   await check('all ' + images.length + ' PNG atlases including all ten named art atlases and preserved original media retain source bytes and paint decoded images', async () => {
-    assert.equal(images.length, 36, 'all 26 original PNG files and ten new name-based art files remain');
-    for (const name of namedAtlases) assert.ok(images.includes(name), 'complete named artwork exists: ' + name);
+    assert.equal(images.length, 43, 'all 26 original PNGs, ten named art atlases and seven new journey/encounter images remain');
+    for (const name of [...preservedImages, ...namedAtlases, ...newJourneyImages]) assert.ok(images.includes(name), 'complete preserved and current artwork exists: ' + name);
     const decoded = await page.evaluate(async entries => {
       const result = [];
       for (const entry of entries) {
@@ -242,8 +249,8 @@ async function chooseSkill(id) {
     assert.ok(decoded.every(entry => entry.width > 0 && entry.height > 0));
     return decoded;
   });
-  await check('all 14 embedded MP3s retain source hashes and decode metadata plus audible PCM', async () => {
-    const entries = Object.entries(manifest.assets).map(([name, info]) => ({ name, ...info, path: 'assets/audio/' + info.file }));
+  await check('all 16 embedded MP3s retain source hashes and decode metadata plus audible PCM', async () => {
+    const entries = Object.entries(audioAssets).map(([name, info]) => ({ name, ...info, path: 'assets/audio/' + info.file }));
     const decoded = await page.evaluate(async entries => {
       const result = [], decoder = new OfflineAudioContext(2, 24000, 24000);
       for (const entry of entries) {
@@ -267,7 +274,7 @@ async function chooseSkill(id) {
       }
       return result;
     }, entries);
-    assert.equal(decoded.length, 14);
+    assert.equal(decoded.length, 16);
     return decoded;
   });
   await check('a real click unlocks audible BGM with its media clock advancing offline', async () => {
@@ -640,6 +647,74 @@ async function chooseSkill(id) {
     await assertRegular();
     return { realReload: true, additionalHtmlRequests: 1, previewSaveRestored: true, normalSaveUnchanged: true };
   });
+  await check('same-origin formal, human and heavenly previews boot and switch through real buttons while preserving all three independent saves', async () => {
+    // This uses the same HTTP document/origin, including actual query-based
+    // navigation. The opaque Blob check below remains media-only.
+    await page.close();
+    const fixedNow=Date.now();
+    await context.addInitScript(now=>{Date.now=()=>now;},fixedNow);
+    page=await context.newPage();observe(page,'three-isolated-chapters');
+    const keys=[REGULAR_KEY,KEY,ASCENSION_KEY],storage=()=>page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
+    const loaded=async()=>{
+      await page.waitForLoadState('load',{timeout:45000});
+      if(await page.locator('#accept-age').count()){
+        await page.locator('#accept-age').check();await page.locator('button[data-ui="enter"]').click();
+      }
+      await page.waitForFunction(()=>window.Lingqi?.state(),null,{timeout:15000});
+      await context.setOffline(true);
+    };
+    const settings=async()=>{await page.locator('.top-actions button[data-ui="settings"]').click();};
+    const rename=async(name,key)=>{
+      await settings();await page.locator('#rename-input').fill(name);
+      await page.locator('#modal-layer button[data-action="rename"]').click();
+      const s=await stateOf(page);assert.equal(s.player.name,name);assert(E.validate(s).ok);
+      assert.deepEqual(JSON.parse((await storage())[key]),s,'the selected mode saves its actual changed character');
+      await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
+    };
+    const switchTo=async(button,expected,key)=>{
+      if(await page.locator('[data-narrative=ascension]').count())await page.locator('button[data-ui="ascension-exit"]').click();
+      await settings();await context.setOffline(false);
+      await Promise.all([
+        page.waitForURL(u=>u.pathname==='/wendao-lingqi-preview.html'&&u.searchParams.get('preview')===expected.preview&&u.searchParams.get('immortal')===expected.immortal,{waitUntil:'load',timeout:45000}),
+        page.locator('#modal-layer button[data-ui="'+button+'"]').click()
+      ]);
+      await loaded();const s=await stateOf(page);assert(E.validate(s).ok);
+      assert.deepEqual(JSON.parse((await storage())[key]),s,'the actual selected mode uses its own key');return s;
+    };
+    const initial=await storage();assert.equal(initial[ASCENSION_KEY],null,'flight preview has not existed in this context');
+    await context.setOffline(false);await page.goto(url+'?preview=0',{waitUntil:'load',timeout:45000});await loaded();
+    assert.equal((await stateOf(page)).player.name,'正常存档保留检查');assert.equal((await stateOf(page)).ascension,null);
+    assert.equal((await storage())[KEY],initial[KEY],'formal startup leaves the played human preview byte-for-byte');
+    assert.equal((await storage())[ASCENSION_KEY],null);
+    await rename('正式仙途隔离',REGULAR_KEY);const formal=(await storage())[REGULAR_KEY];
+    let s=await switchTo('preview-human',{preview:'1',immortal:null},KEY);
+    assert.equal(s.player.name,'试玩行者');assert.equal(s.gacha.total,drawExpected.before.gacha.total+10,'the original real human ten-pull survives changing modes');
+    assert(Object.values(s.equipped).includes(equippedUid));assert.equal((await storage())[REGULAR_KEY],formal);assert.equal((await storage())[ASCENSION_KEY],null);
+    await rename('人界试玩隔离',KEY);const human=(await storage())[KEY];
+    s=await switchTo('preview-ascension',{preview:'1',immortal:'1'},ASCENSION_KEY);
+    assert.equal(s.player.name,'天门试玩行者');assert.equal(s.paths.magic.realm,5);assert.equal(s.story.chapter,6);assert.equal(s.progress.endingTrials.magic,true);
+    assert.equal((await storage())[REGULAR_KEY],formal);assert.equal((await storage())[KEY],human);
+    await rename('天门试玩隔离',ASCENSION_KEY);
+    await page.locator('button[data-ui="ascension-open"]').click();
+    await page.waitForSelector('[data-narrative=ascension]');
+    assert.equal(await page.locator('button[data-action="beginAscension"]').isEnabled(),true,'the independent heavenly preview can actually begin its ceremony');
+    const music=await advanceMusic('ascension');
+    await page.locator('button[data-action="beginAscension"]').click();await page.locator('button[data-action="advanceAscension"]').click();
+    const ascendedPreview=await stateOf(page),celestial=(await storage())[ASCENSION_KEY];
+    assert.equal(ascendedPreview.ascension.stage,'invitation');assert.equal(ascendedPreview.ascension.line,1);
+    assert.deepEqual(JSON.parse(celestial),ascendedPreview,'the actual heavenly reading position is committed independently');
+    s=await switchTo('preview-formal',{preview:'0',immortal:null},REGULAR_KEY);
+    assert.equal(s.player.name,'正式仙途隔离');assert.equal((await storage())[KEY],human);assert.equal((await storage())[ASCENSION_KEY],celestial);
+    s=await switchTo('preview-human',{preview:'1',immortal:null},KEY);
+    assert.equal(s.player.name,'人界试玩隔离');assert.equal((await storage())[REGULAR_KEY],formal);assert.equal((await storage())[ASCENSION_KEY],celestial);
+    s=await switchTo('preview-ascension',{preview:'1',immortal:'1'},ASCENSION_KEY);
+    assert.equal(s.player.name,'天门试玩隔离');assert.equal(s.ascension.line,1);assert.equal((await storage())[REGULAR_KEY],formal);assert.equal((await storage())[KEY],human);
+    await context.setOffline(false);await page.reload({waitUntil:'load',timeout:45000});await loaded();
+    assert.deepEqual((await stateOf(page)).ascension,ascendedPreview.ascension,'heavenly reading and oath state survive a real reload');
+    assert.deepEqual(await storage(),{[REGULAR_KEY]:formal,[KEY]:human,[ASCENSION_KEY]:celestial});
+    await screenshot('preview-single-html-isolated-heaven.png');
+    return {sameOrigin:true,queryModes:['preview=0','preview=1','preview=1&immortal=1'],keys,actualButtonTransitions:5,humanTenPullPreserved:true,heavenlySavedLine:1,reload:true,music};
+  });
   await check('desktop and small-mobile preview layouts have no horizontal document overflow', async () => {
     const results = [];
     for (const viewport of [{ width: 320, height: 568 }, { width: 1280, height: 800 }]) {
@@ -672,7 +747,7 @@ async function chooseSkill(id) {
     const attempts = [];
     offlinePage.on('request', request => { if (/^https?:/.test(request.url())) attempts.push(urlSummary(request.url())); });
     try {
-      // The 138 MB HTML exceeds one CDP/pipe message's practical size. Transfer
+      // The complete HTML exceeds one CDP/pipe message's practical size. Transfer
       // every character in bounded messages, then navigate its exact HTML Blob.
       // This retains an opaque origin and starts with all browser networking off.
       await offlinePage.evaluate(() => { window.__offlineHtmlChunks = []; });
@@ -711,9 +786,9 @@ async function chooseSkill(id) {
         const decoder = new OfflineAudioContext(2, 24000, 24000);
         for (const info of audio) await decoder.decodeAudioData(await (await fetch(WendaoAssetURLs('assets/audio/' + info.file))).arrayBuffer());
         return { imagesDecoded: imagePaths.length, mp3Decoded: audio.length };
-      }, { imagePaths: ['icon.svg', ...images.map(name => 'assets/' + name)], audio: Object.values(manifest.assets) });
+      }, { imagePaths: ['icon.svg', ...images.map(name => 'assets/' + name)], audio: Object.values(audioAssets) });
       assert.equal(attempts.length, 0);
-      assert.deepEqual(result, { imagesDecoded: images.length + 1, mp3Decoded: Object.keys(manifest.assets).length });
+      assert.deepEqual(result, { imagesDecoded: images.length + 1, mp3Decoded: Object.keys(audioAssets).length });
       return { ...result, offlineBeforeContent: true, httpRequests: 0, htmlBytes: transfer.bytes, htmlSha256: transfer.sha256, transportChunks: chunks, persistenceScope: 'Media independence only: opaque HTML Blob origin has no writable localStorage.' };
     } finally { await offlineContext.close(); }
   });

@@ -18,6 +18,7 @@ function model(report){
   const r=report||{},win=!!(r.win||r.victory),practice=!!r.practice,pending=!!r.rewardsPending&&!practice;
   const reward=practice?{}:r.rewards||r.reward||{},items=[];
   for(const id of ['stones','xp','tickets','contribution','jade','dust'])if(positive(reward[id]))items.push({kind:'currency',id,name:labels[id],count:reward[id],rarity:id==='tickets'?3:0});
+  for(const [id,name] of [['xp','仙界修为'],['yuan','仙元']])if(positive(reward.celestial?.[id]))items.push({kind:'currency',id:id==='xp'?'celestialXp':'yuan',name,count:reward.celestial[id],rarity:3});
   for(const [id,count] of Object.entries(reward.materials||{}))if(labels[id]&&positive(count))items.push({kind:'material',id,name:labels[id],count,rarity:id.startsWith('crystal')?4:id==='soul'?3:1});
   for(const [id,count] of Object.entries(reward.fragments||{}))if(positive(count)&&(id==='universal'||C.techniques[id]))items.push({kind:'fragment',id,name:id==='universal'?'通用功法残页':C.techniques[id].name+' · 残页',count,rarity:id==='universal'?2:C.techniques[id].rarity});
   for(const [kind,field,catalog] of [['technique','techniques',C.techniques],['treasure','treasures',C.treasures],['recipe','recipes',C.recipes]])for(const id of reward[field]||[])if(catalog[id])items.push({kind,id,name:catalog[id].name+(kind==='recipe'?' · 丹方':''),count:1,rarity:catalog[id].rarity});
@@ -31,7 +32,7 @@ function model(report){
   return {title,outcome,win,practice,pending,first:!!r.first&&win&&!practice,stars:win&&!practice?Math.max(0,Math.min(3,Math.floor(r.stars||0))):0,items,state,rare:items.some(item=>item.rarity>=4)};
 }
 function icon(item){
-  const art=item.kind==='gear'?A.gearArt(item.gear):item.kind==='technique'||item.kind==='fragment'&&item.id!=='universal'?G.technique(item.id):item.kind==='treasure'?G.treasure(item.id):item.kind==='recipe'?G.pill(item.id):G.utility(item.kind==='blueprint'?'blueprint':item.id==='xp'?'insight':item.id);
+  const art=item.kind==='gear'?A.gearArt(item.gear):item.kind==='technique'||item.kind==='fragment'&&item.id!=='universal'?G.technique(item.id):item.kind==='treasure'?G.treasure(item.id):item.kind==='recipe'?G.pill(item.id):G.utility(item.kind==='blueprint'?'blueprint':['xp','celestialXp'].includes(item.id)?'insight':item.id==='yuan'?'crystal5':item.id);
   if(!art)return '<span class="settlement-icon settlement-fallback" aria-hidden="true">✦</span>';
   const I=typeof module==='object'&&module.exports?require('./art-identity.js'):globalThis.WendaoArtIdentity,d=I.decorate(art);
   return `<span class="item-icon art-icon settlement-icon ${d.className}" ${d.attrs} style="${d.style}background-image:url(assets/${art.file});background-size:${esc(art.size)};background-position:${esc(art.position)}" role="img" aria-label="${esc(item.name)}"></span>`;

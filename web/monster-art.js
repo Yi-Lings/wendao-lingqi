@@ -11,7 +11,8 @@ const definitions={
  'v3-monster-atlas.png':{width:1774,height:887,x:[4,447,891,1336,1770],y:[5,447,883],inset:4},
  'v3-boss-atlas.png':{width:1086,height:1448,x:[0,362,724,1086],y:[0,362,724,1086,1448],inset:0},
  'v7-rivals-atlas.png':{width:1536,height:1024,x:[0,512,1024,1536],y:[0,512,1024],inset:0},
- 'v7-encounters-atlas.png':{width:1774,height:887,x:[0,443,887,1330,1774],y:[0,444,887],inset:1}
+ 'v7-encounters-atlas.png':{width:1774,height:887,x:[0,443,887,1330,1774],y:[0,444,887],inset:1},
+ 'v7-immortal-beasts-atlas.png':{width:1254,height:1254,x:[0,627,1254],y:[0,627,1254],inset:1}
 };
 Object.values(definitions).forEach(d=>{Object.freeze(d.x);Object.freeze(d.y);Object.freeze(d);});Object.freeze(definitions);
 const own=(object,key)=>Object.hasOwn(object||{},key);
@@ -27,6 +28,7 @@ function speciesArt(id){return own(C.monsters,id)?cell(C.monsters[id].art,C.mons
 function rivalArt(id){return own(C.rivals,id)?cell(C.rivals[id].art,C.rivals[id].name,'rival'):null;}
 function bossArt(value){
  const d=typeof value==='string'?C.dungeons[value]:value;
+ if(d&&d.type==='ascension'&&own(C.monsters,d.enemy?.species))return cell(C.monsters[d.enemy.species].art,C.monsters[d.enemy.species].name,'boss');
  const index=typeof value==='number'?value:d&&Number.isInteger(d.bossIndex)?d.bossIndex:typeof d?.id==='string'?C.bosses.findIndex(b=>b.id===d.id):-1;
  if(!Number.isInteger(index)||index<0||index>=C.bosses.length)return null;
  return cell({file:'v3-boss-atlas.png',index,cols:3,rows:4},C.bosses[index].name,'boss');
@@ -44,6 +46,7 @@ function enemyArt(enemy,battle){
  const d=C.dungeons[battle.id];if(!d)return null;
  const index=Number.isInteger(enemy.index)?enemy.index:0;
  if(d.type==='arena')return rivalArt(d.enemy.rivalId);
+ if(d.type==='ascension')return speciesArt(d.enemy.species);
  if(d.type==='resource')return speciesArt(d.enemySpecies[index%d.enemySpecies.length]);
  if(d.type==='boss'&&index===0)return bossArt(d);
  if(d.type==='trial'&&index===0)return bossArt([0,2,5,6,8,11][battle.tier||0]);

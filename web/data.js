@@ -211,6 +211,12 @@ const monsters=Object.fromEntries(monsterRows.map(r=>[r[0],{id:r[0],name:r[1],ar
 const rivals=Object.fromEntries([
  ['hanyue','韩岳'],['yejinghong','叶惊鸿'],['luojingxing','骆景行'],['xuzhao','许照'],['jilingchuan','季凌川'],['luojingxing_plain','骆景行·守殿之约']
 ].map((r,index)=>[r[0],{id:r[0],name:r[1],art:{file:'v7-rivals-atlas.png',index,cols:3,rows:2}}]));
+[
+ ['gate_lion','天门镇界狮','玉白神狮镇守天门，金玉甲上留着历代飞升者的洗尘纹。'],
+ ['frost_crane','霜天玄鹤','赤顶白羽的仙鹤，灵息化雪，守住初入仙域者的最后一道寒关。'],
+ ['star_ocean_dragon','星海苍龙','苍蓝仙龙游过星海，潮汐随龙息起落，长角之间凝着一片澄澈星空。'],
+ ['primordial_phoenix','太初玄凰','黑白双羽的玄凰收束阴阳，金焰不焚肉身，却照见修士最深的执念。']
+].forEach((r,index)=>{monsters[r[0]]={id:r[0],name:r[1],description:r[2],art:{file:'v7-immortal-beasts-atlas.png',index,cols:2,rows:2}};});
 const bosses=[
  {id:'boss_0',name:'青甲山君',realm:0,layer:7,school:'body',description:'守山妖虎以重甲抵挡正面攻击，重击后露出胸口阵纹。',mechanics:[
  mechanic('heavy','每12秒蓄力重击',12,3,2.1,{physical:.15},['伏岳掌或惊电步打断','镇骨甲或护体丹承伤后反击'],{armorBreakWindow:6}),
@@ -310,6 +316,20 @@ tournamentRows.forEach((r)=>{
   opening:r.opening,closing:r.closing,mechanics:[mechanic('sect_'+r.school,r.move+'：每12秒蓄力',12,2.5,1.5,{},['打断招式打开反击窗口','依流派准备回复、净化与护盾'])],
   rewards:r.reward,firstRewards:r.first||{stones:100,materials:{insight:2}},firstGear:r.firstGear||null,title:r.title||null,duration:90,
   storyArt:r.competition==='arena'?'story-arena.png':'story-secret.png',artKey:r.competition==='arena'?'map_1':'map_2'};
+});
+const immortalTrials=[
+ {id:'heaven_gate',name:'叩开天门 · 洗尘三劫',species:'gate_lion',kind:'gate',tier:0,hp:75000,attack:75,defense:60,move:'天门洗尘',mechanic:'heaven_pressure',hint:'读条时打断天门灵压，或预留护盾承受；劫后有六秒洗尘破绽。',opening:'云海分开，玉白神狮低下头。它没有问你的出身，只问：“人间万盏灯火已在你身后。叩开此门，你还愿意记得它们吗？”',closing:'第三道洗尘光退去，神狮让开通天石阶。你的名字第一次被仙域的钟声念出。天门已开，走完归愿，便可真正跨入仙界。'},
+ {id:'immortal_0',name:'登仙圆满 · 雪羽问途',species:'frost_crane',kind:'trial',tier:0,hp:85000,attack:82,defense:70,move:'雪羽封息',mechanic:'frost_feathers',hint:'可打断雪羽；束缚后净化，保留回复与真元继续反击。',opening:'玄鹤收拢翅翼，问你为何踏上这片仙土。寒意沿阶而来，只有由你亲手凝起的仙息能让雪羽散开。',closing:'玄鹤展开羽翼，寒云让出一条青金色的路。你握住了第一缕真仙气息，圆满后的这一战已记入仙域道籍。'},
+ {id:'immortal_1',name:'真仙圆满 · 星潮归一',species:'star_ocean_dragon',kind:'trial',tier:1,hp:120000,attack:102,defense:90,move:'星潮噬灵',mechanic:'star_tide',hint:'星潮会抽取真元；打断读条，或准备聚灵阵与低耗神通维持节律。',opening:'星海苍龙在你的影子里看见两条来路。它问你能否在万千潮声中守住自己的呼吸，整片星海随即向你压来。',closing:'漫天星潮合为一线。苍龙把龙首垂向你的掌心，金仙之路不再是远处别人的传说。'},
+ {id:'immortal_2',name:'金仙圆满 · 太初证道',species:'primordial_phoenix',kind:'trial',tier:2,hp:165000,attack:124,defense:110,move:'阴阳归火',mechanic:'primal_flame',hint:'打断阴阳火诀；净化灼烧，借玄凰收焰后的破绽完成最后反击。',opening:'黑白双羽照见你走过的每一场胜败。太初玄凰没有许诺一个更高的名字，只把最后的火光交到你面前：“把自己的道走完。”',closing:'阴阳火熄，仙域万钟齐鸣。你已经用真实的修行与最后一战自证金仙之道；重访人间时，那些最初的名字仍在你的心里。'}
+];
+immortalTrials.forEach((r,index)=>{
+ dungeons[r.id]={id:r.id,type:'ascension',name:r.name,realm:5,layer:10,ascensionTier:r.tier,ascensionKind:r.kind,requiredImmortalLayer:r.kind==='gate'?null:10,
+  description:monsters[r.species].description+' 这是正式仙途实战，剧情选择不能代替胜利。',enemy:{name:monsters[r.species].name,species:r.species,maxHp:r.hp,attack:r.attack,defense:r.defense,mechanic:{kind:r.mechanic,name:r.move,duration:3,hint:r.hint},mechanicInterval:13},
+  opening:r.opening,closing:r.closing,mechanics:[mechanic(r.mechanic,r.move+'：每13秒蓄力',13,3,1.8,{},['观察具名招式并打断','预备回复、净化与护盾渡过劫后破绽'])],rewards:{},firstRewards:{},duration:240,storyArt:'story-heaven.png',artKey:'map_11'};
+ if(index>0){const id='immortal_hunt_'+r.tier;dungeons[id]={...dungeons[r.id],id,name:['霜天巡猎 · 云阶练息','星海巡猎 · 逐潮炼神','太初巡猎 · 阴阳磨心'][r.tier],ascensionKind:'hunt',requiredImmortalLayer:1,
+  description:'在仙域真战中磨炼仙息；只有胜利结算才获得仙修与仙元。'+monsters[r.species].description,
+  enemy:{...dungeons[r.id].enemy,maxHp:Math.round(r.hp*.44),attack:r.attack*.85,defense:r.defense*.75},opening:'你离开仙域静修台，沿着已熟悉的云阶进入巡猎灵阵。眼前的仙兽灵相仍有真实锋芒，只有实战能让刚凝起的仙息融入自己的招式。',closing:'巡猎灵阵缓缓收起。仙息随着你最后一击沉入灵台，带回的仙元已经结算；下一次巡猎，仍要由自己打赢。'};}
 });
 bosses.forEach((b,i)=>{
  dungeons[b.id]={id:b.id,type:'boss',name:b.name,realm:b.realm,layer:b.layer,school:b.school,bossIndex:i,
@@ -455,7 +475,7 @@ const catalog={version:3,contentVersion:3,realms,routes,layerXp,realmXpFactors,r
  techniqueLevelCaps:[5,8,11,14,17,20],enhanceCaps:[5,8,12,16,20,20],
  jointCost:{stones:30,materials:{herb:2}},jointCooldownMs:1800000,bondThreshold:40,jointThreshold:55,
  fragmentCost:20,duplicateTechniqueFragments:5,
- counts:{techniques:48,hearts:12,skills:24,secrets:12,treasures:12,recipes:18,sets:6,gearTargets:36,facilities:5,resources:5,sectTrials:12,bosses:12,towerFloors:60,caves:3,caveRooms:12,chapters:6,sidequests:18,companions:3,maps:12,competitions:2,tournamentBattles:6,monsters:16,rivalPortraits:6}
+ counts:{techniques:48,hearts:12,skills:24,secrets:12,treasures:12,recipes:18,sets:6,gearTargets:36,facilities:5,resources:5,sectTrials:12,bosses:12,towerFloors:60,caves:3,caveRooms:12,chapters:6,sidequests:18,companions:3,maps:12,competitions:2,tournamentBattles:6,monsters:20,rivalPortraits:6,ascensionChallenges:4,immortalHunts:3}
 };
 return catalog;
 });

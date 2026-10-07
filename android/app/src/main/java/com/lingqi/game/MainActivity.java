@@ -121,7 +121,14 @@ public final class MainActivity extends Activity {
     }
 
     private static boolean isEntry(String url) {
-        return ENTRY.equals(url) || (url != null && url.startsWith(ENTRY + "#"));
+        if (url == null) return false;
+        int fragment = url.indexOf('#');
+        String destination = fragment < 0 ? url : url.substring(0, fragment);
+        return ENTRY.equals(destination)
+                || (ENTRY + "?preview=0").equals(destination)
+                || (ENTRY + "?preview=1").equals(destination)
+                || (ENTRY + "?preview=1&immortal=1").equals(destination)
+                || (ENTRY + "?immortal=1&preview=1").equals(destination);
     }
     private static boolean isAsset(Uri uri) {
         String path = uri.getPath();

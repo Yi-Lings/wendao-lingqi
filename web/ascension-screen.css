@@ -1,0 +1,151 @@
+/* The gate and celestial journey have one viewport and their own controls. */
+.ascension-screen {
+  --as-gold: #efd6a0;
+  --as-jade: #b2e4df;
+  --as-muted: #b6cfd1;
+  grid-template-rows: auto minmax(100px, 1fr) minmax(82px, auto) auto;
+  background: #071925;
+}
+.ascension-screen .narrative-hud { padding-bottom: 8px; }
+.ascension-screen .narrative-hud h1 { font-size: 23px; }
+.ascension-backdrop { background-position: center 45%; background-size: cover; opacity: .88; }
+.ascension-shade { background: linear-gradient(#061322c7, #05182617 23%, #081e2530 43%, #071b28d9 75%, #061420fa); }
+.ascension-world { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 0; gap: 9px; padding: 0 20px 8px; overflow: hidden; }
+.ascension-sky { position: relative; flex: 1; min-height: 65px; width: 100%; max-height: 250px; isolation: isolate; display: grid; place-items: center; overflow: hidden; }
+.ascension-gate { position: absolute; inset: 9% 18% 10%; border-radius: 48% 48% 0 0; border: 2px solid #f0d4a269; border-bottom: 0; box-shadow: 0 -3px 22px #fce6a334, inset 0 3px 24px #edecae27; background: radial-gradient(ellipse at 50% 70%, #d1eeed50, #8fccd233 22%, #5a969c0d 56%, transparent 73%); }
+.ascension-gate::before,
+.ascension-gate::after { content: ""; position: absolute; top: 35%; bottom: 0; width: 12%; border: 1px solid #d7c49280; background: linear-gradient(90deg, #335c62cc, #d3d2ae70 48%, #244c5bd9); box-shadow: 0 0 16px #ffdd8c30; }
+.ascension-gate::before { left: -9%; }
+.ascension-gate::after { right: -9%; }
+.ascension-gate-ring { position: absolute; width: 70%; aspect-ratio: 1; max-height: 110%; border-radius: 50%; border: 1px solid #e3d9b442; box-shadow: inset 0 0 25px #d7f0c612; }
+.ascension-gate-ring::before { content: ""; position: absolute; inset: 9%; border: 1px dashed #c1e4d742; border-radius: 50%; }
+.ascension-stair { position: absolute; inset: 67% 17% -10%; clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%); background: repeating-linear-gradient(0deg, #dece9a58 0 1px, transparent 1px 15%), linear-gradient(180deg, #c6e1db55, #c5d8d41a); }
+.ascension-sky-inscription { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: -3%; text-shadow: 0 2px 11px #052338, 0 0 26px #bddad97a; }
+.ascension-sky-inscription strong { font: 35px/1.4 Wendao, "Songti SC", serif; color: #fff0cb; letter-spacing: 10px; padding-left: 10px; }
+.ascension-sky-inscription small { color: #e1eddc; font: 10px/1.6 Wendao, serif; letter-spacing: 3px; text-align: center; max-width: 270px; }
+.ascension-light { position: absolute; inset: -20% 32% -20%; pointer-events: none; background: linear-gradient(90deg, transparent, #defff321 48%, #faffd532 51%, transparent); transform-origin: 50% 100%; }
+.ascension-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.ascension-particles i { position: absolute; left: var(--particle-x); bottom: 6%; width: 3px; height: 3px; background: #fff0c7; border-radius: 50%; box-shadow: 0 0 11px #e9d696b3; opacity: .7; }
+.ascension-screen[data-ascension-stage="return"] .ascension-light,
+.ascension-screen[data-ascension-stage="ready"] .ascension-light { animation: ascension-light-rise 1.7s ease-out both; }
+.ascension-screen[data-ascension-stage="return"] .ascension-particles i,
+.ascension-screen[data-ascension-stage="ready"] .ascension-particles i { animation: ascension-particle-rise 2.4s ease-out var(--particle-delay) both; }
+.ascension-screen[data-ascension-stage="ascended"] .ascension-gate { opacity: .5; }
+.ascension-screen[data-ascension-stage="ascended"] .ascension-sky-inscription strong { font-size: 30px; letter-spacing: 7px; }
+.ascension-panel { flex: none; width: 100%; max-height: 35dvh; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #ccd7b835 transparent; }
+.ascension-requirements { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+.ascension-requirement { padding: 7px 9px; min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 5px; border: 1px solid #b9c8b636; border-radius: 5px; background: #092331d9; }
+.ascension-requirement > div { min-width: 0; }
+.ascension-requirement strong { display: block; font-size: 10px; font-weight: 400; color: #e5e9d5; line-height: 1.5; }
+.ascension-requirement small { display: block; font-size: 9px; color: #b6c7c1; margin-top: 2px; }
+.ascension-requirement.done { border-color: #abd4b65b; }
+.ascension-requirement.done small,
+.ascension-requirement.done > span { color: #b8e3c2; }
+.ascension-requirement .narrative-button { font-size: 9px; min-height: 32px; padding: 6px; flex: none; }
+.ascension-cost { padding: 8px 11px; border: 1px solid #ddce9566; border-radius: 5px; background: #16333bdd; }
+.ascension-cost h2 { color: #e9d7a7; font-size: 10px; line-height: 1.6; font-weight: 400; }
+.ascension-cost ul { display: flex; flex-wrap: wrap; gap: 5px 13px; margin: 5px 0 0; padding: 0; list-style: none; }
+.ascension-cost li { color: #d7e5db; font-size: 10px; line-height: 1.6; }
+.ascension-cost li.missing { color: #ffd7a1; }
+.ascension-cost .ascension-source-link { display: flex; justify-content: space-between; gap: 5px; align-items: center; padding-top: 6px; }
+.ascension-cost .ascension-source-link p { font-size: 9px; color: #b9ced0; line-height: 1.65; }
+.ascension-cost .ascension-source-link .narrative-button { font-size: 9px; min-height: 30px; padding: 5px 7px; flex: none; }
+.ascension-cost + .ascension-requirements { margin-top: 7px; }
+.ascension-dialogue { max-height: 24dvh; min-height: 0; padding-top: 10px; padding-bottom: 10px; overflow: hidden; }
+.ascension-dialogue .narrative-dialogue-copy { min-height: 0; overflow-y: auto; overscroll-behavior: contain; max-height: 100%; }
+.ascension-dialogue .narrative-paragraph p { font-size: 12px; line-height: 1.85; }
+.ascension-dialogue .narrative-portrait { flex: none; width: 53px; height: 70px; }
+.ascension-dialogue .narrative-narrator { width: 36px; height: 46px; font-size: 22px; }
+.ascension-footer { padding-top: 9px; }
+.ascension-footer .narrative-hint { font-size: 9px; line-height: 1.6; }
+.ascension-footer .narrative-actions { gap: 6px; }
+.ascension-footer .narrative-button { min-height: 43px; padding: 9px 12px; font-size: 11px; }
+.ascension-choices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; width: 100%; }
+.ascension-choices .narrative-button { display: flex; flex-direction: column; justify-content: flex-start; text-align: left; align-items: stretch; gap: 4px; padding: 9px; }
+.ascension-choices strong { font-size: 11px; font-weight: 400; color: #eedeab; }
+.ascension-choices small { font-size: 9px; color: #bfdbd4; line-height: 1.65; }
+.celestial-roadmap { display: flex; flex: none; align-items: center; justify-content: center; gap: 6px; width: 100%; }
+.celestial-roadmap span { flex: 1; max-width: 145px; text-align: center; padding: 5px 7px; border-bottom: 1px solid #8dacac57; color: #aec9ca; font-size: 10px; letter-spacing: 1px; }
+.celestial-roadmap span.current { color: #fff0c7; border-color: #dacf94c9; background: #d5d39b15; }
+.celestial-roadmap span.done { color: #bfdfc6; }
+.celestial-progress { width: 100%; flex: none; padding: 8px 10px; border: 1px solid #b6d4ce4b; border-radius: 6px; background: #0a2833e6; }
+.celestial-progress-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.celestial-progress-top strong { color: #f0e8c5; font-size: 11px; font-weight: 400; }
+.celestial-progress-top span { color: #bbddce; font-size: 10px; }
+.celestial-xp-bar { position: relative; height: 5px; border-radius: 4px; background: #061a25; margin: 7px 0 5px; overflow: hidden; }
+.celestial-xp-bar i { display: block; height: 100%; width: var(--celestial-xp); border-radius: 4px; background: linear-gradient(90deg,#8bbdba,#dfd5a4); box-shadow: 0 0 8px #d8dec861; }
+.celestial-progress > p { color: #aec5c6; font-size: 9px; line-height: 1.6; }
+.celestial-training-cost { display: flex; flex-wrap: wrap; gap: 4px 11px; color: #d4e0d1; font-size: 9px; margin: 5px 0 0; padding: 0; list-style: none; }
+.celestial-challenges { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bdcdac4d transparent; padding: 1px 0 6px; }
+.celestial-challenge { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; padding: 10px; border: 1px solid #c6c49163; border-radius: 6px; background: linear-gradient(135deg,#204451de,#102b3bf0); }
+.celestial-challenge-head { display: flex; justify-content: space-between; align-items: center; gap: 7px; }
+.celestial-challenge-head h2 { color: #efe5bf; font: 16px/1.5 Wendao,serif; margin: 0; }
+.celestial-challenge-head span { flex: none; color: #bfd8d3; font-size: 9px; padding: 3px 5px; border: 1px solid #c8d4b52e; border-radius: 3px; }
+.celestial-challenge p { color: #b9d0d1; font-size: 10px; line-height: 1.7; margin: 4px 0 8px; }
+.celestial-challenge-footer { display: flex; justify-content: space-between; align-items: center; gap: 7px; }
+.celestial-challenge-footer .narrative-button { flex: none; font-size: 10px; padding: 7px 10px; min-height: 40px; }
+.celestial-challenge-footer small { color: #bccfbf; font-size: 9px; line-height: 1.6; }
+.celestial-challenge-note { text-align: center; color: #b5c9c2; font-size: 8px; margin-top: 3px; }
+.celestial-letters { margin-top: 6px; border-top: 1px solid #a2c9b52e; }
+.celestial-letters details + details { border-top: 1px solid #a2c9b52e; }
+.celestial-letters summary { padding: 9px 3px; cursor: pointer; color: #d6e0c8; font-size: 10px; line-height: 1.6; }
+.celestial-letters details > div { padding: 0 3px 7px; }
+.celestial-letters p { margin: 0 0 7px; font-size: 10px; line-height: 1.85; color: #c3d6d1; }
+.celestial-letters p strong { display: block; color: #e5dbb4; font-weight: 400; font-size: 9px; }
+.ascension-screen[data-ascension-stage="ascended"] .ascension-world { gap: 7px; }
+.ascension-screen[data-ascension-stage="ascended"] .ascension-sky { min-height: 55px; max-height: 120px; }
+.ascension-screen[data-ascension-stage="ascended"] .ascension-panel { flex: 1 1 auto; max-height: none; }
+@keyframes ascension-light-rise { from { opacity: .1; transform: scaleX(.45) translateY(10%); } 40% { opacity: 1; } to { opacity: .6; transform: scaleX(1.4) translateY(-10%); } }
+@keyframes ascension-particle-rise { from { opacity: 0; transform: translateY(0) scale(.5); } 20% { opacity: 1; } to { opacity: 0; transform: translateY(-170px) scale(1.3); } }
+@media (max-width:380px) {
+ .ascension-screen .narrative-hud { padding-left: 15px; padding-right: 15px; }
+ .ascension-screen .narrative-hud h1 { font-size: 20px; }
+ .ascension-world { padding-left: 15px; padding-right: 15px; }
+ .ascension-sky-inscription strong { font-size: 29px; letter-spacing: 7px; }
+ .ascension-choices .narrative-button { padding: 8px 6px; }
+ .ascension-choices strong { font-size: 10px; }
+ .ascension-choices small { font-size: 8px; }
+ .ascension-dialogue .narrative-portrait { width: 43px; height: 58px; }
+ .ascension-requirement { padding: 7px; }
+ .ascension-requirement strong { font-size: 9px; }
+}
+@media (max-height:570px) {
+ .ascension-screen { grid-template-rows: auto minmax(65px,1fr) minmax(60px,auto) auto; }
+ .ascension-screen .narrative-hud { padding-top: calc(10px + env(safe-area-inset-top)); padding-bottom: 5px; }
+ .ascension-screen .narrative-hud h1 { font-size: 18px; margin-top: 0; }
+ .ascension-screen .narrative-overline { font-size: 8px; letter-spacing: 1px; }
+ .ascension-sky { min-height: 40px; max-height: 100px; }
+ .ascension-sky-inscription strong { font-size: 25px; }
+ .ascension-sky-inscription small { font-size: 8px; }
+ .ascension-panel { max-height: 28dvh; }
+ .ascension-world { gap: 5px; padding-bottom: 4px; }
+ .ascension-dialogue { padding-top: 7px; padding-bottom: 7px; max-height: 23dvh; }
+ .ascension-dialogue .narrative-paragraph p { font-size: 10px; line-height: 1.8; }
+ .ascension-dialogue .narrative-speaker strong { font-size: 10px; }
+ .ascension-dialogue .narrative-portrait { width: 32px; height: 43px; }
+ .ascension-footer { padding-top: 6px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+ .ascension-footer .narrative-button { min-height: 40px; padding: 7px 8px; font-size: 10px; }
+ .ascension-footer .narrative-hint { font-size: 8px; margin-bottom: 5px; }
+ .ascension-choices .narrative-button { min-height: 61px; padding: 6px; }
+ .ascension-choices small { font-size: 8px; }
+ .celestial-progress { padding: 6px 9px; }
+ .celestial-progress-top strong { font-size: 10px; }
+ .celestial-progress-top span { font-size: 9px; }
+ .celestial-challenge { padding: 7px 9px; }
+ .celestial-challenge-head h2 { font-size: 14px; }
+ .celestial-challenge p { font-size: 9px; margin-bottom: 5px; }
+ .ascension-screen[data-ascension-stage="ascended"] .ascension-world { gap: 4px; }
+ .ascension-screen[data-ascension-stage="ascended"] .ascension-sky { min-height: 24px; max-height: 50px; }
+ .ascension-screen[data-ascension-stage="ascended"] .ascension-sky-inscription strong { font-size: 24px; line-height: 1.1; }
+ .ascension-screen[data-ascension-stage="ascended"] .ascension-sky-inscription small { display: none; }
+ .ascension-screen[data-ascension-stage="ascended"] .ascension-panel { min-height: 112px; max-height: none; }
+}
+@media (max-height:450px) and (min-width:620px) {
+ .ascension-world { grid-row: 2 / 4; grid-column: 1; }
+ .ascension-dialogue { grid-row: 2; grid-column: 2; align-self: center; max-height: 100%; }
+ .ascension-footer { grid-row: 3; grid-column: 2; }
+ .ascension-panel { max-height: none; }
+}
+@media (prefers-reduced-motion:reduce) {
+ .ascension-screen *, .ascension-screen *::before, .ascension-screen *::after { animation: none !important; transition: none !important; }
+}

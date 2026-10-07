@@ -27,7 +27,7 @@ test('release catalog has actual promised content with stable unique identities'
  assert.equal(values(C.chapters).length,6);assert.equal(values(C.sidequests).length,18);
  assert.equal(values(C.companions).length,3);assert.equal(values(C.regions).length,6);
  assert.equal(C.regions.reduce((n,r)=>n+r.mapKeys.length,0),12);
- assert.deepEqual([...new Set(values(C.dungeons).map(d=>d.type))].sort(),['arena','boss','cave','resource','sect','tower','trial']);
+ assert.deepEqual([...new Set(values(C.dungeons).map(d=>d.type))].sort(),['arena','ascension','boss','cave','resource','sect','tower','trial']);
 });
 test('all techniques have meaningful numeric rules, explanatory source and legal upgrade metadata',()=>{
  for(const t of values(C.techniques)){

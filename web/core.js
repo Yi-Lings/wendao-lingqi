@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension);
   if(typeof module==='object'&&module.exports)module.exports=api;else root.WendaoCore=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,N,R){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,N,R,A){
 'use strict';
 const CAP=1e12,MAX_TIME=8640000000000000,DAY=86400000,HOUR=3600000,TICK=3000,PRODUCTION=60000;
 const CULT_CAP=DAY,PROD_CAP=7*DAY,SWEEP_CAP=8*HOUR;
@@ -138,7 +138,7 @@ function createState(now){
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
     companions:Object.fromEntries(Object.keys(C.companions||{}).map(id=>[id,{affinity:0,bond:false,cooldownUntil:0,lastTalkAt:-60000,questStep:0}])),
     story:{chapter:0,mercy:0,truth:0,ending:null,completed:[],sideCompleted:[],journeys:{}},
-    ritual:null,ritualLegacyWins:{},ritualHistory:[],
+    ritual:null,ritualLegacyWins:{},ritualHistory:[],ascension:null,
     joint:null,battle:null,exploration:null,battleReports:[],
     gacha:{highPity:0,redPity:0,target:null,fateGuarantee:false,history:[],total:0},
     rngStreams:{gacha:seed^0x9e3779b9,loot:seed^0x85ebca6b,world:seed^0xc2b2ae35},
@@ -240,6 +240,7 @@ function attributes(s,route){
   a.crit=clamp(a.crit,0,.70);a.critDamage=clamp(a.critDamage,1,2.5);a.dodge=clamp(a.dodge,0,.35);
   a.cooldownReduction=clamp(a.cooldownReduction,0,.4);a.damageReduction=clamp(a.damageReduction,0,.5);
   a.penetration=clamp(a.penetration,0,.4);a.healing=clamp(a.healing,0,1);a.lifesteal=clamp(a.lifesteal,0,.2);a.attackSpeed=clamp(a.attackSpeed,.5,2);
+  if(A){const celestial=A.attributeBonus(s);a.attack=Math.min(CAP,a.attack*(1+celestial.attack));a.defense=Math.min(CAP,a.defense*(1+celestial.defense));a.maxHp=Math.min(CAP,a.maxHp*(1+celestial.maxHp));}
   a.attack=Math.max(1,Math.floor(a.attack));a.defense=Math.max(0,Math.floor(a.defense));a.maxHp=Math.max(1,Math.floor(a.maxHp));a.maxMp=Math.max(20,Math.floor(a.maxMp));
   a.power=Math.round(a.attack*5+a.defense*4+a.maxHp);return a;
 }
@@ -463,7 +464,7 @@ function validateV3(raw){
   if(s.story.ending!==null){if(s.story.chapter!==6)throw Error('未完成剧情不能结局');const id=typeof s.story.ending==='string'?s.story.ending:s.story.ending.id;if(!['guardian','wanderer','teacher'].includes(id))throw Error('结局 ID 无效');}
   array(s.story.completed,6,'已完成章节');if(new Set(s.story.completed).size!==s.story.completed.length)throw Error('章节记录重复');for(const id of s.story.completed)if(!table(C.chapters).some(c=>c.id===id)||id>=s.story.chapter)throw Error('章节 ID 无效');
   array(s.story.sideCompleted,18,'支线');if(new Set(s.story.sideCompleted).size!==s.story.sideCompleted.length)throw Error('支线记录重复');for(const id of s.story.sideCompleted)if(!table(C.sidequests).some(q=>q.id===id))throw Error('支线 ID 无效');
-  if(R){R.normalize(s);R.validate(s);}validateJourneys(s);
+  if(R){R.normalize(s);R.validate(s);}validateJourneys(s);if(A){A.normalize(s);A.validate(s);}
   object(s.gacha,'gacha');integer(s.gacha.highPity,0,9,'橙保底');integer(s.gacha.redPity,0,79,'红保底');integer(s.gacha.total,0,CAP,'累计感应');boolean(s.gacha.fateGuarantee,'定向');if(!targetOk(s.gacha.target))throw Error('感应目标无效');
   array(s.gacha.history,200,'感应历史');for(const h of s.gacha.history){object(h,'感应记录');integer(h.at,0,MAX_TIME,'抽取时间');integer(h.rarity,0,5,'抽取品质');if(!['gear','equipment','treasure','technique','pill','material','materials'].includes(h.category))throw Error('抽取类别无效');
     if(h.category==='gear'||h.category==='equipment'){if(!targetOk(h.id)||!String(h.id).startsWith('gear_'))throw Error('历史装备 ID 无效');if(h.uid!==undefined)gearUid(h.uid);}else if(h.category==='treasure')catalogKey(C.treasures,h.id,'历史灵宝');else if(h.category==='technique')catalogKey(C.techniques,h.id,'历史功法');else if(h.category==='pill')catalogKey(C.recipes,h.id,'历史丹药');else if(!materialIds.includes(h.id))throw Error('历史材料 ID 无效');
