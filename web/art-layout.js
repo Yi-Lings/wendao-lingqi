@@ -6,12 +6,14 @@
 'use strict';
 /* An atlas cell is a crop of an image, never an image stretched to fit its box.
    Read actual image dimensions, then uniformly cover only the selected cell. */
-function geometry({width,height,imageWidth,imageHeight,cols,rows,col,row}){
+function geometry({width,height,imageWidth,imageHeight,cols,rows,col,row,crop,fit='cover'}){
  const values=[width,height,imageWidth,imageHeight,cols,rows,col,row];
  if(values.some(x=>!Number.isFinite(x))||width<=0||height<=0||imageWidth<=0||imageHeight<=0||cols<1||rows<1||col<0||row<0||col>cols-1+.001||row>rows-1+.001)return null;
- const cellWidth=imageWidth/cols,cellHeight=imageHeight/rows,scale=Math.max(width/cellWidth,height/cellHeight);
+ const box=crop||[col/cols,row/rows,1/cols,1/rows];
+ if(!Array.isArray(box)||box.length!==4||box.some(x=>!Number.isFinite(x))||box[0]<0||box[1]<0||box[2]<=0||box[3]<=0||box[0]+box[2]>1.000001||box[1]+box[3]>1.000001)return null;
+ const cellWidth=imageWidth*box[2],cellHeight=imageHeight*box[3],scale=(fit==='contain'?Math.min:Math.max)(width/cellWidth,height/cellHeight);
  const renderedCellWidth=cellWidth*scale,renderedCellHeight=cellHeight*scale;
- return {width:imageWidth*scale,height:imageHeight*scale,x:-col*renderedCellWidth+(width-renderedCellWidth)/2,y:-row*renderedCellHeight+(height-renderedCellHeight)/2,cellWidth,cellHeight,scale};
+ return {width:imageWidth*scale,height:imageHeight*scale,x:-box[0]*imageWidth*scale+(width-renderedCellWidth)/2,y:-box[1]*imageHeight*scale+(height-renderedCellHeight)/2,cellWidth,cellHeight,scale};
 }
 const doc=root.document;
 if(!doc)return Object.freeze({geometry});
@@ -38,12 +40,27 @@ function readProfile(node){
  if(x===null||y===null)return null;
  const url=urls[urls.length-1][1],col=cols===1?0:x*(cols-1),row=rows===1?0:y*(rows-1);
  if(col<0||row<0||col>cols-1+.001||row>rows-1+.001)return null;
- return {url,cols,rows,col,row,sourceSize:size,sourcePosition:position,sizes,positions,dimensions:old?.url===url?old.dimensions:null};
+ const crop=node.dataset.artCrop?.split(',').map(Number);
+ return {url,cols,rows,col,row,crop,fit:crop?'contain':'cover',background:style.backgroundImage,sourceSize:size,sourcePosition:position,sizes,positions,dimensions:old?.url===url?old.dimensions:null};
 }
 function apply(node,profile){
  if(!node.isConnected||profiles.get(node)!==profile||!profile.dimensions)return;
  const fitted=geometry({width:node.clientWidth,height:node.clientHeight,imageWidth:profile.dimensions.width,imageHeight:profile.dimensions.height,...profile});
  if(!fitted)return;
+ // Generated atlas separators need not fall on equal sixths. Isolate the
+ // measured rectangle in its own window, then contain it inside the quality
+ // frame. Letterboxing must never expose the adjacent atlas illustration.
+ if(profile.crop){
+  let picture=node.querySelector(':scope > [data-atlas-picture]');
+  if(!picture){picture=doc.createElement('span');picture.dataset.atlasPicture='';picture.setAttribute('aria-hidden','true');node.append(picture);}
+  const width=fitted.cellWidth*fitted.scale,height=fitted.cellHeight*fitted.scale,left=(node.clientWidth-width)/2,top=(node.clientHeight-height)/2;
+  const values={width:clean(width),height:clean(height),left:clean(left),top:clean(top),'background-image':profile.background,'background-size':clean(fitted.width)+' '+clean(fitted.height),'background-position':clean(fitted.x-left)+' '+clean(fitted.y-top)};
+  for(const [name,value] of Object.entries(values))if(picture.style.getPropertyValue(name)!==value)picture.style.setProperty(name,value);
+  if(!node.classList.contains('atlas-crop-fit'))node.classList.add('atlas-crop-fit');
+ }else{
+  node.querySelector(':scope > [data-atlas-picture]')?.remove();
+  if(node.classList.contains('atlas-crop-fit'))node.classList.remove('atlas-crop-fit');
+ }
  const sizes=profile.sizes.slice(),positions=profile.positions.slice();
  sizes[sizes.length-1]=clean(fitted.width)+' '+clean(fitted.height);
  positions[positions.length-1]=clean(fitted.x)+' '+clean(fitted.y);
@@ -69,7 +86,7 @@ function schedule(){if(!pending){pending=1;(root.queueMicrotask||((callback)=>Pr
 const observer=new root.MutationObserver(records=>{
  if(records.some(record=>record.type==='childList'||record.type==='attributes'&&record.target.matches?.(SELECTOR)))schedule();
 });
-observer.observe(doc.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class']});
+observer.observe(doc.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class','data-art-crop']});
 root.addEventListener('resize',schedule,{passive:true});
 if(doc.readyState==='loading')doc.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
 return Object.freeze({geometry,refresh});

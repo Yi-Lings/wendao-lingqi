@@ -7,6 +7,7 @@ const crypto=require('node:crypto');
 const zlib=require('node:zlib');
 const A=require('../web/equipment-art.js');
 const I=require('../web/art-identity.js');
+const Crops=require('../web/art-crops.js');
 const C=require('../web/data.js');
 const K=require('../web/core.js');
 const Q=require('../web/economy.js');
@@ -131,9 +132,10 @@ test('all 216 displayed equipment crops have different actual artwork pixels',()
   for(const set of SETS)for(const slot of ['weapon',...WEARABLES])for(let rarity=0;rarity<6;rarity++){
     const art=A.gearArt({set,slot,rarity});
     if(!decoded.has(art.file))decoded.set(art.file,pngPixels(art.file));
-    const {width,height,bpp,pixels}=decoded.get(art.file),[px,py]=art.position.split(' ').map(x=>Number.parseFloat(x)/20),cw=width/6,ch=height/6,hash=crypto.createHash('sha256');
-    assert.equal(cw,Math.floor(cw));assert.equal(ch,Math.floor(ch));
-    for(let y=py*ch;y<(py+1)*ch;y++)hash.update(pixels.subarray((y*width+px*cw)*bpp,(y*width+(px+1)*cw)*bpp));
+    const {width,height,bpp,pixels}=decoded.get(art.file),[px,py]=art.position.split(' ').map(x=>Number.parseFloat(x)/20),crop=Crops.crop(art.file,px,py,6,6)||[px/6,py/6,1/6,1/6],hash=crypto.createHash('sha256');
+    const [left,top,right,bottom]=[crop[0]*width,crop[1]*height,(crop[0]+crop[2])*width,(crop[1]+crop[3])*height].map(Math.round);
+    assert(left>=0&&top>=0&&right<=width&&bottom<=height&&right>left&&bottom>top);
+    for(let y=top;y<bottom;y++)hash.update(pixels.subarray((y*width+left)*bpp,(y*width+right)*bpp));
     const digest=hash.digest('hex');assert(!hashes.has(digest),'copied artwork for '+set+'/'+slot+'/'+rarity);hashes.add(digest);
   }
   assert.equal(hashes.size,216);

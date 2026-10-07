@@ -6,6 +6,18 @@
   background-repeat: no-repeat;
 }
 
+/* The source window clips its own atlas; the outer rarity frame stays square.
+   A taller last row can therefore show its complete object without stretching
+   it or painting fragments of the next item's illustration. */
+.atlas-fit.atlas-crop-fit { position: relative; background-size: 0 0 !important; }
+.atlas-crop-fit > [data-atlas-picture] {
+  position: absolute;
+  display: block;
+  z-index: 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
 /* Narrative pictures deserve enough height to read as illustrations. */
 .game-shell .chapter-art {
   width: 100%;

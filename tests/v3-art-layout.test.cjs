@@ -30,3 +30,15 @@ test('hidden elements and invalid crops cannot create infinite scaling or cross 
  const input={width:74,height:74,imageWidth:2048,imageHeight:2048,cols:6,rows:6,col:0,row:0};
  for(const override of [{width:0},{height:0},{imageWidth:0},{imageHeight:NaN},{cols:0},{rows:0},{col:-1},{row:6},{col:Infinity}])assert.equal(geometry({...input,...override}),null);
 });
+test('measured rectangles contain the complete artwork at one scale and leave a centered clipped source window',()=>{
+ const source={imageWidth:1254,imageHeight:1254,cols:6,rows:6,col:0,row:5,crop:[0,982/1254,209/1254,272/1254],fit:'contain'};
+ for(const [width,height] of [[88,88],[58,70],[160,160]]){
+  const g=geometry({...source,width,height});assert.ok(g);
+  near(g.width/source.imageWidth,g.height/source.imageHeight);
+  const w=g.cellWidth*g.scale,h=g.cellHeight*g.scale,left=(width-w)/2,top=(height-h)/2;
+  assert.ok(w<=width+.0001&&h<=height+.0001,'whole crop fits instead of cutting its top or bottom');
+  near(left+w/2,width/2);near(top+h/2,height/2);
+  near(g.x-left,-source.crop[0]*g.width);near(g.y-top,-source.crop[1]*g.height);
+ }
+ for(const crop of [[0,0,0,1],[-.1,0,.5,.5],[0,0,1,1.1],[0,0,NaN,.5],[0,0,.5]])assert.equal(geometry({...source,width:88,height:88,crop}),null);
+});
