@@ -234,7 +234,8 @@ public final class MainActivity extends Activity {
         try {
             pendingExportRecovery = recovery;
             pendingExport = recovery ? boundedText(text) : validatedSave(text);
-            if (!recovery && !writeInternalSave(pendingExport)) throw new IllegalStateException("could not preserve save");
+            // Export is a snapshot operation. Preview saves use this bridge too;
+            // only persistSave may replace the formal character's saveFile.
             if (!preserveExport(pendingExport)) throw new IllegalStateException("could not preserve export");
             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);

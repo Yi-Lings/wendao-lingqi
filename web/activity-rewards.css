@@ -7,7 +7,7 @@
 .activity-hero p{margin:0!important;font-size:12px;line-height:1.5;color:#b6cdca;overflow-wrap:anywhere}
 .activity-note{margin:0 0 11px!important;line-height:1.6;font-size:11px;color:#c9b687}
 .activity-costs{margin-top:14px;padding:9px 0 0;border-top:1px solid #5f8a7836;color:#9eb9ae;font-size:11px;line-height:1.6}
-.activity-costs summary{display:flex;align-items:center;min-height:36px;cursor:pointer;color:#b8ccbc}
+.activity-costs summary{display:flex;align-items:center;min-height:40px;cursor:pointer;color:#b8ccbc}
 .activity-costs p{margin:3px 0!important;overflow-wrap:anywhere}
 .activity-pending .activity-hero{border-color:#75a8aa55;background:radial-gradient(ellipse at 6% 50%,#317b8028,transparent 64%),#0e2830}
 .activity-pending .activity-seal{color:#c3e0d6;border-color:#8bbaad66;box-shadow:0 0 20px #62bba120}

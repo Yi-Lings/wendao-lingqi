@@ -4,8 +4,8 @@
   if(node)module.exports=api;else root.WendaoActivityRewards=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(C,A,G,I){
 'use strict';
-const SUPPORTED=new Set(['sweepDungeon','craftPill','finishAlchemyJob','forgeGear','claimWisdom','claimCommission','claimChapter','claimSidequest','jointStep','claimOverflow','recycleGear','bulkRecycle','recycleTreasure','cancelAlchemyJob','jointCancel','chooseCave']);
-const titles={sweepDungeon:'扫荡完成',craftPill:'丹药炼成',finishAlchemyJob:'丹药炼成',forgeGear:'灵装铸成',claimWisdom:'悟道所得',claimCommission:'委托完成',claimChapter:'卷章完成',claimSidequest:'机缘已得',jointStep:'共修完成',claimOverflow:'灵装归囊',recycleGear:'分解完成',bulkRecycle:'分解完成',recycleTreasure:'分解完成',cancelAlchemyJob:'药材已退还',jointCancel:'邀约费用已退还',chooseCave:'洞天采获'};
+const SUPPORTED=new Set(['sweepDungeon','craftPill','finishAlchemyJob','forgeGear','claimWisdom','claimCommission','claimChapter','claimSidequest','jointStep','claimOverflow','recycleGear','bulkRecycle','recycleTreasure','cancelAlchemyJob','jointCancel','chooseCave','exchangeDust']);
+const titles={sweepDungeon:'扫荡完成',craftPill:'丹药炼成',finishAlchemyJob:'丹药炼成',forgeGear:'灵装铸成',claimWisdom:'悟道所得',claimCommission:'委托完成',claimChapter:'卷章完成',claimSidequest:'机缘已得',jointStep:'共修完成',claimOverflow:'灵装归囊',recycleGear:'分解完成',bulkRecycle:'分解完成',recycleTreasure:'分解完成',cancelAlchemyJob:'药材已退还',jointCancel:'邀约费用已退还',chooseCave:'洞天采获',exchangeDust:'天道尘兑换完成'};
 const labels={stones:'灵石',xp:'修为',tickets:'感应券',contribution:'宗门贡献',jade:'灵玉',dust:'天道尘',herb:'灵草',ore:'玄铁',lotus:'灵莲',insight:'参悟',essence:'炼器精华',soul:'器魂',crystal0:'一阶天命晶',crystal1:'二阶天命晶',crystal2:'三阶天命晶',crystal3:'四阶天命晶',crystal4:'五阶天命晶',crystal5:'六阶天命晶'};
 const own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k),copy=x=>JSON.parse(JSON.stringify(x));
 const n=x=>Number.isFinite(x)?x:0,esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

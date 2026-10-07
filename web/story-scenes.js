@@ -8,6 +8,7 @@
 const line=(speaker,text,expression=0)=>({speaker,text,expression});
 const clue=(id,label,text,speaker,x,y)=>({id,label,text,speaker,x,y});
 const map=n=>({file:'v3-map-atlas-'+(n<6?'a':'b')+'.png',cols:3,rows:2,col:n%3,row:Math.floor(n%6/3)});
+const interior=n=>({file:'v8-interiors-atlas.png',cols:2,rows:1,col:n,row:0,crop:n?[888/1774,0,886/1774,1]:[0,0,886/1774,1]});
 const chapterArt=n=>({file:'v3-chapter-atlas.png',cols:3,rows:2,col:n%3,row:Math.floor(n/3)});
 const mission=(key,id,label)=>({key,...(id?{id}:{}),count:1,label,nav:{page:'adventure',modal:'dungeon',payload:{id}}});
 const herb=label=>mission('dungeonWins','resource_herb',label);
@@ -70,7 +71,7 @@ add({id:'qinglan_0',kind:'sidequest',questId:'qinglan_0',title:'钟片微光',lo
     branch('seek','取矿石测钟片，分清旧纹与新痕',[line('player','用不带药圃灵息的矿石作对照。如果也共振，就不是你搬动钟片的缘故。'),line('qinglan','沉星矿洞的石脉最稳。我知道一条避开落石的路。'),line('narrator','她把昨夜的巡山图展开，第一次没有遮住村口那一段。')],ore('通关沉星矿洞，带回共振对照矿石'))],
   outro:{protect:[line('narrator','巡过的泥沟里没有新阵线。药圃守着的老人认出钟片，说他年轻时见过完整的镇山钟。'),line('qinglan','原来这不是我带来的灾。我还是会把那一晚记在巡山簿里。',1),line('player','也记下你把人救出来的那一段。')],seek:[line('narrator','新矿石靠近钟片，同样每三息微震。反向汲灵纹早已嵌进铜的内部。'),line('qinglan','这回我能把原因说清，不必只对村人说「对不起」。',1),line('narrator','她在巡山簿旁画了一只酒盏，标注了第一次测得的微光。')]},summary:'钟片原本属于护脉旧钟。青岚把愧疚变成可核对的巡山记录。'});
 
-add({id:'qinglan_1',kind:'sidequest',questId:'qinglan_1',title:'山门旧愿',location:'青岚山麓 · 山君巡界碑',stakes:'青岚曾答应老师守满十年。她不知道，这句话是不是已经替自己决定了下一程。',cast:['qinglan'],art:map(1),
+add({id:'qinglan_1',kind:'sidequest',questId:'qinglan_1',title:'山门旧愿',location:'青岚山麓 · 山君巡界碑',stakes:'青岚曾答应老师守满十年。她不知道，这句话是不是已经替自己决定了下一程。',cast:['qinglan'],art:map(0),
   intro:[line('narrator','巡界碑下压着一封没寄出的信。信角被青岚反复折过，收信人只有「师父」。'),line('qinglan','他说等村路安全，就带我看海。后来他没回来，我也一直没有离开。',2),line('player','这条路是谁一个人守出来的？'),line('qinglan','碑上只刻了师父的名。但砌碑的人、轮夜的人，我都记得。')],
   clues:[clue('shortened_oath','碑背的半句旧愿','正面写「守山十年」，背面被青苔盖着「待新路通，交后人守」。旧愿本来就留着交接的一句。','qinglan',29,56),clue('two_patrols','重叠的巡山脚印','新弟子的靴印早已覆盖旧路，却在山君出没的一段绕开。要交接，就得先把最危险的路一起走通。','narrator',72,65)],
   choices:[branch('protect','先替新巡山人清出安全交接路',[line('player','先把他们绕开的路清通。交接不是把危险留给后来的人。'),line('qinglan','我走前面，你盯山君侧面。今天巡山簿上要写两个人的名字。',1),line('narrator','她把未寄的信收进口袋，换了一条结实的剑穗。')],boss(0,'击败青甲山君，清通巡山交接路线')),
@@ -91,28 +92,28 @@ add({id:'qinglan_3',kind:'sidequest',questId:'qinglan_3',title:'云外之路',lo
     branch('seek','验证札记，让后来人能按记录破阵',[line('player','照札记走一遍，只用你写下的信号。看看哪里还需补一句。'),line('qinglan','若我下意识换了路线，你就提醒我。我想把凭习惯做的事也说明白。',2),line('narrator','你们约好撤回手势，把未写完的札记带到根须前。')],boss(6,'击败缚灵树王，验证守山札记的破阵步骤'))],
   outro:{protect:[line('narrator','北线木牌点起新灯。青岚走过那道灯时没有再回头数屋顶，只问你海边有没有茶铺。'),line('qinglan','我会回来，但不是因为没人替我守。',1),line('narrator','她在路口留了到海边的第一封信，约定到下一站再寄。')],seek:[line('narrator','札记多了三处补注：何时退、何时止血、看不到树王时不要追。新人照着走完了北线。'),line('qinglan','现在这条路不用猜我在想什么了。',1),line('narrator','她把完整札记留下，只带走空白的旅行簿。第一页写着：云外第一日。')]},summary:'青岚把守山经验留给后来的人，带着自己的海岸图走出山门。'});
 
-add({id:'yueheng_0',kind:'sidequest',questId:'yueheng_0',title:'一炉温药',location:'宗门丹房 · 第一只药碗',stakes:'采药人还在发抖。他的药方没有错，错的是火候表上的一个数字。',cast:['yueheng'],art:map(0),
+add({id:'yueheng_0',kind:'sidequest',questId:'yueheng_0',title:'一炉温药',location:'镜湖云府 · 炼丹房',stakes:'采药人还在发抖。他的药方没有错，错的是火候表上的一个数字。',cast:['yueheng'],art:interior(1),
   intro:[line('narrator','月衡把一只缺口碗移到炉边，却没有倒药。床上的采药人说不冷，盖着的两层被却都在抖。'),line('yueheng','他喝过药。现在不能凭「不见好」就再加一份。',2),line('player','你在等什么？'),line('yueheng','等弄清哪一页错了。人不会按丹书里整齐的数字发热。')],
   clues:[clue('smudged_heat','被药渍覆盖的火候表','原本的「文火」被药渍盖住，像成了「武火」。照错字煎出的药性偏急，才使脉象更躁。','yueheng',28,62),clue('split_bowl','缺口碗的刻线','碗沿有一道用量刻线。采药人把两次份量一次喝下，因为抄方时漏了「分服」两个字。','narrator',72,57)],
   choices:[branch('protect','先炼一炉温和药，稳住今晚的脉象',[line('player','先按你确认过的配比开炉。刻线和用量一起重写。'),line('yueheng','你看火，我备药。这一炉宁可慢些，也不要用猛火追时间。',1),line('narrator','他把缺口碗放在你看得见的地方，当作分服的提醒。')],craft('实际炼成一炉丹药，完成采药人的温药准备')),
     branch('seek','再炼一炉对照药，校清错字的影响',[line('player','留两份样本，把不同火候的药息分清。以后不能再让人猜字。'),line('yueheng','对照样本只用来验药，不给病人试。病人的那份按净方煎。',2),line('narrator','他将校正过的字用深墨描清，在纸边画了一只小火。')],craft('实际炼成一炉丹药，核对净方的药性'))],
   outro:{protect:[line('narrator','采药人的手不再发抖。他尝了一口，说这次药很苦，然后把碗稳稳端住了。'),line('yueheng','能说出苦味，便比刚才好些。你记火候，我记脉象。',1),line('narrator','丹方旁多出第一条共同批注：缺「分服」二字，不可照旧抄用。')],seek:[line('narrator','净方药息稳定，对照样本的急息正好对应旧药渣。月衡把两个样本封好，写上时辰。'),line('yueheng','有了这个，错的不再只是他的用药习惯。是我们的抄方也该改。',2),line('narrator','采药人摸着新刻线问还要喝几次，这次你们给了能听懂的答案。')]},summary:'一次用药差错被具体拆开；月衡在方页上留下你的观察和清楚的分服说明。'});
 
-add({id:'yueheng_1',kind:'sidequest',questId:'yueheng_1',title:'疑方求证',location:'镜湖云府 · 被退回的药箱',stakes:'一箱被退回的丹药仍写着月衡的名字。查出责任，和让缺药的人有药，是两件都要做的事。',cast:['yueheng','qinglan'],art:map(3),
+add({id:'yueheng_1',kind:'sidequest',questId:'yueheng_1',title:'疑方求证',location:'镜湖云府 · 被退回的药箱',stakes:'一箱被退回的丹药仍写着月衡的名字。查出责任，和让缺药的人有药，是两件都要做的事。',cast:['yueheng','qinglan'],art:map(2),
   intro:[line('narrator','药箱上贴着「月衡所制，暂勿服用」。月衡拆掉自己的名字，又把纸条原样放回去。'),line('yueheng','配方是我的，炉子不是我改的。可收箱的人只看得到这个名字。',2),line('qinglan','有几箱经过山君巡界石阶。搬箱的人说，炉旁没有封签。'),line('player','那就从没封签的地方重新核。')],
   clues:[clue('mixed_ash','药箱底的两种炉灰','一层草灰、一层铜屑。铜屑来自汲灵火门，而月衡的净炉没有这种金属。','yueheng',29,59),clue('missing_seal','断了一半的运输封签','封签编号与山君铜环相连。药品在半路被换炉重炼，责名却沿用原方作者。','qinglan',71,64)],
   choices:[branch('protect','先成一炉替代药，把停药的缺口补上',[line('player','药箱暂时扣下。我们先补能用的药，让收箱的人别为证据空等。'),line('yueheng','每份另写新封签，不只写我的名，也写炉号与时辰。',1),line('narrator','他从桌下拿出一沓空纸，第一次把验炉人也列进记录。')],craft('实际炼成一炉丹药，提供清楚封签的替代药')),
     branch('seek','截住山君运输道，找到换炉封签',[line('player','先查封签编号。让人把一箱药换掉，却留下别人的名，这条链得停。'),line('qinglan','我跟你走石阶。月衡，你把药渣留好，别让人说样本是新的。',2),line('yueheng','箱子与旧签都不动。我等你带回能接上的另一半。')],boss(0,'击败青甲山君，核实换炉运输封签'))],
   outro:{protect:[line('narrator','替代药送出后，退箱人又回来，把原来的污签亲手交还。箱内保存了完整的铜屑样本。'),line('yueheng','他先拿到药，才敢说是哪位管事逼他贴签。',2),line('narrator','记录写下了管事的名字，却没有再把一整炉的责任缩成一名医者。')],seek:[line('narrator','两半封签合拢，编号指向旧盟验炉台。新日期压着旧方号，换炉是事先安排的。'),line('yueheng','我会把缺药的名单补齐。证物证明我没有改炉，也提醒我不能只管写完一张方。',1),line('narrator','他洗净指尖的墨，把新的封签规程贴在了所有炉前。')]},summary:'药方作者与篡改丹炉的责任被分开；每炉加入了可追查的封签和验炉记录。'});
 
-add({id:'yueheng_2',kind:'sidequest',questId:'yueheng_2',title:'共守灯火',location:'镜湖医舍 · 雨夜轮值桌',stakes:'月衡仍在接下一只药碗，但他的字已开始写歪。今晚需要有人替他接班。',cast:['yueheng'],art:map(2),
+add({id:'yueheng_2',kind:'sidequest',questId:'yueheng_2',title:'共守灯火',location:'镜湖医舍 · 雨夜轮值桌',stakes:'月衡仍在接下一只药碗，但他的字已开始写歪。今晚需要有人替他接班。',cast:['yueheng'],art:{file:'story-infirmary-night.png',cols:1,rows:1,col:0,row:0},
   intro:[line('narrator','灯芯已换过两次。月衡把最后一份方写完，发现笔尖落在自己另一只手上。'),line('yueheng','还有三个人等药。等他们拿到，我就歇。',2),line('player','你上一炉也是这样说。谁来验你现在写的方？'),line('yueheng','……你说得对。桌边还有一把椅子，坐下帮我看看。')],
   clues:[clue('repeated_dose','重复写下的用量','同一人的记录被写了两次，剂量却不同。月衡已不能只凭记忆判断，必须重新核对。','narrator',29,64),clue('unlit_shiftlamp','没有点亮的交班灯','灯架挂着轮值牌，背面写着可替班的人。月衡一直没点灯，怕让别人觉得自己做不完。','yueheng',71,56)],
   choices:[branch('protect','代他炼完这一炉，点亮交班灯',[line('player','我来完成这炉，你把病历交给下一班。今晚不用证明自己还能撑。'),line('yueheng','炉息若变了就喊我；不是让我回来接班，只是让我告诉你怎么辨。',1),line('narrator','他第一次把椅背放在离丹炉更远的位置。')],craft('实际炼成一炉丹药，完成雨夜交班')),
     branch('seek','先补备用药材，把缺药原因写进轮值表',[line('player','等药的人多，不该只靠你多熬一夜。先补备用药，明日一起改排班。'),line('yueheng','我把病历逐项核完，便把灯点起来。你回来时，椅子应该换人坐了。',1),line('narrator','他在轮值牌上补了自己常漏写的结束时辰。')],herb('通关青岚灵圃，补齐医舍备用药材'))],
   outro:{protect:[line('narrator','你回来时，月衡睡着了。下一班医者在灯下给你留出一只空碗，示意把新药放下。'),line('yueheng','醒来才知道，少看一夜炉火，药也不会少一分温。',1),line('narrator','共同病历上写着交班人的姓名，没有要求你们先在契书上签字。')],seek:[line('narrator','备用药上了架，轮值表第一次列出耗材和替班人数。两个人的小字挨在一起，改掉一整列空白。'),line('yueheng','有人愿意接灯，先得看得见灯。是我之前把它藏得太低。',2),line('narrator','他把灯架挪到门口，约你明晚在不值班的时辰喝茶。')]},summary:'医舍有了真实的交班和备用药安排；同行或结契，都不成为相互照料的前提。'});
 
-add({id:'yueheng_3',kind:'sidequest',questId:'yueheng_3',title:'医道长明',location:'长明书院 · 丹典试读桌',stakes:'丹典写得越精深，山下的人越不敢用。月衡想知道，是书写错了，还是读者被漏掉了。',cast:['yueheng'],art:map(8),
+add({id:'yueheng_3',kind:'sidequest',questId:'yueheng_3',title:'医道长明',location:'长明书院 · 丹典试读桌',stakes:'丹典写得越精深，山下的人越不敢用。月衡想知道，是书写错了，还是读者被漏掉了。',cast:['yueheng'],art:interior(0),
   intro:[line('narrator','试读桌旁摆着三本批注过的丹典。一位村医在「灵火精炼」旁画了一个大圈，写着：没有灵火。'),line('yueheng','我写了最稳的炼法，却忘了他们未必有最好的炉。',2),line('player','第一页先教什么？'),line('yueheng','先教什么时候不该开炉。然后才教怎样把能用的药做出来。')],
   clues:[clue('ordinary_stove','读者带来的普通炉样','炉壁薄，火息不稳，没有丹典设想的恒温条件。低阶净方能完成，但高级配方不能照抄比例。','yueheng',29,61),clue('blank_substitutes','空着的替代材料栏','稀有灵莲的替代栏一片空白。读者并非不会查，而是书没有告诉他们缺材料时应停下或改方。','narrator',72,56)],
   choices:[branch('protect','先做基础净方，让普通炉也有可用的一页',[line('player','基础方先写清，今天就能教会来试读的人。高阶的部分标注别碰。'),line('yueheng','我写每一步看得到的征象，不再只写炉息几分。',1),line('narrator','他把丹典第一页的名词改成了火色、药香和停止的时机。')],craft('实际炼成一炉丹药，核对基础净方的步骤')),
@@ -126,7 +127,7 @@ add({id:'suyan_0',kind:'sidequest',questId:'suyan_0',title:'星图初识',locati
     branch('seek','深入查同一矿脉，测出针影偏差',[line('player','同一矿脉的几处样本放一起，才能辨出哪一段回路倒了。'),line('suyan','我给每块石标位置。别只带最亮的，那会把微弱的偏差盖掉。',2),line('narrator','她把问号留在图上，没有急着给偏差起一个玄妙的名字。')],ore('通关沉星矿洞，取同矿脉的校准样本'))],
   outro:{protect:[line('narrator','白线接回洞口，罗盘偏转时也没有让你们迷路。矿样在图上围出一条可走的弧。'),line('suyan','星图第一条线，原来该是回来的线。',1),line('narrator','她保留了所有问号，另把返程路线用深墨描清。')],seek:[line('narrator','几份矿样沿编号排开，针影只在第三处出现。素衍把那一小段倒接回路圈了起来。'),line('suyan','不是整片星空错了，只是有人改了我们脚下的一段路。',1),line('narrator','第八个问号旁，多了一个可以重复验证的答案。')]},summary:'罗盘的异常来自地脉回路；素衍用普通矿石建立了可验证、可返回的星图。'});
 
-add({id:'suyan_1',kind:'sidequest',questId:'suyan_1',title:'缺失一页',location:'云隐古府 · 被拆开的阵书',stakes:'阵书缺了一页，恰好也是退阵步骤。是谁抽走它，和怎样补回它，需要不同的证据。',cast:['suyan'],art:map(1),
+add({id:'suyan_1',kind:'sidequest',questId:'suyan_1',title:'缺失一页',location:'云隐古府 · 被拆开的阵书',stakes:'阵书缺了一页，恰好也是退阵步骤。是谁抽走它，和怎样补回它，需要不同的证据。',cast:['suyan'],art:map(5),
   intro:[line('narrator','书匣盖得很紧，匣底却落着一根断线。素衍用指腹摸过书脊，没有马上翻页。'),line('suyan','不是虫蛀。这里少了整整一张，线是从外面割断的。',2),line('player','缺的是什么？'),line('suyan','前页是合阵，后页是供能。它们之间本该有退阵，不是空白。')],
   clues:[clue('cut_stitch','整齐的断线','切口朝外，割线时书是被锁在匣中的。持匣钥匙的人可以抽掉那页，而不翻动其余内容。','suyan',28,60),clue('exit_rubbing','石台边的反向拓印','书页虽被抽走，旧学徒临摹的退阵图还压在石台下。图缺了一角，能补回步骤，却不能证明是谁抽页。','narrator',72,56)],
   choices:[branch('protect','先补退阵拓印，让困在古府的人能出',[line('player','先拼出可用的出口。持钥匙的人不能用缺页把后来者困住。'),line('suyan','我校拓印，你带我走完古府回路。途中每一个退阵口都要看。',1),line('narrator','她把旧学徒的署名留下，没有把拓印当成自己的新图。')],cave(0,'完整通关云隐古府，核对退阵拓印')),
@@ -147,24 +148,24 @@ add({id:'suyan_3',kind:'sidequest',questId:'suyan_3',title:'星桥归途',locati
     branch('seek','核清封锁阵，把双向路标接回旧渡口',[line('player','把桥背面的路标也补上。封锁阵留下的假出口，要逐个划掉。'),line('suyan','我记下每次封锁亮起的位置。守将倒下后才能定最后一条真线。',2),line('qinglan','撤回信号按老办法，别让真假箭头把我们带散。')],boss(10,'击败玄河守将，核对双向星桥路标'))],
   outro:{protect:[line('narrator','第一副担架从旧石阶回来，灯光恰好落在抬架人脚下。素衍蹲在旁边，记下他们转弯所需的宽度。'),line('suyan','空白的一角终于画满了。我下一张图，不会等到了桥头才想起它。',1),line('narrator','她把归途图留在渡口，自己的行囊里只收了一枚普通罗盘。')],seek:[line('narrator','新路标的两面都亮着。你从高桥回望，能一眼看见旧渡口，而不是一片金粉。'),line('suyan','星图画完不是封存，是交到真正走路的人手里。',1),line('narrator','她在图角留下修订日期与空白边，等下一个过桥的人添上自己的路。')]},summary:'归途图补上伤者渡口和双向路标；素衍把星图交给行路的人，准备下一次自己的旅程。'});
 
-add({id:'world_forge',kind:'sidequest',questId:'world_forge',title:'器道修复',location:'镜湖云府 · 六印古器台',stakes:'六套蓝图被锁在器台里。只修亮一枚印，仍会让另外五门的弟子无器可用。',cast:['qinglan','suyan'],art:map(3),
+add({id:'world_forge',kind:'sidequest',questId:'world_forge',title:'器道修复',location:'镜湖云府 · 六印古器台',stakes:'六套蓝图被锁在器台里。只修亮一枚印，仍会让另外五门的弟子无器可用。',cast:['qinglan','suyan'],art:map(2),
   intro:[line('narrator','古器台上六枚印记只亮了一枚。台旁断裂的模具里，有剑，也有护腕和布甲扣。'),line('suyan','旧图不是不能做六套。有人把共享回路切成了单门钥印。',2),line('qinglan','守台人说他只会修剑模，其余只能等。但等在外头的，不都用剑。'),line('player','先看哪里断，再决定从哪一枚修起。')],
   clues:[clue('sixway_channel','断开的六向铜槽','六条槽本应接向同一器台，现只有一条通电。缺口可以用普通玄铁重接，无需稀有红装作献材。','suyan',27,59),clue('unused_molds','没有报废的其余模具','五套模具尺寸完整，停用的原因是权限锁印，而非材料损坏。恢复蓝图不会要求换宗门。','narrator',73,62)],
   choices:[branch('protect','先取玄铁补铜槽，让器台能开炉',[line('player','先把共享回路接好。谁带着材料来，都应看得到自己的模具。'),line('qinglan','沉星矿洞的玄铁够用。别把「修台」写成非得寻一件神物。',1),line('narrator','器台旁的材料单只写下可重复获取的矿料。')],ore('通关沉星矿洞，取回修复六向槽的玄铁')),
     branch('seek','先造一件新器，验证蓝图不靠单门锁印',[line('player','用现有蓝图完成一次实造。找出器台到底在哪一步卡住，再拆那道锁。'),line('suyan','我记每一枚印的回应。你选熟悉的套装，不必为了测台换流派。',2),line('narrator','六套模具摆到台面上，锁印的位置被一一标出。')],forge('实际打造一件装备，验证器台蓝图回路'))],
   outro:{protect:[line('narrator','玄铁补入缺口，六枚印按不同颜色亮起。器台没有变成金光四射的神物，只是能让六门都开炉了。'),line('suyan','蓝图复制好了。原台损坏时，也还有第二份。',1),line('narrator','守台人在材料单上写下各套装的配方，空着的五行终于有了字。')],seek:[line('narrator','新器出炉，单门锁印短暂亮起又熄下。素衍沿记录断开锁线，六份蓝图同时被读出。'),line('qinglan','我原以为修器台就是修一件大东西。现在看，是别再让人等错一扇门。',1),line('narrator','六门蓝图被拓成公开的副本，器台旁留着这次实造记录。')]},summary:'六套永久蓝图恢复，器台依靠可获取材料修复，不再由单门钥印决定谁能开炉。'});
 
-add({id:'world_sect',kind:'sidequest',questId:'world_sect',title:'六门问道',location:'宗门学舍 · 六张旁听席',stakes:'学舍有六张席，却有五张被盖住。讲义被拿来划出身，而非讲如何应对敌人。',cast:['qinglan','yueheng'],art:map(0),
+add({id:'world_sect',kind:'sidequest',questId:'world_sect',title:'六门问道',location:'宗门学舍外 · 六张旁听席',stakes:'学舍有六张席，却有五张被盖住。讲义被拿来划出身，而非讲如何应对敌人。',cast:['qinglan','yueheng'],art:map(0),
   intro:[line('narrator','学舍门前摆着六张旁听席，五张覆着灰布。守门弟子先看你的腰牌，再看你手中的笔。'),line('qinglan','我可以替你开口，但不想让下一位来的人还得找我。'),line('yueheng','先把问道得到的经验摆上桌。知道一门有什么用，比争谁有资格坐下更好。',1),line('player','让讲义回答问题，不让腰牌替人回答。')],
   clues:[clue('shared_margin','六门同注的页边','剑诀旁写着阵修的护盾时机，丹方旁记着体修的耗息。最有用的批注早已不分单一流派。','yueheng',29,62),clue('covered_seats','灰布下的备用笔','旁听席有笔、有纸，只少一道准入记录。开放它们不需要让来者永久改换宗门。','narrator',72,56)],
   choices:[branch('protect','先试护路讲义，让新弟子能跟上',[line('player','先带一套基础应对走完灵圃。讲清遇到蓄力时怎么护住自己。'),line('qinglan','我把不同流派的可用办法都写在旁边，不让剑修的习惯成为唯一答案。',1),line('narrator','灰布被卷到角落，一张旁听席先摆上了新讲义。')],herb('通关青岚灵圃，验证面向新弟子的护路讲义')),
     branch('seek','先核旧碑批注，把六门共有的经验整理出来',[line('player','讲义上的异门批注得保留名字。去核它们的出处，再公开抄本。'),line('yueheng','静悟石林的守碑灵会逼人换应对。正好看哪些批注真能用。'),line('narrator','你在纸上分出「出处」「条件」「例外」三栏，没有把它们抄成一串招式名。')],insight('通关静悟石林，核对六门批注的实际应对'))],
   outro:{protect:[line('narrator','新讲义写下蓄力的可见征兆，六张旁听席渐渐都有人坐。有人仍不会使剑，却能说出何时开盾。'),line('qinglan','这回不需要我替每个人向门口解释了。',1),line('narrator','学舍把旁听记录改成学习内容，而非新的终身门籍。')],seek:[line('narrator','抄本留下了六门批注者的名字，也留下不适用的条件。原本盖住的席边，摆好了完整副本。'),line('yueheng','旁听不是把六门混成一门。是让人知道遇到难处，还能向哪一页找。',1),line('narrator','守门弟子开始问来者想学什么，先前那摞腰牌登记被放进了空匣。')]},summary:'六门经验以可验证的讲义公开，旁听与自选流派不再被永久门籍限制。'});
 
-add({id:'world_tower',kind:'sidequest',questId:'world_tower',title:'雷霄余响',location:'问道塔外 · 雷痕拓碑',stakes:'雷术记录只留了最亮的一瞬，真正保住人的打断时机被遗漏了。',cast:['suyan','qinglan'],art:map(4),
+add({id:'world_tower',kind:'sidequest',questId:'world_tower',title:'雷霄余响',location:'问道塔外 · 雷痕拓碑',stakes:'雷术记录只留了最亮的一瞬，真正保住人的打断时机被遗漏了。',cast:['suyan','qinglan'],art:map(3),
   intro:[line('narrator','塔外拓碑上全是如树枝的雷痕，最深一道被圈成「必胜」。素衍在圈旁点了三个细小记号。'),line('suyan','他们记下了落雷，却没记前面那三息的蓄力。'),line('qinglan','学招的人看着最亮那一下出剑，往往已经迟了。',2),line('player','把出手前看得见的征兆也写下来。')],
   clues:[clue('three_small_marks','深雷痕前的三枚小点','小点按间隔排列，对应蓄力、雷印与落雷。辨认这三息，才能选打断或护盾，而非只追求伤害。','suyan',29,57),clue('scorched_copy','边缘烧焦的拓本','拓本只展示成功爆发，烧焦页边却记着一次失败与净化。失败记录正好说明不能连续硬接雷印。','qinglan',72,62)],
-  choices:[branch('protect','再战雷渊玄蛟，补出护盾与打断窗口',[line('player','先把能活着回来的应对写清。落雷前的三息，一个也别省。'),line('qinglan','我记录前摇，你盯雷印。招式未必照原来次序再来。',2),line('narrator','新拓本留出整页给前摇，而不只留给胜利的一击。')],boss(2,'击败雷渊玄蛟，验证雷印与打断应对')),
+  choices:[branch('protect','再战雷渊蛟，补出护盾与打断窗口',[line('player','先把能活着回来的应对写清。落雷前的三息，一个也别省。'),line('qinglan','我记录前摇，你盯雷印。招式未必照原来次序再来。',2),line('narrator','新拓本留出整页给前摇，而不只留给胜利的一击。')],boss(2,'击败雷渊蛟，验证雷印与打断应对')),
     branch('seek','重核守碑余响，拆开被合写的雷术顺序',[line('player','先让记录不把三种雷术写成一种。余响里一定留着不同的间隔。'),line('suyan','静悟石林能验证辨识节律的办法。我给每个间隔单独编号。',2),line('narrator','最亮的一道雷痕不再写「必胜」，而是写上了出现的条件。')],insight('通关静悟石林，核对雷术余响的辨识记录'))],
   outro:{protect:[line('narrator','新记录没有只写如何击倒玄蛟，还画出了雷印叠起时怎样停攻、净化和开盾。'),line('qinglan','这些字没有最亮那道雷好看，但能让抄书的人活得久些。',1),line('narrator','烧焦拓本的失败批注也被收进完整雷术抄本。')],seek:[line('narrator','素衍把余响分成三列。间隔、前摇与雷印各自有了记录，再也不是一句「雷来则击」。'),line('suyan','招名可以相同，条件不能省。把这几行读懂，才算听完了余响。',1),line('narrator','塔外的「必胜」圈旁，多出一条明确的例外说明。')]},summary:'雷术留下前摇、雷印、打断与失败记录，雷霄传承不再只有招式名和亮光。'});
 
@@ -194,6 +195,7 @@ add({id:'world_escort',kind:'sidequest',questId:'world_escort',title:'河桥长�
 function chapterJourney(id,extraIntro,stages){
   const e=episodes['chapter_'+id];e.intro.push(...extraIntro);
   for(const b of e.choices){const stage=stages[b.id];b.goals=stage.goals;b.goal=stage.goals[0];b.interludes=stage.interludes;
+    if(stage.label)b.label=stage.label;
     if(stage.reply)b.reply=stage.reply;else b.reply.push(line('player',stage.lastReply));
     if(stage.outro)e.outro[b.id]=stage.outro;
   }
@@ -212,42 +214,42 @@ chapterJourney(0,[line('narrator','村口木牌上贴着三日后的山门试武
 
 // The original chapter name and rewards remain; the rise through the sect is now
 // witnessed through three actual arena victories, rather than a choice button.
-Object.assign(episodes.chapter_1,{location:'宗门斗技场 · 三轮登名台',stakes:'骆景行凭内门出身占着头名，顾寒舟只认胜绩。你要靠三场真正的对决，取得公开查炉的席位。',intro:[
-  line('narrator','斗技场里挂满各门旗，登记案却把散修排在最末。你走近时，骆景行正将自己的名牌摆在头席。'),line('narrator','「外门试武，三轮淘汰。」顾寒舟指了指你手里的木牌，「初试赢了，只说明你有资格再上一次台。」'),line('qinglan','他是内门最熟悉这座台的人。台上不认谁陪你来，盯住他亮招前的手势。',2),line('narrator','骆景行把护腕扣紧：「拿了一场入场胜，就想翻宗门药簿？台上的剑不会陪你讲村里的故事。」'),line('yueheng','台下的药我验过了，没有改炉的痕迹。你按自己的节奏，别为那句话把所有真元都用光。'),line('player','那就让他看见，我不止会讲。'),line('narrator','一位白发老修士坐在最远的石阶上，没有带门旗，只带一杯凉茶。他对记名弟子说：「胜负后，把每个人的名写清。」')],clues:[
+Object.assign(episodes.chapter_1,{art:{file:'story-arena.png',cols:1,rows:1,col:0,row:0},location:'宗门斗技场 · 三轮登名台',stakes:'骆景行凭内门出身占着头名，顾寒舟只认胜绩。你要靠三场真正的对决，取得公开查炉的席位。',intro:[
+  line('narrator','斗技场里挂满各门旗，登记案却把散修排在最末。你走近时，骆景行正将自己的名牌摆在头席。'),line('narrator','「外门试武，三轮淘汰。」顾寒舟指了指你手里的木牌，「初试赢了，只说明你有资格再上一次台。」'),line('qinglan','韩岳再守初试，叶惊鸿守复试，最后才是骆景行。每轮是不同的对手，盯住他们各自亮招前的手势。',2),line('narrator','骆景行把护腕扣紧：「拿了一场入场胜，就想翻宗门药簿？台上的剑不会陪你讲村里的故事。」'),line('yueheng','台下的药我验过了，没有改炉的痕迹。你按自己的节奏，别为那句话把所有真元都用光。'),line('player','那就让他看见，我不止会讲。'),line('narrator','一位白发老修士坐在最远的石阶上，没有带门旗，只带一杯凉茶。他对记名弟子说：「胜负后，把每个人的名写清。」')],clues:[
   clue('old_matchmarks','台沿重叠的旧战痕','深痕前都有一段浅刻，说明高爆发并非突然出现。真正可抓的窗口藏在蓄力前摇里，而非兵器有多华丽。','qinglan',28,61),
   clue('sealed_prize','首席封签与查炉名额','胜者除了领常规奖赏，还获得长老公开验炉时的旁席。名额记在首席封签上，顾寒舟不能凭出身另换一人。','yueheng',73,57)]});
 chapterJourney(1,[],{
-  protect:{goals:[mission('dungeonWins','arena_0','赢下斗技初试，稳住入场名次'),mission('dungeonWins','arena_1','赢下斗技复试，闯入决胜轮'),mission('dungeonWins','arena_2','赢下斗技决胜，夺得宗门斗技头名')],reply:[line('player','我先打稳每一轮，不为他一句话乱了节奏。'),line('qinglan','那就把眼睛留在前摇上。出身给不了他第二次开盾的时间。',1),line('yueheng','上一轮结束再准备下一轮。别把三场当成一口气。'),line('narrator','你把入场木牌放进登记案，第一次有人给你留出一条通往试台的路。')],interludes:[
-    [line('narrator','初试再次取胜，记名弟子把你的牌从队尾移到了台前。有人低声问起你是哪一门的，却无人能答。'),line('narrator','骆景行看了一眼战痕：「普通守台阵罢了。复试会逼你在护盾和爆发间作选择。」'),line('qinglan','他开始看你的招了。这比他先前看你的旧衣更有用。',1),line('player','我也看清了，不能见到破绽就把真元全押出去。'),line('narrator','顾寒舟给复试牌盖上印，墨比第一枚更浓。他仍没夸你，却没再省去名字。')],
-    [line('narrator','复试阵灭下时，台旁掌声先是零散，随后连了起来。原来坐在远处的老修士把茶盏放到膝边。'),line('yueheng','气血能续，真元也够。你这回知道在第二段蓄力前留一手了。',1),line('narrator','骆景行收起笑意，把头席名牌翻面：「决胜轮，我按对手与你打。」'),line('player','从第一轮起，我就一直在按对手与你打。'),line('qinglan','最后一场没有人替你收招。把前两场赢来的节奏留住。',2),line('narrator','顾寒舟亲自举起决胜旗，声音越过整座斗技场。')]
+  protect:{label:'稳打三轮斗技，为救治与查炉赢来旁席',goals:[mission('dungeonWins','arena_0','再战韩岳赢下斗技初试，稳住入场名次'),mission('dungeonWins','arena_1','击败叶惊鸿赢下斗技复试，闯入决胜轮'),mission('dungeonWins','arena_2','击败骆景行赢下斗技决胜，夺得宗门斗技头名')],reply:[line('player','我先打稳每一轮，不为他一句话乱了节奏。'),line('qinglan','那就把眼睛留在前摇上。出身给不了他第二次开盾的时间。',1),line('yueheng','上一轮结束再准备下一轮。别把三场当成一口气。'),line('narrator','你把入场木牌放进登记案，第一次有人给你留出一条通往试台的路。')],interludes:[
+    [line('narrator','韩岳的裂石掌被你挡回，初试再次取胜。记名弟子把你的牌从队尾移到台前，开始有人问起你的名字。'),line('narrator','骆景行看了一眼战痕：「韩岳的裂石掌还只是初试。复试叶惊鸿的霞火会逼你在护盾和爆发间作选择。」'),line('qinglan','他开始看你的招了。这比他先前看你的旧衣更有用。',1),line('player','我也看清了，不能见到破绽就把真元全押出去。'),line('narrator','顾寒舟给复试牌盖上印，墨比第一枚更浓。他仍没夸你，却没再省去名字。')],
+    [line('narrator','叶惊鸿收去霞火，复试阵光灭下。台旁掌声先零散、后连起来，远处的老修士把茶盏放到膝边。'),line('yueheng','气血能续，真元也够。你这回知道在第二段蓄力前留一手了。',1),line('narrator','骆景行收起笑意，把头席名牌翻面：「决胜轮，我按对手与你打。」'),line('player','从第一轮起，我就一直在按对手与你打。'),line('qinglan','最后一场没有人替你收招。把前两场赢来的节奏留住。',2),line('narrator','顾寒舟亲自举起决胜旗，声音越过整座斗技场。')]
   ],outro:[line('narrator','决胜台安静了一息，随后开试钟变成了登名钟。你的名牌越过所有内门牌，落在首席。'),line('narrator','骆景行看着断去的阵光，先抱拳：「先前看低你，是我错。下一次，我还会来挑战。」'),line('narrator','顾寒舟当众揭开首席封签：「此届斗技头名，按三轮胜绩记名。验炉旁席，归胜者。」白发老修士点了点头，终于喝完那杯凉茶。'),line('yueheng','药碗之外，终于有一张桌愿意听我们拿出的证据。你赢来的位置，不只是让名字写得更高。',1)]},
-  seek:{goals:[mission('dungeonWins','arena_0','赢下斗技初试，辨清试台应对'),mission('dungeonWins','arena_1','赢下斗技复试，突破骆景行的压阵'),mission('dungeonWins','arena_2','赢下斗技决胜，取得公开验炉席位')],reply:[line('player','我不抢第一下。先看清他惯用的蓄力、护盾和收招，再让他付出判断错我的代价。'),line('qinglan','看清之后就出手，别为了多看一招硬接。',2),line('yueheng','你的纸匣我收着。最后一场下台，它会在验炉桌上等你。'),line('narrator','你没有回骆景行的嘲笑，而是走到能看清整座台沿的位置。')],interludes:[
-    [line('narrator','初试结束，你把阵光亮起的次序记在台沿浅痕旁。围观弟子第一次议论的不是来历，而是你的应对。'),line('narrator','骆景行扫过记录：「光靠记招，过不了会变的阵。复试不会照你那几行字再来。」'),line('player','字不是让我照抄，是提醒我什么时候重新看。'),line('qinglan','他说得越多，越在意你看见了什么。别被话带着走。',1),line('narrator','复试门开，台上第二层阵光的节律果然与初试不同。')],
-    [line('narrator','复试获胜，顾寒舟从记录里挑出两段关键应对，交给了看台上负责验炉的长老。'),line('yueheng','他把你的查验记录也拿走了。原来胜绩能让人先愿意读一行字。',2),line('narrator','骆景行站到决胜台前，声音低下来：「最后一轮，不留手。你若能看懂，就来破。」'),line('player','我来这里，不是等你留手。'),line('qinglan','这才是他真的把你当成对手。最后一场，按你自己看见的时机出剑。',1),line('narrator','老修士起身换到离试台最近的石阶，杯中的茶已经彻底凉了。')]
+  seek:{label:'辨清三轮应对，用实战胜绩争取验炉席位',goals:[mission('dungeonWins','arena_0','再战韩岳赢下斗技初试，辨清裂石掌前摇'),mission('dungeonWins','arena_1','击败叶惊鸿赢下斗技复试，突破霞火压阵'),mission('dungeonWins','arena_2','击败骆景行赢下斗技决胜，取得公开验炉席位')],reply:[line('player','我不抢第一下。先看清每轮对手的蓄力、护盾和收招，再用实际应对让他们重新看我。'),line('qinglan','看清之后就出手，别为了多看一招硬接。',2),line('yueheng','你的纸匣我收着。最后一场下台，它会在验炉桌上等你。'),line('narrator','你没有回骆景行的嘲笑，而是走到能看清整座台沿的位置。')],interludes:[
+    [line('narrator','韩岳收掌认输，你把裂石掌蓄力的次序记在台沿浅痕旁。围观弟子开始议论你怎样应对，而不只议论来历。'),line('narrator','骆景行扫过记录：「光靠记韩岳的招，过不了叶惊鸿的霞火。复试不会照你那几行字再来。」'),line('player','字不是让我照抄，是提醒我什么时候重新看。'),line('qinglan','他说得越多，越在意你看见了什么。别被话带着走。',1),line('narrator','复试门开，叶惊鸿指尖燃起火莲。霞火连诀的前摇与韩岳的裂石掌不同，真元也得换一套分配。')],
+    [line('narrator','叶惊鸿收去火莲，向你点头认输。顾寒舟从你的复试记录里挑出两段关键应对，交给负责验炉的长老。'),line('yueheng','他把你的查验记录也拿走了。原来胜绩能让人先愿意读一行字。',2),line('narrator','骆景行站到决胜台前，声音低下来：「最后一轮，不留手。你若能看懂，就来破。」'),line('player','我来这里，不是等你留手。'),line('qinglan','这才是他真的把你当成对手。最后一场，按你自己看见的时机出剑。',1),line('narrator','老修士起身换到离试台最近的石阶，杯中的茶已经彻底凉了。')]
   ],outro:[line('narrator','决胜阵熄灭，你赢下的第三道胜印落在首席封签上。围观弟子开始复述你抢到的那个打断窗口。'),line('narrator','骆景行抱拳时没有再提你的旧衣：「我先前把你看成陪跑的人。下回，先看你的招。」'),line('narrator','顾寒舟将纸匣与头名牌同时放到验炉桌：「赢来的旁席，任何人不得替换。」长老展开铜灰记录，第一次念出莫无迁的验炉签名。'),line('qinglan','先登台，再让他们看证据。你两件都做到了。',1)]}
 });
 
-Object.assign(episodes.chapter_2,{location:'雾海秘境 · 三关争魁道',stakes:'秘境首席能取原档；旧盟只愿你看到抄本。骆景行也入了这次秘境，争的却未必是同一件东西。',intro:[
-  line('narrator','雾海秘境开放时，宗门弟子把上一届首席的旗立在门边。你那枚斗技胜印，被验门人翻看了三次。'),line('narrator','骆景行比你早到半步，却没有挡门：「台上输了，路上未必还输。三关走完，我在原档台等你。」'),line('suyan','第一关破雾，第二关灵泉夺印，第三关古殿争席。首席取原档，后来的只准拿已经删过的抄本。',2),line('player','那就不是为一面旗争。原档里的退阵页，必须有人看见。'),line('yueheng','里面还有抄档人的求援痕。到第三关时，别只记住首席的位置。'),line('narrator','顾寒舟亲自给你检过入境牌，将「散修」一栏改成了「斗技首席」。远处的老修士笑了一声：「这回，名在前头了。」'),line('suyan','你先别被头名催着跑。雾里最短的线，不一定通向真正的门。',1)],clues:[
+Object.assign(episodes.chapter_2,{art:{file:'story-secret.png',cols:1,rows:1,col:0,row:0},location:'雾海秘境 · 三关争魁道',stakes:'秘境首席能取原档；旧盟只愿你看到抄本。骆景行也入了这次秘境，争的却未必是同一件东西。',intro:[
+  line('narrator','雾海秘境开放时，宗门弟子把上一届首席的旗立在门边。你那枚斗技胜印，被验门人翻看了三次。'),line('narrator','骆景行比你早到半步，却没有挡门：「台上输了，路上未必还输。三关走完，我在原档台等你。」'),line('suyan','许照守第一关破雾，季凌川守第二关灵泉夺印，骆景行守第三关古殿争席。首席取原档，后来者只准拿删过的抄本。',2),line('player','那就不是为一面旗争。原档里的退阵页，必须有人看见。'),line('yueheng','里面还有抄档人的求援痕。到第三关时，别只记住首席的位置。'),line('narrator','顾寒舟亲自给你检过入境牌，将「散修」一栏改成了「斗技首席」。远处的老修士笑了一声：「这回，名在前头了。」'),line('suyan','你先别被头名催着跑。雾里最短的线，不一定通向真正的门。',1)],clues:[
   clue('false_fastline','越走越亮的近路','近路的灵光与钟片同拍，正诱人向汲灵支阵靠近。真入口旁只有矿工与学徒留下的普通刻痕。','suyan',26,59),
   clue('firstseat_rules','原档台的争魁旧例','三关胜绩必须分别登记，不能把第一关的胜利算成整场争魁。首席的原档权写在旧例中，旧盟不能再用抄本替代。','narrator',73,62)]});
 chapterJourney(2,[],{
-  protect:{goals:[mission('dungeonWins','secret_0','通关破雾争先关，开启安全归路'),mission('dungeonWins','secret_1','通关灵泉夺印关，打通抄档人撤出路线'),mission('dungeonWins','secret_2','通关秘境争魁终关，夺取原档首席')],reply:[line('player','争首席，也先给后面的人留一条能回去的路。别人掉进支阵，不会让我的胜绩更重。'),line('suyan','我把普通刻痕接成返程线。你去清守关的那一段。',1),line('yueheng','若见到求援痕，记清位置，别急着只追旗。'),line('narrator','你把首席胜印扣紧，沿着不发亮的刻痕走进雾中。')],interludes:[
+  protect:{label:'逐关清出归路，再夺原档首席救出抄档人',goals:[mission('dungeonWins','secret_0','击败许照通关破雾争先关，开启安全归路'),mission('dungeonWins','secret_1','击败季凌川通关灵泉夺印关，打通抄档人撤出路线'),mission('dungeonWins','secret_2','击败骆景行通关秘境争魁终关，夺取原档首席')],reply:[line('player','争首席，也先给后面的人留一条能回去的路。别人掉进支阵，不会让我的胜绩更重。'),line('suyan','我把普通刻痕接成返程线。你去清守关的那一段。',1),line('yueheng','若见到求援痕，记清位置，别急着只追旗。'),line('narrator','你把首席胜印扣紧，沿着不发亮的刻痕走进雾中。')],interludes:[
     [line('narrator','破雾关通了，守碑阵师许照收起阵旗，返程刻痕露出一段被苔掩住的石阶。三名走错近路的弟子沿着石阶追上来。'),line('narrator','骆景行从另一头赶到，肩边带着一道新裂口：「那道光是假的，你已经知道？」'),line('player','知道。返程线在脚下，不在最亮的地方。'),line('suyan','季凌川守着灵泉夺印阵，雷息会把路截成两段。先接退阵口，不然下一场赢了也带不走人。',2),line('narrator','骆景行没再抢先，他把自己的路牌插在了归路入口。')],
     [line('narrator','季凌川的雷旗落下，灵泉关的两段回路重接，石门后有纸片晃了一下。抄档人的手已经冻得无法把求援字写全。'),line('yueheng','他还活着。第三关开后我留在门内接人，你们到原档台去。',2),line('narrator','骆景行拿着第二道关印站在殿前，横剑行礼：「最后一轮，我按守殿旧约与你争。你若能赢，就别拿回一份没字的抄本。」'),line('player','等我拿下第三胜印，你我一起把里面的人带出来。'),line('suyan','原阵的第七出口就在档台下面。最后一关，既是首席，也是把它打开的机会。',2),line('narrator','古殿争席阵亮起，骆景行握稳青钢剑：「破雾开天剑，不再因你没有师承而收一分力。」')]
   ],outro:[line('narrator','第三道关印盖定，原档台的首席锁为你打开。抄档人沿重接的退路出来，紧攥着那张未写完的求援纸。'),line('suyan','原档融霜坏了一角，但他的口述补上了日期。莫无迁亲手撤掉第七阵口，先封路，后说灵息不足。',2),line('narrator','回到境门时，争魁旗被升到你的名下。骆景行收起败阵后留下的剑，替你挡开殿门余光：「这一回，三关归你。」'),line('player','把抄档人的名字也写进去。首席取回的不能只有一面旗。')]},
-  seek:{goals:[mission('dungeonWins','secret_0','通关破雾争先关，识破汲灵近路'),mission('dungeonWins','secret_1','通关灵泉夺印关，校出真正的原档入口'),mission('dungeonWins','secret_2','通关秘境争魁终关，保全原档与胜印')],reply:[line('player','先辨真路，再抢关印。旧盟越催人去看那条亮线，我越要查它漏掉哪一个出口。'),line('suyan','我带着先前矿样的编号。每一处回流都能和图上的位置相对。',2),line('yueheng','抄档人的求援线也要记在图上，不要让它被胜旗盖住。'),line('narrator','你没有沿人最多的近路跑，而是在第一道普通刻痕旁取下雾中的铜屑。')],interludes:[
+  seek:{label:'逐关查清真入口，争取首席保全原档',goals:[mission('dungeonWins','secret_0','击败许照通关破雾争先关，识破汲灵近路'),mission('dungeonWins','secret_1','击败季凌川通关灵泉夺印关，校出真正的原档入口'),mission('dungeonWins','secret_2','击败骆景行通关秘境争魁终关，保全原档与胜印')],reply:[line('player','先辨真路，再抢关印。旧盟越催人去看那条亮线，我越要查它漏掉哪一个出口。'),line('suyan','我带着先前矿样的编号。每一处回流都能和图上的位置相对。',2),line('yueheng','抄档人的求援线也要记在图上，不要让它被胜旗盖住。'),line('narrator','你没有沿人最多的近路跑，而是在第一道普通刻痕旁取下雾中的铜屑。')],interludes:[
     [line('narrator','许照的守碑阵退散，第一关胜印亮起，你把铜屑封到图边。所谓近路把来者的灵息引到一道废炉，并不通向第二关。'),line('narrator','骆景行从假路折返，呼吸比来时更重：「有人改过门纹。往年不是这样。」'),line('player','改路的人不想首席拿到完整档案。他知道赶着争旗的人最容易不看脚下。'),line('suyan','灵泉夺印阵有被磨掉的出口编号。我来对图，你去破季凌川守着的那段雷息。',2),line('narrator','骆景行看了一眼你的证物袋，第一次问的不是胜负，而是有没有一份副图。')],
     [line('narrator','季凌川的雷息止住，第二关回路解开，素衍把第七出口的位置补回图中。原档台的锁与药圃假路，使用同一道旧盟印。'),line('suyan','证据接上了。第三关原档还封在寒阵里，先固定纸脊，再取首席锁印。',2),line('yueheng','我留在出口照看抄档人。你们破阵时喊一声，我按时接人。'),line('narrator','骆景行把副图交给追来的弟子：「别再去亮线。没看清这图的，就先站在这里。」'),line('player','首席锁我来开。旧盟留下的字，不许只给我们看抄本。'),line('narrator','最后一枚关牌浮上古殿台。骆景行将副图交给守门人，横剑行礼：「最后一轮，先破我这一剑，再开原档锁。」')]
   ],outro:[line('narrator','终关胜印落定，原档的印痕、日期与改阵顺序完整留下。抄档人被月衡带出，冻伤的右手需要慢慢恢复。'),line('suyan','不是古钟先失效，而是出口先被撤。莫无迁的说法，终于有原档能反驳。',2),line('narrator','秘境旗在门前升起，顾寒舟当众登记你连破三关的首席。骆景行递回副图：「我会再争一次，但这图，你该先留下。」'),line('player','给每个人一份。胜印归我，证据不只归首席。')]}
 });
 
 chapterJourney(3,[line('narrator','城门上新挂着你的斗技与秘境两枚首席印。有人说首席来了就会有救，有人还在问，首席凭什么比他们的命更急。'),line('player','印不能替人开门。我来断这些根，也把门后的名字记住。'),line('narrator','顾寒舟带着护城弟子赶到，向你拱手请命。他没再给你分一条陪行的路，而是在等你的部署。')],{
-  protect:{goals:[boss(6,'击败缚灵树王，为东巷打开缺口'),herb('通关青岚灵圃，补齐劫火后的救治药材'),boss(7,'击败阵心影卫，夺回钟心外圈')],lastReply:'顾执事带人守河堤，我清树根。今日谁都不靠一个首席名号等救。',interludes:[
+  protect:{goals:[boss(6,'击败缚灵树王，为东巷打开缺口'),herb('通关青岚灵圃，补齐劫火后的救治药材'),boss(7,'击败双生影卫，夺回钟心外圈')],lastReply:'顾执事带人守河堤，我清树根。今日谁都不靠一个首席名号等救。',interludes:[
     [line('narrator','树王的根须退去，青岚带着私塾的人从缺口出来。最小的孩子没有鞋，先生把他抱在怀里。'),line('qinglan','二十三个，都在。药铺那边烧了棚子，药材不够。',2),line('yueheng','先补净药，别把被炉灰浸过的旧药再煎。我在井边设诊，药一到就能用。'),line('narrator','顾寒舟脱下外袍垫在孩子脚下，叫护城弟子去分担抬人。他看向你时，没有再问师承。'),line('player','我去补药。钟心封印的事，等这里稳住就接着查。')],
-    [line('narrator','新药送进临时诊棚，敲窗求救的声音渐渐停下。素衍从焦黑的主根里挑出一片还能读的铜边。'),line('suyan','钟心不在树王身上，外圈被阵心影卫带去西线了。坐标烧掉一半，但影卫的回流还在。',2),line('qinglan','人可以留给护城弟子了。我们去西线，别让莫无迁借钟心再起一次火。'),line('player','让顾执事把每户的药留足。西线最后一道守阵，我亲自破。'),line('narrator','两枚首席印映在焦铜上，城里的人不再只望着它们，而是开始按新部署动起来。')]
+    [line('narrator','新药送进临时诊棚，敲窗求救的声音渐渐停下。素衍从焦黑的主根里挑出一片还能读的铜边。'),line('suyan','钟心不在树王身上，外圈被双生影卫带去西线了。坐标烧掉一半，但影卫的回流还在。',2),line('qinglan','人可以留给护城弟子了。我们去西线，别让莫无迁借钟心再起一次火。'),line('player','让顾执事把每户的药留足。西线最后一道守阵，我亲自破。'),line('narrator','两枚首席印映在焦铜上，城里的人不再只望着它们，而是开始按新部署动起来。')]
   ]},
-  seek:{goals:[boss(6,'击败缚灵树王，切断钟心主根'),boss(7,'击败阵心影卫，截住钟心转运'),craft('实际炼成一炉丹药，完成城镇应急净药')],lastReply:'断主根后城防会空一阵。顾执事守河堤，青岚守东巷，我清出钟心转运路。',interludes:[
+  seek:{goals:[boss(6,'击败缚灵树王，切断钟心主根'),boss(7,'击败双生影卫，截住钟心转运'),craft('实际炼成一炉丹药，完成城镇应急净药')],lastReply:'断主根后城防会空一阵。顾执事守河堤，青岚守东巷，我清出钟心转运路。',interludes:[
     [line('narrator','树王倒下，全城汲灵同时停止。钟心从断根里落入影卫开启的暗阵，西线亮起一道移形痕。'),line('suyan','它在转运钟心，阵不会开很久。只要截住，下一处炉站的坐标就还完整。',2),line('qinglan','东巷人已撤出，私塾的屋顶没保住。我留下两人帮先生，你可以追。',2),line('narrator','顾寒舟在河堤挡住第一波失衡阵压，朝你举起空下的一只手，示意城防仍有人接着。'),line('player','我去截影卫。钟心到手后，先用它把城防补稳。')],
     [line('narrator','影卫退散，钟心坐标完整留在你手中。莫无迁的下一站不是救灾阵，竟是通往私库的星桥熔炉。'),line('suyan','这不是不得不舍一城。他把夺来的力量先分给了自己的锁库。',2),line('yueheng','证据带好。城里的人还在诊棚等净药，我不能让旧灰再伤他们一次。'),line('player','下一站不会让他提前合炉。这一站，先让人喝上能用的药。'),line('narrator','你把钟心放在众人看得见的台上，转身检查炉火。两种工作，终于不再被旧盟写成只能选一种。')]
   ]}

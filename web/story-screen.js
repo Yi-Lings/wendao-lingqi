@@ -22,7 +22,9 @@ function background(episode){
  const row=typeof supplied==='object'?Math.max(0,Math.min(rows-1,Math.floor(Number(supplied.row)||0))):Math.floor(n/3);
  const atlas=cols>1||rows>1;
  const pos=(cols>1?col*100/(cols-1):50)+'% '+(rows>1?row*100/(rows-1):50)+'%';
- return `<div class="chapter-art narrative-backdrop story-backdrop" aria-hidden="true" style="background-image:url(assets/${art.file});background-size:${atlas?cols*100+'% '+rows*100+'%':'cover'};background-position:${atlas?pos:'center'}"></div>`;
+ const candidate=typeof supplied==='object'?supplied?.crop:null;
+ const crop=Array.isArray(candidate)&&candidate.length===4&&candidate.every(Number.isFinite)&&candidate[0]>=0&&candidate[1]>=0&&candidate[2]>0&&candidate[3]>0&&candidate[0]+candidate[2]<=1.000001&&candidate[1]+candidate[3]<=1.000001?candidate:[col/cols,row/rows,1/cols,1/rows];
+ return `<div class="chapter-art narrative-backdrop story-backdrop" data-art-crop="${crop.join(',')}" data-art-fit="cover" aria-hidden="true" style="background-image:url(assets/${art.file});background-size:${cols*100+'% '+rows*100+'%'};background-position:${atlas?pos:'center'}"></div>`;
 }
 function speakerView(line,state){
  const raw=line&&typeof line==='object'?line:{};
@@ -30,7 +32,8 @@ function speakerView(line,state){
  const id=typeof raw.portrait==='string'&&Object.hasOwn(companionNames,raw.portrait)?raw.portrait:Object.keys(companionNames).find(id=>speaker===id||speaker===companionNames[id]);
  const name=companionNames[speaker]||({narrator:'山海记',player:state.player?.name||state.name||'我'})[speaker]||speaker;
  if(!id)return {name,portrait:'<div class="narrative-narrator" aria-hidden="true">卷</div>'};
- const expressionNames={calm:0,thoughtful:1,worried:1,smile:2,joy:2,determined:3,serious:3};
+ // The retained portrait atlas rows are calm, happy, serious and worried.
+ const expressionNames={calm:0,thoughtful:2,worried:3,smile:1,joy:1,determined:2,serious:2};
  const emotion=raw.expression??raw.emotion??0;
  const row=typeof emotion==='number'?Math.max(0,Math.min(3,Math.floor(emotion))):expressionNames[emotion]??0;
  const col=Object.keys(companionNames).indexOf(id);
@@ -53,6 +56,9 @@ function missionView(view,episode){
  const text=typeof goal==='string'?goal:goal?.label||goal?.description||goal?.title||episode.mission?.label||episode.mission?.description||episode.goal||'循着线索，完成眼前的一件事';
  const current=Number(mission.current)||0,required=Math.max(0,Number(mission.required)||0);
  const total=Math.max(1,Number(mission.total)||1),index=Math.max(0,Number(mission.index)||0);
+ const pending=mission.done&&mission.canReturn===false?(view.missingRequirements||(view.requirements||[]).filter(x=>!x.done)):[];
+ const prerequisites=pending.length?`<section class="story-prerequisites" aria-label="本卷尚待目标"><p>这一场历练已经完成，收束本卷还需：</p>${pending.map(x=>`<div class="story-prerequisite"><div><strong>${esc(x.label)}</strong><small>${esc(x.current)} / ${esc(x.required)}</small></div>${ui('前往','story-requirement',{episode:episode.id,key:x.key,id:x.id},'secondary')}</div>`).join('')}</section>`:'';
+ if(prerequisites)return prerequisites;
  return `<div class="story-objective" data-story-objective data-story-mission="${index}"><span class="narrative-overline">此刻要做${total>1?' · 第 '+(index+1)+' / '+total+' 幕':''}</span><strong>${esc(text)}</strong><div class="story-objective-progress"><span>${mission.done?'已践行':`进度 ${Math.min(current,required)} / ${required}`}</span><div role="progressbar" aria-label="当前剧情目标" aria-valuemin="0" aria-valuemax="${required}" aria-valuenow="${Math.min(current,required)}"><i style="width:${required?Math.min(100,current/required*100):0}%"></i></div></div></div>`;
 }
 function lineText(view,episode){
@@ -69,7 +75,7 @@ function footnote(view,episode){
  if(view.completed||view.stage==='completed')return '往事已经留存，重读不会再次领取奖励。';
  if(view.stage==='survey')return '轻触场景中的线索，听完它们留下的故事。';
  if(view.stage==='decision')return '同行者会记住这一次决定。';
- if(view.stage==='mission')return (view.requirements||[]).every(x=>x.done)?'完成当前约定后，回到此处继续对话。':'修行与约定一同前行；完整进度可在札记中查看。';
+ if(view.stage==='mission')return view.mission?.nextRequirement?'历练已经完成；继续准备尚待目标，达成后回来收束。':(view.requirements||[]).every(x=>x.done)?'完成当前约定后，回到此处继续对话。':'修行与约定一同前行；完整进度可在札记中查看。';
  if(view.stage==='ready')return rewardLine(episode.reward||episode.rewards)||'此卷经历已完整走过，收束后保留选择与进度。';
  return '阅读位置自动保留，随时可以离开再继续。';
 }
@@ -87,7 +93,8 @@ function controls(view,episode,id){
  }
  if(stage==='mission'){
   const done=view.mission?.canReturn??(!!view.mission?.done&&(view.requirements||[]).every(x=>x.done));
-  return done?act('带着经历回来','advanceStory',params):ui('前往当前目标','story-mission',params,'primary');
+  const next=view.mission?.nextRequirement;
+  return done?act('带着经历回来','advanceStory',params):ui(next?'前往：'+next.label:'前往当前目标','story-mission',params,'primary');
  }
  if(stage==='ready')return /^chapter_\d+$/.test(id)?act('记下此卷 · 继续仙途','claimChapter',{choice:view.entry?.choice},'primary',!view.entry?.choice):act('记下这段经历','claimSidequest',{id});
  const clues=episode.clues||[],seen=clues.filter(clue=>examined(view.entry,clue)).length;

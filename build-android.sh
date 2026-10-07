@@ -52,7 +52,7 @@ application.set('{http://schemas.android.com/apk/res/android}label','问道·灵
 manifest.write(build/'AndroidManifest.xml',encoding='utf-8',xml_declaration=True)
 PY
 "$TASK_TOOLS/aapt2" compile --dir "$TASK_SRC/res" -o "$TASK_BUILD/resources.zip"
-"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code 4 --version-name 4.0
+"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code 5 --version-name 4.1
 "$TASK_JAVA" -jar "$TASK_TOOLS/ecj.jar" -8 -proc:none -nowarn -classpath "$TASK_TOOLS/android.jar" -d "$TASK_BUILD/classes" "@$TASK_BUILD/sources.list"
 python3 - "$TASK_BUILD" <<'PY'
 import pathlib,sys,zipfile
@@ -89,7 +89,7 @@ for version in (2,3):
  if not re.search(r'Verified using v'+str(version)+r' scheme[^\n]*: true',text):raise SystemExit('Required signing scheme missing')
 print(text,end='')
 PY
-python3 "$TASK_ROOT/audit-apk.py" "$TASK_SIGNED" --report "$TASK_BUILD/apk-check.txt" --version-code 4 --version-name 4.0
+python3 "$TASK_ROOT/audit-apk.py" "$TASK_SIGNED" --report "$TASK_BUILD/apk-check.txt" --version-code 5 --version-name 4.1
 python3 - "$TASK_SIGNED" "$TASK_ROOT/dist" "$TASK_BUILD" <<'PY'
 import hashlib,os,pathlib,sys
 signed,dist,build=map(pathlib.Path,sys.argv[1:])

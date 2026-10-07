@@ -25,11 +25,11 @@
 .ritual-material strong { display: block; font-weight: 400; font-size: 10px; line-height: 1.4; color: #f0e9cf; }
 .ritual-material small { display: block; font-size: 9px; color: #b0c4ac; margin-top: 3px; }
 .ritual-material.missing small { color: #ead399; }
-.ritual-material .narrative-button { flex: none; font-size: 9px; min-height: 35px; padding: 6px 5px; }
+.ritual-material .narrative-button { flex: none; font-size: 9px; min-height: 40px; padding: 6px 5px; }
 .ritual-material-check { color: #a3d7b6; font-size: 12px; }
 .ritual-preparation-links { display: flex; flex-direction: column; gap: 7px; margin-top: 9px; }
 .ritual-preparation-links > span { color: #d3d7b7; text-align: center; font-size: 9px; }
-.ritual-preparation-links .narrative-button { min-height: 39px; font-size: 11px; }
+.ritual-preparation-links .narrative-button { min-height: 40px; font-size: 11px; }
 .ritual-altar { position: relative; flex: 1; min-height: 75px; width: 100%; max-height: 300px; display: grid; place-items: center; isolation: isolate; }
 .ritual-circle { position: absolute; left: 50%; top: 50%; aspect-ratio: 1; max-height: 100%; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
 .ritual-circle.outer { width: min(90%, 250px); border: 1px solid #a6d1b260; outline: 1px dashed #d8ca8065; outline-offset: -8px; box-shadow: 0 0 25px #8de6d91a; }
@@ -79,7 +79,7 @@
 .ritual-heart-choices strong { font-size: 11px; font-weight: 400; color: #ebddb1; }
 .ritual-heart-choices small { font-size: 9px; line-height: 1.6; color: #b5cfbd; }
 .ritual-cancel { display: flex; justify-content: center; margin-top: 5px; }
-.ritual-cancel .narrative-button { min-height: 30px; font-size: 9px; color: #c1cdb8; background: transparent; border-color: transparent; padding: 5px 8px; }
+.ritual-cancel .narrative-button { min-height: 40px; font-size: 9px; color: #c1cdb8; background: transparent; border-color: transparent; padding: 5px 8px; }
 @keyframes ritual-breath-arrival { from { transform: translate(-50%, -50%) scale(.85); opacity: .5; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
 @keyframes ritual-rune-arrival { from { box-shadow: 0 0 40px #d6e2b15c; } to { box-shadow: inset 0 0 30px #9dddbc17; } }
 @media (max-width: 380px) {
@@ -91,7 +91,7 @@
   .ritual-material { padding: 7px 5px; gap: 4px; }
   .ritual-material .ritual-item-art { width: 22px; height: 22px; }
   .ritual-material strong { font-size: 9px; }
-  .ritual-material .narrative-button { font-size: 8px; min-height: 35px; padding: 6px 4px; }
+  .ritual-material .narrative-button { font-size: 8px; min-height: 40px; padding: 6px 4px; }
   .ritual-step-track { gap: 3px; }
   .ritual-step-track > span { gap: 3px; }
   .ritual-step-track small { font-size: 8px; }

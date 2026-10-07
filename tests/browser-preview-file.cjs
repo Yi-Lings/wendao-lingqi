@@ -218,7 +218,8 @@ async function chooseSkill(id) {
     return { ...modules, offlineAcquisitionChoices: acquisition.forgeChoices.length };
   });
   await check('all ' + images.length + ' PNG atlases including all ten named art atlases and preserved original media retain source bytes and paint decoded images', async () => {
-    assert.equal(images.length, 43, 'all 26 original PNGs, ten named art atlases and seven new journey/encounter images remain');
+    assert.equal(images.length, 45, 'all 43 V4 PNGs and both new interior/night-scene resources remain');
+    for (const file of ['v8-interiors-atlas.png', 'story-infirmary-night.png']) assert.ok(images.includes(file), 'new story scenery is embedded: ' + file);
     for (const name of [...preservedImages, ...namedAtlases, ...newJourneyImages]) assert.ok(images.includes(name), 'complete preserved and current artwork exists: ' + name);
     const decoded = await page.evaluate(async entries => {
       const result = [];

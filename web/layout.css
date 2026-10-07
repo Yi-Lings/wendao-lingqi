@@ -22,7 +22,7 @@
 .game-shell .brand { font-size: 18px; letter-spacing: 2px; line-height: 1.3; }
 .game-shell .brand small { font-size: 8px; letter-spacing: 1.5px; margin-top: 3px; }
 .game-shell .top-actions { gap: 5px; }
-.game-shell .icon-btn { width: 31px; height: 31px; font-size: 17px; }
+.game-shell .icon-btn { width: 40px; height: 40px; font-size: 17px; }
 .game-shell .sound-toggle { font-size: 17px; }
 
 .game-shell .resource-bar {
@@ -69,8 +69,8 @@
 .game-shell .page-content > .panel { padding: 11px; margin-bottom: 10px; border-radius: 9px; }
 .game-shell .page-content .panel-head { margin-bottom: 7px; }
 .game-shell .page-content .panel-head h3 { font-size: 15px; line-height: 1.35; }
-.game-shell .page-content .btn { min-height: 39px; font-size: 11px; padding: 8px 10px; }
-.game-shell .page-content .btn.small { min-height: 31px; padding: 5px 8px; font-size: 10px; }
+.game-shell .page-content .btn { min-height: 40px; font-size: 11px; padding: 8px 10px; }
+.game-shell .page-content .btn.small { min-height: 40px; padding: 5px 8px; font-size: 10px; }
 .game-shell .page-content .gap-top { margin-top: 9px; }
 .game-shell .page-content .section-note { padding: 7px 9px; margin: 8px 0; font-size: 10px; line-height: 1.65; }
 
@@ -85,12 +85,12 @@
 .game-shell .nav-bottom button.active::after { top: -6px; }
 
 .compact-tabs { display: grid; grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column; gap: 6px; overflow: visible; padding-bottom: 10px; }
-.game-shell .compact-tabs .btn { min-width: 0; min-height: 34px; padding: 6px 5px; }
+.game-shell .compact-tabs .btn { min-width: 0; min-height: 40px; padding: 6px 5px; }
 .game-shell .compact-tabs .active,
 .game-shell .dungeon-tabs .active { color: #09232a; border-color: #e8ca86; background: linear-gradient(130deg, #efd698, #c3a667); }
 .compact-note { color: #a8c0b7; font-size: 10px; line-height: 1.7; margin-top: 9px; }
 .compact-details { margin: 8px 0; border: 1px solid #5a756742; border-radius: 7px; background: #09232b75; }
-.compact-details > summary { padding: 9px 11px; color: #c9d2b8; cursor: pointer; font-size: 11px; min-height: 37px; }
+.compact-details > summary { padding: 9px 11px; color: #c9d2b8; cursor: pointer; font-size: 11px; min-height: 40px; }
 .compact-details > .list,
 .compact-details > .stat-grid { padding: 0 11px 11px; }
 .compact-details .quest-line { font-size: 10px; }
@@ -102,14 +102,14 @@
 .cultivation-routes { margin-bottom: 10px; }
 .game-shell .cultivation-routes .route-card { padding: 8px; }
 .game-shell .cultivation-routes .route-card .gap-top { margin-top: 4px; }
-.game-shell .cultivation-routes .btn.small { min-height: 27px; padding: 4px 7px; }
-.game-shell .cultivation-auto .btn.small { min-height: 24px; padding: 3px 7px; font-size: 9px; }
+.game-shell .cultivation-routes .btn.small { min-height: 40px; padding: 4px 7px; }
+.game-shell .cultivation-auto .btn.small { min-height: 40px; padding: 3px 7px; font-size: 9px; }
 
 .list-pagination { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 10px; }
 .list-pagination span { color: #a7c0b8; font-size: 10px; white-space: nowrap; }
-.game-shell .list-pagination .btn { min-height: 31px; }
+.game-shell .list-pagination .btn { min-height: 40px; }
 .game-shell .dungeon-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; overflow: visible; padding-bottom: 9px; }
-.game-shell .dungeon-tabs .btn { min-height: 31px; padding: 5px; }
+.game-shell .dungeon-tabs .btn { min-height: 40px; padding: 5px; }
 .game-shell .compact-dungeon { padding: 9px; gap: 9px; }
 .game-shell .compact-dungeon .item-icon { width: 46px; height: 46px; }
 .game-shell .compact-dungeon .item-main strong { font-size: 12px; }
@@ -147,7 +147,7 @@
 .game-shell .page-content .selection-tile .item-icon { width: 45px; height: 45px; }
 .game-shell .page-content .selection-tile strong { font-size: 9px; line-height: 1.4; }
 .game-shell .page-content .selection-tile small { font-size: 8px; }
-.game-shell .page-content .selection-info { position: absolute; top: 3px; right: 3px; width: 26px; min-height: 24px; padding: 2px; font-size: 8px; border: 1px solid #adcbb63d; border-radius: 4px; background: #08202bd9; }
+.game-shell .page-content .selection-info { position: static; width: 100%; min-height: 40px; padding: 5px; font-size: 9px; border-top: 1px solid #adcbb63d; border-radius: 0; background: #08202bd9; }
 .game-shell .page-content .selection-empty { min-height: 95px; font-size: 11px; }
 
 .workshop-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -177,7 +177,7 @@
 .game-shell .companion-card .item-main small { font-size: 9px; margin-top: 3px; }
 .game-shell .companion-card .item-actions { gap: 4px; margin-top: 6px; }
 .game-shell .companion-card .progress { margin: 4px 0; height: 5px; }
-.game-shell .companion-card .item-actions .btn { min-height: 28px; padding: 5px 7px; font-size: 9px; }
+.game-shell .companion-card .item-actions .btn { min-height: 40px; padding: 5px 7px; font-size: 9px; }
 
 .game-shell .compact-sanctum { min-height: 72px; height: 72px; margin-bottom: 9px; border-radius: 8px; }
 .game-shell .compact-sanctum .gacha-ring { width: 50px; height: 50px; margin-right: 115px; }
@@ -234,3 +234,6 @@
   .game-shell .brand small { display: none; }
   .game-shell .resource-bar { min-height: 30px; padding-top: 4px; padding-bottom: 4px; }
 }
+
+/* One historical painting per page; the original canvas keeps its aspect. */
+.art-collection-painting{height:clamp(140px,43vh,380px);width:100%;background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#0b2025;border:1px solid #ba9b5b60;border-radius:9px}.art-collection h3{margin:10px 0 6px}.art-collection-navigation{display:flex;gap:10px;align-items:center;justify-content:space-between}.art-collection-navigation .btn{min-height:40px;min-width:64px}.art-collection p{line-height:1.65}

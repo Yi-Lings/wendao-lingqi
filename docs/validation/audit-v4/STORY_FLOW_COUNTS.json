@@ -1,0 +1,136 @@
+{
+  "method": "Runtime-exported, reachable narrative only; overwritten draft branches excluded. Characters use Unicode code points. Text includes punctuation; Han count separate. Titles, labels, descriptions and summaries excluded. Clues and optional celestial letters separate.",
+  "snapshotSha256": {
+    "web/story-scenes.js": "22bc98404ad803786518e63864a9db33a6653744580bed62cc782d6bb73f12f2",
+    "web/ascension-scenes.js": "f0baf3859bea275d6c37b9cfbb4377eda133e49ff74aa23898b8fcb6eb75cb81",
+    "web/story.js": "b983f968aa51f7c0b59ef7288aa3947f7cab2353861e06ec499cfc2cd5220e50",
+    "web/ascension.js": "ce10b6ad5a422ae1f2e986a1203e35ec90f5c17e665e9cf8895933528cf33b38"
+  },
+  "chapters": {
+    "lines": 263,
+    "charactersIncludingPunctuation": 8603,
+    "hanCharacters": 7606,
+    "uniqueTextCount": 263
+  },
+  "sidequests": {
+    "lines": 288,
+    "charactersIncludingPunctuation": 7718,
+    "hanCharacters": 6906,
+    "uniqueTextCount": 288
+  },
+  "storyAllBranches": {
+    "lines": 551,
+    "charactersIncludingPunctuation": 16321,
+    "hanCharacters": 14512,
+    "uniqueTextCount": 551
+  },
+  "clues": {
+    "lines": 48,
+    "charactersIncludingPunctuation": 1922,
+    "hanCharacters": 1727,
+    "uniqueTextCount": 48
+  },
+  "storySinglePath": {
+    "protect": {
+      "lines": 333,
+      "charactersIncludingPunctuation": 9765,
+      "hanCharacters": 8675,
+      "uniqueTextCount": 333
+    },
+    "seek": {
+      "lines": 333,
+      "charactersIncludingPunctuation": 9984,
+      "hanCharacters": 8857,
+      "uniqueTextCount": 333
+    }
+  },
+  "chaptersSinglePath": {
+    "protect": {
+      "lines": 153,
+      "charactersIncludingPunctuation": 5062,
+      "hanCharacters": 4471,
+      "uniqueTextCount": 153
+    },
+    "seek": {
+      "lines": 153,
+      "charactersIncludingPunctuation": 5098,
+      "hanCharacters": 4500,
+      "uniqueTextCount": 153
+    }
+  },
+  "episodes": 24,
+  "chapterMissionStagesPerChosenPath": 18,
+  "sidequestMissionStagesPerChosenPath": 18,
+  "totalMissionStagesPerChosenPath": 36,
+  "uniqueGoalMetricTargets": [
+    "dungeonWins:resource_herb",
+    "crafted:",
+    "dungeonWins:arena_0",
+    "dungeonWins:arena_1",
+    "dungeonWins:arena_2",
+    "dungeonWins:secret_0",
+    "dungeonWins:secret_1",
+    "dungeonWins:secret_2",
+    "bossWins:boss_6",
+    "bossWins:boss_7",
+    "bossWins:boss_8",
+    "bossWins:boss_9",
+    "bossWins:boss_10",
+    "bossWins:boss_11",
+    "forged:",
+    "dungeonWins:resource_ore",
+    "bossWins:boss_0",
+    "dungeonWins:resource_insight",
+    "dungeonWins:cave_0",
+    "bossWins:boss_2",
+    "dungeonWins:cave_2"
+  ],
+  "sameGoalSequencesBothChoices": [
+    "chapter_0",
+    "chapter_1",
+    "chapter_2",
+    "qinglan_1",
+    "qinglan_3",
+    "yueheng_0",
+    "suyan_0",
+    "suyan_1",
+    "suyan_3",
+    "world_relic",
+    "world_escort"
+  ],
+  "ascensionAllBranchesAndLetters": {
+    "lines": 128,
+    "charactersIncludingPunctuation": 4872,
+    "hanCharacters": 4360,
+    "uniqueTextCount": 128
+  },
+  "ascensionMandatoryGateProtect": {
+    "lines": 37,
+    "charactersIncludingPunctuation": 1388,
+    "hanCharacters": 1236,
+    "uniqueTextCount": 37
+  },
+  "celestialPerRealm": [
+    {
+      "realm": "登仙",
+      "lines": 20,
+      "charactersIncludingPunctuation": 781,
+      "hanCharacters": 699,
+      "uniqueTextCount": 20
+    },
+    {
+      "realm": "真仙",
+      "lines": 22,
+      "charactersIncludingPunctuation": 804,
+      "hanCharacters": 717,
+      "uniqueTextCount": 22
+    },
+    {
+      "realm": "金仙",
+      "lines": 23,
+      "charactersIncludingPunctuation": 895,
+      "hanCharacters": 805,
+      "uniqueTextCount": 23
+    }
+  ]
+}

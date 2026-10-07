@@ -1,64 +1,49 @@
-# 问道·灵契 V4 接手说明
+# 问道·灵契 V4.1 接手说明
 
-更新：2026-10-07。本轮开启第21节全需求/美术自查与改进；V4公开版作为审计基准，新版尚未发布。用户最新要求先大量研究、头脑风暴，再制作并直接构建APK；该要求覆盖历史“不构建APK”指令。当前V4游戏内容、QA、APK构建与公開交付全部完成。
+更新：2026-10-07（香港时间）。最新用户要求自查全部内容与美术对齐，整理需求符合程度，迭代完善方案。当前43项需求追踪与独立审计已完成；本轮源修已落地，V4.1打包/公开交付正在最终验证。用户先研究再制作并直接构建APK的授权有效，覆盖历史“不构建APK”。
 
-## 源码与当前交付
+## 当前源码与任务
 
-仓库 Yi-Lings/wendao-lingqi，目录 /workspace/wendao-lingqi，工作分支 work，所有代理共享此checkout；不创建worktree。先检查git status并保留当前变化。首批已推送786cb2e，随后飞升/研究/音画/测试与打包文件全部提交；源码1caa5c7、APK分片c7338a2、发布修正c82b7b1。main的历史V3源码保留，不依赖main拿本轮内容。
+仓库Yi-Lings/wendao-lingqi，/workspace/wendao-lingqi，work分支，共享既有checkout，不创建worktree。main保留历史V3；通过README的work链接和新版release取当前资源。先读plan.md第21节、docs/REQUIREMENTS_TRACEABILITY.md、docs/ITERATION_PLAN_V4_1.md，检查git status保留改动。不要把旧对话无法加载当作资源缺失；根因尚未查明，仓库资源已足以工作。
 
-V4发布目标是 v4.0.0-preview：APK wendao-lingqi-v4-preview.apk 与离线ZIP wendao-lingqi-preview.zip。APK包名com.lingqi.game.preview、版本4.0/code4、最低Android8.0；本环境缺旧发布私钥，使用Gradle调试签名，可与旧com.lingqi.game并排安装。旧角色从旧应用导出JSON后在体验包导入。不要声称覆盖升级。最终大小、SHA、Actions与匿名下载证据已写入 docs/validation/V4_ASCENSION_APK_2026-10-07.md。
+本轮修正正式Native导出、持久化后展示异常回滚、尘兑换和仙修晋层结算、剧情剩余条件引导、斗技/秘境人物文案、胜利与实际晋境文案、表情行、仙阶背景、双卫/分身裁片、短屏战斗及触控区。45PNG、16MP3；43张V4 PNG和原音频未改字节，新书院/丹房双图和雨夜医舍已接入对应篇章。330物品图位逐一复核，216套装图位独立；117战斗实例核对，13旧图集通过藏画阁逐卷可读。报告在docs/validation/audit-v4/。
 
-历史V3资源和发布保留，历史网页交付分支web-preview-download-20261006、本轮之前ZIP103600843字节/HTML138278189字节均不是V4。旧APK48,035,951字节，SHA7c90a5e6870b8cb1b124af1f5325b75715e0d4fb7b11519a2b64702268343597；本轮独立包不替换此asset。
+## 需求仍未完全满足的部分
 
-## 已完成
+现有六章+十八支线是可玩的中短篇骨架。单条人界主线153句、5062/5098字符含标点，4471/4500汉字；不能将未选分支与被覆盖草稿叠算为一遍游玩。线索多为必读门槛，11/24篇两分支目标顺序相同，专属药方仍用通用炼丹计数，章节回顾仅摘要。仙界已有三阶成长与来信，长篇多幕任务还未实现。
 
-- 原有六主页面、图片配装/长按、独立战斗/洞天/红品动画、216独立装备图位、六流派套装与推荐、常规资源双币购买、真实战斗和生产结算继续保留。
-- 六章各三段真实行动，十八支线多幕场景，调查/抉择/回应/归来与最终奖励单独保存；不是点选直接结束。故事与闭关均全屏，退出或跳活动可恢复。
-- 闭关必须同境突破丹及灵莲玄铁；调息/布阵/心魔后正式渡劫。费用预扣一次，取消退款，失败可重试，旧真实渡劫记录兼容。
-- 三轮斗技、三轮秘境夺魁、六名人物对手、20物种明确映射；大Boss和仙兽独立放大舞台。
-- 六境圆满与终章后可立道誓、备料、挑战天门飞升。登仙/真仙/金仙各十层，以仙界静修、历练、仙元与境界挑战继续成长；三位仙界人物来信按实际进度开放。
-- 新7 PNG、2 MP3与独立音频manifest。当前43 PNG/16 MP3；原36 PNG与14 MP3、旧manifest逐字节不变。仙界NPC共12表情全部接入对白；4首配乐/12效果音。
-- 红品图标缺失已修复，保留data-atlas-picture。实测图集裁片由art-crops/art-layout等比例呈现，不拉伸、不露相邻图；旧素材按合适名称/物种使用。
-- 23实质研究来源、可复核获取manifest与头脑风暴选择见docs/research。联网宗门、灵兽养成、法则等列为后续规划，不能声称已完成。
+下一阶段按ITERATION_PLAN_V4_1的场景表、任务类型、分支、丹方计数、体修叙述、章节重读和心流验收推进。角色核心配置已分离，但不能宣称所有长列表一屏全容纳；一屏定义采用主要行动与关键反馈可见、次级列表分页/滚动。不靠无用文件凑800MB或1GB。
 
-## 模块与存档
+没有adb、模拟器或Android设备。浏览器和DEX检查不能替代真机WebView、系统文件选择器、返回手势及30分钟稳定性。新任务独立恢复和旧线程加载原因也仍未验证。
 
-index顺序：data、art/monster/mentor映射、story-scenes、ascension-scenes、breakthrough-ritual、ascension、core、economy/combat/story、engine、各独立screen、app。引擎保存模式先计算/校验/持久化成功，再展示奖励；场景与动画不二次发奖。
+## 保存与模块边界
 
-story.journeys保存阶段、线索、抉择、基线、任务索引。ritual/ritualHistory/ritualLegacyWins独立保存真实仪式和旧胜绩。ascension为严格规范化可选对象，人界双路线六境索引不扩；仙界三阶独立统计。所有奖励、开门条件、仙元与修为来自真实行动。纯演练不计进度/奖励。
+正式lingqi-save-v2，人界试玩lingqi-preview-save-v1，天门试玩lingqi-ascension-preview-save-v1；三个角色隔离。源网页默认正式，preview=1人界，preview=1&immortal=1天门；单文件默认人界，preview=0正式。试玩资源只验证可见操作，不是自然经济证据。
 
-设置三个入口：正式lingqi-save-v2，人界lingqi-preview-save-v1，天门lingqi-ascension-preview-save-v1。源网页默认正式；?preview=1为人界，?preview=1&immortal=1为天门。单文件默认人界，?preview=0回正式。试玩含明示进度/资源，不是自然经济证据。原生仅正式调用Native.persistSave，试玩不覆盖正式内部档；MainActivity.isEntry明确白名单允许三模式URL。
+正式仅Native.persistSave提交内部档。Native.exportSave只校验并保留独立exportFile快照，不写saveFile；导出与取消均不切换正式角色。run/settle只在持久化之前可回滚，已提交的真实经济/随机数状态不能因展示失败撤销；结算是只读反馈，不能二次发奖。
 
-## 已验收与边界
+story.journeys保存对白、线索、选择、实际目标及基线；ritual准备费一次、取消退款、失败可重试；ascension独立规范化对象，人界双路线六境不扩为假第七境。道劫战胜与备料付费晋境分开。
 
-297逻辑、32通用浏览器、29美术/生产、10故事/闭关、4飞升专项通过；95仙界布局组合全按钮完整可见，零脚本/缺资源错误。装备、功法、灵宝三类红品在9个视口/物品组合验证实际裁片像素。双路线真实动作无注入、无抽卡、最高紫装跑完六境、终章、三仙阶及金仙圆满；等待模拟每次最多跳七日，不能把其4200/4368小时当最低通关时长。首次30分钟的可复核引擎节奏另见FIRST30文档，动作3秒假设不是真人阅读时间。
+## 启动与验证
 
-原生实际Java入口19组URL检查通过。最终单文件24通过/0失败/1受管file跳过，APK编译/v2签名/对齐/103文件字节审计通过；三存档真实按钮切换与天门实播通过，结果见V4文档。没有adb、模拟器或Android设备，不能把Linux编译、签名和浏览器通过当作真机/WebView/文件选择器/返回手势/30分钟稳定性验收。
+node24/Python3.12，网页无需npm安装。Playwright位于qa-tools/node_modules/playwright，Chromium/usr/bin/chromium；浏览器测试明确传LINGQI_CHROMIUM=/usr/bin/chromium，旧browser-v3默认路径不适合本环境。服务进程需恢复：检查8787占用，仓库根目录python3 -m http.server 8787 --bind 127.0.0.1 --directory web，保留会话；HTTP检查真实文件后跑浏览器。
 
-## 本地恢复与构建
+npm test包含v3-*.cjs逻辑和构建来源测试。专项tests/browser-v4-audit-ui.cjs、browser-v4-integrity.cjs、browser-red-art.cjs、browser-story-ritual.cjs、browser-ascension.cjs。故障注入console与正常异常分列。
 
-环境保留工具和缓存，不保留进程。已有端口服务先检查，仓库根目录可用python3 -m http.server 8787 --bind 127.0.0.1 --directory web启动；curl核对HTML，再做真实浏览器进入。npm test不需要npm安装。Playwright在qa-tools/node_modules/playwright，Chromium/usr/bin/chromium；LINGQI_ROOT/LINGQI_CHROMIUM变量参照测试。
+source /workspace/cloud-setup/env.sh后用gradle --offline --no-daemon --max-workers=2 -p android :app:assembleDebug。JDK17/Gradle8.9/SDK35/AGP8.7.3及缓存在/workspace/cloud-toolchain。audit-apk.py传--package-id com.lingqi.game.preview --version-code 5 --version-name 4.1；apksigner/zipalign验证，tools/check-android-entry.py实际Java19组入口，tools/check-android-export.py实际DEX导出边界。
 
-source /workspace/cloud-setup/env.sh，Gradle8.9/JDK17/SDK35与AGP缓存在/workspace/cloud-toolchain。gradle --offline --no-daemon --max-workers=2 -p android :app:assembleDebug。旧tools/android只保留aapt2和lib64链接，旧tools/signing私钥不存在，不能运行旧release脚本冒充升级。audit-apk.py传--package-id com.lingqi.game.preview --version-code 4 --version-name 4.0；SDK35的apksigner/zipalign验证。tools/check-android-entry.py运行实际Java入口边界。
+python3 tools/build-web-preview.py --zip生成确切单HTML；browser-preview-file验收该产物。受管file://禁止是独立跳过，不能称通过；HTTP载入后断网与离线opaque Blob分块核SHA另有证据。45PNG、16MP3、SVG及2manifest共64嵌入资源。
 
-python3 tools/build-web-preview.py --zip生成单文件，browser-preview-file验证该确切HTML。受管Chromium禁止file://，明确跳过；HTTP载入后断网与预先断网opaque Blob是独立可证实检查，不绕过策略。大HTML通过8MiB分块传入Blob并核对原字节SHA，不使用一次CDP传输。云设置已保存完整install_script/start_skill草稿，包含V4构建和审计参数；保存不等于发布，新任务恢复尚未独立验证。
+## 构建与发布约定
 
-## V4提交与发布
+体验包com.lingqi.game.preview V4.1/code5/API26–35，沿用V4体验调试证书7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6，可更新V4体验安装；旧个人签名com.lingqi.game独立，JSON导出/导入迁移，旧私钥不在环境。
 
-所有源码资源/测试文档先提交work [skip ci]，再构建冻结源码。APK以24MiB分片放releases/parts-v4，每片及全包SHA和公开证书指纹写manifest，私钥/存档/缓存不入库。tools/assemble-apk.py保持V3默认并支持显式V4参数，重组必须字节相同。
+先将全部代码/资源/测试/文档提交推送work [skip ci]，再用冻结源码编译。新分片releases/parts-v4-1/manifest.json记录sourceCommit、全部web/Android构建输入path/size/SHA、每片/全包SHA及证书。check-artifact-sources.py --write-inputs只能sourceCommit=HEAD且输入全部已提交时生成；验证允许后续纯文档提交。CI浅clone用--fetch-source按安全完整SHA取声明commit。旧V4/旧V3分片及release保留。
 
-.github/workflows/publish-apk.yml在work版本仅手动运行，--ref work；default/main同名流程仍属历史V3，必须核对ref与实际job=verify-and-publish。它跑npm，重组确切APK，重建HTML并比对releases/v4-artifact-manifest.json固定hash，审计全源码assets/包名/版本/v2签名/证书，再创建独立预发布。通过后匿名HTTPS下载APK/ZIP与checksum，核对SHA、ZIP CRC和内部HTML；更新plan/handoff。直接gh release upload曾被平台代理BadContentLength拒绝，使用Actions上传，不索取新令牌。复用平台代理认证/CA，不输出凭证、不关闭TLS。
+.github/workflows/publish-apk.yml从work手动运行：gh workflow run publish-apk.yml --ref work，核对job=verify-and-publish。先校验buildInputs及声明Git树，再重组已实测APK，检查assets/版本/DEX/v2签名/证书，重建HTML核对releases/v4-1-artifact-manifest.json后发布v4.1.0-preview四个文件。直接gh upload曾被平台代理BadContentLength拒绝，应使用Actions上传；复用平台认证/CA，不输出凭证，不关TLS。
 
-旧会话无法加载的原因尚未证实；现有仓库、历史提交和资源已足以继续，当前无代码/资源依赖旧对话。
+匿名HTTPS下载APK/ZIP/checksum，核对全包SHA、ZIP CRC、内部HTML原字节后才能完成交付。大小/run/源码检查点与最终证据写docs/validation/V4_1_ALIGNMENT_2026-10-07.md，并更新本文件及plan。
 
-## 最终公开交付
+云环境install_script/start_skill已保存草稿，构建参数需本轮结束同步4.1/code5。保存不是发布，新任务恢复尚未独立验证。
 
-- [V4 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk)，126858599字节，SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。
-- [V4网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)，126923094字节，SHA 1a4d7514ef944bdb4b71a5eee696690ea0a09f8f5cd6512e2fb6a470e5e600ec。
-- HTML169592222字节，SHA8dc05b1acb52c787661b1d970363776c426723e2085a925ce590852b3473cb38。62媒体/图标/manifest资源原字节内嵌。
-- Actions37583120786/job verify-and-publish成功，发布目标c82b7b1；匿名下载HTTP200、公开checksum、全包SHA、ZIP CRC与内部HTML逐字节核验通过。原V3 asset615156452、main基准均保持。
-- 资源、脚本、测试、研究、音画、APK分片和最终证据全部在GitHub work；工作树不留待提交游戏项。APK内设置「天门·飞升与仙界」为独立快速体验，不影响正式角色。
-
-下一轮先依据真实试玩继续扩展剧情/仙界与心流，设备验证尚未执行。设计文档中灵兽养成/法则/更大世界是后续规划，不把NPC模拟当真人联网，不以空文件凑体量。
-
-当前审计：六任务分别负责物品美术、世界/人物美术、实际UI、剧情心流、原需求追踪、保存/声音/打包完整性，只写各自报告；根统一修复/接线及发布。优先核查图像语义与真实任务，而非仅文件存在或数量。当前用户“迭代到完善方案”允许直接修复已证实问题，先给出可验收结果，不暂停等确认。
+历史V4.0 release v4.0.0-preview、源码1caa5c7、Actions37583120786、APK SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。V3资产和main保持，详细证据见docs/validation/V4_ASCENSION_APK_2026-10-07.md。

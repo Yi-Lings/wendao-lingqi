@@ -1875,3 +1875,81 @@
     width: min(48%, 185px);
   }
 }
+
+/* Short portrait keeps commands reachable while the encounter owns its scroll. */
+@media (max-height: 540px) and (max-width: 599px) {
+  .boss-arena .battle-stage.boss-stage {
+    --boss-art-size: 170px;
+    height: 190px;
+    min-height: 190px;
+  }
+
+  .boss-arena .boss-stage .boss-nameplate strong { font-size: 16px; }
+  .boss-arena .boss-stage .boss-nameplate { padding-top: 2px; padding-bottom: 3px; }
+  .battle-arena .combat-loadout { display: flex; gap: 4px; overflow-x: auto; overscroll-behavior-x: contain; }
+  .battle-arena .combat-group { flex: 1 1 40px; min-width: 40px; }
+  .battle-arena .combat-group:first-child { flex: 4 1 166px; min-width: 166px; }
+  .battle-arena .combat-group:last-child { flex: 3 1 124px; min-width: 124px; }
+  .battle-arena .combat-group:first-child > .label::after { display: none; }
+  .battle-arena .combat-group > .label { padding-bottom: 2px; font-size: 8px; }
+  .battle-arena .combat-icons,
+  .battle-arena .combat-group:first-child .combat-icons { display: grid; gap: 2px; padding: 0; overflow: visible; }
+  .battle-arena .combat-group:first-child .combat-icons { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .battle-arena .combat-group:nth-child(2) .combat-icons { grid-template-columns: 1fr; }
+  .battle-arena .btn.combat-icon { min-width: 40px; min-height: 58px; padding: 2px; gap: 2px; }
+  .battle-arena .combat-icon .item-icon.art-icon { width: 34px; height: 34px; }
+  .battle-arena .combat-icon > .name { font-size: 8px; line-height: 1.15; }
+  .battle-arena .combat-icon > small.cooldown { top: 24px; width: 34px; font-size: 7px; }
+  .battle-arena .combat-icons .empty-combat-slot { min-height: 58px; }
+  .battle-arena .battle-controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-top: auto;
+    padding: 5px 0;
+    background: #07171ef5;
+    box-shadow: 0 -7px 14px #07171ea6;
+  }
+}
+
+/* Landscape shares the viewport between the opponent and the actual controls. */
+@media (orientation: landscape) and (max-height: 540px) and (min-width: 600px) {
+  .encounter.battle-arena {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto;
+    align-content: start;
+    gap: 5px 9px;
+    padding: calc(6px + env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  }
+
+  .battle-arena .battle-topbar { grid-column: 1 / -1; min-height: 44px; }
+  .battle-arena .battle-stage,
+  .boss-arena .battle-stage.boss-stage {
+    grid-column: 1;
+    grid-row: 2 / 6;
+    --boss-art-size: min(35vw, 238px);
+    height: calc(100dvh - 72px);
+    min-height: 230px;
+    padding: 28px 5px 5px;
+  }
+
+  .boss-arena .boss-stage .enemy-card.boss-target .boss-portrait.boss-main-art { top: 0; }
+  .boss-arena .boss-stage .boss-nameplate { bottom: 4px; padding: 3px 8px; }
+  .boss-arena .boss-stage .boss-nameplate strong { font-size: 17px; margin: 1px 0; }
+  .boss-arena .boss-stage .stage-label { top: 5px; left: 7px; font-size: 8px; }
+  .battle-arena .battle-player.player-hud { grid-column: 2; grid-row: 2; margin: 0; padding: 6px 8px; }
+  .battle-arena .combat-loadout { grid-column: 2; grid-row: 3; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 4px; }
+  .battle-arena .combat-group:first-child { grid-column: 1 / -1; }
+  .battle-arena .combat-group > .label { padding-bottom: 2px; font-size: 9px; }
+  .battle-arena .combat-icons { gap: 3px; }
+  .battle-arena .btn.combat-icon { min-height: 56px; padding: 2px; gap: 2px; }
+  .battle-arena .combat-icon .item-icon.art-icon { width: 34px; height: 34px; }
+  .battle-arena .combat-icon > .name { font-size: 8px; line-height: 1.15; }
+  .battle-arena .combat-icon > small.cooldown { top: 24px; width: 34px; font-size: 7px; }
+  .battle-arena .combat-icons .empty-combat-slot { min-height: 56px; }
+  .battle-arena .battle-controls { grid-column: 2; grid-row: 4; gap: 4px; padding: 0; }
+  .battle-arena .battle-controls .btn { min-height: 40px; padding: 6px 3px; font-size: 9px; }
+  .battle-arena .battle-feed { grid-column: 2; grid-row: 5; margin: 0; }
+  .battle-arena .battle-feed > summary { min-height: 40px; padding: 5px 2px; font-size: 9px; }
+}

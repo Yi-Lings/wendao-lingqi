@@ -41,7 +41,7 @@ function readProfile(node){
  const url=urls[urls.length-1][1],col=cols===1?0:x*(cols-1),row=rows===1?0:y*(rows-1);
  if(col<0||row<0||col>cols-1+.001||row>rows-1+.001)return null;
  const crop=node.dataset.artCrop?.split(',').map(Number);
- return {url,cols,rows,col,row,crop,fit:crop?'contain':'cover',background:style.backgroundImage,sourceSize:size,sourcePosition:position,sizes,positions,dimensions:old?.url===url?old.dimensions:null};
+ return {url,cols,rows,col,row,crop,fit:crop&&node.dataset.artFit!=='cover'?'contain':'cover',background:style.backgroundImage,sourceSize:size,sourcePosition:position,sizes,positions,dimensions:old?.url===url?old.dimensions:null};
 }
 function apply(node,profile){
  if(!node.isConnected||profiles.get(node)!==profile||!profile.dimensions)return;
@@ -50,7 +50,7 @@ function apply(node,profile){
  // Generated atlas separators need not fall on equal sixths. Isolate the
  // measured rectangle in its own window, then contain it inside the quality
  // frame. Letterboxing must never expose the adjacent atlas illustration.
- if(profile.crop){
+ if(profile.crop&&profile.fit==='contain'){
   let picture=node.querySelector(':scope > [data-atlas-picture]');
   if(!picture){picture=doc.createElement('span');picture.dataset.atlasPicture='';picture.setAttribute('aria-hidden','true');node.append(picture);}
   const width=fitted.cellWidth*fitted.scale,height=fitted.cellHeight*fitted.scale,left=(node.clientWidth-width)/2,top=(node.clientHeight-height)/2;
@@ -86,7 +86,7 @@ function schedule(){if(!pending){pending=1;(root.queueMicrotask||((callback)=>Pr
 const observer=new root.MutationObserver(records=>{
  if(records.some(record=>record.type==='childList'||record.type==='attributes'&&record.target.matches?.(SELECTOR)))schedule();
 });
-observer.observe(doc.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class','data-art-crop']});
+observer.observe(doc.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class','data-art-crop','data-art-fit']});
 root.addEventListener('resize',schedule,{passive:true});
 if(doc.readyState==='loading')doc.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
 return Object.freeze({geometry,refresh});

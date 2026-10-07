@@ -11,7 +11,7 @@ test('all new encounter atlases have verified native dimensions and isolated non
  for(const [file,d] of Object.entries(M.definitions)){assert.deepEqual(native(file),{width:d.width,height:d.height});}
  const arts=[...Object.keys(C.monsters).map(M.speciesArt),...Object.keys(C.rivals).map(M.rivalArt),...C.bosses.map((_,i)=>M.bossArt(i))];
  for(const art of arts){assert.ok(art);const d=M.definitions[art.file];assert.ok(art.crop.every(Number.isFinite));assert.ok(art.crop[0]+art.crop[2]<=1&&art.crop[1]+art.crop[3]<=1);
-  const g=Layout.geometry({width:150,height:190,imageWidth:d.width,imageHeight:d.height,...art,fit:'contain'});assert.ok(g);assert.ok(g.cellWidth*g.scale<=150.00001&&g.cellHeight*g.scale<=190.00001);assert.equal(g.width/d.width,g.height/d.height,'one uniform image scale must preserve proportions');
+  const g=Layout.geometry({width:150,height:190,imageWidth:d.width,imageHeight:d.height,...art,fit:'contain'});assert.ok(g);assert.ok(g.cellWidth*g.scale<=150.00001&&g.cellHeight*g.scale<=190.00001);assert.ok(Math.abs(g.width/d.width-g.height/d.height)<1e-12,'one uniform image scale must preserve proportions');
  }
 });
 

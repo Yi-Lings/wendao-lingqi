@@ -41,7 +41,7 @@ function speaker(line,s){
  const name=companionNames[entry.speaker]||({narrator:'天门札记',player:s.player?.name||'我'})[entry.speaker]||entry.speaker||'天门札记';
  const id=Object.hasOwn(companionNames,entry.speaker)?entry.speaker:Object.keys(companionNames).find(id=>companionNames[id]===entry.speaker);
  if(!id)return {name,portrait:'<div class="narrative-narrator" aria-hidden="true">天</div>',text:entry.text||''};
- const expressions={calm:0,thoughtful:1,worried:1,smile:2,joy:2,determined:3,serious:3},raw=entry.expression??entry.emotion??0;
+ const expressions={calm:0,thoughtful:2,worried:3,smile:1,joy:1,determined:2,serious:2},raw=entry.expression??entry.emotion??0;
  const row=typeof raw==='number'?Math.max(0,Math.min(3,Math.floor(raw))):expressions[raw]??0,col=Object.keys(companionNames).indexOf(id);
  return {name,portrait:`<div class="conversation-portrait narrative-portrait" role="img" aria-label="${esc(companionNames[id])}" style="background-image:url(assets/v3-hero-expressions.png);background-size:300% 400%;background-position:${col*50}% ${row*100/3}%"></div>`,text:entry.text||''};
 }
@@ -103,12 +103,18 @@ function hint(v){
 function render(s,view){
  const v={...(view||{}),stage:view?.stage||'preparation'},celestial=v.stage==='ascended';
  const title=celestial?(v.realmNarrative?.title||'仙界 · '+(v.realmName||'登仙')):'云海天门 · 飞升';
- const backgroundArt={file:typeof v.background==='string'&&/^[a-zA-Z0-9_.-]+\.png$/.test(v.background)?v.background:'story-heaven.png'};
+ const suppliedArt=v.background||(celestial?v.realmNarrative?.art:N?.art),rawArt=typeof suppliedArt==='string'?{file:suppliedArt}:suppliedArt||{};
+ const backgroundArt={file:typeof rawArt.file==='string'&&/^[a-zA-Z0-9_.-]+\.png$/.test(rawArt.file)?rawArt.file:'story-heaven.png'};
+ const cols=Math.max(1,Math.min(12,Math.floor(Number(rawArt.cols)||1))),rows=Math.max(1,Math.min(12,Math.floor(Number(rawArt.rows)||1)));
+ const col=Math.max(0,Math.min(cols-1,Math.floor(Number(rawArt.col)||0))),row=Math.max(0,Math.min(rows-1,Math.floor(Number(rawArt.row)||0)));
+ const candidate=rawArt.crop;
+ const crop=Array.isArray(candidate)&&candidate.length===4&&candidate.every(Number.isFinite)&&candidate[0]>=0&&candidate[1]>=0&&candidate[2]>0&&candidate[3]>0&&candidate[0]+candidate[2]<=1.000001&&candidate[1]+candidate[3]<=1.000001?candidate:[col/cols,row/rows,1/cols,1/rows];
+ const backgroundStyle=`background-image:url(assets/${backgroundArt.file});background-size:${cols*100+'% '+rows*100+'%'};background-position:${cols>1||rows>1?(cols>1?col*100/(cols-1):50)+'% '+(rows>1?row*100/(rows-1):50)+'%':'center'}`;
  const finalRealm=amount(v.realm)===2;
  const breakthroughTitle=finalRealm?'金仙圆满的实际投入':'凝定下一仙阶的实际投入';
  const breakthroughExplanation=finalRealm?'本阶道劫已经完成；确认后扣除阵材，落定金仙圆满。':'本阶道劫已经完成；确认后扣除这些材料，进入新的仙阶。';
  const body=celestial?`${roadmap(v)}${celestialProgress(s,v)}<div class="ascension-panel">${challenges(s,v)}${v.realmFull&&v.trialFresh&&!v.perfected?costPanel(s,v.breakthroughCost,breakthroughTitle,breakthroughExplanation):''}${celestialLetters(s,v)}</div>`:`<div class="ascension-panel">${['preparation','invitation','condense'].includes(v.stage)?costPanel(s,v.preparationCost,'凝道入天门 · 阵材准备','阵材只在凝道读完并确认入劫时投入；先看清费用与缺口。'):''}${v.stage==='preparation'?requirementPanel(v):v.stage==='trial'?challenges(s,v):''}</div>`;
- return `<section class="narrative-screen ascension-screen" data-narrative="ascension" data-ascension-stage="${esc(v.stage)}" data-celestial-realm="${amount(v.realm)}" aria-label="${esc(title)}"><div class="narrative-backdrop ascension-backdrop" aria-hidden="true" style="background-image:url(assets/${backgroundArt.file})"></div><div class="narrative-shade ascension-shade" aria-hidden="true"></div><header class="narrative-hud"><div class="narrative-hud-copy"><span class="narrative-overline">${esc(stageNames[v.stage])} · ${celestial?'仙界三阶':'人界六境之后'}</span><h1>${esc(title)}</h1></div><div class="narrative-tools">${ui('暂歇','ascension-exit')}</div></header><div class="ascension-world">${sky(v)}${body}</div>${dialogue(s,v)}<footer class="narrative-footer ascension-footer"><p class="narrative-hint">${esc(hint(v))}</p><div class="narrative-actions">${controls(s,v)}</div></footer></section>`;
+ return `<section class="narrative-screen ascension-screen" data-narrative="ascension" data-ascension-stage="${esc(v.stage)}" data-celestial-realm="${amount(v.realm)}" aria-label="${esc(title)}"><div class="chapter-art narrative-backdrop ascension-backdrop" data-art-crop="${crop.join(',')}" data-art-fit="cover" aria-hidden="true" style="${backgroundStyle}"></div><div class="narrative-shade ascension-shade" aria-hidden="true"></div><header class="narrative-hud"><div class="narrative-hud-copy"><span class="narrative-overline">${esc(stageNames[v.stage])} · ${celestial?'仙界三阶':'人界六境之后'}</span><h1>${esc(title)}</h1></div><div class="narrative-tools">${ui('暂歇','ascension-exit')}</div></header><div class="ascension-world">${sky(v)}${body}</div>${dialogue(s,v)}<footer class="narrative-footer ascension-footer"><p class="narrative-hint">${esc(hint(v))}</p><div class="narrative-actions">${controls(s,v)}</div></footer></section>`;
 }
 return Object.freeze({render});
 });

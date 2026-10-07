@@ -30,7 +30,25 @@ function value(s,r){
   if(r.key==='sidequest')return s.story.sideCompleted.includes(r.id)?1:0;
   return Number(s.stats[r.key]||0);
 }
-function requirementView(s,requirements){return (requirements||[]).map(r=>({key:r.key,label:r.label||r.key,current:value(s,r),required:r.count,done:value(s,r)>=r.count,id:r.id||null}));}
+function requirementNav(s,r){
+ const key=r.key,p=s.paths[s.route];
+ if(key==='rank'||key==='maxRealm'||key==='endingTrial')return {page:'cultivation',...(key==='endingTrial'||p.layer===10?{kind:'ritual'}:{})};
+ if(key==='tower')return {page:'adventure',modal:'dungeon',payload:{id:'tower',floor:Math.min(60,(s.progress.tower||0)+1)}};
+ if(key==='bossWins'||key==='dungeonWins'||key==='manualWins')return {page:'adventure',modal:'dungeon',payload:{id:r.id|| (key==='bossWins'?'boss_0':'resource_herb')}};
+ if(key==='crafted')return {page:'cave',modal:'alchemy'};
+ if(key==='forged')return {page:'cave',modal:'forge'};
+ if(key==='sect')return {page:'fate',tab:'sect'};
+ if(key==='sectTrialCount'){
+  const next=Object.values(C.dungeons).find(d=>d.type==='sect'&&d.school===s.sect.school&&!s.progress.sectTrials.includes(d.id));
+  return s.sect.joined&&next?{page:'adventure',modal:'dungeon',payload:{id:next.id}}:{page:'fate',tab:'sect'};
+ }
+ if(key==='affinity'||key==='bonds')return {page:'fate',tab:'companions'};
+ if(key==='knownTechniques')return {page:'character',modal:'techniques'};
+ if(key==='study')return {page:'heaven'};
+ if(key==='chapter'||key==='sidequest')return {page:'fate',kind:'story',payload:{episode:key==='sidequest'?r.id:'chapter_'+Math.min(5,s.story.chapter)}};
+ return {page:'cultivation'};
+}
+function requirementView(s,requirements){return (requirements||[]).map(r=>({key:r.key,label:r.label||r.key,current:value(s,r),required:r.count,done:value(s,r)>=r.count,id:r.id||null,nav:requirementNav(s,r)}));}
 function satisfied(s,requirements){return requirementView(s,requirements).every(x=>x.done);}
 const stages=['intro','survey','decision','reply','mission','interlude','outro','ready','completed'];
 const missionGoals=choice=>choice.goals||[choice.goal];
@@ -64,10 +82,11 @@ function journeyView(s,id){
   const goals=entry&&entry.choice?missionGoals(ep.choices[entry.choice]):[],goal=goals[entry&&entry.missionIndex||0]||null;
   const current=goal?Math.max(0,value(s,goal)-entry.baseline):0;
   const index=entry&&entry.missionIndex||0,done=!!goal&&current>=goal.count;
-  const mission=goal?{goal,current,required:goal.count,done,index,total:goals.length,canReturn:done&&(index<goals.length-1||requirements.every(x=>x.done))}:null;
+  const missingRequirements=requirements.filter(x=>!x.done);
+  const mission=goal?{goal,current,required:goal.count,done,index,total:goals.length,nextRequirement:done&&index===goals.length-1?missingRequirements[0]||null:null,canReturn:done&&(index<goals.length-1||requirements.every(x=>x.done))}:null;
   const lines=entry?linesFor(ep,entry):[],selectedClue=stage==='survey'&&entry&&entry.clues.length?ep.clues.find(clue=>clue.id===entry.clues[entry.clues.length-1]):null;
   const line=selectedClue?{speaker:selectedClue.speaker||'narrator',text:selectedClue.text,expression:0}:lines[entry&&entry.line||0]||null;
-  return {episode:ep,entry,line,stage,mission,requirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,cluesRead:entry?entry.clues.length:0};
+  return {episode:ep,entry,line,stage,mission,requirements,missingRequirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,cluesRead:entry?entry.clues.length:0};
 }
 function handleJourney(s,a,now){
   const ep=episode(a.episode);if(!ep)return no('这段故事尚未开放');
@@ -298,5 +317,5 @@ function handle(s,a,now){
   }
   return null;
 }
-return {handle,view,grantReward,requirementView,commissionView,value,episode,journeyView,stages,missionGoals,completedEndingTrial};
+return {handle,view,grantReward,requirementView,requirementNav,commissionView,value,episode,journeyView,stages,missionGoals,completedEndingTrial};
 });
