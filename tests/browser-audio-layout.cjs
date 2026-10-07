@@ -688,7 +688,7 @@ async function encounterGeometry(page, screen) {
       text: node.innerText, width: node.getBoundingClientRect().width
     })));
     assert.deepEqual(displayed.map(item => item.id), exploring.exploration.choices.map(choice => choice.id));
-    assert.ok(displayed.every(item => item.image.includes('v4-utilities-atlas.png') && item.text.length > 4 && item.width > 100));
+    assert.ok(displayed.every(item => item.image.includes('v6-utilities-atlas.png') && item.text.length > 4 && item.width > 100));
     await screenshot(page, 'v5-exploration-mobile.png');
     await (await payloadButton(page, '.exploration-choices button[data-action="chooseCave"]', value => value.choice === 'battle:fight')).click();
     assert.equal((await stateOf(page)).battle.room, 'battle');
@@ -770,7 +770,9 @@ async function encounterGeometry(page, screen) {
   await test('all image and audio assets decode with correct MIME; offline PCM renders positive RMS', () => withPage({}, async page => {
     const images = fs.readdirSync(path.join(ROOT, 'web/assets')).filter(name => /\.png$/i.test(name));
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/assets/audio/manifest.json'), 'utf8'));
-    assert.ok(images.length >= 16);
+    assert.equal(images.length, 36, 'preserves all 26 original atlases plus ten new named atlases');
+    for (let rarity = 0; rarity < 6; rarity++) assert.ok(images.includes('v6-gear-quality-' + rarity + '.png'));
+    for (const kind of ['techniques', 'treasures', 'pills', 'utilities']) assert.ok(images.includes('v6-' + kind + '-atlas.png'));
     assert.equal(Object.keys(manifest.assets).length, 14);
     const decoded = await page.evaluate(async ({ images, assets }) => {
       const pictures = [];

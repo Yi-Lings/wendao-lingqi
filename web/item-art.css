@@ -55,10 +55,10 @@
    still, so many equipped items never create constant work on mobile. */
 @media (prefers-reduced-motion: no-preference) {
   .forge-art-preview .named-item[data-art-rarity="5"]::after,
-  .selection-detail-icon .named-item[data-art-rarity="5"]::after,
+  .selection-inspect-card header .named-item[data-art-rarity="5"]::after,
   .red-card-art .named-item::after,
   .reveal-grid.animated-reveal .named-item[data-art-rarity="5"]::after,
-  .loot-item .named-item[data-art-rarity="5"]::after {
+  .settlement-card .named-item[data-art-rarity="5"]::after {
     animation: named-item-sparks 1.25s ease-out 1 both;
   }
   @media (hover: hover) {
