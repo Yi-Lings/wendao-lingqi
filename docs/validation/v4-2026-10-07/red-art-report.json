@@ -1,0 +1,1062 @@
+{
+  "startedAt": "2026-10-07T06:02:38.283Z",
+  "url": "http://127.0.0.1:8787/",
+  "tests": [
+    {
+      "name": "Visible gear crop during real red draw at 360×640",
+      "passed": true,
+      "details": {
+        "target": "gear_thunder_weapon",
+        "category": "gear",
+        "width": 360,
+        "height": 640,
+        "motion": "no-preference",
+        "prize": {
+          "at": 1791352958283,
+          "category": "gear",
+          "rarity": 5,
+          "id": "gear_thunder_weapon",
+          "name": "道品·雷霄·武器 6阶",
+          "target": "gear_thunder_weapon",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1,
+          "uid": "g3"
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 117,
+              "height": 111.390625,
+              "x": 121.578125,
+              "y": 229.078125,
+              "right": 238.578125,
+              "bottom": 340.46875
+            },
+            "outer": {
+              "x": 121.578125,
+              "y": 226.28125,
+              "right": 238.421875,
+              "bottom": 343.125
+            },
+            "image": {
+              "width": 1254,
+              "height": 1254
+            },
+            "backgroundSize": "702px 702px",
+            "backgroundPosition": "0px -217.766px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 13924,
+            "changed": 12815,
+            "fraction": 0.9203533467394427
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible technique crop during real red draw at 360×640",
+      "passed": true,
+      "details": {
+        "target": "array_heart_1",
+        "category": "technique",
+        "width": 360,
+        "height": 640,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "technique",
+          "rarity": 5,
+          "id": "array_heart_1",
+          "name": "星罗炼神法",
+          "target": "array_heart_1",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 115.71875,
+              "height": 117,
+              "x": 122.203125,
+              "y": 216.9375,
+              "right": 237.921875,
+              "bottom": 333.9375
+            },
+            "outer": {
+              "x": 121.578125,
+              "y": 216.9375,
+              "right": 238.421875,
+              "bottom": 333.78125
+            },
+            "image": {
+              "width": 1448,
+              "height": 1086
+            },
+            "backgroundSize": "925.771px 694.328px",
+            "backgroundPosition": "-114.443px -577.328px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 13924,
+            "changed": 13552,
+            "fraction": 0.9732835392128699
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible treasure crop during real red draw at 360×640",
+      "passed": true,
+      "details": {
+        "target": "t11",
+        "category": "treasure",
+        "width": 360,
+        "height": 640,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "treasure",
+          "rarity": 5,
+          "id": "t11",
+          "name": "星桥玉",
+          "target": "t11",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 117,
+              "height": 117,
+              "x": 121.578125,
+              "y": 216.9375,
+              "right": 238.578125,
+              "bottom": 333.9375
+            },
+            "outer": {
+              "x": 121.578125,
+              "y": 216.9375,
+              "right": 238.421875,
+              "bottom": 333.78125
+            },
+            "image": {
+              "width": 2172,
+              "height": 724
+            },
+            "backgroundSize": "696.23px 232.077px",
+            "backgroundPosition": "-579.23px -115.077px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 13924,
+            "changed": 7482,
+            "fraction": 0.5373455903476012
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible gear crop during real red draw at 390×480",
+      "passed": true,
+      "details": {
+        "target": "gear_thunder_weapon",
+        "category": "gear",
+        "width": 390,
+        "height": 480,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "gear",
+          "rarity": 5,
+          "id": "gear_thunder_weapon",
+          "name": "道品·雷霄·武器 6阶",
+          "target": "gear_thunder_weapon",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1,
+          "uid": "g3"
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 71,
+              "height": 67.59375,
+              "x": 159.609375,
+              "y": 182.421875,
+              "right": 230.609375,
+              "bottom": 250.015625
+            },
+            "outer": {
+              "x": 159.609375,
+              "y": 180.734375,
+              "right": 230.375,
+              "bottom": 251.5
+            },
+            "image": {
+              "width": 1254,
+              "height": 1254
+            },
+            "backgroundSize": "426px 426px",
+            "backgroundPosition": "0px -132.148px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 5184,
+            "changed": 4583,
+            "fraction": 0.8840663580246914
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible technique crop during real red draw at 390×480",
+      "passed": true,
+      "details": {
+        "target": "array_heart_1",
+        "category": "technique",
+        "width": 390,
+        "height": 480,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "technique",
+          "rarity": 5,
+          "id": "array_heart_1",
+          "name": "星罗炼神法",
+          "target": "array_heart_1",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 70.21875,
+              "height": 71,
+              "x": 159.984375,
+              "y": 172.234375,
+              "right": 230.203125,
+              "bottom": 243.234375
+            },
+            "outer": {
+              "x": 159.609375,
+              "y": 172.234375,
+              "right": 230.375,
+              "bottom": 243
+            },
+            "image": {
+              "width": 1448,
+              "height": 1086
+            },
+            "backgroundSize": "561.792px 421.344px",
+            "backgroundPosition": "-69.4481px -350.344px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 5112,
+            "changed": 4796,
+            "fraction": 0.9381846635367762
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible treasure crop during real red draw at 390×480",
+      "passed": true,
+      "details": {
+        "target": "t11",
+        "category": "treasure",
+        "width": 390,
+        "height": 480,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "treasure",
+          "rarity": 5,
+          "id": "t11",
+          "name": "星桥玉",
+          "target": "t11",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 71,
+              "height": 71,
+              "x": 159.609375,
+              "y": 180.734375,
+              "right": 230.609375,
+              "bottom": 251.734375
+            },
+            "outer": {
+              "x": 159.609375,
+              "y": 180.734375,
+              "right": 230.375,
+              "bottom": 251.5
+            },
+            "image": {
+              "width": 2172,
+              "height": 724
+            },
+            "backgroundSize": "422.499px 140.833px",
+            "backgroundPosition": "-351.499px -69.8329px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 5184,
+            "changed": 2789,
+            "fraction": 0.5380015432098766
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible gear crop during real red draw at 1440×900",
+      "passed": true,
+      "details": {
+        "target": "gear_thunder_weapon",
+        "category": "gear",
+        "width": 1440,
+        "height": 900,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "gear",
+          "rarity": 5,
+          "id": "gear_thunder_weapon",
+          "name": "道品·雷霄·武器 6阶",
+          "target": "gear_thunder_weapon",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1,
+          "uid": "g3"
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 177,
+              "height": 168.515625,
+              "x": 631.3125,
+              "y": 328.09375,
+              "right": 808.3125,
+              "bottom": 496.609375
+            },
+            "outer": {
+              "x": 631.3125,
+              "y": 323.859375,
+              "right": 808.671875,
+              "bottom": 501.21875
+            },
+            "image": {
+              "width": 1254,
+              "height": 1254
+            },
+            "backgroundSize": "1062px 1062px",
+            "backgroundPosition": "0px -329.44px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 31862,
+            "changed": 29808,
+            "fraction": 0.9355344924989015
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible technique crop during real red draw at 1440×900",
+      "passed": true,
+      "details": {
+        "target": "array_heart_1",
+        "category": "technique",
+        "width": 1440,
+        "height": 900,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "technique",
+          "rarity": 5,
+          "id": "array_heart_1",
+          "name": "星罗炼神法",
+          "target": "array_heart_1",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 175.0625,
+              "height": 177,
+              "x": 632.265625,
+              "y": 314.515625,
+              "right": 807.328125,
+              "bottom": 491.515625
+            },
+            "outer": {
+              "x": 631.3125,
+              "y": 314.515625,
+              "right": 808.671875,
+              "bottom": 491.875
+            },
+            "image": {
+              "width": 1448,
+              "height": 1086
+            },
+            "backgroundSize": "1400.52px 1050.39px",
+            "backgroundPosition": "-173.131px -873.393px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 31684,
+            "changed": 30937,
+            "fraction": 0.9764234313849262
+          }
+        }
+      }
+    },
+    {
+      "name": "Visible treasure crop during real red draw at 1440×900",
+      "passed": true,
+      "details": {
+        "target": "t11",
+        "category": "treasure",
+        "width": 1440,
+        "height": 900,
+        "motion": "reduce",
+        "prize": {
+          "at": 1791352958283,
+          "category": "treasure",
+          "rarity": 5,
+          "id": "t11",
+          "name": "星桥玉",
+          "target": "t11",
+          "highBefore": 0,
+          "redBefore": 79,
+          "highAfter": 0,
+          "redAfter": 0,
+          "fateBefore": true,
+          "fateAfter": false,
+          "drawIndex": 1
+        },
+        "art": {
+          "details": {
+            "display": "block",
+            "visibility": "visible",
+            "rect": {
+              "width": 177,
+              "height": 177,
+              "x": 631.3125,
+              "y": 314.515625,
+              "right": 808.3125,
+              "bottom": 491.515625
+            },
+            "outer": {
+              "x": 631.3125,
+              "y": 314.515625,
+              "right": 808.671875,
+              "bottom": 491.875
+            },
+            "image": {
+              "width": 2172,
+              "height": 724
+            },
+            "backgroundSize": "1053.27px 351.09px",
+            "backgroundPosition": "-876.271px -174.09px",
+            "overflow": "hidden",
+            "ancestors": [
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "grid",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "flex",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              },
+              {
+                "display": "block",
+                "visibility": "visible",
+                "opacity": 1
+              }
+            ]
+          },
+          "difference": {
+            "pixels": 31684,
+            "changed": 17345,
+            "fraction": 0.5474371922737028
+          }
+        }
+      }
+    }
+  ],
+  "screenshots": [
+    "/workspace/wendao-lingqi/dist/red-art-qa/gear-360x640.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/technique-360x640.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/treasure-360x640.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/gear-390x480.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/technique-390x480.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/treasure-390x480.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/gear-1440x900.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/technique-1440x900.png",
+    "/workspace/wendao-lingqi/dist/red-art-qa/treasure-1440x900.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "fixtureNotice": "Validated late-game inventories, red pity 79 and a guaranteed target exercise actual one-draw transactions and their original reveal. This does not prove natural economic reachability.",
+  "finishedAt": "2026-10-07T06:03:03.596Z",
+  "passed": true
+}

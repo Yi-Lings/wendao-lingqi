@@ -1,0 +1,578 @@
+{
+  "startedAt": "2026-10-07T06:04:40.148Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Validated rank/resource/attribute fixtures establish UI transactions and recovery; the separate engine campaign establishes no-injection progression.",
+  "tests": [
+    {
+      "name": "story is a full scene, saves line and clues, and requires a fresh victory after a promise",
+      "passed": true,
+      "detail": {
+        "savedLine": 1,
+        "clue": "warm_shard",
+        "freshWin": true,
+        "chapter": 1,
+        "choice": "protect"
+      }
+    },
+    {
+      "name": "scene clue and decision save failures preserve the original line and can retry a different genuine choice",
+      "passed": true,
+      "detail": {
+        "clueRollback": true,
+        "choiceRollback": true,
+        "retriedChoice": "seek",
+        "futureRejected": true
+      }
+    },
+    {
+      "name": "story viewport 360x640 keeps dialogue and action visible",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 360,
+          "height": 640
+        },
+        "docWidth": 360,
+        "screen": {
+          "top": 0,
+          "bottom": 640,
+          "left": 0,
+          "right": 360,
+          "width": 360,
+          "height": 640
+        },
+        "footer": {
+          "top": 542,
+          "bottom": 640,
+          "left": 0,
+          "right": 360,
+          "width": 360,
+          "height": 98
+        },
+        "dialogue": {
+          "top": 442,
+          "bottom": 542,
+          "left": 12,
+          "right": 348,
+          "width": 336,
+          "height": 100
+        },
+        "scroll": 640
+      }
+    },
+    {
+      "name": "story viewport 390x844 keeps dialogue and action visible",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "docWidth": 390,
+        "screen": {
+          "top": 0,
+          "bottom": 844,
+          "left": 0,
+          "right": 390,
+          "width": 390,
+          "height": 844
+        },
+        "footer": {
+          "top": 746,
+          "bottom": 844,
+          "left": 0,
+          "right": 390,
+          "width": 390,
+          "height": 98
+        },
+        "dialogue": {
+          "top": 636.515625,
+          "bottom": 746,
+          "left": 13,
+          "right": 377,
+          "width": 364,
+          "height": 109.484375
+        },
+        "scroll": 844
+      }
+    },
+    {
+      "name": "story viewport 1440x900 keeps dialogue and action visible",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "docWidth": 1440,
+        "screen": {
+          "top": 0,
+          "bottom": 900,
+          "left": 410,
+          "right": 1030,
+          "width": 620,
+          "height": 900
+        },
+        "footer": {
+          "top": 802,
+          "bottom": 900,
+          "left": 410,
+          "right": 1030,
+          "width": 620,
+          "height": 98
+        },
+        "dialogue": {
+          "top": 702,
+          "bottom": 802,
+          "left": 423,
+          "right": 1017,
+          "width": 594,
+          "height": 100
+        },
+        "scroll": 900
+      }
+    },
+    {
+      "name": "mandatory main pill guide uses deterministic research and paid crafting; wrong cues and save recovery never charge twice",
+      "passed": true,
+      "detail": {
+        "pill": "break0",
+        "resumeStep": 1,
+        "heart": "protect",
+        "realm": 1
+      }
+    },
+    {
+      "name": "failed native and browser saves roll back ritual reservation and progress before any stage feedback",
+      "passed": true,
+      "detail": {
+        "nativePaymentRollback": true,
+        "browserPaymentRollback": true,
+        "cueRollback": true
+      }
+    },
+    {
+      "name": "ritual viewport 360x640 keeps preparation, heart and controls visible",
+      "passed": true,
+      "detail": {
+        "preparationMetrics": {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "docWidth": 360,
+          "screen": {
+            "top": 0,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 640
+          },
+          "footer": {
+            "top": 522.703125,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 117.296875
+          },
+          "dialogue": {
+            "top": 407.125,
+            "bottom": 522.703125,
+            "left": 12,
+            "right": 348,
+            "width": 336,
+            "height": 115.578125
+          },
+          "scroll": 640
+        },
+        "breathMetrics": {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "docWidth": 360,
+          "screen": {
+            "top": 0,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 640
+          },
+          "footer": {
+            "top": 487.703125,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 152.296875
+          },
+          "dialogue": {
+            "top": 327.703125,
+            "bottom": 487.703125,
+            "left": 12,
+            "right": 348,
+            "width": 336,
+            "height": 160
+          },
+          "scroll": 640
+        },
+        "heartMetrics": {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "docWidth": 360,
+          "screen": {
+            "top": 0,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 640
+          },
+          "footer": {
+            "top": 458.703125,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 181.296875
+          },
+          "dialogue": {
+            "top": 343.125,
+            "bottom": 458.703125,
+            "left": 12,
+            "right": 348,
+            "width": 336,
+            "height": 115.578125
+          },
+          "scroll": 640
+        },
+        "responseMetrics": {
+          "viewport": {
+            "width": 360,
+            "height": 640
+          },
+          "docWidth": 360,
+          "screen": {
+            "top": 0,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 640
+          },
+          "footer": {
+            "top": 487.703125,
+            "bottom": 640,
+            "left": 0,
+            "right": 360,
+            "width": 360,
+            "height": 152.296875
+          },
+          "dialogue": {
+            "top": 327.703125,
+            "bottom": 487.703125,
+            "left": 12,
+            "right": 348,
+            "width": 336,
+            "height": 160
+          },
+          "scroll": 640
+        }
+      }
+    },
+    {
+      "name": "ritual viewport 390x844 keeps preparation, heart and controls visible",
+      "passed": true,
+      "detail": {
+        "preparationMetrics": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "docWidth": 390,
+          "screen": {
+            "top": 0,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 844
+          },
+          "footer": {
+            "top": 724.703125,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 119.296875
+          },
+          "dialogue": {
+            "top": 609.125,
+            "bottom": 724.703125,
+            "left": 13,
+            "right": 377,
+            "width": 364,
+            "height": 115.578125
+          },
+          "scroll": 844
+        },
+        "breathMetrics": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "docWidth": 390,
+          "screen": {
+            "top": 0,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 844
+          },
+          "footer": {
+            "top": 689.703125,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 154.296875
+          },
+          "dialogue": {
+            "top": 522.9375,
+            "bottom": 689.703125,
+            "left": 13,
+            "right": 377,
+            "width": 364,
+            "height": 166.765625
+          },
+          "scroll": 844
+        },
+        "heartMetrics": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "docWidth": 390,
+          "screen": {
+            "top": 0,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 844
+          },
+          "footer": {
+            "top": 660.703125,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 183.296875
+          },
+          "dialogue": {
+            "top": 545.125,
+            "bottom": 660.703125,
+            "left": 13,
+            "right": 377,
+            "width": 364,
+            "height": 115.578125
+          },
+          "scroll": 844
+        },
+        "responseMetrics": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "docWidth": 390,
+          "screen": {
+            "top": 0,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 844
+          },
+          "footer": {
+            "top": 689.703125,
+            "bottom": 844,
+            "left": 0,
+            "right": 390,
+            "width": 390,
+            "height": 154.296875
+          },
+          "dialogue": {
+            "top": 522.9375,
+            "bottom": 689.703125,
+            "left": 13,
+            "right": 377,
+            "width": 364,
+            "height": 166.765625
+          },
+          "scroll": 844
+        }
+      }
+    },
+    {
+      "name": "ritual viewport 1440x900 keeps preparation, heart and controls visible",
+      "passed": true,
+      "detail": {
+        "preparationMetrics": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "docWidth": 1440,
+          "screen": {
+            "top": 0,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 900
+          },
+          "footer": {
+            "top": 780.703125,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 119.296875
+          },
+          "dialogue": {
+            "top": 686.71875,
+            "bottom": 780.703125,
+            "left": 423,
+            "right": 1017,
+            "width": 594,
+            "height": 93.984375
+          },
+          "scroll": 900
+        },
+        "breathMetrics": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "docWidth": 1440,
+          "screen": {
+            "top": 0,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 900
+          },
+          "footer": {
+            "top": 745.703125,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 154.296875
+          },
+          "dialogue": {
+            "top": 622.125,
+            "bottom": 745.703125,
+            "left": 423,
+            "right": 1017,
+            "width": 594,
+            "height": 123.578125
+          },
+          "scroll": 900
+        },
+        "heartMetrics": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "docWidth": 1440,
+          "screen": {
+            "top": 0,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 900
+          },
+          "footer": {
+            "top": 716.703125,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 183.296875
+          },
+          "dialogue": {
+            "top": 622.71875,
+            "bottom": 716.703125,
+            "left": 423,
+            "right": 1017,
+            "width": 594,
+            "height": 93.984375
+          },
+          "scroll": 900
+        },
+        "responseMetrics": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "docWidth": 1440,
+          "screen": {
+            "top": 0,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 900
+          },
+          "footer": {
+            "top": 745.703125,
+            "bottom": 900,
+            "left": 410,
+            "right": 1030,
+            "width": 620,
+            "height": 154.296875
+          },
+          "dialogue": {
+            "top": 600.53125,
+            "bottom": 745.703125,
+            "left": 423,
+            "right": 1017,
+            "width": 594,
+            "height": 145.171875
+          },
+          "scroll": 900
+        }
+      }
+    }
+  ],
+  "screenshots": [
+    "story-mission-390x844.png",
+    "story-return-390x844.png",
+    "story-intro-360x640.png",
+    "story-intro-390x844.png",
+    "story-intro-1440x900.png",
+    "ritual-breath-390x844.png",
+    "ritual-trial-390x844.png",
+    "ritual-preparation-360x640.png",
+    "ritual-heart-360x640.png",
+    "ritual-preparation-390x844.png",
+    "ritual-heart-390x844.png",
+    "ritual-preparation-1440x900.png",
+    "ritual-heart-1440x900.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "badResponses": [],
+  "failedRequests": [],
+  "finishedAt": "2026-10-07T06:05:07.252Z",
+  "passed": true
+}

@@ -47,6 +47,6 @@ python3 tools/build-web-preview.py --zip生成单文件，browser-preview-file�
 
 所有源码资源/测试文档先提交work [skip ci]，再构建冻结源码。APK以24MiB分片放releases/parts-v4，每片及全包SHA和公开证书指纹写manifest，私钥/存档/缓存不入库。tools/assemble-apk.py保持V3默认并支持显式V4参数，重组必须字节相同。
 
-.github/workflows/publish-v4.yml仅手动运行，--ref work。它跑npm，重组确切APK，重建HTML并比对releases/v4-artifact-manifest.json固定hash，审计全源码assets/包名/版本/v2签名/证书，再创建独立预发布。通过后匿名HTTPS下载APK/ZIP与checksum，核对SHA、ZIP CRC和内部HTML；更新plan/handoff。直接gh release upload曾被平台代理BadContentLength拒绝，使用Actions上传，不索取新令牌。复用平台代理认证/CA，不输出凭证、不关闭TLS。
+.github/workflows/publish-apk.yml在work版本仅手动运行，--ref work；default/main同名流程仍属历史V3，必须核对ref与实际job=verify-and-publish。它跑npm，重组确切APK，重建HTML并比对releases/v4-artifact-manifest.json固定hash，审计全源码assets/包名/版本/v2签名/证书，再创建独立预发布。通过后匿名HTTPS下载APK/ZIP与checksum，核对SHA、ZIP CRC和内部HTML；更新plan/handoff。直接gh release upload曾被平台代理BadContentLength拒绝，使用Actions上传，不索取新令牌。复用平台代理认证/CA，不输出凭证、不关闭TLS。
 
 旧会话无法加载的原因尚未证实；现有仓库、历史提交和资源已足以继续，当前无代码/资源依赖旧对话。

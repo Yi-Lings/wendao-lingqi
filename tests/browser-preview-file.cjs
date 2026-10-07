@@ -650,11 +650,13 @@ async function chooseSkill(id) {
   await check('same-origin formal, human and heavenly previews boot and switch through real buttons while preserving all three independent saves', async () => {
     // This uses the same HTTP document/origin, including actual query-based
     // navigation. The opaque Blob check below remains media-only.
+    const keys=[REGULAR_KEY,KEY,ASCENSION_KEY];
+    const initial=await page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
     await page.close();
     const fixedNow=Date.now();
     await context.addInitScript(now=>{Date.now=()=>now;},fixedNow);
     page=await context.newPage();observe(page,'three-isolated-chapters');
-    const keys=[REGULAR_KEY,KEY,ASCENSION_KEY],storage=()=>page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
+    const storage=()=>page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),keys);
     const loaded=async()=>{
       await page.waitForLoadState('load',{timeout:45000});
       if(await page.locator('#accept-age').count()){
@@ -681,7 +683,7 @@ async function chooseSkill(id) {
       await loaded();const s=await stateOf(page);assert(E.validate(s).ok);
       assert.deepEqual(JSON.parse((await storage())[key]),s,'the actual selected mode uses its own key');return s;
     };
-    const initial=await storage();assert.equal(initial[ASCENSION_KEY],null,'flight preview has not existed in this context');
+    assert.equal(initial[ASCENSION_KEY],null,'flight preview has not existed in this context');
     await context.setOffline(false);await page.goto(url+'?preview=0',{waitUntil:'load',timeout:45000});await loaded();
     assert.equal((await stateOf(page)).player.name,'正常存档保留检查');assert.equal((await stateOf(page)).ascension,null);
     assert.equal((await storage())[KEY],initial[KEY],'formal startup leaves the played human preview byte-for-byte');
