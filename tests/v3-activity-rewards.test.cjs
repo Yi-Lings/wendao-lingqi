@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const E=require('../web/engine.js'),K=require('../web/core.js'),Q=require('../web/economy.js'),C=require('../web/data.js'),R=require('../web/activity-rewards.js');
+const {readyJourneyFixture}=require('./story-fixtures.cjs');
 const NOW=1700000000000,copy=x=>JSON.parse(JSON.stringify(x));
 function stock(tier=0){const s=E.createState(NOW);s.stones=1000000;for(const id of Object.keys(s.materials))s.materials[id]=10000;s.paths.magic.realm=tier;s.paths.magic.layer=10;s.blueprints=Object.keys(C.sets);return s;}
 function settle(s,action){const before=copy(s),result=E.act(s,action,NOW);assert.equal(result.ok,true,result.message);const after=copy(s),view=R.model(action,result,before,s);assert.deepEqual(s,after,'presenting cannot mutate the committed state');return {view,result,before};}
@@ -60,6 +61,7 @@ test('wisdom and commission collections report only the real capped or tier-spec
 
 test('chapter reward duplicates turn into actual fragments rather than falsely displayed new techniques',()=>{
  const s=stock(),ch=C.chapters[0];s.paths.magic.layer=5;s.progress.dungeonWins.resource_herb=1;for(const id of ch.reward.techniques)s.techniques[id]={level:1,branch:0,spent:0,resetUsed:false};
+ readyJourneyFixture(s,'chapter_0','protect',NOW);
  const before=copy(s),action={type:'claimChapter',choice:'protect'},result=E.act(s,action,NOW);assert.equal(result.ok,true,result.message);
  const view=R.model(action,result,before,s);assert.equal(view.type,'claimChapter');assert.equal(view.subtitle,ch.name);
  for(const id of result.data.reward.techniques||[])if(before.techniques[id])assert.ok(!item(view,'technique',id));

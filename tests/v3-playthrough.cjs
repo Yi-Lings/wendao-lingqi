@@ -9,6 +9,9 @@ const E = require('../web/engine.js');
 const B = E.modules.combat;
 const K = E.modules.core;
 const C = E.catalog;
+const S = require('../web/story.js');
+const {toMission,finishJourney}=require('./story-fixtures.cjs');
+const {toTrial}=require('./ritual-fixtures.cjs');
 const START = 1700000000000;
 const HOUR = 3600000;
 const CAPS = [5, 8, 11, 14, 17, 20];
@@ -23,6 +26,7 @@ class Campaign {
     this.counts = {actions:0, battles:0, wins:0, losses:0, combatSeconds:0, waitHours:0, saves:0, maxEquippedRarity:0, draws:0};
     this.steps = [];
     this.failures = [];
+    this.processingStories=false;
     this.visitedRanks = new Set([0]);
     this.originalOtherPath = copy(this.state.paths[route === 'magic' ? 'body' : 'magic']);
     if (route !== this.state.route) this.act({type:'switchRoute', route});
@@ -136,14 +140,72 @@ class Campaign {
       if(g)this.counts.maxEquippedRarity=Math.max(this.counts.maxEquippedRarity,g.rarity);
     }
   }
-  claimReady() {
-    for(let pass=0;pass<8;pass++) {
-      const view=E.view(this.state);
-      for(const q of view.sidequestProgress.filter(x=>x.ready))this.act({type:'claimSidequest',id:q.id});
-      if(view.chapterReady)this.act({type:'claimChapter',choice:'protect'});
-      else break;
+  performStoryGoal(journey) {
+    const goal=journey.mission.goal, needed=journey.mission.required-journey.mission.current;
+    for(let n=0;n<needed;n++) {
+      if(goal.key==='dungeonWins'||goal.key==='bossWins') {
+        const id=goal.id||(goal.key==='bossWins'?'boss_0':'resource_herb');
+        if(!E.previewDungeon(this.state,{id,difficulty:0}).allowed)return false;
+        if(C.dungeons[id].type==='cave')this.completeCave(id);
+        else this.clearWithRetry({id});
+      } else if(goal.key==='crafted')this.act({type:'craftPill',id:'heal0',count:1});
+      else if(goal.key==='pillsUsed')this.act({type:'usePill',id:'qi0'});
+      else if(goal.key==='study') {
+        const id=Object.keys(this.state.techniques).find(id=>this.available(id)&&this.state.techniques[id].level<20);
+        assert(id,'At least one available technique can still be studied');
+        let r=this.act({type:'upgradeTechnique',id},true);
+        if(!r.ok){this.wait(168);r=this.act({type:'upgradeTechnique',id});}
+      }else if(goal.key==='gearDrops') {
+        const boss=Object.values(C.dungeons).find(d=>d.type==='boss'&&d.realm<=this.state.paths[this.route].realm&&E.previewDungeon(this.state,{id:d.id}).allowed);
+        assert(boss,'gear mission has an accessible source');this.clearWithRetry({id:boss.id});
+      }else if(goal.key==='forged')this.act({type:'forgeGear',slot:'weapon',set:this.route==='body'?'body':'sword',rarity:0});
+      else if(goal.key==='gifts')this.act({type:'gift',companion:journey.episode.companion||'qinglan',item:'herb'});
+      else if(goal.key==='manualWins'||goal.key==='kills')this.clearWithRetry({id:'resource_herb'});
+      else if(goal.key==='tower')this.clearWithRetry({id:'tower',floor:this.state.progress.tower+1});
+      else throw Error('Campaign needs a real activity for story goal '+JSON.stringify(goal));
     }
-    for(const q of E.view(this.state).commissions.filter(x=>x.ready))this.act({type:'claimCommission',id:q.id});
+    assert(S.journeyView(this.state,journey.episode.id).mission.done,'actual story activity credits its declared goal');
+    return true;
+  }
+  completeCave(id) {
+    this.act({type:'startDungeon',id,difficulty:0});
+    for(let guard=0;guard<40&&this.state.exploration;guard++) {
+      if(this.state.battle) {
+        for(let n=0;n<601&&this.state.battle;n++)B.advanceBattle(this.state,1);
+        assert(!this.state.battle,'cave battle settles');assert(this.state.lastBattleResult.win,'actual cave encounter victory');
+        this.counts.battles++;this.counts.wins++;this.counts.combatSeconds+=this.state.lastBattleResult.time;
+      }else {
+        const choices=this.state.exploration.choices;
+        if(!choices.length){this.act({type:'finishCave'});break;}
+        const pick=choices.find(x=>x.optionId==='fight')||choices.find(x=>x.optionId==='gather')||choices[0];
+        this.act({type:'chooseCave',choice:pick.id});
+      }
+    }
+    assert(!this.state.exploration,'complete real cave route');assert(this.state.lastBattleResult.win,'cave finished, not early exited');this.save();
+  }
+  claimReady() {
+    if(this.processingStories||this.state.battle||this.state.exploration)return;
+    this.processingStories=true;
+    try {
+      for(let pass=0;pass<30;pass++) {
+        const view=E.view(this.state);let progressed=false;
+        const candidates=view.sidequestProgress.filter(q=>!q.completed&&q.journey&&q.journey.accessible&&q.progress.every(p=>p.done));
+        if(view.currentChapter&&view.currentJourney&&view.currentJourney.accessible)candidates.push({id:'chapter_'+view.currentChapter.id,chapter:true});
+        for(const candidate of candidates) {
+          let journey=toMission(this.state,candidate.id,'protect',this.now,a=>this.act(a)),blocked=false;
+          for(let stage=0;stage<20&&!['ready','completed'].includes(journey.stage);stage++){
+            if(journey.stage==='mission'&&!journey.mission.done&&!this.performStoryGoal(journey)){blocked=true;break;}
+            if(journey.stage==='mission'&&journey.mission.done&&journey.mission.canReturn===false){blocked=true;break;}
+            journey=finishJourney(this.state,candidate.id,this.now,a=>this.act(a));
+          }
+          if(blocked)continue;assert.equal(journey.stage,'ready','all sequential chapter missions completed through real activity');
+          this.act(candidate.chapter?{type:'claimChapter',choice:'protect'}:{type:'claimSidequest',id:candidate.id});progressed=true;
+          this.save();
+        }
+        if(!progressed)break;
+      }
+      for(const q of E.view(this.state).commissions.filter(x=>x.ready))this.act({type:'claimCommission',id:q.id});
+    }finally{this.processingStories=false;}
   }
   combat(a, required=true) {
     const start=this.act({type:'startDungeon',difficulty:0,...a},!required);
@@ -214,7 +276,9 @@ class Campaign {
       while(this.state.paths[this.route].layer<10)this.act({type:'levelUp'});
       if(this.state.paths[this.route].xp<K.xpNeeded(this.state))this.wait(24);
       this.prepare(realm);
+      toTrial(this.state,this.now,a=>this.act(a));
       this.clearWithRetry({id:'trial'});
+      if(realm===5)this.act({type:'finishRitual'});
       this.steps.push({realm,realmLabel:K.realmLabel(this.state),hours:this.counts.waitHours,battles:this.counts.battles,tower:this.state.progress.tower,chapter:this.state.story.chapter,power:E.attributes(this.state).power});
       this.claimReady();
       if(realm<5) {

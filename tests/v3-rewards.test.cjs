@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const E=require('../web/engine.js'),K=require('../web/core.js'),C=require('../web/data.js'),R=require('../web/rewards.js');
+const {stockRitualFixture,toTrial}=require('./ritual-fixtures.cjs');
 const NOW=1700000000000,copy=x=>JSON.parse(JSON.stringify(x));
 function account(){const s=K.createState(NOW);s.paths.magic.layer=10;s.paths.magic.realm=2;return s;}
 function start(s,id,fields={}){const a=E.act(s,{type:'startDungeon',id,...fields},NOW);assert.ok(a.ok,a.message);return s.battle;}
@@ -42,7 +43,7 @@ test('cave pending loot and banked materials have distinct saved versus pending 
  assert.equal(R.model(saved).pending,false);assert.equal(R.model(saved).items[0].count,12);assert.ok(R.render(saved).includes('已携出收益已保留'));
 });
 test('trial progress is positive feedback with no invented material rewards',()=>{
- const s=account();s.paths.magic.xp=K.xpNeeded(s);start(s,'trial');const report=finish(s);assert.equal(report.rewards,null);
+ const s=account();s.paths.magic.xp=K.xpNeeded(s);stockRitualFixture(s);toTrial(s,NOW);start(s,'trial');const report=finish(s);assert.equal(report.rewards,null);
  const view=R.model(report);assert.equal(view.outcome,'win');assert.equal(view.items.length,0);assert.equal(view.state,'试炼进度已记录');assert.ok(s.progress.trialWins['magic:2']);
 });
 test('actual cave completion records first-clear metadata once and never labels practice or withdrawal as first',()=>{

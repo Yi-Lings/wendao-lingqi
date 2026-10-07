@@ -449,7 +449,7 @@
   font-size: 70px;
 }
 
-.red-card-art .art-icon span {
+.red-card-art .art-icon span:not([data-atlas-picture]) {
   display: none;
 }
 

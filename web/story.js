@@ -1,15 +1,18 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./story-scenes.js'):root.WendaoStoryScenes);
   if(node)module.exports=api;else root.WendaoStory=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,N){
 'use strict';
 const own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k);
 const copy=x=>JSON.parse(JSON.stringify(x));
 const yes=(message,data)=>({ok:true,message,data:data||{}});
 const no=message=>({ok:false,message});
 const maxTier=s=>Math.floor(K.maxRank(s)/10);
-function countRecord(records,id){if(!records)return 0;if(id&&own(records,id))return records[id];return Object.entries(records).filter(([k])=>!id||k===id||k.startsWith(id+':')).reduce((n,[,v])=>n+(Number(v)||0),0);}
+function countRecord(records,id){if(!records)return 0;if(id&&own(records,id))return records[id];return Math.min(K.CAP,Object.entries(records).filter(([k])=>!id||k===id||k.startsWith(id+':')).reduce((n,[,v])=>n+(Number(v)||0),0));}
+function completedEndingTrial(s,route){
+  return !!(s.progress.endingTrials[route]&&(s.ritualLegacyWins&&s.ritualLegacyWins[route+':5']||s.ritual&&s.ritual.route===route&&s.ritual.realm===5&&s.ritual.phase==='complete'||Array.isArray(s.ritualHistory)&&s.ritualHistory.some(h=>h.route===route&&h.realm===5)));
+}
 function value(s,r){
   if(r.key==='rank')return K.maxRank(s);
   if(r.key==='maxRealm')return maxTier(s);
@@ -18,16 +21,104 @@ function value(s,r){
   if(r.key==='bossWins')return r.id?countRecord(s.progress.bossWins,r.id):s.stats.bosses;
   if(r.key==='dungeonWins')return countRecord(s.progress.dungeonWins,r.id);
   if(r.key==='sectTrialCount')return new Set(s.progress.sectTrials).size;
-  if(r.key==='endingTrial')return Object.values(s.progress.endingTrials).some(Boolean)?1:0;
+  if(r.key==='endingTrial')return ['body','magic'].some(route=>completedEndingTrial(s,route))?1:0;
   if(r.key==='affinity')return s.companions[r.id]?.affinity||0;
   if(r.key==='bonds')return Object.values(s.companions).filter(x=>x.bond).length;
   if(r.key==='knownTechniques')return Object.keys(s.techniques).length;
+  if(r.key==='study')return Math.min(K.CAP,Object.entries(s.stats).filter(([id])=>/^studyTier[0-5]$/.test(id)).reduce((n,[,count])=>n+count,0));
   if(r.key==='chapter')return s.story.chapter;
   if(r.key==='sidequest')return s.story.sideCompleted.includes(r.id)?1:0;
   return Number(s.stats[r.key]||0);
 }
 function requirementView(s,requirements){return (requirements||[]).map(r=>({key:r.key,label:r.label||r.key,current:value(s,r),required:r.count,done:value(s,r)>=r.count,id:r.id||null}));}
 function satisfied(s,requirements){return requirementView(s,requirements).every(x=>x.done);}
+const stages=['intro','survey','decision','reply','mission','interlude','outro','ready','completed'];
+const missionGoals=choice=>choice.goals||[choice.goal];
+function episode(id){
+  const collection=N&&N.episodes||{},scene=Array.isArray(collection)?collection.find(x=>x.id===id):collection[id];
+  const chapter=typeof id==='string'&&/^chapter_[0-5]$/.test(id)?C.chapters[Number(id.slice(8))]:null;
+  const quest=chapter?null:C.sidequests.find(x=>x.id===id),catalog=chapter||quest;
+  if(!scene||!catalog)return null;
+  const choices=Array.isArray(scene.choices)?Object.fromEntries(scene.choices.map(x=>[x.id,x])):scene.choices;
+  return {...scene,clues:scene.clues.map(clue=>({...clue,title:clue.title||clue.label})),id,name:scene.name||catalog.name,title:scene.title||catalog.title||catalog.name,kind:chapter?'chapter':'sidequest',catalogId:catalog.id,artKey:scene.artKey||catalog.artKey,choices,requirements:catalog.requirements,reward:catalog.reward,previous:quest&&quest.previous||null};
+}
+function completed(s,ep){return ep.kind==='chapter'?s.story.chapter>ep.catalogId:s.story.sideCompleted.includes(ep.id);}
+function accessible(s,ep){
+  if(completed(s,ep))return true;
+  if(ep.kind==='chapter')return ep.catalogId===s.story.chapter;
+  if(ep.previous&&!s.story.sideCompleted.includes(ep.previous))return false;
+  const requiredRank=Math.max(ep.unlockRank||0,...(ep.requirements||[]).filter(r=>r.key==='rank').map(r=>r.count),0);
+  return K.maxRank(s)>=requiredRank;
+}
+function linesFor(ep,entry){
+  if(entry.stage==='intro')return ep.intro||[];
+  if(entry.stage==='reply')return ep.choices[entry.choice].reply||[];
+  if(entry.stage==='outro')return ep.outro[entry.choice]||[];
+  if(entry.stage==='interlude')return ep.choices[entry.choice].interludes[entry.missionIndex]||[];
+  return [];
+}
+function journeyView(s,id){
+  const ep=episode(id);if(!ep)return null;
+  const saved=s.story.journeys&&s.story.journeys[id],isComplete=completed(s,ep),entry=saved?copy(saved):null;
+  const stage=isComplete?'completed':entry?entry.stage:'not-started',requirements=requirementView(s,ep.requirements);
+  const goals=entry&&entry.choice?missionGoals(ep.choices[entry.choice]):[],goal=goals[entry&&entry.missionIndex||0]||null;
+  const current=goal?Math.max(0,value(s,goal)-entry.baseline):0;
+  const index=entry&&entry.missionIndex||0,done=!!goal&&current>=goal.count;
+  const mission=goal?{goal,current,required:goal.count,done,index,total:goals.length,canReturn:done&&(index<goals.length-1||requirements.every(x=>x.done))}:null;
+  const lines=entry?linesFor(ep,entry):[],selectedClue=stage==='survey'&&entry&&entry.clues.length?ep.clues.find(clue=>clue.id===entry.clues[entry.clues.length-1]):null;
+  const line=selectedClue?{speaker:selectedClue.speaker||'narrator',text:selectedClue.text,expression:0}:lines[entry&&entry.line||0]||null;
+  return {episode:ep,entry,line,stage,mission,requirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,cluesRead:entry?entry.clues.length:0};
+}
+function handleJourney(s,a,now){
+  const ep=episode(a.episode);if(!ep)return no('这段故事尚未开放');
+  if(completed(s,ep))return no('这段故事已经完成，奖励不会重复领取');
+  if(!accessible(s,ep))return no(ep.previous?'先完成前一段故事，再继续同行':'这段故事需要先走到对应的修行阶段');
+  if(!s.story.journeys)s.story.journeys={};
+  let entry=s.story.journeys[ep.id];
+  if(a.type==='beginStory'){
+    if(entry)return yes('回到未完的故事',{journey:journeyView(s,ep.id)});
+    if(Object.keys(s.story.journeys).length>=24)return no('故事记录已满');
+    s.story.journeys[ep.id]={stage:'intro',line:0,clues:[],choice:null,baseline:0,missionIndex:0};
+    return yes('进入《'+ep.title+'》',{journey:journeyView(s,ep.id)});
+  }
+  if(!entry)return no('请先进入这段故事');
+  if(a.type==='inspectStory'){
+    if(entry.stage!=='survey')return no('先听完同行者的话，再查看现场');
+    if(!ep.clues.some(clue=>clue.id===a.clue))return no('这条线索不在现场');
+    if(entry.clues.includes(a.clue)){entry.clues=entry.clues.filter(id=>id!==a.clue);entry.clues.push(a.clue);return yes('重新查看已找到的线索',{journey:journeyView(s,ep.id)});}
+    entry.clues.push(a.clue);return yes('你记下了新的线索',{journey:journeyView(s,ep.id)});
+  }
+  if(a.type==='chooseStory'){
+    if(entry.stage!=='decision')return no('先了解现场的两条线索，再作决定');
+    if(!['protect','seek'].includes(a.choice)||!ep.choices[a.choice])return no('请选择有效的行动方向');
+    entry.choice=a.choice;entry.missionIndex=0;entry.baseline=Math.min(K.CAP,value(s,missionGoals(ep.choices[a.choice])[0]));entry.stage='reply';entry.line=0;
+    return yes('同行者回应了你的决定',{journey:journeyView(s,ep.id)});
+  }
+  if(a.type==='advanceStory'){
+    if(['intro','reply','interlude','outro'].includes(entry.stage)){
+      const lines=linesFor(ep,entry);
+      if(entry.line+1<lines.length)entry.line++;
+      else{
+        if(entry.stage==='interlude'){entry.missionIndex++;entry.baseline=Math.min(K.CAP,value(s,missionGoals(ep.choices[entry.choice])[entry.missionIndex]));entry.stage='mission';}
+        else entry.stage=entry.stage==='intro'?'survey':entry.stage==='reply'?'mission':'ready';
+        entry.line=0;
+      }
+      return yes(entry.stage==='mission'?'带着这次约定，去完成真实的行动':'故事继续',{journey:journeyView(s,ep.id)});
+    }
+    if(entry.stage==='survey'){
+      if(!ep.clues.every(clue=>entry.clues.includes(clue.id)))return no('还有现场线索没有查看，先把事情弄清楚');
+      entry.stage='decision';entry.line=0;return yes('你已经看清两条可走的路',{journey:journeyView(s,ep.id)});
+    }
+    if(entry.stage==='mission'){
+      const view=journeyView(s,ep.id);
+      if(!view.mission.done)return no('先完成约定的实际行动，再回来与同行者会合');
+      if(view.mission.index===view.mission.total-1&&!view.requirements.every(x=>x.done))return no('此次行动已经完成，原有修行与历练目标仍需达成');
+      entry.stage=view.mission.index<view.mission.total-1?'interlude':'outro';entry.line=0;return yes('同行者等到了你的归来',{journey:journeyView(s,ep.id)});
+    }
+    return no(entry.stage==='ready'?'这段故事已经讲完，可以收下这一程的回响':'请先作出自己的决定');
+  }
+  return null;
+}
 function grantReward(s,reward,route){
   const r=reward||{};K.grant(s,r,route||s.route);
   for(const [id,n] of Object.entries(r.fragments||{}))if(id==='universal'||C.techniques[id])K.add(s.fragments,id,n);
@@ -88,12 +179,15 @@ function view(s){
   const ch=C.chapters[s.story.chapter]||null,chapterProgress=ch?requirementView(s,ch.requirements):[];
   const sidequestProgress=C.sidequests.map(q=>{
     const completed=s.story.sideCompleted.includes(q.id),progress=requirementView(s,q.requirements),previousReady=!q.previous||s.story.sideCompleted.includes(q.previous);
-    return {...q,completed,progress,ready:!completed&&previousReady&&progress.every(x=>x.done),progressText:(q.previous&&!previousReady?'先完成前置任务；':'')+progress.map(x=>x.label+' '+x.current+'/'+x.required).join(' · ')};
+    const journey=journeyView(s,q.id);
+    return {...q,completed,progress,journey,ready:!completed&&previousReady&&progress.every(x=>x.done)&&!!journey&&journey.ready,progressText:(q.previous&&!previousReady?'先完成前置任务；':'')+progress.map(x=>x.label+' '+x.current+'/'+x.required).join(' · ')};
   });
-  return {currentChapter:ch,chapterProgress,chapterReady:!!ch&&chapterProgress.every(x=>x.done),sidequestProgress,commissions:commissionView(s),jointCost:C.jointCost,bondThreshold:C.bondThreshold,jointThreshold:C.jointThreshold,jointCooldownMs:C.jointCooldownMs,companionAttitudes:companionAttitudes(s),storyDirection:storyDirection(s),chapterChoices:{protect:choicePreview(s,'protect'),seek:choicePreview(s,'seek')},recommendedEnding:storyDirection(s)==='protect'?'guardian':storyDirection(s)==='seek'?'wanderer':'teacher'};
+  const currentJourney=ch?journeyView(s,'chapter_'+ch.id):null;
+  return {currentChapter:ch,currentJourney,chapterProgress,chapterReady:!!currentJourney&&currentJourney.ready,sidequestProgress,commissions:commissionView(s),jointCost:C.jointCost,bondThreshold:C.bondThreshold,jointThreshold:C.jointThreshold,jointCooldownMs:C.jointCooldownMs,companionAttitudes:companionAttitudes(s),storyDirection:storyDirection(s),chapterChoices:{protect:choicePreview(s,'protect'),seek:choicePreview(s,'seek')},recommendedEnding:storyDirection(s)==='protect'?'guardian':storyDirection(s)==='seek'?'wanderer':'teacher'};
 }
 function handle(s,a,now){
   if(!a||typeof a.type!=='string')return null;
+  if(['beginStory','advanceStory','inspectStory','chooseStory'].includes(a.type))return handleJourney(s,a,now);
   if(a.type==='joinSect'){
     if(!C.schools[a.school])return no('请选择有效宗门');
     if(K.maxRank(s)<4)return no('达到首境五层后可加入宗门');
@@ -119,6 +213,9 @@ function handle(s,a,now){
     const ch=C.chapters[s.story.chapter];if(!ch)return no('六卷主线已经完成');
     if(!['protect','seek'].includes(a.choice))return no('请选择剧情方向');
     if(!satisfied(s,ch.requirements))return no('章节目标尚未完成');
+    const journey=journeyView(s,'chapter_'+ch.id);if(!journey||!journey.ready)return no('先经历这段故事、完成约定并听完归来的对话');
+    if(journey.entry.choice!==a.choice)return no('请沿着你在故事中作出的决定继续');
+    s.story.journeys[journey.episode.id].stage='completed';
     grantReward(s,ch.reward);
     if(!s.story.completed.includes(ch.id))s.story.completed.push(ch.id);
     const reactions=choicePreview(s,a.choice);
@@ -131,6 +228,7 @@ function handle(s,a,now){
   if(a.type==='ending'){
     if(s.story.chapter<6)return no('完成六卷主线后再选择归途');
     if(s.story.ending)return no('你已选择归途，可继续自由游历');
+    if(!value(s,{key:'endingTrial'}))return no('先亲自落定终境仪式的最后道誓，再决定自己的归途');
     if(!C.endings[a.choice])return no('请选择有效结局');
     s.story.ending=copy(C.endings[a.choice]);K.log(s,s.story.ending.title+'：'+s.story.ending.text,now);
     return yes(s.story.ending.title,{ending:s.story.ending});
@@ -141,6 +239,8 @@ function handle(s,a,now){
     if(s.story.sideCompleted.includes(q.id))return no('此支线奖励已领取');
     if(q.previous&&!s.story.sideCompleted.includes(q.previous))return no('先完成上一段个人任务');
     if(!satisfied(s,q.requirements))return no('支线条件尚未完成');
+    const journey=journeyView(s,q.id);if(!journey||!journey.ready)return no('先经历这段同行故事、完成约定并听完归来的对话');
+    s.story.journeys[q.id].stage='completed';
     grantReward(s,q.reward);s.story.sideCompleted.push(q.id);
     if(q.companion)s.companions[q.companion].questStep=Math.max(s.companions[q.companion].questStep,q.step+1);
     K.log(s,q.name+'：'+q.after,now);return yes(q.after,{reward:q.reward,quest:q.id});
@@ -198,5 +298,5 @@ function handle(s,a,now){
   }
   return null;
 }
-return {handle,view,grantReward,requirementView,commissionView,value};
+return {handle,view,grantReward,requirementView,commissionView,value,episode,journeyView,stages,missionGoals,completedEndingTrial};
 });

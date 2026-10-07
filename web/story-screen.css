@@ -1,0 +1,202 @@
+/* Story scenes own their viewport. Reading and world interactions stay apart. */
+body.has-narrative .game-shell,
+.game-shell.scene-mode { padding-bottom: 0; }
+body.has-narrative .game-shell > .topbar,
+body.has-narrative .game-shell > .resource-bar,
+body.has-narrative .game-shell > .hero-scene,
+body.has-narrative .game-shell > .nav-bottom,
+.game-shell.scene-mode > .topbar,
+.game-shell.scene-mode > .resource-bar,
+.game-shell.scene-mode > .hero-scene,
+.game-shell.scene-mode > .nav-bottom { display: none; }
+body.has-narrative .game-shell > .page-content,
+.game-shell.scene-mode > .page-content { padding: 0; overflow: hidden; min-height: 0; }
+.narrative-screen {
+  --story-ink: #f4eed9;
+  --story-muted: #bbd0c1;
+  --story-gold: #e5ca91;
+  --story-jade: #9bdbc0;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto minmax(80px, 1fr) minmax(100px, auto) auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: var(--story-ink);
+  background: #071b23;
+}
+.game-shell .chapter-art.narrative-backdrop,
+.narrative-backdrop {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-repeat: no-repeat;
+  background-color: #122a30;
+  overflow: hidden;
+}
+.narrative-shade {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(#06161dc4, #071b2226 20%, #071b2220 45%, #071b22d9 76%, #06171eee);
+}
+.narrative-screen::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  inset: max(8px, env(safe-area-inset-top)) 9px max(8px, env(safe-area-inset-bottom));
+  border: 1px solid #d7c18930;
+  border-radius: 2px;
+}
+.narrative-hud {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: calc(18px + env(safe-area-inset-top)) 20px 12px;
+  min-width: 0;
+}
+.narrative-hud-copy { min-width: 0; }
+.narrative-overline { display: block; font-size: 10px; letter-spacing: 2px; color: var(--story-gold); }
+.narrative-hud h1 { margin-top: 3px; font: 22px/1.4 Wendao, "Songti SC", serif; letter-spacing: 2px; color: #ffefd0; text-shadow: 0 2px 14px #0009; }
+.narrative-tools { display: flex; flex: none; gap: 4px; }
+.narrative-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid #9a92746b;
+  border-radius: 6px;
+  color: var(--story-ink);
+  background: #123036dd;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: .5px;
+  touch-action: manipulation;
+  overflow-wrap: anywhere;
+}
+.narrative-button.primary { color: #133029; border-color: #ead19b; background: linear-gradient(130deg, #f2dfa8, #c7a665); box-shadow: 0 4px 18px #09191960; }
+.narrative-button.secondary { color: #d1f1df; border-color: #9ac3a988; background: linear-gradient(135deg, #28534aec, #183843ee); }
+.narrative-button.quiet { min-height: 38px; padding: 7px 9px; color: #e0dac3; font-size: 11px; background: #0a232bb8; border-color: #bea7794d; }
+.narrative-button:focus-visible,
+.story-hotspot:focus-visible { outline: 2px solid #f1d595; outline-offset: 3px; }
+.narrative-button:active { transform: translateY(1px); }
+.narrative-button:disabled { opacity: .5; }
+.story-world { position: relative; min-height: 0; padding: 10px 22px; }
+.story-atmosphere { display: flex; align-items: flex-end; width: 100%; height: 100%; padding-bottom: 18px; }
+.story-atmosphere span { max-width: 260px; color: #f1eee1; font: 12px/2 Wendao, serif; letter-spacing: 2px; text-shadow: 0 1px 8px #041216, 0 0 25px #041216; }
+.story-survey-caption { font-size: 10px; color: #e5e2c9; text-shadow: 0 2px 5px #000; }
+.story-hotspots { position: absolute; inset: 20px 15px 20px; }
+.story-hotspot {
+  position: absolute;
+  left: var(--hotspot-x);
+  top: var(--hotspot-y);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  max-width: 135px;
+  min-width: 68px;
+  min-height: 56px;
+  padding: 5px 8px;
+  border: 0;
+  color: #fff0d4;
+  background: transparent;
+  font-size: 11px;
+  line-height: 1.5;
+  text-shadow: 0 1px 6px #001013;
+  touch-action: manipulation;
+}
+.story-hotspot > span:last-child { padding: 4px 9px; background: #09232bcc; border: 1px solid #d1ba805e; border-radius: 4px; }
+.story-hotspot-mark { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #f3ddab; border-radius: 50%; background: #123632ad; color: #f8e5b2; font-size: 23px; box-shadow: 0 0 14px #f1ca704d; }
+.story-hotspot:not(.examined) .story-hotspot-mark { animation: story-clue-arrival .7s ease-out both; }
+.story-hotspot.examined .story-hotspot-mark { font-size: 17px; color: #b7e6cc; border-color: #99c4b1; box-shadow: none; background: #15332de0; }
+.story-moment { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; text-align: center; color: #f1e6bf; font: 15px/2.1 Wendao, serif; letter-spacing: 3px; text-shadow: 0 2px 8px #052125; }
+.story-memory { font-size: 22px; letter-spacing: 5px; }
+.story-objective { position: absolute; left: 20px; right: 20px; bottom: 20px; max-width: 390px; padding: 13px 15px; border-left: 2px solid #e5ca91; background: linear-gradient(90deg, #09232be3, #09232b80); border-radius: 0 6px 6px 0; }
+.story-objective strong { display: block; margin-top: 5px; color: #f3efdc; font: 16px/1.65 Wendao, serif; }
+.story-objective-progress { margin-top: 8px; display: flex; align-items: center; gap: 10px; font-size: 10px; color: #ccddce; }
+.story-objective-progress > span { flex: none; }
+.story-objective-progress > div { width: 100%; height: 4px; overflow: hidden; background: #82978333; }
+.story-objective-progress i { display: block; height: 100%; background: linear-gradient(90deg, #669782, #e4d597); }
+.narrative-dialogue {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+  max-height: 34dvh;
+  padding: 15px 19px;
+  margin: 0 13px;
+  border: 1px solid #c8b57d75;
+  border-top-color: #e8ce936b;
+  border-radius: 7px;
+  background: linear-gradient(125deg, #132f34ef, #09202bf5);
+  box-shadow: 0 7px 25px #0004;
+  animation: story-line-arrival .18s ease-out both;
+}
+.conversation-portrait.narrative-portrait { width: 64px; height: 64px; margin: 0; flex: none; background-repeat: no-repeat; box-shadow: 0 0 20px #789c7120; border-color: #d0ba8280; border-radius: 7px; }
+.narrative-narrator { flex: none; display: grid; place-items: center; width: 40px; height: 52px; border: 1px solid #c7b78370; border-radius: 4px; color: #dece9d; font: 22px Wendao, serif; background: #42504636; }
+.narrative-dialogue-copy { display: flex; flex-direction: column; min-width: 0; min-height: 0; width: 100%; max-height: inherit; }
+.narrative-speaker { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: none; margin-bottom: 7px; font-size: 12px; }
+.narrative-speaker strong { color: #f4daa2; font-weight: 500; letter-spacing: 1px; }
+.narrative-speaker span { font-size: 9px; color: #9db8ad; white-space: nowrap; }
+.narrative-paragraph { min-height: 0; overflow: auto; scrollbar-width: thin; scrollbar-color: #c9d0a933 transparent; overscroll-behavior: contain; }
+.narrative-paragraph p { color: #edf0df; font-size: 13px; line-height: 1.95; margin: 0; letter-spacing: .4px; }
+.narrative-footer { min-width: 0; padding: 10px 16px calc(19px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, #071b23c9 30%); }
+.narrative-hint { font-size: 10px; line-height: 1.7; color: #becab3; text-align: center; padding: 0 4px; margin-bottom: 8px; }
+.narrative-actions { display: flex; gap: 9px; width: 100%; }
+.narrative-actions > .narrative-button { flex: 1; }
+.story-decisions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; width: 100%; }
+.story-decisions .narrative-button { min-height: 56px; font-size: 12px; }
+@keyframes story-line-arrival { from { opacity: .5; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@keyframes story-clue-arrival { from { transform: scale(.7); box-shadow: 0 0 32px #f2dca180; } to { transform: scale(1); box-shadow: 0 0 14px #f1ca704d; } }
+@media (max-width: 380px) {
+  .narrative-hud { padding-left: 17px; padding-right: 15px; }
+  .narrative-hud h1 { font-size: 19px; letter-spacing: 1px; }
+  .narrative-overline { font-size: 9px; letter-spacing: 1px; }
+  .narrative-dialogue { padding: 12px; gap: 9px; margin: 0 12px; }
+  .conversation-portrait.narrative-portrait { width: 54px; height: 54px; }
+  .narrative-paragraph p { font-size: 12px; line-height: 1.85; }
+  .narrative-footer { padding-left: 13px; padding-right: 13px; }
+  .narrative-tools { gap: 3px; }
+  .narrative-button.quiet { padding: 7px; }
+}
+@media (max-height: 570px) {
+  .narrative-screen { grid-template-rows: auto minmax(52px, 1fr) minmax(82px, auto) auto; }
+  .narrative-hud { padding-top: calc(11px + env(safe-area-inset-top)); padding-bottom: 6px; }
+  .narrative-hud h1 { font-size: 18px; }
+  .narrative-dialogue { max-height: 29dvh; padding-top: 10px; padding-bottom: 10px; }
+  .narrative-footer { padding-top: 7px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .narrative-hint { font-size: 9px; margin-bottom: 6px; }
+  .story-hotspots { inset: 8px 12px; }
+  .story-objective { bottom: 9px; padding: 9px 12px; }
+  .story-objective strong { font-size: 13px; }
+  .story-decisions .narrative-button { min-height: 46px; }
+}
+@media (max-height: 450px) and (min-width: 620px) {
+  .narrative-screen { grid-template-columns: minmax(0, 1fr) minmax(280px, .85fr); grid-template-rows: auto minmax(0, 1fr) auto; }
+  .narrative-hud { grid-column: 1 / -1; }
+  .story-world { grid-row: 2 / 4; }
+  .narrative-dialogue { grid-row: 2; grid-column: 2; max-height: 100%; }
+  .narrative-footer { grid-row: 3; grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .narrative-screen *, .narrative-screen *::before, .narrative-screen *::after { animation: none !important; transition: none !important; }
+}

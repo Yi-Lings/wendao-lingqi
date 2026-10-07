@@ -1,7 +1,8 @@
 (function(root,factory){
-  const api=factory(typeof module==='object'&&module.exports?require('./data.js'):root.WendaoData);
+  const node=typeof module==='object'&&module.exports;
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual);
   if(typeof module==='object'&&module.exports)module.exports=api;else root.WendaoCore=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,N,R){
 'use strict';
 const CAP=1e12,MAX_TIME=8640000000000000,DAY=86400000,HOUR=3600000,TICK=3000,PRODUCTION=60000;
 const CULT_CAP=DAY,PROD_CAP=7*DAY,SWEEP_CAP=8*HOUR;
@@ -136,7 +137,8 @@ function createState(now){
     stats:Object.fromEntries(statIds.map(id=>[id,0])),
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
     companions:Object.fromEntries(Object.keys(C.companions||{}).map(id=>[id,{affinity:0,bond:false,cooldownUntil:0,lastTalkAt:-60000,questStep:0}])),
-    story:{chapter:0,mercy:0,truth:0,ending:null,completed:[],sideCompleted:[]},
+    story:{chapter:0,mercy:0,truth:0,ending:null,completed:[],sideCompleted:[],journeys:{}},
+    ritual:null,ritualLegacyWins:{},ritualHistory:[],
     joint:null,battle:null,exploration:null,battleReports:[],
     gacha:{highPity:0,redPity:0,target:null,fateGuarantee:false,history:[],total:0},
     rngStreams:{gacha:seed^0x9e3779b9,loot:seed^0x85ebca6b,world:seed^0xc2b2ae35},
@@ -348,6 +350,68 @@ function validateAlchemy(s){
   }
   if(active>1)throw Error('同时控火的炉数超过上限');
 }
+function journeyMetric(s,r){
+  if(r.key==='rank')return maxRank(s);
+  if(r.key==='maxRealm')return Math.floor(maxRank(s)/10);
+  if(r.key==='sect')return s.sect.joined?1:0;
+  if(r.key==='tower')return s.progress.tower;
+  if(r.key==='bossWins'||r.key==='dungeonWins'){
+    if(r.key==='bossWins'&&!r.id)return s.stats.bosses;
+    const records=s.progress[r.key];if(r.id&&own(records,r.id))return records[r.id];
+    return Math.min(CAP,Object.entries(records).filter(([key])=>!r.id||key===r.id||key.startsWith(r.id+':')).reduce((n,[,v])=>n+v,0));
+  }
+  if(r.key==='sectTrialCount')return new Set(s.progress.sectTrials).size;
+  if(r.key==='endingTrial')return routes.some(route=>s.progress.endingTrials[route]&&(s.ritualLegacyWins&&s.ritualLegacyWins[route+':5']||s.ritual&&s.ritual.route===route&&s.ritual.realm===5&&s.ritual.phase==='complete'||Array.isArray(s.ritualHistory)&&s.ritualHistory.some(h=>h.route===route&&h.realm===5)))?1:0;
+  if(r.key==='affinity')return s.companions[r.id]?.affinity||0;
+  if(r.key==='bonds')return Object.values(s.companions).filter(x=>x.bond).length;
+  if(r.key==='knownTechniques')return Object.keys(s.techniques).length;
+  if(r.key==='study')return Math.min(CAP,Object.entries(s.stats).filter(([id])=>/^studyTier[0-5]$/.test(id)).reduce((n,[,count])=>n+count,0));
+  if(r.key==='chapter')return s.story.chapter;
+  if(r.key==='sidequest')return s.story.sideCompleted.includes(r.id)?1:0;
+  return s.stats[r.key]||0;
+}
+function validateJourneys(s){
+  if(s.story.journeys===undefined)s.story.journeys={};
+  const journeys=object(s.story.journeys,'故事旅程'),ids=Object.keys(journeys);
+  if(ids.length>24)throw Error('故事旅程记录过多');
+  const collection=N&&N.episodes||{};
+  for(const id of ids){
+    const chapter=/^chapter_[0-5]$/.test(id)?C.chapters[Number(id.slice(8))]:null;
+    const quest=chapter?null:C.sidequests.find(q=>q.id===id),catalog=chapter||quest;
+    const ep=Array.isArray(collection)?collection.find(x=>x.id===id):collection[id];
+    if(!catalog||!ep)throw Error('故事旅程 ID 无效');
+    const e=object(journeys[id],'故事旅程');
+    if(Object.keys(e).some(key=>!['stage','line','clues','choice','baseline','missionIndex'].includes(key)))throw Error('故事旅程字段无效');
+    if(!['intro','survey','decision','reply','mission','interlude','outro','ready','completed'].includes(e.stage))throw Error('故事旅程阶段无效');
+    const isComplete=chapter?s.story.chapter>chapter.id:s.story.sideCompleted.includes(id);
+    if((e.stage==='completed')!==isComplete)throw Error('故事旅程领取记录不一致');
+    if(chapter&&!isComplete&&chapter.id!==s.story.chapter)throw Error('故事旅程不能跳过前卷');
+    if(quest&&quest.previous&&!s.story.sideCompleted.includes(quest.previous))throw Error('故事旅程缺少前置同行');
+    if(quest&&!isComplete&&maxRank(s)<Math.max(ep.unlockRank||0,...catalog.requirements.filter(r=>r.key==='rank').map(r=>r.count),0))throw Error('故事旅程修行阶段尚未开放');
+    const beforeChoice=['intro','survey','decision'].includes(e.stage);
+    if(beforeChoice?e.choice!==null:!['protect','seek'].includes(e.choice))throw Error('故事旅程选择无效');
+    array(e.clues,ep.clues.length,'现场线索');
+    if(new Set(e.clues).size!==e.clues.length||e.clues.some(key=>!ep.clues.some(clue=>clue.id===key)))throw Error('现场线索无效');
+    if(e.stage==='intro'&&e.clues.length)throw Error('现场线索阶段无效');
+    if(!['intro','survey'].includes(e.stage)&&e.clues.length!==ep.clues.length)throw Error('现场线索尚未齐全');
+    const choices=Array.isArray(ep.choices)?Object.fromEntries(ep.choices.map(x=>[x.id,x])):ep.choices;
+    const goals=beforeChoice?[]:choices[e.choice].goals||[choices[e.choice].goal];
+    integer(e.missionIndex,0,beforeChoice?0:goals.length-1,'故事行动段落');
+    if(e.stage==='reply'&&e.missionIndex!==0)throw Error('故事回应阶段无效');
+    if(e.stage==='interlude'&&e.missionIndex>=goals.length-1)throw Error('故事中段对话阶段无效');
+    if(['outro','ready','completed'].includes(e.stage)&&e.missionIndex!==goals.length-1)throw Error('故事行动段落尚未完成');
+    const lines=e.stage==='intro'?ep.intro:e.stage==='reply'?choices[e.choice].reply:e.stage==='interlude'?choices[e.choice].interludes[e.missionIndex]:e.stage==='outro'?ep.outro[e.choice]:null;
+    integer(e.line,0,lines?lines.length-1:0,'故事对话位置');
+    integer(e.baseline,0,CAP,'故事行动起点');
+    if(beforeChoice&&e.baseline!==0)throw Error('故事行动起点阶段无效');
+    if(!beforeChoice){
+      const goal=goals[e.missionIndex],current=journeyMetric(s,goal);
+      if(e.baseline>current)throw Error('故事行动起点超过实际进度');
+      if(e.stage==='interlude'&&current-e.baseline<goal.count)throw Error('故事本段行动尚未完成');
+      if(['outro','ready'].includes(e.stage)&&(current-e.baseline<goal.count||catalog.requirements.some(r=>journeyMetric(s,r)<r.count)))throw Error('故事行动与历练目标尚未达成');
+    }
+  }
+}
 function validateV3(raw){
   if(raw.version!==3)throw Error('存档版本不兼容');const s=raw;
   integer(s.contentVersion,3,3,'内容版本');integer(s.revision,0,CAP,'事务序号');
@@ -397,8 +461,9 @@ function validateV3(raw){
   object(s.companions,'companions');for(const id of Object.keys(C.companions)){const r=object(s.companions[id],'伙伴');integer(r.affinity,0,100,'好感');boolean(r.bond,'结契');if(r.bond&&r.affinity<40)throw Error('结契关系无效');integer(r.cooldownUntil,0,MAX_TIME,'共修冷却');integer(r.lastTalkAt,-60000,MAX_TIME,'交谈时间');integer(r.questStep,0,4,'伙伴任务');}
   object(s.story,'story');integer(s.story.chapter,0,6,'章节');integer(s.story.mercy,0,6,'仁心');integer(s.story.truth,0,6,'求真');if(s.story.mercy+s.story.truth!==s.story.chapter)throw Error('剧情选择数错误');
   if(s.story.ending!==null){if(s.story.chapter!==6)throw Error('未完成剧情不能结局');const id=typeof s.story.ending==='string'?s.story.ending:s.story.ending.id;if(!['guardian','wanderer','teacher'].includes(id))throw Error('结局 ID 无效');}
-  array(s.story.completed,6,'已完成章节');for(const id of s.story.completed)if(!table(C.chapters).some(c=>c.id===id))throw Error('章节 ID 无效');
-  array(s.story.sideCompleted,18,'支线');for(const id of s.story.sideCompleted)if(!table(C.sidequests).some(q=>q.id===id))throw Error('支线 ID 无效');
+  array(s.story.completed,6,'已完成章节');if(new Set(s.story.completed).size!==s.story.completed.length)throw Error('章节记录重复');for(const id of s.story.completed)if(!table(C.chapters).some(c=>c.id===id)||id>=s.story.chapter)throw Error('章节 ID 无效');
+  array(s.story.sideCompleted,18,'支线');if(new Set(s.story.sideCompleted).size!==s.story.sideCompleted.length)throw Error('支线记录重复');for(const id of s.story.sideCompleted)if(!table(C.sidequests).some(q=>q.id===id))throw Error('支线 ID 无效');
+  if(R){R.normalize(s);R.validate(s);}validateJourneys(s);
   object(s.gacha,'gacha');integer(s.gacha.highPity,0,9,'橙保底');integer(s.gacha.redPity,0,79,'红保底');integer(s.gacha.total,0,CAP,'累计感应');boolean(s.gacha.fateGuarantee,'定向');if(!targetOk(s.gacha.target))throw Error('感应目标无效');
   array(s.gacha.history,200,'感应历史');for(const h of s.gacha.history){object(h,'感应记录');integer(h.at,0,MAX_TIME,'抽取时间');integer(h.rarity,0,5,'抽取品质');if(!['gear','equipment','treasure','technique','pill','material','materials'].includes(h.category))throw Error('抽取类别无效');
     if(h.category==='gear'||h.category==='equipment'){if(!targetOk(h.id)||!String(h.id).startsWith('gear_'))throw Error('历史装备 ID 无效');if(h.uid!==undefined)gearUid(h.uid);}else if(h.category==='treasure')catalogKey(C.treasures,h.id,'历史灵宝');else if(h.category==='technique')catalogKey(C.techniques,h.id,'历史功法');else if(h.category==='pill')catalogKey(C.recipes,h.id,'历史丹药');else if(!materialIds.includes(h.id))throw Error('历史材料 ID 无效');

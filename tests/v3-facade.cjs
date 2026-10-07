@@ -1,6 +1,8 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const E=require('../web/engine.js'),C=require('../web/data.js');
+const E=require('../web/engine.js'),C=require('../web/data.js'),S=require('../web/story.js');
+const {toMission,finishJourney}=require('./story-fixtures.cjs');
+const {stockRitualFixture,toTrial}=require('./ritual-fixtures.cjs');
 const NOW=1791244800000;
 const clone=x=>JSON.parse(JSON.stringify(x));
 function checked(s,label){
@@ -37,6 +39,7 @@ function durableCombatFixture(s){
  return checked(s,'durable combat fixture');
 }
 function win(s,id,args={}){
+ if(id==='trial'&&!args.practice)toTrial(s,NOW,a=>act(s,a));
  act(s,{type:'startDungeon',id,...args},'enter '+id);
  assert(s.battle||s.exploration,'challenge begins');
  let steps=0;
@@ -45,6 +48,23 @@ function win(s,id,args={}){
  assert.equal(s.lastBattleResult?.win,true,id+' victory: '+s.lastBattleResult?.reason);
  checked(s,id+' settled save');
  return s.lastBattleResult;
+}
+function finishStory(s,id,choice){
+ let j=toMission(s,id,choice,NOW,a=>act(s,a));
+ for(let stage=0;stage<20&&!['ready','completed'].includes(j.stage);stage++){
+ if(j.stage==='mission')for(let n=j.mission.current;n<j.mission.required;n++){
+  const goal=j.mission.goal;
+  if(goal.key==='dungeonWins'||goal.key==='bossWins')win(s,goal.id||'resource_herb');
+  else if(goal.key==='crafted')act(s,{type:'craftPill',id:'heal0',count:1});
+  else if(goal.key==='study')act(s,{type:'upgradeTechnique',id:'thunder_skill_0'});
+  else if(goal.key==='forged')act(s,{type:'forgeGear',set:'sword',slot:'weapon',rarity:0});
+  else if(goal.key==='manualWins'||goal.key==='kills')win(s,'resource_herb');
+  else throw Error('Facade needs a real activity for '+JSON.stringify(goal));
+ }
+ j=finishJourney(s,id,NOW,a=>act(s,a));
+ }
+ assert.equal(j.stage,'ready','all chapter missions and intervening dialogue played');
+ return act(s,/^chapter_/.test(id)?{type:'claimChapter',choice}:{type:'claimSidequest',id});
 }
 test('facade failures retain state and successful actions increment revision exactly once',()=>{
  const s=E.createState(NOW);
@@ -71,7 +91,7 @@ test('facade rolls back multi-resource shortages and invalid candidate validatio
 for(const route of ['magic','body']){
  test(route+' reaches ten through actual pill and level actions, trial then transition retains surplus',()=>{
   let s=E.createState(NOW);if(route==='body')act(s,{type:'switchRoute',route});
-  s.pills.qi0=1000;s=durableCombatFixture(s);
+  s.pills.qi0=1000;stockRitualFixture(s);s=durableCombatFixture(s);
   for(let layer=1;layer<=10;layer++){
    assert.equal(s.paths[route].realm,0);assert.equal(s.paths[route].layer,layer);
    pillFill(s);if(layer<10){fail(s,{type:'breakthrough'},'small layer cannot skip realm');act(s,{type:'levelUp'});}
@@ -80,6 +100,7 @@ for(const route of ['magic','body']){
   for(let i=0;i<5;i++)act(s,{type:'usePill',id:'qi0'});
   const surplus=s.paths[route].reserve;assert(surplus>=600);
   fail(s,{type:'levelUp'},'ten stops small advance');fail(s,{type:'breakthrough'},'trial required');
+  toTrial(s,NOW,a=>act(s,a));
   const beforeRewards={stones:s.stones,tickets:s.tickets,materials:clone(s.materials)};
   win(s,'trial');
   assert.equal(s.progress.trialWins[route+':0'],true);
@@ -89,21 +110,23 @@ for(const route of ['magic','body']){
   const p=s.paths[route];assert.equal(p.realm,1);assert.equal(p.layer,1);
   assert.equal(p.xp,Math.min(surplus,300));assert.equal(p.reserve,Math.max(0,surplus-300));
   assert.equal(p.xp+p.reserve,surplus,'only filled old realm requirement was consumed');
-  assert.equal(s.stones,stones-cost.stones);assert.equal(s.materials.lotus,lotus-cost.materials.lotus);assert.equal(s.materials.ore,ore-cost.materials.ore);
+  assert.equal(s.stones,stones-(cost.stones||0));assert.equal(s.materials.lotus,lotus-(cost.materials?.lotus||0));assert.equal(s.materials.ore,ore-(cost.materials?.ore||0));
+  assert.equal(s.ritual,null,'completed nonterminal ritual is archived');assert.equal(s.ritualHistory[0].realm,0);
   assert.equal(s.paths[route==='magic'?'body':'magic'].realm,0);
   assert.equal(s.paths[route==='magic'?'body':'magic'].layer,1);
   fail(s,{type:'breakthrough'},'next realm still requires its own ten layers');
  });
 }
 test('completed trial cannot commit breakthrough without all materials',()=>{
- const s=E.createState(NOW);s.paths.magic={realm:0,layer:10,xp:2200,reserve:600};s.progress.trialWins['magic:0']=true;
+ const s=E.createState(NOW);s.paths.magic={realm:0,layer:10,xp:2200,reserve:600};s.progress.trialWins['magic:0']=true;delete s.ritualLegacyWins;
+ const migrated=E.validate(s);assert(migrated.ok,migrated.error);Object.assign(s,migrated.state);
  s.stones=500;s.materials.lotus=3;s.materials.ore=0;
  fail(s,{type:'breakthrough'},'atomic missing ore');assert.equal(s.paths.magic.realm,0);
  s.materials.ore=3;act(s,{type:'breakthrough'});assert.equal(s.paths.magic.realm,1);assert.equal(s.paths.magic.layer,1);
 });
 test('terminal trial grants ending eligibility and does not create a seventh realm',()=>{
- let s=E.createState(NOW);s.paths.magic={realm:5,layer:10,xp:275000,reserve:1000};s=durableCombatFixture(s);
- win(s,'trial');assert.equal(s.progress.endingTrials.magic,true);
+ let s=E.createState(NOW);s.paths.magic={realm:5,layer:10,xp:275000,reserve:1000};stockRitualFixture(s);s=durableCombatFixture(s);
+ win(s,'trial');assert.equal(s.progress.endingTrials.magic,true);act(s,{type:'finishRitual'});assert.equal(s.ritual.phase,'complete');assert.equal(s.ritualHistory.at(-1).realm,5);
  fail(s,{type:'breakthrough'},'terminal realm remains terminal');assert.equal(s.paths.magic.realm,5);assert.equal(s.paths.magic.layer,10);
 });
 test('actual red forging obeys equip, lock, preset and explicit recycle protections',()=>{
@@ -130,18 +153,18 @@ test('facade JSON import validates without modifying the live save and preserves
  const invalid=clone(s);invalid.gacha.highPity=10;assert.throws(()=>E.serialize(invalid));assert.equal(JSON.stringify(s),before);
 });
 test('story, cultivation, combat, economy and gacha operate through one validated facade',()=>{
- let s=E.createState(NOW);s.pills.qi0=1000;s=durableCombatFixture(s);
+ let s=E.createState(NOW);s.pills.qi0=1000;stockRitualFixture(s);s=durableCombatFixture(s);
  const herb=C.dungeons.resource_herb;
  assert.equal(herb.layer,1);const first=win(s,'resource_herb');assert(first.first);assert(s.progress.dungeonWins.resource_herb>=1);
  raiseTo(s,5);act(s,{type:'joinSect',school:'sword'});win(s,'sect_sword_0');
  for(const id of C.dungeons.sect_sword_0.firstRewards.techniques)assert(s.techniques[id],'declared sect reward '+id);
- act(s,{type:'claimChapter',choice:'protect'});assert.equal(s.story.chapter,1);
+ finishStory(s,'chapter_0','protect');assert.equal(s.story.chapter,1);
  act(s,{type:'craftPill',id:'heal0',count:3,control:0});assert(s.stats.crafted>=3);
  raiseTo(s,7);win(s,'boss_0');
  for(const id of C.dungeons.boss_0.firstRewards.blueprints)assert(s.blueprints.includes(id),'declared boss blueprint '+id);
  for(const id of C.dungeons.boss_0.firstRewards.treasures)assert(s.ownedTreasures[id],'declared boss treasure '+id);
  raiseTo(s,10);pillFill(s);win(s,'trial');act(s,{type:'breakthrough'});assert.equal(s.paths.magic.realm,1);
- act(s,{type:'claimChapter',choice:'seek'});assert.equal(s.story.chapter,2);assert.equal(s.companions.qinglan.bond,false);
+ finishStory(s,'chapter_1','seek');assert.equal(s.story.chapter,2);assert.equal(s.companions.qinglan.bond,false);
  act(s,{type:'setGachaTarget',target:'gear_body_weapon'});s.gacha.redPity=79;s.gacha.fateGuarantee=true;
  const tickets=s.tickets,draw=act(s,{type:'draw',count:1}),item=draw.data.results[0];
  assert.equal(s.tickets,tickets-1);assert.equal(item.rarity,5);assert.equal(item.id,'gear_body_weapon');

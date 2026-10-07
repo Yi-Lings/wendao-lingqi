@@ -28,7 +28,8 @@ function createState(now){
   act({type:'setTraining',enabled:true});
   act({type:'setAutoSmall',enabled:false});
   act({type:'joinSect',school:'sword'});
-  act({type:'claimSidequest',id:'world_forge'});
+  // Preview supplies all blueprints without skipping or claiming narrative rewards.
+  s.blueprints=Object.keys(C.sets);
   act({type:'buyJade',packageId:'p128'});
   for(const t of Object.values(C.techniques))if(available(t)&&!s.techniques[t.id])act({type:'learnTechnique',id:t.id});
   for(const r of Object.values(C.recipes))if(available(r)){

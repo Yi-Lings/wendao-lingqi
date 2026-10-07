@@ -124,16 +124,16 @@ recipe('purify0','清心散','purify',2,0,{herb:4,lotus:1},20,{purify:1,immunity
 recipe('purify1','涤魂丹','purify',3,1,{herb:8,lotus:2,insight:1},60,{purify:2,immunity:3},'清除两个负面状态，获得3秒短时抗性。',src('dungeon','sect_array_0','丹阵入门试炼'));
 recipe('purify2','无垢明心丹','purify',4,3,{herb:16,lotus:4,insight:5},220,{purify:4,immunity:5},'清除四个负面状态，获得5秒抗性；核心状态机制仍以副本说明为准。',src('dungeon','boss_9','月蚀灵狐研究及宗门丹典'));
 [
- ['护脉丹','以温和灵息护住经脉，首次转境试炼前可服用。'],
- ['固基丹','稳定道基，在结丹或凝血试炼中提高容错。'],
- ['归藏丹','守护识海，应对元婴或通脉心魔。'],
- ['玉清丹','梳理劫火，在化神或金身试炼中保持清明。'],
- ['渡厄丹','调和雷火，为渡劫或破虚转境提供防护。'],
- ['太一复元丹','终境试炼与劫后调养所用，不开启额外境界。']
+ ['筑基丹','将散乱灵息凝为第一重道基；炼体者以此温养骨髓。突破前先访药炉研究丹方，再采集灵草、玄铁与莲子。'],
+ ['凝金丹','把道基中的灵息压入丹心；炼体者凝练心血。先以参悟砂校正丹方，再备齐同境药材。'],
+ ['凝婴丹','滋养识海，在心魔问心之前为灵识留一盏归途灯；炼体者借药力贯通灵脉。'],
+ ['化神丹','让神识与地脉相接，在守阵与择愿之前护住道心；炼体者借此锤炼金身。'],
+ ['渡厄丹','调和雷火，在雷劫到来之前护住经脉；炼体者借此为破虚作最后准备。'],
+ ['道心丹','在自证大道之前收束纷乱愿念，完成终境调息；不凭空开启额外境界。']
 ].forEach((row,i)=>recipe('break'+i,row[0],'break',Math.min(5,i+1),i,
  {herb:6+i*5,ore:3+i*2,lotus:2+i,insight:i*2},32+Math.pow(i+1,2)*30,
- {trialShield:.2,trialReduction:.1,heal:.15,duration:12},row[1]+'试炼中作为可选准备丹使用，胜利不依赖它。',
- src('dungeon','trial','对应大境试炼首通；同境药炉可确定研究')));
+ {trialShield:.2,trialReduction:.1,heal:.15,duration:12},row[1]+'这是对应境界突破仪式的备料丹，药炉研究与炼制均有确定产出。',
+ src('research','furnace','当前境药炉确定研究丹方；药材来自灵田、青岚灵圃、沉星矿洞与静悟石林')));
 
 const treasureRows=[
  ['青木铃','active',1,1,'摇铃清除一个负面状态并恢复30%气血，冷却24秒。',{heal:.3,purify:1,cooldown:24},sectSource('array',false)],
@@ -187,6 +187,30 @@ const materials={
 for(let i=0;i<6;i++) materials['crystal'+i]={id:'crystal'+i,name:routes.magic.realmNames[i]+'天命晶',description:'对应阶位红装打造与重铸。低阶晶不能代替高阶晶。',realm:i,source:src('dungeon','resource_fate','对应境界有效挑战、宗门委托')};
 
 const mechanic=(id,trigger,interval,castTime,damage,resist,counter,extra)=>Object.assign({id,trigger,interval,castTime,damage,resist,counter},extra||{});
+// Explicit species replace name guessing: the original eight illustrations are
+// retained as matching creatures, while newly drawn encounters fill real gaps.
+const monsterRows=[
+ ['boar','青岚灵獠','v3-monster-atlas.png',0,4,2,'药圃外围的灵獠，藤叶覆背，双獠外翻。'],
+ ['golem','晶甲石傀','v3-monster-atlas.png',1,4,2,'矿脉凝成的石傀，胸肩嵌着绿色晶簇。'],
+ ['water','镜湖灵鹿','v3-monster-atlas.png',2,4,2,'守护灵泉的白蓝灵鹿，角间托着一颗水珠。'],
+ ['thunder','紫霄雷隼','v3-monster-atlas.png',3,4,2,'紫羽雷隼，振翼时显出金色雷纹。'],
+ ['shadow','噬影幽狼','v3-monster-atlas.png',4,4,2,'黑紫幽狼沿破碎长廊出没，眼中燃着魂火。'],
+ ['armor','古甲执戈卫','v3-monster-atlas.png',5,4,2,'披覆旧青铜甲的守卫，执一杆青玉长戈。'],
+ ['flower','赤莲噬灵花','v3-monster-atlas.png',6,4,2,'花核燃金，赤红巨莲借根须汲取地脉。'],
+ ['star','星桥灵螭','v3-monster-atlas.png',7,4,2,'白金灵螭盘绕星轨，身旁浮着蓝色阵珠。'],
+ ['siphon_beetle','汲灵虫','v7-encounters-atlas.png',0,4,2,'六足翠甲灵虫，腹部会随汲取药圃灵息而发光。'],
+ ['tablet_spirit','碑纹石灵','v7-encounters-atlas.png',1,4,2,'刻纹石碑所化的矮小石灵，头顶留着完整青蓝阵纹。'],
+ ['spring_wraith','灵泉浊妖','v7-encounters-atlas.png',2,4,2,'被旧阵污染的水息聚成浊妖，净化后会还原清泉。'],
+ ['blight_moth','蚀莲灵蛾','v7-encounters-atlas.png',3,4,2,'夜里掠过莲池的灵蛾，翅粉会侵蚀药草生机。'],
+ ['bronze_sentinel','青铜门卫','v7-encounters-atlas.png',4,4,2,'古府门前的铜玉机关卫，持短枪与方盾。'],
+ ['root_tendril','缚灵根须','v7-encounters-atlas.png',5,4,2,'树王分出的活根，木壳之下露出青色灵眼。'],
+ ['mirror_phantom','镜月幻影','v7-encounters-atlas.png',6,4,2,'镜片聚成的无面衣影，与有实体的修士区分。'],
+ ['ember_golem','碎焰石灵','v7-encounters-atlas.png',7,4,2,'火脉里诞生的浮石灵，黑岩裂隙间透出橙色熔焰。']
+];
+const monsters=Object.fromEntries(monsterRows.map(r=>[r[0],{id:r[0],name:r[1],art:{file:r[2],index:r[3],cols:r[4],rows:r[5]},description:r[6]}]));
+const rivals=Object.fromEntries([
+ ['hanyue','韩岳'],['yejinghong','叶惊鸿'],['luojingxing','骆景行'],['xuzhao','许照'],['jilingchuan','季凌川'],['luojingxing_plain','骆景行·守殿之约']
+].map((r,index)=>[r[0],{id:r[0],name:r[1],art:{file:'v7-rivals-atlas.png',index,cols:3,rows:2}}]));
 const bosses=[
  {id:'boss_0',name:'青甲山君',realm:0,layer:7,school:'body',description:'守山妖虎以重甲抵挡正面攻击，重击后露出胸口阵纹。',mechanics:[
  mechanic('heavy','每12秒蓄力重击',12,3,2.1,{physical:.15},['伏岳掌或惊电步打断','镇骨甲或护体丹承伤后反击'],{armorBreakWindow:6}),
@@ -227,8 +251,8 @@ const bosses=[
 ];
 const dungeons={};
 const resourceRows=[
- ['herb','青岚灵圃','herb',0,1,'巡山教学：首境一层即可进入，学习攻击、回复与护盾。巡护药圃，清理汲灵虫，稳定获得炼丹药材。',{herb:12,lotus:1}],
- ['ore','沉星矿洞','ore',0,3,'击破矿洞甲兽，获得玄铁；重击有可打断前摇。',{ore:8,herb:3}],
+ ['herb','青岚灵圃','herb',0,1,'巡山教学：首境一层即可进入，学习攻击、回复与护盾。巡护药圃，清理汲灵虫、蚀莲灵蛾与闯入药圃的青岚灵獠，稳定获得炼丹药材。',{herb:12,lotus:1}],
+ ['ore','沉星矿洞','ore',0,3,'击破晶甲石傀与古甲执戈卫，获得玄铁；重击有可打断前摇。',{ore:8,herb:3}],
  ['insight','静悟石林','insight',0,5,'辨识石碑与守碑灵，获得升级功法的参悟砂。',{insight:8,ore:2}],
  ['essence','流光灵泉','essence',0,7,'净化泉眼，清理不断聚集的灵污，获得灵粹。',{essence:5,herb:5,lotus:1}],
  ['fate','天衡遗坛','crystal',1,1,'守住古坛并击败汲运灵，获得同阶天命晶及感应资源。',{essence:3,ore:4,lotus:1}]
@@ -240,6 +264,7 @@ resourceRows.forEach((r,i)=>{
  rewards:{xp:100,stones:800,materials:r[6],crystal:3,tickets:2},
  firstRewards:{stones:160,materials:{lotus:2,insight:3},tickets:i===0?5:2},
  duration:45,enemyCount:3,difficultyUnlocks:[{realm:r[3],layer:r[4]},{realm:1,layer:4},{realm:2,layer:4}],
+ enemySpecies:{herb:['siphon_beetle','blight_moth','boar'],ore:['golem','armor','ember_golem'],insight:['tablet_spirit','star','bronze_sentinel'],essence:['spring_wraith','water','flower'],fate:['star','thunder','shadow']}[r[0]],
  artKey:'map_'+Math.min(5,i)};
 });
 Object.keys(schools).forEach((school,i)=>{
@@ -256,6 +281,36 @@ Object.keys(schools).forEach((school,i)=>{
    duration:advanced?90:60,artKey:'map_'+i,requiredSect:false};
  }
 });
+// Story tournaments use the normal persisted combat pipeline. They are distinct
+// from the twelve teaching trials and cannot be completed by choosing dialogue.
+const tournamentRows=[
+ {id:'arena_0',competition:'arena',round:1,name:'冲霄斗技 · 初试锋芒',layer:3,school:'body',rival:'外门师兄·韩岳',hp:480,attack:12,defense:5,
+  description:'冲霄台第一次为无名散修敲钟。韩岳守住擂台正中，要你先承住他的一记裂石掌，才肯把通往正赛的铜签交出来。',
+  move:'裂石掌',hint:'读条时用惊电步或伏岳掌打断；也可先开镇骨甲再回复。',opening:'韩岳把袖口卷至手肘：“台下无人记得你的名字，台上就用这一战告诉他们。”',closing:'韩岳退到台沿，认真抱拳：“这枚正赛铜签，你凭本事拿走。”',reward:{xp:90,stones:180,materials:{herb:4,insight:2}}},
+ {id:'arena_1',competition:'arena',round:2,name:'冲霄斗技 · 百席争名',layer:4,school:'elements',rival:'丹霞峰·叶惊鸿',hp:650,attack:14,defense:6,
+  description:'正赛看台第一次有人喊出你的名字。叶惊鸿以连绵火雨封住擂台退路，只有看清她收诀时短暂的空隙，才能踏入决赛。',
+  move:'霞火连诀',hint:'火诀可以打断；灼烧用回春术、净尘诀或清心散应对。',opening:'叶惊鸿指尖点燃一朵火莲：“我不会留手。你也别因为台下那些人的话乱了自己的气息。”',closing:'叶惊鸿收去火莲，笑着看向贵宾席：“这一届决赛，终于不只是他们几家的独角戏。”',reward:{xp:120,stones:240,materials:{herb:5,lotus:1,insight:3}}},
+ {id:'arena_2',competition:'arena',round:3,name:'冲霄斗技 · 一剑夺魁',layer:5,school:'sword',rival:'骆家少主·骆景行',hp:900,attack:17,defense:8,
+  description:'骆景行的锦衣掠过台心。他身后是家族供给的丹药与名剑，你身后只有一路亲手练成的招式。最后一声铜钟响起，魁首要由这一场真战决定。',
+  move:'惊鸿归鞘',hint:'打断蓄剑能打开短暂破绽；保留破甲与连击，在破绽期间集中爆发。',opening:'骆景行看了一眼你的旧剑：“荒山出来的人，也想在冲霄台留下名字？”',closing:'名剑落在台边，骆景行沉默片刻，第一次认真抱拳：“今日是我输了。下一次，我会用自己的剑来赢你。”看台呼声压过铜钟：冲霄魁首！',reward:{xp:150,stones:320,materials:{ore:4,insight:4}},first:{stones:600,tickets:3,materials:{lotus:2,insight:5}},title:'冲霄魁首',firstGear:{slot:'weapon',set:'sword',rarity:2,tier:0}},
+ {id:'secret_0',competition:'secret',round:1,name:'云隐争魁 · 破雾争先',layer:7,school:'array',rival:'守碑阵师·许照',hp:850,attack:16,defense:8,
+  description:'云隐古府只放出三十六枚入府玉符。许照封住雾桥，把星纹石碑化作最后一道门；带着完整玉符穿过这场阵斗，才算真正进入争魁。',
+  move:'回环锁灵阵',hint:'许照借阵回血；打断布阵，或以持续伤害与回复维持压制。',opening:'许照敲了敲雾中石碑：“会打架的人很多，能从古阵里找到生路的人，才配往前走。”',closing:'石碑熄灭，许照递来半张古图：“你找到了阵心。别让那些抢先的人把府里真正的秘密毁了。”',reward:{xp:160,stones:300,materials:{ore:4,insight:4}}},
+ {id:'secret_1',competition:'secret',round:2,name:'云隐争魁 · 灵泉夺印',layer:8,school:'thunder',rival:'惊雷宗·季凌川',hp:1080,attack:19,defense:9,
+  description:'灵泉上方悬着第二枚古印。季凌川的雷索横断栈桥，先入府者回头堵路。你必须在雷印堆叠前压住他的攻势，才能携印攀上主殿。',
+  move:'九霄截灵索',hint:'雷索读条时打断；净化雷印，保留护盾承接后续重击。',opening:'季凌川把古印藏到身后：“斗技场的名声，在这片雾里可换不来路。”',closing:'雷索碎裂，古印沿石桥滑到你的脚边。季凌川抹去嘴角的血：“好，主殿见。那里的阵法，可不会因为你赢过我就退开。”',reward:{xp:190,stones:360,materials:{herb:6,lotus:1,insight:5}}},
+ {id:'secret_2',competition:'secret',round:3,name:'云隐争魁 · 古殿第一',layer:9,school:'sword',rival:'骆景行·守殿之约',hp:1400,attack:21,defense:11,
+  description:'古殿前，骆景行把家传名剑留在阶下，举起一柄普通青钢剑。阵门只认可最后的胜者；你们约好，胜者先取传承，败者负责护住身后的同行者。',
+  move:'破雾开天剑',hint:'连续蓄剑可以打断；盾与回复保留给重击，利用暴露破绽结束这场争魁。',opening:'骆景行横剑行礼：“冲霄台欠你的一战，我记着。今日不论出身，只论我们走到这里的本事。”',closing:'青钢剑终于垂下。骆景行扶住殿门，替你挡开最后一缕劫光：“进去吧，秘境第一。把你看见的真相带出来，别让我们这一战白打。”古印同时亮起，万年传承第一次回应了你的呼吸。',reward:{xp:220,stones:440,materials:{ore:6,lotus:2,insight:6}},first:{stones:900,tickets:5,materials:{lotus:3,insight:8}},title:'秘境第一',firstGear:{slot:'weapon',set:'sword',rarity:2,tier:0}}
+];
+tournamentRows.forEach((r)=>{
+ const previous=r.round>1?r.competition+'_'+(r.round-2):null;
+ dungeons[r.id]={id:r.id,type:'arena',competition:r.competition,round:r.round,name:r.name,realm:0,layer:r.layer,school:r.school,previous,
+  description:r.description,enemy:{name:r.rival,rivalId:['hanyue','yejinghong','luojingxing','xuzhao','jilingchuan','luojingxing_plain'][tournamentRows.indexOf(r)],maxHp:r.hp,attack:r.attack,defense:r.defense,mechanic:{kind:'sect_'+r.school,name:r.move,duration:2.5,hint:r.hint},mechanicInterval:12},
+  opening:r.opening,closing:r.closing,mechanics:[mechanic('sect_'+r.school,r.move+'：每12秒蓄力',12,2.5,1.5,{},['打断招式打开反击窗口','依流派准备回复、净化与护盾'])],
+  rewards:r.reward,firstRewards:r.first||{stones:100,materials:{insight:2}},firstGear:r.firstGear||null,title:r.title||null,duration:90,
+  storyArt:r.competition==='arena'?'story-arena.png':'story-secret.png',artKey:r.competition==='arena'?'map_1':'map_2'};
+});
 bosses.forEach((b,i)=>{
  dungeons[b.id]={id:b.id,type:'boss',name:b.name,realm:b.realm,layer:b.layer,school:b.school,bossIndex:i,
  description:b.description,mechanics:b.mechanics,rewards:{xp:180,stones:1500,materials:{ore:12,herb:15,lotus:2,essence:3},crystal:6,tickets:3,fragments:{[b.school+'_skill_2']:3}},
@@ -270,7 +325,7 @@ treasures.t7.source=bossSource(7);
 treasures.t8.source=bossSource(9);
 treasures.t11.source=src('sidequest','world_escort','河桥长明任务；终章与天道感应');
 dungeons.boss_3.firstRewards.techniques.push('body_secret_1','array_secret_1');
-Object.values(recipes).forEach(r=>{r.source.label='到境开放；材料来源：'+r.source.label;});
+Object.values(recipes).forEach(r=>{r.source.label=(r.kind==='break'?'突破前可准备；丹方与备料：':'到境开放；材料来源：')+r.source.label;});
 
 const towerThemes=[
  {name:'青锋十问',school:'sword',mechanic:'连续目标与破甲窗口',boss:0},
@@ -315,9 +370,9 @@ const trials=Array.from({length:6},(_,realm)=>({id:'trial_'+realm,realm,layer:10
  mechanics:bosses[[0,2,5,6,8,11][realm]].mechanics,optionalPill:'break'+realm,rewards:{},terminal:realm===5}));
 
 const chapters=[
- {id:0,name:'荒山入道',title:'雪夜青岚 · 荒山入道',description:'雪夜村民灵力枯竭。沈青岚带来镇山钟碎片，你在荒山洞府学会修行，并寻找药圃里相同的阵纹。',requirements:[{key:'rank',count:4,label:'任一路首境五层'},{key:'dungeonWins',id:'resource_herb',count:1,label:'灵草秘境通关'}],goal:'任一路五层，通关灵草秘境一次',reward:{stones:500,xp:240,materials:{herb:12,lotus:3,insight:8},tickets:5,techniques:['sword_heart_0','body_heart_0']},after:'钟片指向一座被改造的丹炉。你带着村人的感谢进入宗门。'},
- {id:1,name:'宗门立身',title:'炉火疑云 · 宗门立身',description:'陆月衡被诬陷暗改丹炉。你在宗门试炼中查验器纹，清理山君，稳固第一重大境。',requirements:[{key:'rank',count:10,label:'任一路第二境一层'},{key:'sect',count:1,label:'加入宗门'},{key:'crafted',count:3,label:'炼丹三炉'},{key:'bossWins',id:'boss_0',count:1,label:'击败青甲山君'}],goal:'第二境，加入宗门，炼丹三炉，击败山君',reward:{stones:1500,materials:{ore:16,herb:18,lotus:4,insight:12},tickets:10,blueprints:['body'],techniques:['array_skill_1']},after:'月衡的嫌疑洗清。旧丹炉记下的星纹通向雾海古府。'},
- {id:2,name:'古府疑云',title:'雾海问心 · 古府疑云',description:'闻素衍在古府发现地脉残影。钟原本依靠众人自愿供能，却被旧盟改成夺取灵息的阵法。',requirements:[{key:'rank',count:22,label:'任一路第三境三层'},{key:'bossWins',id:'boss_4',count:1,label:'击败寒鸦真人'},{key:'tower',count:20,label:'问道塔二十层'}],goal:'第三境三层，寒鸦真人，问道塔二十层',reward:{stones:4000,materials:{ore:24,lotus:6,insight:20,essence:12},tickets:12,techniques:['elements_heart_1'],treasures:['t3']},after:'你取得旧盟档案，证明镇山钟本是保护地脉的器物。'},
+ {id:0,name:'荒山入道',title:'雪夜青岚 · 荒山入道',description:'雪夜村民灵力枯竭。沈青岚带来镇山钟碎片，你在荒山洞府学会修行，并寻找药圃里相同的阵纹。山门冲霄台即将开赛，三层可报名：亲手连赢三场，让宗门记住你的名字。',requirements:[{key:'rank',count:4,label:'任一路首境五层'},{key:'dungeonWins',id:'resource_herb',count:1,label:'灵草秘境通关'}],goal:'任一路五层，通关灵草秘境一次',reward:{stones:500,xp:240,materials:{herb:12,lotus:3,insight:8},tickets:5,techniques:['sword_heart_0','body_heart_0']},after:'钟片指向一座被改造的丹炉。你带着村人的感谢进入宗门。'},
+ {id:1,name:'宗门立身',title:'炉火疑云 · 宗门立身',description:'陆月衡被诬陷暗改丹炉。你在宗门试炼中查验器纹，清理山君，稳固第一重大境。',requirements:[{key:'rank',count:10,label:'任一路第二境一层'},{key:'sect',count:1,label:'加入宗门'},{key:'crafted',count:3,label:'炼丹三炉'},{key:'bossWins',id:'boss_0',count:1,label:'击败青甲山君'},{key:'dungeonWins',id:'arena_2',count:1,label:'冲霄斗技夺魁'}],goal:'第二境，加入宗门，炼丹三炉，击败山君，冲霄斗技夺魁',reward:{stones:1500,materials:{ore:16,herb:18,lotus:4,insight:12},tickets:10,blueprints:['body'],techniques:['array_skill_1']},after:'月衡的嫌疑洗清。旧丹炉记下的星纹通向雾海古府。'},
+ {id:2,name:'古府疑云',title:'雾海问心 · 古府疑云',description:'闻素衍在古府发现地脉残影。钟原本依靠众人自愿供能，却被旧盟改成夺取灵息的阵法。',requirements:[{key:'rank',count:22,label:'任一路第三境三层'},{key:'bossWins',id:'boss_4',count:1,label:'击败寒鸦真人'},{key:'tower',count:20,label:'问道塔二十层'},{key:'dungeonWins',id:'secret_2',count:1,label:'云隐秘境夺魁'}],goal:'第三境三层，寒鸦真人，问道塔二十层，云隐秘境夺魁',reward:{stones:4000,materials:{ore:24,lotus:6,insight:20,essence:12},tickets:12,techniques:['elements_heart_1'],treasures:['t3']},after:'你取得旧盟档案，证明镇山钟本是保护地脉的器物。'},
  {id:3,name:'劫火人间',title:'裂镜旧盟 · 劫火人间',description:'旧盟继续汲取地脉，山下城镇被劫火困住。你可以先守住人群，或先追寻阵眼，伙伴尊重你的选择。',requirements:[{key:'rank',count:32,label:'任一路第四境三层'},{key:'bossWins',id:'boss_6',count:1,label:'击败缚灵树王'},{key:'manualWins',count:30,label:'主动挑战三十胜'}],goal:'第四境三层，树王，主动挑战三十胜',reward:{stones:8000,materials:{herb:36,ore:32,lotus:8,insight:24},tickets:15,techniques:['shadow_skill_3']},after:'你夺回钟心，断开强迫供能的旧阵。同行无需以结契证明。'},
  {id:4,name:'天道裂隙',title:'星桥追凶 · 天道裂隙',description:'莫无迁要牺牲城池封住凌渊。素衍重建星桥，你追踪熔炉与幻阵，证明自愿协作也能守住裂隙。',requirements:[{key:'rank',count:46,label:'任一路第五境七层'},{key:'bossWins',id:'boss_8',count:1,label:'击败熔炉傀儡'},{key:'bossWins',id:'boss_9',count:1,label:'击败月蚀灵狐'}],goal:'第五境七层，熔炉与月蚀双妖王',reward:{stones:15000,materials:{ore:48,lotus:10,insight:36,essence:24},tickets:20,techniques:['array_heart_1']},after:'星桥重开，最后钟片留在天隙阵眼。'},
  {id:5,name:'自证大道',title:'长明之约 · 自证大道',description:'镇山钟即将复原。你完成终境试炼，与同行者建立能自愿加入也能退出的新约，决定自己的归途。',requirements:[{key:'rank',count:59,label:'任一路终境十层'},{key:'bossWins',id:'boss_11',count:1,label:'击败天隙劫兽'},{key:'endingTrial',count:1,label:'完成任一路终境试炼'}],goal:'终境十层，天隙劫兽，终境试炼',reward:{stones:26000,materials:{ore:60,lotus:12,insight:48,essence:32,soul:3},tickets:30,treasures:['t11']},after:'钟声长明，每个人都能自由选择自己的道路。'}
@@ -394,13 +449,13 @@ const shop={jadePerDraw:60,historyLimit:50,packages:[
 ]};
 const limits={bag:300,overflow:1000,drawHistory:200,battleReports:20,saveBytes:1048576,number:1e12};
 const catalog={version:3,contentVersion:3,realms,routes,layerXp,realmXpFactors,rarities,slots,schools,techniques,
- facilities,recipes,treasures,sets,gearTargets,materials,dungeons,bosses,towerFloors,towerThemes,caveRooms,caves,trials,
+ facilities,recipes,treasures,sets,gearTargets,materials,monsters,rivals,dungeons,bosses,towerFloors,towerThemes,caveRooms,caves,trials,
  chapters,sidequests,companions,commissions,tasks:commissions,regions,endings,gacha,shop,limits,
  tickMs:1000,offlineCapMs:86400000,productionCapMs:604800000,sweepCapMs:28800000,
  techniqueLevelCaps:[5,8,11,14,17,20],enhanceCaps:[5,8,12,16,20,20],
  jointCost:{stones:30,materials:{herb:2}},jointCooldownMs:1800000,bondThreshold:40,jointThreshold:55,
  fragmentCost:20,duplicateTechniqueFragments:5,
- counts:{techniques:48,hearts:12,skills:24,secrets:12,treasures:12,recipes:18,sets:6,gearTargets:36,facilities:5,resources:5,sectTrials:12,bosses:12,towerFloors:60,caves:3,caveRooms:12,chapters:6,sidequests:18,companions:3,maps:12}
+ counts:{techniques:48,hearts:12,skills:24,secrets:12,treasures:12,recipes:18,sets:6,gearTargets:36,facilities:5,resources:5,sectTrials:12,bosses:12,towerFloors:60,caves:3,caveRooms:12,chapters:6,sidequests:18,companions:3,maps:12,competitions:2,tournamentBattles:6,monsters:16,rivalPortraits:6}
 };
 return catalog;
 });
