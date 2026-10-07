@@ -46,6 +46,10 @@ function model(action,result,before,after){
     add(kind,id,name,difference,rarity||0);
     if(!pending&&difference<0&&name)costs.push({id,name,count:-difference});
   }
+  if(pending){
+    for(const id of ['stones','tickets','jade','dust']){const used=n(before[id])-n(after[id]);if(used>0)costs.push({id,name:labels[id],count:used});}
+    for(const [field,catalog] of [['materials',labels],['pills',C.recipes]])for(const id of Object.keys(before[field]||{})){const used=n(before[field][id])-n(after[field]?.[id]),name=field==='materials'?catalog[id]:catalog[id]?.name;if(used>0&&name)costs.push({id,name,count:used});}
+  }
   const oldUids=new Set((type==='claimOverflow'?before.bag||[]:prev.gear).map(g=>g.uid));
   for(const gear of type==='claimOverflow'?after.bag||[]:next.gear)if(!oldUids.has(gear.uid)&&own(C.sets,gear.set)&&own(C.slots,gear.slot))add('gear',gear.uid,A.gearLabel(gear),1,gear.rarity,{gear:copy(gear)});
   if(!pending){
@@ -78,7 +82,7 @@ function model(action,result,before,after){
   return {type,title:titles[type],subtitle,note,bonus,count,items,costs,pending,overflow,status,message:String(result.message||''),rare:items.some(item=>item.rarity>=4)};
 }
 function icon(item){const art=item.kind==='gear'?A.gearArt(item.gear):item.kind==='pill'||item.kind==='recipe'?G.pill(item.id):item.kind==='technique'||item.kind==='fragment'&&item.id!=='universal'?G.technique(item.id):item.kind==='treasure'?G.treasure(item.id):G.utility(item.kind==='blueprint'?'blueprint':item.id==='xp'?'insight':item.id),d=I?.decorate(art)||{className:'',attrs:'',style:''};return art?`<span class="item-icon art-icon settlement-icon ${d.className}" ${d.attrs} role="img" aria-label="${esc(item.name)}" style="${d.style}background-image:url(assets/${art.file});background-size:${esc(art.size)};background-position:${esc(art.position)}"></span>`:'<span class="settlement-icon settlement-fallback" aria-hidden="true">✦</span>';}
-function inspect(item){const kind=['gear','technique','treasure'].includes(item.kind)?item.kind:item.kind==='fragment'&&item.id!=='universal'?'technique':null;return kind?`data-inspect-kind="${kind}" data-inspect-id="${esc(item.id)}"${item.kind==='gear'?` data-inspect-snapshot="${esc(JSON.stringify(item.gear))}"`:''}`:'';}
+function inspect(item){const kind=['gear','technique','treasure','pill'].includes(item.kind)?item.kind:item.kind==='recipe'?'pill':item.kind==='fragment'&&item.id!=='universal'?'technique':null;return kind?`data-inspect-kind="${kind}" data-inspect-id="${esc(item.id)}"${item.kind==='gear'?` data-inspect-snapshot="${esc(JSON.stringify(item.gear))}"`:''}`:'';}
 function card(item,index,state){const attrs=inspect(item),overflow=item.kind==='gear'&&state?.rewardOverflow?.some(g=>g.uid===item.id);return `<article class="settlement-card rarity-${item.rarity}${item.rarity>=4?' settlement-rare':''}" data-reward-kind="${item.kind}" data-reward-id="${esc(item.id)}" data-reward-count="${esc(item.count)}" style="--reward-order:${index};--rarity:${esc(C.rarities[item.rarity]?.color||'#d1d5db')}" ${attrs}>${icon(item)}<div class="settlement-item-copy"><small>${esc(C.rarities[item.rarity]?.name||'历练所得')}</small><strong>${esc(item.name)}</strong>${item.kind==='gear'?`<span>${overflow?'奖励暂存 · 整理背包后可取':esc(C.slots[item.gear.slot])+' · '+(item.gear.tier+1)+'阶'}</span>`:item.route?`<span>${esc(C.routes[item.route]?.name||'')}</span>`:''}${attrs?`<button type="button" class="btn ghost small settlement-inspect" data-selection="inspect" ${attrs}>查看${item.kind==='gear'?'属性':'详情'}</button>`:''}</div><b class="settlement-count">${['gear','treasure','technique','recipe','blueprint'].includes(item.kind)?'×':'+'}${number(item.count)}</b></article>`;}
 function render(value,options={}){
   if(!value)return '';const v=value,refund=['cancelAlchemyJob','jointCancel'].includes(v.type),seal=v.type==='sweepDungeon'?'捷':v.type==='forgeGear'?'铸':v.type==='craftPill'||v.type==='finishAlchemyJob'?'丹':refund?'还':'得';

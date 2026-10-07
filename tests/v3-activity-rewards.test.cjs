@@ -27,7 +27,8 @@ test('capped sweep quantities show actual capped gains and can report no increas
 test('immediate alchemy shows the selected recipe and batch with real expenses only',()=>{
  const s=stock(),{view,result,before}=settle(s,{type:'craftPill',id:'heal0',count:10});
  assert.equal(view.type,'craftPill');assert.equal(view.count,result.data.count);assert.equal(view.bonus,0);assert.equal(item(view,'pill','heal0').count,s.pills.heal0-before.pills.heal0);assert.equal(view.items.length,1);
- assert.ok(view.costs.some(x=>x.id==='stones'&&x.count===80));assert.ok(view.costs.some(x=>x.id==='herb'&&x.count===30));assert.ok(R.render(view).includes('data-reward-kind="pill"'));
+ assert.ok(view.costs.some(x=>x.id==='stones'&&x.count===80));assert.ok(view.costs.some(x=>x.id==='herb'&&x.count===30));
+ const html=R.render(view);assert.ok(html.includes('data-reward-kind="pill"'));assert.ok(html.includes('data-inspect-kind="pill"'));assert.ok(html.includes('data-inspect-id="heal0"'));assert.ok(html.includes('长按物品查看详情'));
 });
 
 test('queued alchemy and partial control grant no celebration until its single real finish, including the bonus',()=>{
@@ -92,6 +93,12 @@ test('cave gathering clearly distinguishes real pending rewards from currency al
  const {view,before}=settle(s,{type:'chooseCave',choice:'herb:gather'});assert.ok(view.pending);assert.ok(view.items.length);assert.ok(view.status.includes('暂存洞天'));assert.equal(s.materials.herb,before.materials.herb);assert.ok(R.render(view).includes('data-rewards-pending="true"'));
  const practice=stock(1);act(practice,{type:'startDungeon',id:'cave_0',practice:true});practice.exploration.choices=copy(before.exploration.choices);
  const tested=settle(practice,{type:'chooseCave',choice:'herb:gather'});assert.equal(tested.view,null,'practice must not advertise real gathered loot');
+});
+
+test('a paid cave merchant records committed spending separately from the reward still pending in exploration',()=>{
+ const s=stock(1);act(s,{type:'startDungeon',id:'cave_0'});const room=C.caveRooms.find(x=>x.id==='merchant'),choice=room.choices.find(x=>x.cost&&Object.keys(x.cost).length);
+ s.exploration.choices=[{id:room.id+':'+choice.id,label:room.name+' · '+choice.label,description:room.description,roomId:room.id,optionId:choice.id,cost:copy(choice.cost),reward:copy(choice.reward||{})}];
+ const {view,before}=settle(s,{type:'chooseCave',choice:s.exploration.choices[0].id});assert.equal(view.pending,true);assert.equal(view.costs.find(x=>x.id==='stones').count,before.stones-s.stones);assert.ok(!view.items.some(x=>x.kind==='currency'&&x.id==='stones'&&x.count<0));assert.ok(R.render(view).includes('暂存洞天'));
 });
 
 test('shopping, equipment settings and partial production stay in place and never open a harvest overlay',()=>{

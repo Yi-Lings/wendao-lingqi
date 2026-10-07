@@ -21,7 +21,8 @@ const KEY = 'lingqi-preview-save-v1';
 const REGULAR_KEY = 'lingqi-save-v2';
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/assets/audio/manifest.json'), 'utf8'));
 const images = fs.readdirSync(path.join(ROOT, 'web/assets')).filter(name => /\.png$/i.test(name));
-const setAtlases = Array.from({ length: 6 }, (_, rarity) => 'v5-gear-quality-' + rarity + '.png');
+const setAtlases = Array.from({ length: 6 }, (_, rarity) => 'v6-gear-quality-' + rarity + '.png');
+const namedAtlases = [...setAtlases, ...['techniques', 'treasures', 'pills', 'utilities'].map(kind => 'v6-' + kind + '-atlas.png')];
 const sourceMedia = ['icon.svg', ...images.map(name => 'assets/' + name), ...Object.values(manifest.assets).map(info => 'assets/audio/' + info.file)];
 const expectedMedia = sourceMedia.map(name => {
   const bytes = fs.readFileSync(path.join(ROOT, 'web', name));
@@ -185,26 +186,31 @@ async function chooseSkill(id) {
     await screenshot('preview-single-html-home.png');
     return { defaultFixture: true, firstGateConfirmedViaUi: firstGate, isolatedSaveKey: KEY, normalSaveUnchanged: true, offline: true };
   });
-  await check('new acquisition, settlement and image-layout modules run from inline scripts with no external imports', async () => {
+  await check('acquisition, battle and production settlement, named art and image-layout modules run from inline scripts with no external imports', async () => {
     const modules = await page.evaluate(() => ({
       scripts: [...document.querySelectorAll('script[data-source]')].map(node => node.dataset.source),
       styles: [...document.querySelectorAll('style[data-source]')].map(node => node.dataset.source),
       sources: typeof window.WendaoEquipmentSources?.view,
       rewards: typeof window.WendaoRewards?.render,
+      activityRewards: typeof window.WendaoActivityRewards?.render,
+      activityModel: typeof window.WendaoActivityRewards?.model,
+      artIdentity: typeof window.WendaoArtIdentity?.decorate,
       layout: typeof window.WendaoArtLayout?.geometry,
       external: [...document.querySelectorAll('script[src],link[rel="stylesheet"]')].map(node => node.src || node.href)
     }));
-    for (const name of ['equipment-sources.js', 'rewards.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
-    for (const name of ['rewards.css', 'art-layout.css']) assert.ok(modules.styles.includes(name));
+    for (const name of ['equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-identity.js', 'art-layout.js']) assert.ok(modules.scripts.includes(name), name + ' is inside the single HTML');
+    for (const name of ['rewards.css', 'activity-rewards.css', 'item-art.css', 'art-layout.css']) assert.ok(modules.styles.includes(name));
     assert.equal(modules.sources, 'function'); assert.equal(modules.rewards, 'function'); assert.equal(modules.layout, 'function');
+    assert.equal(modules.activityRewards, 'function'); assert.equal(modules.activityModel, 'function'); assert.equal(modules.artIdentity, 'function');
     assert.deepEqual(modules.external, []);
     const acquisition = await page.evaluate(() => WendaoEquipmentSources.view(Lingqi.state(), { set: 'array', slot: 'weapon' }));
     assert.equal(acquisition.forgeChoices.length, 6); assert.equal(acquisition.gacha.target, 'gear_array_weapon');
     assert.ok(acquisition.bosses.length > 0 && acquisition.blueprintSources.length > 0);
     return { ...modules, offlineAcquisitionChoices: acquisition.forgeChoices.length };
   });
-  await check('all ' + images.length + ' PNG atlases including six complete set/quality atlases retain source bytes and paint decoded images', async () => {
-    for (const name of setAtlases) assert.ok(images.includes(name), 'complete six-quality set atlas exists: ' + name);
+  await check('all ' + images.length + ' PNG atlases including all ten named art atlases and preserved original media retain source bytes and paint decoded images', async () => {
+    assert.equal(images.length, 36, 'all 26 original PNG files and ten new name-based art files remain');
+    for (const name of namedAtlases) assert.ok(images.includes(name), 'complete named artwork exists: ' + name);
     const decoded = await page.evaluate(async entries => {
       const result = [];
       for (const entry of entries) {
@@ -349,6 +355,53 @@ async function chooseSkill(id) {
     assert.equal((await savedOf(page)).loadouts.magic.skills[0], 'thunder_skill_0');
     assert.equal(new Set(state.loadouts.magic.skills).size, state.loadouts.magic.skills.length);
     return { skills: state.loadouts.magic.skills };
+  });
+  await check('offline production results show saved pills and gear with painted named art and return to original inputs', async () => {
+    await page.evaluate(() => Lingqi.showModal('alchemy'));
+    await page.locator('#pill-count').selectOption('3');
+    const before = await stateOf(page);
+    await page.locator('.recipe-card[data-recipe="qi0"] button[data-action="craftPill"]').click();
+    const made = await stateOf(page), saved = await savedOf(page);
+    assert.equal(made.pills.qi0, before.pills.qi0 + 3, 'three real pills are credited once');
+    assert.equal(saved.pills.qi0, made.pills.qi0, 'result appears after the actual preview save');
+    assert.ok(await page.locator('[data-activity-settlement="craftPill"]').isVisible());
+    assert.equal(await page.locator('.activity-settlement [data-reward-kind="pill"][data-reward-id="qi0"]').getAttribute('data-reward-count'), '3');
+    async function assertPaintedNamedResult() {
+      await page.waitForFunction(() => [...document.querySelectorAll('.activity-settlement .art-icon')].every(icon => icon.dataset.atlasFit));
+      return page.locator('.activity-settlement .art-icon').evaluateAll(async icons => Promise.all(icons.map(async icon => {
+        const css = getComputedStyle(icon), source = css.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1];
+        if (!source || !/^(blob:|data:image\/)/.test(source)) throw Error('Production icon uses an external or missing image');
+        const image = new Image(); image.src = source; await image.decode();
+        if (!image.naturalWidth || !icon.dataset.artIdentity || !icon.dataset.atlasFit) throw Error('Production icon lost its named identity or native cell');
+        if (css.filter !== 'none') throw Error('Production art is recolored instead of using the named source');
+        return { identity: icon.dataset.artIdentity, palette: icon.dataset.artPalette, fit: icon.dataset.atlasFit, width: image.naturalWidth, height: image.naturalHeight };
+      })));
+    }
+    const pillArt = await assertPaintedNamedResult();
+    assert.ok(pillArt.length > 0);
+    await screenshot('preview-single-html-alchemy-result.png');
+    await page.locator('button[data-ui="activity-return"]').click();
+    assert.equal(await page.locator('.activity-settlement').count(), 0);
+    assert.equal(await page.locator('#pill-count').inputValue(), '3', 'original batch selection survives returning');
+    assert.equal((await stateOf(page)).pills.qi0, made.pills.qi0, 'return cannot duplicate the payout');
+    await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
+    await page.evaluate(() => Lingqi.showModal('forge', { set: 'thunder', slot: 'weapon', rarity: 0 }));
+    const forgeBefore = await stateOf(page);
+    await page.locator('button[data-action="forgeGear"]').click();
+    const forged = await stateOf(page), gear = forged.bag.find(item => !forgeBefore.bag.some(old => old.uid === item.uid));
+    assert.ok(gear && gear.set === 'thunder' && gear.slot === 'weapon' && gear.rarity === 0);
+    assert.deepEqual((await savedOf(page)).bag, forged.bag, 'actual forged UID is saved');
+    assert.ok(await page.locator('[data-activity-settlement="forgeGear"]').isVisible());
+    assert.equal(await page.locator('.activity-settlement [data-reward-kind="gear"]').getAttribute('data-reward-id'), gear.uid);
+    const gearArt = await assertPaintedNamedResult();
+    await page.locator('button[data-ui="activity-return"]').click();
+    assert.equal(await page.locator('#forge-set').inputValue(), 'thunder');
+    assert.equal(await page.locator('#forge-slot').inputValue(), 'weapon');
+    assert.equal(await page.locator('#forge-rarity').inputValue(), '0');
+    assert.deepEqual((await stateOf(page)).bag, forged.bag, 'return cannot forge a second piece');
+    await page.locator('#modal-layer .modal-header button[data-ui="close"]').click();
+    await assertRegular();
+    return { pills: 3, forgedUid: gear.uid, pillArt, gearArt, offline: true, normalSaveUnchanged: true };
   });
   await check('entering free practice and clicking a spell executes real combat without rewards', async () => {
     await page.locator('.nav-bottom button[data-page="adventure"]').click();

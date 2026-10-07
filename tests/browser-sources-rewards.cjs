@@ -143,7 +143,12 @@ async function action(page, name, predicate = () => true) {
   const scope = await page.locator('#modal-layer [role="dialog"]').count() ? '#modal-layer ' : '';
   await (await button(page, scope + 'button[data-action="' + name + '"]', predicate)).click();
 }
-async function close(page) { if (await page.locator('#modal-layer [role="dialog"]').count()) await page.keyboard.press('Escape'); }
+async function returnActivity(page, name) {
+  assert.ok(await page.locator('[data-activity-settlement="' + name + '"]').isVisible(), 'saved ' + name + ' result appears');
+  await ui(page, 'activity-return');
+  assert.equal(await page.locator('.activity-settlement').count(), 0, 'explicit return dismisses production result');
+}
+async function close(page) { if (await page.locator('.activity-settlement').count()) { await ui(page, 'activity-return'); assert.equal(await page.locator('.activity-settlement').count(), 0); } if (await page.locator('#modal-layer [role="dialog"]').count()) await page.keyboard.press('Escape'); }
 async function hold(page, target) {
   await target.scrollIntoViewIfNeeded();
   const box = await target.boundingBox(); assert.ok(box && box.width > 20 && box.height > 20);
@@ -341,6 +346,9 @@ async function atlasChecks(page, label) {
       assert.ok(newGear, 'explicit craft button creates a real inventory piece');
       assert.equal(newGear.set, set); assert.equal(newGear.slot, 'boots'); assert.equal(newGear.rarity, quality);
       assert.ok(after.stones < before.stones, 'explicit craft spends actual resources');
+      await returnActivity(page, 'forgeGear');
+      assert.equal(await page.locator('#forge-slot').inputValue(), 'boots', 'result returns to the requested forge slot');
+      assert.equal(await page.locator('#forge-set').inputValue(), set, 'result returns to the requested forge set');
       rows.push({ set, boss: bossPayload.id, crafted: newGear.uid, rarity: quality });
     }
     return rows;
@@ -566,7 +574,7 @@ async function atlasChecks(page, label) {
     // Un-equip the reward by replacing it with a real crafted piece so the
     // original reward can actually be recycled through its ordinary control.
     await page.evaluate(({ set, slot }) => window.Lingqi.showModal('forge', { set, slot, rarity: 0 }), { set: gear.set, slot: gear.slot });
-    await action(page, 'forgeGear'); await close(page);
+    await action(page, 'forgeGear'); await returnActivity(page, 'forgeGear'); await close(page);
     assert.equal(await page.locator('.battle-settlement').count(), 0, 'craft does not reopen old reward report');
     const crafted = (await stateOf(page)).bag.find(g => g.uid !== gear.uid);
     assert.ok(crafted);
@@ -576,6 +584,7 @@ async function atlasChecks(page, label) {
     await ui(page, 'confirm', p => p.type === 'recycleGear' && p.payload.uid === gear.uid);
     await action(page, 'recycleGear', p => p.uid === gear.uid);
     assert.ok(!(await stateOf(page)).bag.some(g => g.uid === gear.uid), 'reward item is really removed from inventory');
+    await returnActivity(page, 'recycleGear');
     await page.evaluate(() => window.Lingqi.showModal('battle-history'));
     await ui(page, 'battle-report', p => p.index === 0);
     await hold(page, page.locator('.settlement-card[data-reward-id="' + gear.uid + '"]'));
