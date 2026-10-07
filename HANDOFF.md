@@ -1,6 +1,6 @@
 # 问道·灵契 V4.1 接手说明
 
-更新：2026-10-07（香港时间）。最新用户要求自查全部内容与美术对齐，整理需求符合程度，迭代完善方案。当前43项需求追踪与独立审计已完成；本轮源修已落地，V4.1打包/公开交付正在最终验证。用户先研究再制作并直接构建APK的授权有效，覆盖历史“不构建APK”。
+更新：2026-10-07（香港时间）。最新用户要求自查全部内容与美术对齐，整理需求符合程度，迭代完善方案。当前43项需求追踪与独立审计已完成；本轮源修已落地，V4.1打包/公开交付和匿名字节核验均已完成。用户先研究再制作并直接构建APK的授权有效，覆盖历史“不构建APK”。
 
 ## 当前源码与任务
 
@@ -44,6 +44,16 @@ python3 tools/build-web-preview.py --zip生成确切单HTML；browser-preview-fi
 
 匿名HTTPS下载APK/ZIP/checksum，核对全包SHA、ZIP CRC、内部HTML原字节后才能完成交付。大小/run/源码检查点与最终证据写docs/validation/V4_1_ALIGNMENT_2026-10-07.md，并更新本文件及plan。
 
-云环境install_script/start_skill已保存草稿，构建参数需本轮结束同步4.1/code5。保存不是发布，新任务恢复尚未独立验证。
+云环境完整install_script/start_skill已保存并同步4.1/code5及来源/DEX校验。保存不是发布，环境设置发布后供新任务复用；新任务恢复尚未独立验证。
 
 历史V4.0 release v4.0.0-preview、源码1caa5c7、Actions37583120786、APK SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。V3资产和main保持，详细证据见docs/validation/V4_ASCENSION_APK_2026-10-07.md。
+
+## V4.1最终公开交付
+
+冻结游戏源d1519c3b4b122fd3f8f41da5c95d189c42219a9f；发布检查点e238ff2；Actions37590588262/job verify-and-publish成功。香港时间2026-10-07 16:02匿名核验完成：
+
+- [APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-v4-1-preview.apk)：132183784字节，SHA59a32e09cbeb06547c4c36c1a5e1332bf0e172e557f6c8da0b1cf1348d47f4e6。
+- [离线ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-preview.zip)：132247258字节，SHAe362c3df24d39dd95498ad160f4bbb097ebc8acf9f30c58002ae749ea75aa428。
+- HTML176700528字节，SHA2f08e6a63d56f8239a2f389643b90749ae61347cc54e230b2526ef8879c35e20；公开两附件与本地实测字节相同，checksum/ZIP CRC/内部HTML全部通过。
+
+326/326逻辑、32通用、9UI、9完整性（预期故障1单列）、9红品像素、10故事闭关、4飞升/95布局、离线24/0/1通过；原生Java入口19、DEX导出6、106源文件/114输入/签名/对齐通过。61项旧V4 PNG/MP3/JSON全部逐字节保留。旧V4 assets和main28d4dcee保持。完整证据docs/validation/V4_1_ALIGNMENT_2026-10-07.md及audit-v4/evidence。源码、素材、完善方案、报告与分片均已推送work；下一批按迭代方案A/B/C继续，无设备不宣称真机已验收。

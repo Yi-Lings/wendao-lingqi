@@ -495,7 +495,7 @@ v2 迁移：
 
 V4交付已完成：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-v4-preview.apk)、[网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.0.0-preview/wendao-lingqi-preview.zip)。Actions37583120786成功；两者匿名HTTP200下载、公开checksum、SHA与本地已测字节一致，ZIP CRC及内部HTML完整。APK126858599字节，SHA d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424。源码/发布检查点c82b7b1，最终文档/证据同步不会改变已验收源码和安装包。
 
-## 21. 全需求与美术对齐自查（2026-10-07，进行中）
+## 21. 全需求与美术对齐自查（2026-10-07，已完成本轮）
 
 用户要求自查全部内容/美术和需求符合程度，迭代完善方案。以V4公开验收源码为基准进行独立审计，不把逻辑测试通过、资源数量或安装包大小当作所有体验需求已满足。
 
@@ -505,8 +505,10 @@ V4交付已完成：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/dow
 - [x] 核对多幕剧情和实际目标一致，所有剩余章节条件有直接获取入口；区分内容长度、真实可达性与玩家心流。
 - [x] 核查旧档兼容、三存档隔离、真实奖励唯一性、后台音乐/战斗、APK资产及公开发布完整性。
 - [x] 按证据修复本轮可完成缺陷，验证并提交GitHub；完善方案分开写本轮改进与下一阶段内容，真机/新环境/旧会话未验证保持明确。
-- [ ] 有实际源变更则交付独立版本体验更新，保留已发布V4及原V3，匿名下载核验。
+- [x] 有实际源变更则交付独立版本体验更新，保留已发布V4及原V3，匿名下载核验。
 
 审计由六个独立任务并行开展，根代理汇总并统一接线/提交。审计报告在 docs/validation/audit-v4/，设计与交付更新以最新 handoff 为准。
 
-本轮具体修复与剩余需求见 [43项需求追踪](docs/REQUIREMENTS_TRACEABILITY.md)、[V4.1迭代方案](docs/ITERATION_PLAN_V4_1.md)。源改完成：原生导出快照隔离；持久化后展示失败保留真实所得；尘兑换/仙修晋层结算；剩余剧情条件直达；斗技/秘境对白与实际人物；道劫胜利后的境界文本；表情/三仙阶背景/Boss裁片；短屏战斗触控；45PNG与13旧图藏画阁。新APK/网页需冻结源码、检查buildInputs与DEX、匿名下载完成后再勾最后一项。
+本轮具体修复与剩余需求见 [43项需求追踪](docs/REQUIREMENTS_TRACEABILITY.md)、[V4.1迭代方案](docs/ITERATION_PLAN_V4_1.md)。源改完成：原生导出快照隔离；持久化后展示失败保留真实所得；尘兑换/仙修晋层结算；剩余剧情条件直达；斗技/秘境对白与实际人物；道劫胜利后的境界文本；表情/三仙阶背景/Boss裁片；短屏战斗触控；45PNG与13旧图藏画阁。冻结源d1519c3，326逻辑/当前浏览器/64嵌入资源/106APK文件/114构建输入/实际DEX/v2签名验证通过。Actions37590588262成功，APK132183784字节、ZIP132247258字节，匿名HTTP200与公开SHA/ZIP CRC/内部HTML均匹配。全部代码/资源/证据/分片已同步work。长篇内容和真机体验按下一阶段方案实施，不误标完成。
+
+V4.1公开交付：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-v4-1-preview.apk)、[离线试玩ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-preview.zip)。完整大小/hash/验收和剩余事项见 [交付报告](docs/validation/V4_1_ALIGNMENT_2026-10-07.md)。下一批先做专属计数/全文回顾/体修术语，再扩第一二卷与三仙阶任务，详见ITERATION_PLAN_V4_1。

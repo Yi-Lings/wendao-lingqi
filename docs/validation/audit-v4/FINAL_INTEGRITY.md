@@ -33,13 +33,13 @@
 
 | 画面 | 文件 |
 | --- | --- |
-| 人界试玩取消导出 | `dist/audit-v4/integrity-human-export-canceled.png` |
-| 天门试玩取消导出 | `dist/audit-v4/integrity-immortal-export-canceled.png` |
-| 提交后展示错误仍保存所得 | `dist/audit-v4/integrity-postcommit-saved-fallback.png` |
-| 橙装实际物品与费用 | `dist/audit-v4/integrity-orangeGear-actual-settlement.png` |
-| 橙灵宝实际物品与费用 | `dist/audit-v4/integrity-orangeTreasure-actual-settlement.png` |
-| 仙修晋层真实结果 | `dist/audit-v4/integrity-celestial-layer2-saved.png` |
-| 仙界实际音轨场景 | `dist/audit-v4/integrity-ascension-real-audio.png` |
+| 人界试玩取消导出 | [integrity-human-export-canceled.png](evidence/integrity-human-export-canceled.png) |
+| 天门试玩取消导出 | [integrity-immortal-export-canceled.png](evidence/integrity-immortal-export-canceled.png) |
+| 提交后展示错误仍保存所得 | [integrity-postcommit-saved-fallback.png](evidence/integrity-postcommit-saved-fallback.png) |
+| 橙装实际物品与费用 | [integrity-orangeGear-actual-settlement.png](evidence/integrity-orangeGear-actual-settlement.png) |
+| 橙灵宝实际物品与费用 | [integrity-orangeTreasure-actual-settlement.png](evidence/integrity-orangeTreasure-actual-settlement.png) |
+| 仙修晋层真实结果 | [integrity-celestial-layer2-saved.png](evidence/integrity-celestial-layer2-saved.png) |
+| 仙界实际音轨场景 | [integrity-ascension-real-audio.png](evidence/integrity-ascension-real-audio.png) |
 
 本次执行对应关键源摘要：
 
