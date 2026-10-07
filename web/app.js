@@ -535,6 +535,7 @@ function showBattleSettlement(){
 }
 
 function activityOrigin(){
+ if(modal?.type==='activity-rewards'&&modal.p.origin)return JSON.parse(JSON.stringify(modal.p.origin));
  const body=layer.querySelector('.modal-body'),fields={};
  if(body)for(const control of body.querySelectorAll('select[id],input[id]'))fields[control.id]=control.type==='checkbox'?control.checked:control.value;
  return {page,modal:modal?{type:modal.type,p:JSON.parse(JSON.stringify(modal.p||{}))}:null,scroll:body?.scrollTop||0,fields};

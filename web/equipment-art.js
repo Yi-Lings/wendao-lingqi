@@ -8,7 +8,7 @@ const SETS=['sword','body','thunder','elements','shadow','array'];
 const SLOTS=['weapon','armor','head','bracer','boots','charm'];
 const QUALITY=['凡品','灵品','玄品','地品','天品','道品'];
 const SET_NAMES={sword:'青锋',body:'玄武',thunder:'雷霄',elements:'离火',shadow:'太虚',array:'回春'};
-const RED_LEGACY_WEAPONS={sword:0,elements:5,shadow:4};
+const RED_LEGACY_WEAPONS={sword:0,shadow:4};
 const WEAPONS={
   sword:['铁剑','精钢剑','灵纹剑','紫玄剑','天锋剑','青锋剑'],
   body:['铁锤','精钢锤','玄铁锤','撼山锤','伏岳锤','镇岳锤'],
@@ -50,8 +50,11 @@ function baseName(value){
 }
 function gearArt(value){
   const g=normalize(value),row=SETS.indexOf(g.set),col=SLOTS.indexOf(g.slot),identity=I.gear(g,baseName(g));
-  if(g.rarity===5&&(g.slot==='weapon'&&own(RED_LEGACY_WEAPONS,g.set)||g.slot==='armor'&&g.set==='body')){
-    const legacyColumn=g.slot==='weapon'?RED_LEGACY_WEAPONS[g.set]:1;
+  const oldWeapon=g.rarity===5&&g.slot==='weapon'&&own(RED_LEGACY_WEAPONS,g.set);
+  const oldArmor=g.rarity===4&&g.slot==='armor'&&g.set==='body';
+  const oldFan=g.rarity===2&&g.slot==='weapon'&&g.set==='elements';
+  if(oldWeapon||oldArmor||oldFan){
+    const legacyColumn=oldFan?5:oldArmor?1:RED_LEGACY_WEAPONS[g.set];
     return {...identity,file:'v3-items-atlas.png',position:legacyColumn*20+'% 0%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};
   }
   return {...identity,file:'v6-gear-quality-'+g.rarity+'.png',position:col*20+'% '+row*20+'%',size:'600% 600%',rarity:g.rarity,slot:g.slot,set:g.set};

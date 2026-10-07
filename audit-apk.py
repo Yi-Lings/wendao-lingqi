@@ -9,19 +9,22 @@ parser.add_argument('--report', default=str(ROOT / 'dist/apk-check.txt'))
 args = parser.parse_args()
 apk = pathlib.Path(args.apk)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'equipment-art.js', 'game-art.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'art-layout.js', 'preview.js', 'app.js']
+modules = ['data.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
        'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',
        'v4-weapons-atlas.png', 'v4-armor-atlas.png', 'v4-utilities-atlas.png',
        'v4-treasures-atlas.png', 'v4-pills-atlas.png', 'v4-basic-skills-atlas.png',
        'v5-gear-quality-0.png', 'v5-gear-quality-1.png', 'v5-gear-quality-2.png',
-       'v5-gear-quality-3.png', 'v5-gear-quality-4.png', 'v5-gear-quality-5.png']
+       'v5-gear-quality-3.png', 'v5-gear-quality-4.png', 'v5-gear-quality-5.png',
+       'v6-gear-quality-0.png', 'v6-gear-quality-1.png', 'v6-gear-quality-2.png',
+       'v6-gear-quality-3.png', 'v6-gear-quality-4.png', 'v6-gear-quality-5.png',
+       'v6-techniques-atlas.png', 'v6-treasures-atlas.png', 'v6-pills-atlas.png', 'v6-utilities-atlas.png']
 audio = ['bgm-home', 'bgm-battle', 'bgm-heaven', 'ui', 'success', 'error',
          'battle-hit', 'battle-skill', 'victory', 'defeat', 'summon-rise', 'reveal',
          'red-awaken', 'red-impact']
 assets = [p for p in sorted((ROOT / 'web').rglob('*')) if p.is_file()]
-required = modules + ['index.html', 'style.css', 'selection.css', 'layout.css', 'battle.css', 'builds.css', 'rewards.css', 'art-layout.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json']
+required = modules + ['index.html', 'style.css', 'item-art.css', 'selection.css', 'layout.css', 'battle.css', 'builds.css', 'rewards.css', 'activity-rewards.css', 'art-layout.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json']
 assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required game asset missing'
 
 def digest(stream):
