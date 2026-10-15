@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Verify the APK manifest and every embedded Web resource without Android hardware."""
-import argparse, hashlib, json, os, pathlib, subprocess, zipfile
+import argparse, hashlib, json, os, pathlib, re, subprocess, zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('apk', nargs='?', default=str(ROOT / 'dist/lingqi-game.apk'))
 parser.add_argument('--report', default=str(ROOT / 'dist/apk-check.txt'))
+parser.add_argument('--variant', choices=['release', 'debug'], default='release')
 args = parser.parse_args()
 apk = pathlib.Path(args.apk)
 tools = ROOT / 'tools/android'
@@ -40,8 +41,12 @@ result = subprocess.run([str(tools / 'aapt2'), 'dump', 'badging', str(apk)],
                         env={**os.environ, 'LD_LIBRARY_PATH': str(tools / 'lib64')},
                         check=True, text=True, capture_output=True)
 badging = result.stdout
-assert "name='com.lingqi.game'" in badging
-assert "versionCode='3'" in badging and "versionName='3.0'" in badging
+package = 'com.lingqi.game.preview' if args.variant == 'debug' else 'com.lingqi.game'
+gradle_source = (ROOT / 'android/app/build.gradle').read_text(encoding='utf-8')
+version_code = re.search(r'\bversionCode\s+(\d+)', gradle_source).group(1)
+version_name = re.search(r"\bversionName\s+'([^']+)'", gradle_source).group(1)
+assert "name='" + package + "'" in badging
+assert "versionCode='" + version_code + "'" in badging and "versionName='" + version_name + "'" in badging
 assert "sdkVersion:'26'" in badging or "minSdkVersion:'26'" in badging
 assert "targetSdkVersion:'35'" in badging
 assert 'uses-permission:' not in badging, 'APK declares a permission'

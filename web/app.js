@@ -5,6 +5,8 @@ const KEY='lingqi-save-v2', OLD='lingqi-save-v1', AGE='lingqi-age-confirmed', MA
 const app=document.getElementById('app'), layer=document.getElementById('modal-layer'), toastEl=document.getElementById('toast'), fileInput=document.getElementById('import-file');
 let s=null,page='cultivation',modal=null,recovery=null,mounted=false,lastFrame=Date.now(),lastPassive=Date.now(),lastPersist=0,timer=null,toastTimer=null,busy=false,pointerHeld=false,previousBattleFrame=null,summonTimer=null,summonPulseTimer=null;
 const uiState={techSchool:'all',techKind:'all',dungeonType:'resource',gearSlot:'all',gearRarity:'all',gearSet:'all',sideTab:'story',selectedDungeon:null,drawResults:[],poolCategory:'gear',poolRarity:5};
+uiState.gearSort='gain';
+let modalOrigin=null,journeyMarkup='',saveHealthy=true;
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(Number(x))?Number(x).toLocaleString('zh-CN',{maximumFractionDigits:1}):'0';
 const pct=(x,m)=>Math.max(0,Math.min(100,m?x/m*100:0));
@@ -56,8 +58,41 @@ function persist(candidate=s,quiet=false){
    if(!window.Native.persistSave(raw))throw new Error('原生存档写入失败');
    try{localStorage.setItem(KEY,raw);}catch(e){}
   }else localStorage.setItem(KEY,raw);
-  lastPersist=Date.now();return true;
- }catch(e){if(!quiet)toast('保存未成功，操作已撤回。请导出备份并检查可用空间。');return false;}
+  lastPersist=Date.now();saveHealthy=true;updateSaveStatus();return true;
+ }catch(e){const firstFailure=saveHealthy;saveHealthy=false;updateSaveStatus();if(!quiet||firstFailure)toast('保存未成功。请导出备份并检查可用空间；本次操作未提交。');return false;}
+}
+function updateSaveStatus(){const el=document.getElementById('save-state');if(el){el.textContent=saveHealthy?'已保存':'未保存';el.classList.toggle('save-failed',!saveHealthy);el.setAttribute('aria-label',saveHealthy?'进度已保存，打开设置':'进度未保存，打开设置重试或导出备份');}}
+function targetToken(el){return el?{id:el.id,action:el.dataset?.action,ui:el.dataset?.ui,payload:el.dataset?.payload||''}:null;}
+function matchingTarget(root,token){
+ if(!token)return null;
+ return Array.from(root.querySelectorAll('button,input,select,[tabindex]')).find(el=>token.id?el.id===token.id:((token.action&&el.dataset.action===token.action)||(token.ui&&el.dataset.ui===token.ui))&&(el.dataset.payload||'')===token.payload)||null;
+}
+function motionBehavior(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth';}
+function replaceEncounter(el,markup){
+ if(el._lingqiMarkup===markup)return;
+ const focused=el.contains(document.activeElement)?targetToken(document.activeElement):null,scroll=el.querySelector('.enemy-grid')?.scrollLeft||0;
+ el.innerHTML=markup;el._lingqiMarkup=markup;
+ const grid=el.querySelector('.enemy-grid');if(grid)grid.scrollLeft=scroll;
+ const target=matchingTarget(el,focused);if(target&&!target.disabled)target.focus({preventScroll:true});
+}
+function journeyCard(g,primary=false){return `<article class="journey-card${primary?' primary-goal':''}"><div><small>${primary?'建议下一步':'可顺路完成'}</small><strong>${esc(g.title)}</strong><p>${esc(g.description)}</p></div>${ui(g.label,'journey-go',{id:g.id},primary?'primary':'secondary small')}</article>`;}
+function journeyBody(j){
+ const m=j.nextUnlock,p=s.paths[s.route],eta=j.etaSeconds===null?'':j.etaSeconds<60?'不足 1 分钟':Math.ceil(j.etaSeconds/60)+' 分钟';
+ return journeyCard(j.primary,true)+`<div class="journey-checks">${j.checks.map(x=>`<span class="${x.done?'done':''}">${x.done?'✓':'○'} ${esc(x.label)}${x.current!==undefined?' '+num(x.current)+' / '+num(x.required):''}</span>`).join('')}</div>`+(eta?`<p class="tiny muted">静修约 ${esc(eta)} 达到本层门槛 · 每分钟 ${num(j.trainingPerMinute)} 修为</p>`:'')+(m?`<p class="tiny muted gap-top">下个开放：${esc(C.routes[s.route].realmNames[Math.floor(m.rank/10)])}${m.rank%10+1}层 · ${esc(m.label)}</p>`:'')+`<div class="row spaced gap-top"><span class="tiny muted">${p.realm===5&&p.layer===10?'自证大道，自由游历':'每一步都由你选择'}</span>${ui('仙途目标'+(j.goals.length>1?' · '+j.goals.length:''),'journey',{},'ghost small')}</div>`;
+}
+function updateJourney(){
+ const el=document.getElementById('journey-body');if(!el)return;const body=journeyBody(E.journey(s));
+ if(body!==journeyMarkup){const focused=el.contains(document.activeElement)?targetToken(document.activeElement):null;el.innerHTML=body;journeyMarkup=body;matchingTarget(el,focused)?.focus({preventScroll:true});}
+}
+function journeyModal(){const j=E.journey(s);frame('仙途目标 · '+j.realmLabel,`<p class="muted">随当前主修、修为和通关进度更新。点击目标前会重新检查条件。</p><div class="journey-list gap-top">${j.goals.map((g,i)=>journeyCard(g,i===0)).join('')}</div>`);}
+function followJourney(id){
+ const g=E.journey(s).goals.find(x=>x.id===id);if(!g){updateJourney();if(modal?.type==='journey')journeyModal();return toast('仙途目标已更新，请查看当前目标。');}
+ const target=g.target;closeModal();
+ if(target.kind==='action')return run(target.type,target.payload);
+ if(target.kind==='ui')return handleUi(target.type,target.payload||{});
+ if(target.kind==='page')return navigate(target.type);
+ if(s.joint)return showModal('joint');
+ navigate('adventure');document.getElementById('encounter-container')?.scrollIntoView({block:'start',behavior:motionBehavior()});
 }
 function load(){
  let raw=null;try{if(window.Native&&typeof window.Native.loadSave==='function')raw=window.Native.loadSave()||null;}catch(e){}
@@ -72,7 +107,7 @@ function gate(){
 function recoveryScreen(){mounted=false;app.innerHTML=`<section class="age-gate"><div class="modal"><div class="modal-header"><h2>仙途恢复</h2></div><div class="modal-body"><p>${esc(recovery.error||'存档内容不完整')}</p><p class="muted">原始数据已保留。有效进度不会被新存档自动覆盖。</p></div><div class="modal-footer">${ui('导出恢复备份','export-recovery')}${ui('导入有效存档','import-save')}</div><div class="modal-footer">${ui('另开仙途','new-game',{},'primary')}</div></div></section>`;}
 const pages={cultivation:['修行','M12 3v4m-5-2 2 3m8-3-2 3M6 11h12l-2 4H8l-2-4Zm2 4-2 5h12l-2-5M10 11V8h4v3'],adventure:['历练','m3 20 7-15 4 8 3-5 4 12H3Zm7-15 2 5'],cave:['洞府','m3 13 9-10 9 10M5 11v10h14V11M9 21v-7h6v7'],fate:['仙缘','M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 1a3 3 0 1 0 0-6M1 21v-3a7 7 0 0 1 14 0v3m1-7a5 5 0 0 1 7 4v3'],heaven:['天道','M12 2 15 8l7 4-7 4-3 6-3-6-7-4 7-4 3-6Zm0 6v8m-4-4h8']};
 function mount(){
- mounted=true;app.innerHTML=`<div class="game-shell"><header class="topbar"><div class="brand">问道 · 灵契<small>山海万象 · 自证大道</small></div><div class="top-actions"><button class="icon-btn" data-ui="help" aria-label="修行指引">?</button><button class="icon-btn" data-ui="settings" aria-label="设置">⚙</button></div></header><div class="resource-bar"><div class="resource"><i class="gem">◇</i><span>灵石</span><strong id="hud-stones"></strong></div><div class="resource"><i class="gem">✧</i><span>感应券</span><strong id="hud-tickets"></strong></div><div class="resource"><i class="gem">◈</i><span>天道尘</span><strong id="hud-dust"></strong></div></div><section class="hero-scene" id="hero-scene"><div class="scene-stars"></div><div class="scene-copy"><p class="eyebrow" id="scene-kicker"></p><h1 id="scene-heading"></h1><p id="scene-description"></p></div><div class="scene-path"><strong id="scene-name"></strong><small id="scene-power"></small></div><div class="realm-orb"><strong id="scene-realm"></strong><small id="scene-layer"></small></div></section><div id="encounter-container"></div><main class="page-content" id="page-content"></main><nav class="nav-bottom">${Object.entries(pages).map(([id,[label,path]])=>`<button data-page="${id}" aria-label="${label}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg><span>${label}</span></button>`).join('')}</nav></div>`;
+ mounted=true;app.innerHTML=`<div class="game-shell"><header class="topbar"><div class="brand">问道 · 灵契<small>山海万象 · 自证大道</small></div><div class="top-actions"><button id="save-state" class="save-indicator" data-ui="settings" aria-label="进度已保存，打开设置">已保存</button><button id="open-help" class="icon-btn" data-ui="help" aria-label="修行指引">?</button><button id="open-settings" class="icon-btn" data-ui="settings" aria-label="设置">⚙</button></div></header><div class="resource-bar"><div class="resource"><i class="gem">◇</i><span>灵石</span><strong id="hud-stones"></strong></div><div class="resource"><i class="gem">✧</i><span>感应券</span><strong id="hud-tickets"></strong></div><div class="resource"><i class="gem">◈</i><span>天道尘</span><strong id="hud-dust"></strong></div></div><section class="hero-scene" id="hero-scene"><div class="scene-stars"></div><div class="scene-copy"><p class="eyebrow" id="scene-kicker"></p><h1 id="scene-heading"></h1><p id="scene-description"></p></div><div class="scene-path"><strong id="scene-name"></strong><small id="scene-power"></small></div><div class="realm-orb"><strong id="scene-realm"></strong><small id="scene-layer"></small></div></section><div id="encounter-container"></div><main class="page-content" id="page-content"></main><nav class="nav-bottom">${Object.entries(pages).map(([id,[label,path]])=>`<button data-page="${id}" aria-label="${label}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg><span>${label}</span></button>`).join('')}</nav></div>`;
  updateChrome();renderPage();renderEncounter();
 }
 function text(id,value){const el=document.getElementById(id);if(el)el.textContent=value;}
@@ -91,9 +126,10 @@ function updateChrome(){
  }
  for(const b of document.querySelectorAll('[data-action="draw"]')){try{const a=JSON.parse(b.dataset.payload);b.disabled=!K.unlocks(s).gacha||s.tickets<a.count;}catch(e){}}
  for(const b of document.querySelectorAll('[data-action="claimWisdom"]'))b.disabled=!s.wisdomTickets;
+ updateSaveStatus();updateJourney();
 
 }
-function navigate(id){if(!pages[id])return;page=id;closeModal();updateChrome();renderPage();window.scrollTo({top:0,behavior:'smooth'});}
+function navigate(id){if(!pages[id])return;page=id;closeModal();updateChrome();renderPage();window.scrollTo({top:0,behavior:motionBehavior()});}
 function renderPage(){if(!mounted)return;const functions={cultivation:renderCultivation,adventure:renderAdventure,cave:renderCave,fate:renderFate,heaven:renderHeaven};document.getElementById('page-content').innerHTML=functions[page]();}
 function heading(title,sub=''){return `<div class="page-heading"><h2>${esc(title)}</h2><small>${esc(sub)}</small></div>`;}
 function renderCultivation(){
@@ -101,7 +137,7 @@ function renderCultivation(){
  const routes=Object.keys(C.routes).map(id=>{const x=s.paths[id],vv=v.paths?.[id];return `<div class="route-card${s.route===id?' active':''}"><strong>${esc(routeName(id))}</strong><small>${esc(vv?.realmLabel||realmName(id)+' '+x.layer+'层')}</small><div class="gap-top">${act(s.route===id?'当前主修':'切换主修','switchRoute',{route:id},'small secondary',s.route===id||!!s.battle)}</div></div>`;}).join('');
  const attrs=[['attack','攻击'],['defense','防御'],['maxHp','气血'],['maxMp','真元'],['crit','暴击'],['power','战力']].map(([id,name])=>`<div><small>${name}</small><strong>${id==='crit'?num(v[id]*100)+'%':num(v[id])}</strong></div>`).join('');
  const trialKey=s.route+':'+p.realm,canTrial=p.layer===10,full=p.xp>=v.xpNeeded,won=!!s.progress.trialWins?.[trialKey];
- return heading('修行','双仙途 · 逐层晋级')+panel(v.realmLabel,`<div class="row spaced tiny"><span>当前修为</span><span id="cult-xp">${num(p.xp)} / ${num(v.xpNeeded)}</span></div>${bar(p.xp,v.xpNeeded,'gold','cult-xp-fill')}<div class="row spaced tiny"><span id="cult-reserve">储备 ${num(p.reserve)}</span><span>${s.training?'灵气运转中':'已暂停修行'}</span></div><div class="grid-2 gap-top">${p.layer<10?act('晋升下一层','levelUp',{},'primary',!full):p.realm===5?(s.progress.endingTrials[s.route]?ui('前往终章','ending-story',{},'primary'):act('自证大道试炼','startDungeon',{id:'trial',tier:5,difficulty:0},'primary',!full||!!s.battle)):act('突破下一境','breakthrough',{},'primary',!full||!won)}${act(s.training?'暂停修行':'开始修行','setTraining',{enabled:!s.training},'secondary')}</div><div class="row wrap gap-top">${act(s.autoSmall?'自动小层：开':'自动小层：关','setAutoSmall',{enabled:!s.autoSmall},'ghost small',K.maxRank(s)<2)}${canTrial?act('进入境界试炼','startDungeon',{id:'trial',tier:p.realm,difficulty:0},'small secondary',!!s.battle||!!s.exploration):''}</div>${canTrial?`<p class="section-note">${p.realm===5?(s.progress.endingTrials[s.route]?'终境自证试炼已通过。前往山海卷推进终章，之后可继续自由游历。':'终境圆满后完成自证试炼，解锁最终故事，不再增加第七境。'):won?'试炼已通过。修为与材料齐全后可确定突破。':'圆满后挑战试炼，失败不降层，胜利后再提交突破材料。'}</p>`:''} ${canTrial&&p.realm<5?costLine('breakthrough'):''}<div class="stat-grid">${attrs}</div><div class="grid-2">${routes}</div>`)+panel('万法归心',`<p class="muted">已学 ${Object.keys(s.techniques).length} / 48 · 心法 1 · 神通 ${u.skillSlots} · 秘术 ${u.secretSlots} · 灵宝 ${u.treasureSlots}</p><div class="grid-2 gap-top">${ui('功法图鉴','techniques',{},'primary')}${ui('出战配置','loadout',{},'secondary')}</div><div class="grid-3 gap-top">${[0,1,2].map(i=>ui('预设 '+(i+1),'preset',{index:i},s.presets[s.route][i]?'secondary small':'ghost small')).join('')}</div>`)+panel('近期仙途',`<div class="list">${(s.logs||[]).slice(-5).reverse().map(x=>`<p class="tiny">${esc(typeof x==='string'?x:x.message||x.text||'')}</p>`).join('')||'<p class="muted">第一步，修行与配置你的功法。</p>'}</div>`,ui('成长与获取指引','help',{},'ghost small'));
+ return heading('修行','双仙途 · 逐层晋级')+panel('此刻的仙途',`<div id="journey-body">${journeyBody(E.journey(s))}</div>`)+panel(v.realmLabel,`<div class="row spaced tiny"><span>当前修为</span><span id="cult-xp">${num(p.xp)} / ${num(v.xpNeeded)}</span></div>${bar(p.xp,v.xpNeeded,'gold','cult-xp-fill')}<div class="row spaced tiny"><span id="cult-reserve">储备 ${num(p.reserve)}</span><span>${s.training?'灵气运转中':'已暂停修行'}</span></div><div class="grid-2 gap-top">${p.layer<10?act('晋升下一层','levelUp',{},'primary',!full):p.realm===5?(s.progress.endingTrials[s.route]?ui('前往终章','ending-story',{},'primary'):act('自证大道试炼','startDungeon',{id:'trial',tier:5,difficulty:0},'primary',!full||!!s.battle)):act('突破下一境','breakthrough',{},'primary',!full||!won)}${act(s.training?'暂停修行':'开始修行','setTraining',{enabled:!s.training},'secondary')}</div><div class="row wrap gap-top">${act(s.autoSmall?'自动小层：开':'自动小层：关','setAutoSmall',{enabled:!s.autoSmall},'ghost small',K.maxRank(s)<2)}${canTrial?act('进入境界试炼','startDungeon',{id:'trial',tier:p.realm,difficulty:0},'small secondary',!!s.battle||!!s.exploration):''}</div>${canTrial?`<p class="section-note">${p.realm===5?(s.progress.endingTrials[s.route]?'终境自证试炼已通过。前往山海卷推进终章，之后可继续自由游历。':'终境圆满后完成自证试炼，解锁最终故事，不再增加第七境。'):won?'试炼已通过。修为与材料齐全后可确定突破。':'圆满后挑战试炼，失败不降层，胜利后再提交突破材料。'}</p>`:''} ${canTrial&&p.realm<5?costLine('breakthrough'):''}<div class="stat-grid">${attrs}</div><div class="grid-2">${routes}</div>`)+panel('万法归心',`<p class="muted">已学 ${Object.keys(s.techniques).length} / 48 · 心法 1 · 神通 ${u.skillSlots} · 秘术 ${u.secretSlots} · 灵宝 ${u.treasureSlots}</p><div class="grid-2 gap-top">${ui('功法图鉴','techniques',{},'primary')}${ui('出战配置','loadout',{},'secondary')}</div><div class="grid-3 gap-top">${[0,1,2].map(i=>ui('预设 '+(i+1),'preset',{index:i},s.presets[s.route][i]?'secondary small':'ghost small')).join('')}</div>`)+panel('近期仙途',`<div class="list">${(s.logs||[]).slice(-5).reverse().map(x=>`<p class="tiny">${esc(typeof x==='string'?x:x.message||x.text||'')}</p>`).join('')||'<p class="muted">第一步，修行与配置你的功法。</p>'}</div>`,ui('成长与获取指引','help',{},'ghost small'));
 }
 function dungeonUnlocked(d){
  if(d.id==='resource_herb')return true;
@@ -120,7 +156,7 @@ function renderCave(){
  const slots=Object.entries(C.slots).map(([id,label])=>{const g=s.bag.find(x=>x.uid===s.equipped[id]);return `<div class="equipment-slot rarity-${g?.rarity||0}"><small>${esc(label)} · 强化 +${num(s.slotLevels[id])}</small><strong>${g?esc(gearName(g)):'未装配'}</strong>${ui('查看','equipment',g?{uid:g.uid}:{slot:id},'ghost small')}</div>`;}).join('');
  const facilities=Object.entries(C.facilities).map(([id,f])=>`<article class="item"><div class="item-icon">${esc(f.name.slice(0,1))}</div><div class="item-main"><strong>${esc(f.name)} · ${num(s.facilities[id])} 级</strong><p>${esc(f.description)}</p>${costLine('upgradeFacility',{id})}<div class="item-actions">${act('升级设施','upgradeFacility',{id},'secondary small',s.facilities[id]>=f.maxLevel)}</div></div></article>`).join('');
  const materials=Object.entries(s.materials).filter(([,n])=>n>0).map(([id,n])=>`<span>${esc(mat[id]||id)} ${num(n)}</span>`).join('');
- return heading('云栖洞府','炉火与灵田，皆为仙途')+panel('灵装 · 六部位',`<div class="grid-3">${slots}</div><div class="grid-2 gap-top">${ui('装备背包','equipment',{},'primary')}${ui('定向打造','forge',{},'secondary')}</div><div class="row wrap gap-top">${act('一键装配','autoEquip',{},'ghost small')}${ui('灵宝图鉴','treasures',{},'ghost small')}${s.overflow?.length||s.rewardOverflow?.length?act('领取奖励盒','claimOverflow',{},'primary small'):''}</div>`)+panel('丹炉与材料',`<div class="material-chips">${materials||'<span>暂未积累材料</span>'}</div><div class="grid-2 gap-top">${ui('炼丹 · 18丹方','alchemy',{},'primary')}${ui('装备整理','recycle',{},'secondary')}</div><p class="safe-note">收藏丹方后备料开炉，普通成丹保证基础产量，三轮控火可争取额外产量。丹方可由研究和对应历练收集。</p>`)+panel('洞府设施',`<div class="list">${facilities}</div>`);
+ return heading('云栖洞府','炉火与灵田，皆为仙途')+panel('灵装 · 六部位',`<div class="grid-3">${slots}</div><div class="grid-2 gap-top">${ui('装备背包','equipment',{},'primary')}${ui('定向打造','forge',{},'secondary')}</div><div class="row wrap gap-top">${ui('配装推荐','recommend',{},'ghost small')}${ui('灵宝图鉴','treasures',{},'ghost small')}${s.overflow?.length||s.rewardOverflow?.length?act('领取奖励盒','claimOverflow',{},'primary small'):''}</div>`)+panel('丹炉与材料',`<div class="material-chips">${materials||'<span>暂未积累材料</span>'}</div><div class="grid-2 gap-top">${ui('炼丹 · 18丹方','alchemy',{},'primary')}${ui('装备整理','recycle',{},'secondary')}</div><p class="safe-note">收藏丹方后备料开炉，普通成丹保证基础产量，三轮控火可争取额外产量。丹方可由研究和对应历练收集。</p>`)+panel('洞府设施',`<div class="list">${facilities}</div>`);
 }
 const chapterImpact=(choice,v)=>{const values=v.chapterChoices?.[choice]||[];return values.length?'<p class="tiny choice-impact">'+esc(values.map(x=>x.name+' 信任 +'+x.affinity).join(' · '))+'</p>':'';};
 const endingHint=v=>{const r=v.recommendedEnding,id=typeof r==='string'?r:r?.id,label=typeof r==='object'?(r.title||r.name||r.label):({guardian:'守山护世',wanderer:'逍遥远游',teacher:'开宗传道'})[id];return label?'<p class="section-note">此行选择倾向 '+esc(label)+'。终章仍可自由选择任一去向。</p>':'';};
@@ -144,15 +180,28 @@ function battleView(){try{return E.battleView?E.battleView(s):window.WendaoComba
 function renderEncounter(){
  if(!mounted||pointerHeld)return;const el=document.getElementById('encounter-container'),b=battleView();
  if(b.active){const p=b.player,oldFrame=previousBattleFrame&&previousBattleFrame.id===b.id?previousBattleFrame:null;
-  el.innerHTML=`<section class="encounter"><div class="encounter-header"><div><strong>${esc(b.name)}</strong><small> · ${num(b.time)}s${b.practice?' · 试阵':''}${b.paused?' · 暂停':''}</small></div>${act(b.paused?'继续':'战术暂停','pauseBattle',{paused:!b.paused},'ghost small')}</div><div class="battle-player${oldFrame&&p.hp<oldFrame.hp?' player-hit':''}"><div class="row spaced"><strong>${esc(s.player.name)}</strong><span>气血 ${num(p.hp)} / ${num(p.maxHp)} · 护盾 ${num(p.shield)}</span></div>${bar(p.hp,p.maxHp,'red')}<div class="row spaced"><span>真元 ${num(p.mp)} / ${num(p.maxMp)}</span><span>${esc(p.resourceName||'灵势')} ${num(p.resource)}</span></div>${bar(p.mp,p.maxMp,'blue')}${statusTags(p.statuses)}</div><div class="enemy-grid">${b.enemies.map(x=>`<button class="enemy-card${b.target===x.index?' target':''}${!x.alive?' dead':''}${oldFrame&&x.hp<(oldFrame.enemies[x.index]??x.hp)?' hurt':''}" data-action="targetEnemy" data-payload="${esc(JSON.stringify({index:x.index}))}"${!x.alive?' disabled':''}>${b.type==='boss'&&x.index===0?'<div class="boss-portrait" style="background-image:url(assets/v3-boss-atlas.png);background-size:300% 400%;background-position:'+atlasPosition(Number(String(b.id).split('_').pop())||0,3,4)+'"></div>':monsterPortrait(x,b)}<strong>${esc(x.name)}</strong><small>${num(x.hp)} / ${num(x.maxHp)}${x.shield?' · 盾'+num(x.shield):''}</small>${bar(x.hp,x.maxHp,'red')}${statusTags(x.statuses)}${x.casting?`<div class="casting">${esc(x.casting.name)} · ${num(x.casting.remaining)}s${bar(x.casting.duration-x.casting.remaining,x.casting.duration,'gold')}<small>${esc(x.casting.hint)}${x.casting.interruptible?' · 可打断':''}</small></div>`:''}</button>`).join('')}</div><div class="battle-skills">${b.skills.map(x=>act(x.name+' · '+(x.remaining>0?num(x.remaining)+'s':x.mp+'真元'),'useSkill',{id:x.id},'skill-button secondary'+(x.remaining>0?' cooldown':''),!x.ready||b.paused)).join('')}${b.treasure?act(b.treasure.name+' · '+(b.treasure.remaining>0?num(b.treasure.remaining)+'s':'灵宝'),'useTreasure',{},'skill-button primary',!b.treasure.ready||b.paused):''}</div><div class="battle-footer">${(b.pills||[]).map(x=>act(x.name+' ×'+num(x.count),'battlePill',{id:x.id},'ghost small',!x.ready||b.paused)).join('')}</div><div class="battle-footer">${ui('战斗规则','battle-settings',{},'ghost small')}${act(b.auto?'自动神通：开':'自动神通：关','setBattleAuto',{enabled:!b.auto},'secondary small')}${ui('退出战斗','confirm',{type:'leaveBattle',label:'退出本场战斗',text:'本场未结算奖励不会发放。已使用丹药保持消耗。'},'ghost small')}</div><div class="battle-log">${(b.log||[]).slice(-3).map(x=>esc(typeof x==='string'?x:x.message||x.text||'')).join('<br>')}</div></section>`;
+  replaceEncounter(el,`<section class="encounter"><div class="encounter-header"><div><strong>${esc(b.name)}</strong><small> · ${num(b.time)}s${b.practice?' · 试阵':''}${b.paused?' · 暂停':''}</small></div>${act(b.paused?'继续':'战术暂停','pauseBattle',{paused:!b.paused},'ghost small')}</div><div class="battle-player${oldFrame&&p.hp<oldFrame.hp?' player-hit':''}"><div class="row spaced"><strong>${esc(s.player.name)}</strong><span>气血 ${num(p.hp)} / ${num(p.maxHp)} · 护盾 ${num(p.shield)}</span></div>${bar(p.hp,p.maxHp,'red')}<div class="row spaced"><span>真元 ${num(p.mp)} / ${num(p.maxMp)}</span><span>${esc(p.resourceName||'灵势')} ${num(p.resource)}</span></div>${bar(p.mp,p.maxMp,'blue')}${statusTags(p.statuses)}</div><div class="enemy-grid">${b.enemies.map(x=>`<button class="enemy-card${b.target===x.index?' target':''}${!x.alive?' dead':''}${oldFrame&&x.hp<(oldFrame.enemies[x.index]??x.hp)?' hurt':''}" data-action="targetEnemy" data-payload="${esc(JSON.stringify({index:x.index}))}"${!x.alive?' disabled':''}>${b.type==='boss'&&x.index===0?'<div class="boss-portrait" style="background-image:url(assets/v3-boss-atlas.png);background-size:300% 400%;background-position:'+atlasPosition(Number(String(b.id).split('_').pop())||0,3,4)+'"></div>':monsterPortrait(x,b)}<strong>${esc(x.name)}</strong><small>${num(x.hp)} / ${num(x.maxHp)}${x.shield?' · 盾'+num(x.shield):''}</small>${bar(x.hp,x.maxHp,'red')}${statusTags(x.statuses)}${x.casting?`<div class="casting">${esc(x.casting.name)} · ${num(x.casting.remaining)}s${bar(x.casting.duration-x.casting.remaining,x.casting.duration,'gold')}<small>${esc(x.casting.hint)}${x.casting.interruptible?' · 可打断':''}</small></div>`:''}</button>`).join('')}</div><div class="battle-skills">${b.skills.map(x=>act(x.name+' · '+(x.remaining>0?num(x.remaining)+'s':x.mp+'真元'),'useSkill',{id:x.id},'skill-button secondary'+(x.remaining>0?' cooldown':''),!x.ready||b.paused)).join('')}${b.treasure?act(b.treasure.name+' · '+(b.treasure.remaining>0?num(b.treasure.remaining)+'s':'灵宝'),'useTreasure',{},'skill-button primary',!b.treasure.ready||b.paused):''}</div><div class="battle-footer">${(b.pills||[]).map(x=>act(x.name+' ×'+num(x.count),'battlePill',{id:x.id},'ghost small',!x.ready||b.paused)).join('')}</div><div class="battle-footer">${ui('战斗规则','battle-settings',{},'ghost small')}${act(b.auto?'自动神通：开':'自动神通：关','setBattleAuto',{enabled:!b.auto},'secondary small')}${ui('退出战斗','confirm',{type:'leaveBattle',label:'退出本场战斗',text:'本场未结算奖励不会发放。已使用丹药保持消耗。'},'ghost small')}</div><div class="battle-log">${(b.log||[]).slice(-3).map(x=>esc(typeof x==='string'?x:x.message||x.text||'')).join('<br>')}</div></section>`);
   previousBattleFrame={id:b.id,hp:p.hp,enemies:Object.fromEntries(b.enemies.map(x=>[x.index,x.hp]))};
- }else if(s.exploration){previousBattleFrame=null;const x=s.exploration;el.innerHTML=`<section class="encounter"><div class="encounter-header"><strong>${esc(x.name)} · 洞天</strong><small>${num(x.node)} / ${num(x.total)} 节点</small></div><p class="muted">已携出：${esc(price(x.banked))||'无'} · 待通关：${esc(price(x.pending))||'无'}</p><div class="stack gap-top">${(x.choices||[]).map(c=>`<button class="btn explore-choice secondary" data-action="chooseCave" data-payload="${esc(JSON.stringify({choice:c.id}))}"><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></button>`).join('')}</div><div class="gap-top">${act(x.status==='cleared'?'开启最终宝箱':'结束探索 · 取已携出','finishCave',{},'primary')}</div></section>`;}
- else{previousBattleFrame=null;el.innerHTML='';}
+ }else if(s.exploration){previousBattleFrame=null;const x=s.exploration;replaceEncounter(el,`<section class="encounter"><div class="encounter-header"><strong>${esc(x.name)} · 洞天</strong><small>${num(x.node)} / ${num(x.total)} 节点</small></div><p class="muted">已携出：${esc(price(x.banked))||'无'} · 待通关：${esc(price(x.pending))||'无'}</p><div class="stack gap-top">${(x.choices||[]).map(c=>`<button class="btn explore-choice secondary" data-action="chooseCave" data-payload="${esc(JSON.stringify({choice:c.id}))}"><strong>${esc(c.label)}</strong><small>${esc(c.description)}</small></button>`).join('')}</div><div class="gap-top">${act(x.status==='cleared'?'开启最终宝箱':'结束探索 · 取已携出','finishCave',{},'primary')}</div></section>`);}
+ else{previousBattleFrame=null;replaceEncounter(el,'');}
 }
-function closeModal(){clearTimeout(summonTimer);clearTimeout(summonPulseTimer);summonTimer=summonPulseTimer=null;modal=null;layer.hidden=true;layer.innerHTML='';}
-function frame(title,body,footer=''){layer.hidden=false;layer.innerHTML=`<div class="modal-backdrop"><section class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header"><h2>${esc(title)}</h2>${ui('×','close',{},'ghost small')}</div><div class="modal-body">${body}</div>${footer?`<div class="modal-footer">${footer}</div>`:''}</section></div>`;}
+function closeModal(){
+ clearTimeout(summonTimer);clearTimeout(summonPulseTimer);summonTimer=summonPulseTimer=null;modal=null;layer.hidden=true;layer.innerHTML='';
+ document.body.classList.remove('modal-open');app.inert=false;app.removeAttribute('aria-hidden');
+ const origin=matchingTarget(app,modalOrigin);if(origin&&!origin.disabled)origin.focus({preventScroll:true});modalOrigin=null;
+}
+function frame(title,body,footer=''){
+ const open=!layer.hidden,sameTitle=layer.querySelector('[role="dialog"]')?.getAttribute('aria-label')===title;
+ const scroll=sameTitle?layer.querySelector('.modal-body')?.scrollTop||0:0;
+ const focused=open&&layer.contains(document.activeElement)?targetToken(document.activeElement):null;
+ if(!open)modalOrigin=targetToken(document.activeElement);
+ layer.hidden=false;layer.innerHTML=`<div class="modal-backdrop"><section class="modal" role="dialog" tabindex="-1" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header"><h2>${esc(title)}</h2>${ui('×','close',{},'ghost small')}</div><div class="modal-body">${body}</div>${footer?`<div class="modal-footer">${footer}</div>`:''}</section></div>`;
+ document.body.classList.add('modal-open');app.inert=true;
+ const target=sameTitle?matchingTarget(layer,focused):null;(target&&!target.disabled?target:layer.querySelector('[role="dialog"]')).focus({preventScroll:true});
+ app.setAttribute('aria-hidden','true');layer.querySelector('.modal-body').scrollTop=scroll;
+}
 function showModal(type,p={}){
- modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal};
+ modal={type,p};const fn={techniques:techniquesModal,loadout:loadoutModal,preset:presetModal,dungeon:dungeonModal,sweep:sweepModal,equipment:equipmentModal,forge:forgeModal,alchemy:alchemyModal,treasures:treasuresModal,recycle:recycleModal,'gacha-target':targetModal,'gacha-odds':oddsModal,'gacha-history':historyModal,'draw-results':drawModal,dust:dustModal,gift:giftModal,'joint-invite':inviteModal,joint:jointModal,settings:settingsModal,help:helpModal,'battle-report':battleReportModal,confirm:confirmModal,offline:offlineModal,reroll:rerollModal,'battle-settings':battleSettingsModal,'gacha-pool':poolModal,conversation:conversationModal,'battle-history':battleHistoryModal,shop:shopModal,summoning:summoningModal,journey:journeyModal,recommend:recommendModal,'recycle-preview':recyclePreviewModal};
  (fn[type]||helpModal)(p);
 }
 function techniquesModal(){
@@ -178,17 +227,33 @@ function sweepModal(p){const best=Array.from({length:s.paths[s.route].realm+1},(
 function gearItem(g,full=false){
  const worn=Object.values(s.equipped).includes(g.uid),stats=equipmentStats(g);
  const attributes=Object.entries(stats).filter(([id,n])=>['attack','defense','hp'].includes(id)&&n>0).map(([id,n])=>`${({attack:'攻击',defense:'防御',hp:'气血'})[id]||id} +${num(n)}`).join(' · ');
- return `<article class="item rarity-${g.rarity}">${itemIcon('gear',g.set,C.slots[g.slot].slice(0,1))}<div class="item-main"><strong>${esc(gearName(g))}</strong><small>${esc(rar(g.rarity).name)} · ${esc(realmName(s.route,g.tier))}阶 · ${worn?'已装配 · ':''}${g.locked?'保护中 · ':''}觉醒 ${num(g.awakening)}</small><small>${esc(attributes)}</small><small>${esc((g.affixes||[]).map(x=>affixName(x.id)+' '+affixValue(x)).join(' · '))}</small>${g.rarity===5?`<p>${esc(C.sets[g.set]?.redEffect||'道品专属机制')}</p>`:''}<div class="item-actions">${act(worn?'已装配':'装配','equipGear',{uid:g.uid},'secondary small',worn||!!s.battle)}${act(g.locked?'解除保护':'保护','lockGear',{uid:g.uid},'ghost small')}${full?'':ui('养成详情','gear-detail',{uid:g.uid},'primary small')}</div></div></article>`;
+ return `<article class="item rarity-${g.rarity}">${itemIcon('gear',g.set,C.slots[g.slot].slice(0,1))}<div class="item-main"><strong>${esc(gearName(g))}</strong><small>${esc(rar(g.rarity).name)} · ${esc(realmName(s.route,g.tier))}阶 · ${worn?'已装配 · ':''}${g.locked?'保护中 · ':''}觉醒 ${num(g.awakening)}</small><small>${esc(attributes)}</small>${gearComparison(g)}<small>${esc((g.affixes||[]).map(x=>affixName(x.id)+' '+affixValue(x)).join(' · '))}</small>${g.rarity===5?`<p>${esc(C.sets[g.set]?.redEffect||'道品专属机制')}</p>`:''}<div class="item-actions">${act(worn?'已装配':'装配','equipGear',{uid:g.uid},'secondary small',worn||!!s.battle)}${act(g.locked?'解除保护':'保护','lockGear',{uid:g.uid},'ghost small')}${full?'':ui('养成详情','gear-detail',{uid:g.uid},'primary small')}</div></div></article>`;
+}
+function gearComparison(g){
+ const c=E.compareEquipment(s,g.uid);if(!c)return '';
+ const value=c.delta.power;
+ return `<p class="gear-gain ${value>0?'positive':value<0?'negative':''}">${c.currentUid===g.uid?'当前装配':value===0?'整套战力持平':'整套战力 '+(value>0?'+':'')+num(value)}${c.lost.length?' · 换装将失去 '+esc(c.lost.map(x=>x.label).join('、')):''}${c.gained.length?' · 激活 '+esc(c.gained.map(x=>x.label).join('、')):''}</p>`;
+}
+function equipmentDelta(c){return `<div class="equipment-delta">${[['power','整套战力'],['attack','攻击'],['defense','防御'],['maxHp','气血']].map(([id,name])=>`<div><small>${name}</small><span>${num(c.before[id])} → ${num(c.after[id])}</span><strong class="${c.delta[id]>0?'positive':c.delta[id]<0?'negative':''}">${c.delta[id]>0?'+':''}${num(c.delta[id])}</strong></div>`).join('')}</div>`+`<p class="tiny gap-top">${c.gained.length?'激活：'+esc(c.gained.map(x=>x.label).join('、')):'套装与道品特效无新增。'}</p>`+(c.lost.length?`<p class="negative tiny">失去：${esc(c.lost.map(x=>x.label).join('、'))}</p>`:'');}
+function recommendModal(){
+ const plan=E.recommendEquipment(s),expected={from:plan.from,equipped:plan.equipped};
+ frame('配装推荐 · 先看后换',`<p class="muted">按整套面板战力推荐，计入影响面板的套装加成。神通连携、治疗、暴击和专属效果请结合流派选择。</p>${equipmentDelta(plan)}<div class="list gap-top">${plan.changes.map(x=>`<div class="recommend-row"><strong>${esc(C.slots[x.slot])}</strong><span>${esc(x.from?gearName(s.bag.find(g=>g.uid===x.from)):'未装配')}<br>↓<br>${esc(gearName(s.bag.find(g=>g.uid===x.to)))}</span></div>`).join('')||'<p class="empty">当前配置已是推荐方案，可继续按流派自行搭配。</p>'}</div>`,act('应用 '+plan.changes.length+' 件换装','autoEquip',{expected},'primary',!plan.changes.length||!!s.battle)+ui('返回背包','equipment',{},'secondary'));
+}
+function recyclePreviewModal(p){
+ const preview=E.recyclePreview(s,Number(p.maxRarity));if(!preview)return toast('分解品质无效。');
+ frame('分解预览 · '+preview.count+'件',`<p>将分解白色至${esc(rar(Number(p.maxRarity)).name)}的 ${preview.count} 件未保护装备。</p><p class="cost gap-top">实际返还：${esc(price(preview.rewards))||'无'}</p><p class="muted">本次保留 ${preview.protectedCount} 件装备。穿戴、保护、预设引用和待选择洗炼的物品自动保留。</p><div class="recycle-preview-list list gap-top">${preview.uids.map(uid=>{const g=s.bag.find(x=>x.uid===uid);return `<p class="tiny">${esc(gearName(g))}</p>`;}).join('')||'<p class="empty">没有可分解的装备。</p>'}</div><p class="safe-note">确认后才分解；背包或保护状态变化时，需要重新预览。</p>`,act('确认分解 '+preview.count+' 件','bulkRecycle',{maxRarity:Number(p.maxRarity),uids:preview.uids},'danger',!preview.count)+ui('返回整理','recycle',{},'secondary'));
 }
 function equipmentModal(p={}){
  const filters=`<div class="grid-3"><label>部位${select('filter-gear-slot',[{id:'all',name:'全部部位'},...Object.entries(C.slots).map(([id,name])=>({id,name}))],p.slot||uiState.gearSlot)}</label><label>品质${select('filter-gear-rarity',[{id:'all',name:'全部品质'},...C.rarities.map((x,i)=>({id:i,name:x.name}))],uiState.gearRarity)}</label><label>套装${select('filter-gear-set',[{id:'all',name:'全部套装'},...Object.entries(C.sets).map(([id,x])=>({id,name:x.name}))],uiState.gearSet)}</label></div>`;
  if(p.uid){gearDetail(p);return;}if(p.slot)uiState.gearSlot=p.slot;
- const gs=s.bag.filter(g=>(uiState.gearSlot==='all'||g.slot===uiState.gearSlot)&&(uiState.gearRarity==='all'||g.rarity===Number(uiState.gearRarity))&&(uiState.gearSet==='all'||g.set===uiState.gearSet)).slice().reverse();
- frame('灵装背包 · '+s.bag.length+' / 300',filters+`<div class="list gap-top">${gs.map(g=>gearItem(g)).join('')||'<div class="empty">此筛选下暂无装备。</div>'}</div>`,ui('定向打造','forge',{},'primary')+ui('整理分解','recycle',{},'secondary'));
+ const gs=s.bag.filter(g=>(uiState.gearSlot==='all'||g.slot===uiState.gearSlot)&&(uiState.gearRarity==='all'||g.rarity===Number(uiState.gearRarity))&&(uiState.gearSet==='all'||g.set===uiState.gearSet)).slice();
+ const gains=new Map(gs.map(g=>[g.uid,E.compareEquipment(s,g.uid).delta.power]));
+ gs.sort((a,b)=>uiState.gearSort==='rarity'?b.rarity-a.rarity||b.tier-a.tier:uiState.gearSort==='newest'?Number(b.uid)-Number(a.uid)||Number(String(b.uid).replace('g',''))-Number(String(a.uid).replace('g','')):gains.get(b.uid)-gains.get(a.uid)||b.rarity-a.rarity);
+ frame('灵装背包 · '+s.bag.length+' / 300',filters+`<label class="gap-top">排序${select('filter-gear-sort',[{id:'gain',name:'整套战力提升优先'},{id:'rarity',name:'品质与阶位优先'},{id:'newest',name:'最新获得优先'}],uiState.gearSort)}</label><div class="list gap-top">${gs.map(g=>gearItem(g)).join('')||'<div class="empty">此筛选下暂无装备。</div>'}</div>`,ui('配装推荐','recommend',{},'primary')+ui('定向打造','forge',{},'secondary')+ui('整理分解','recycle',{},'secondary'));
 }
 function gearDetail(p){
  const g=s.bag.find(x=>x.uid===p.uid);if(!g)return equipmentModal({});
- modal={type:'equipment',p};frame('灵装养成',gearItem(g,true)+`<h3>部位强化 · +${num(s.slotLevels[g.slot])}</h3><p class="muted">强化保存在部位，换装继承。成功确定，不碎装。</p>${costLine('enhanceSlot',{slot:g.slot})}<div class="item-actions">${act('强化部位','enhanceSlot',{slot:g.slot},'primary')}${act('跨境重铸','recastGear',{uid:g.uid},'secondary',g.tier>=s.paths[s.route].realm)}${ui('词条洗炼','reroll',{uid:g.uid},'secondary')}${act('道品觉醒','awakenGear',{uid:g.uid},'primary',g.rarity!==5)}</div>${costLine('recastGear',{uid:g.uid})}${costLine('awakenGear',{uid:g.uid})}<p class="safe-note">重铸保留品质、套装、专属效果与词条。已穿戴、锁定和预设引用的装备受到保护。</p><div class="item-actions">${ui('分解此装备','confirm',{type:'recycleGear',payload:{uid:g.uid,confirm:g.rarity===5},label:'分解 '+gearName(g),text:g.rarity===5?'这是红色道品装备。分解会永久移除该实例，请确认已有替代。':'分解返还材料与天道尘。'},'danger small',K.protectedGear(s,g.uid))}</div>`,ui('返回背包','equipment',{},'secondary'));
+ modal={type:'equipment',p};frame('灵装养成',gearItem(g,true)+equipmentDelta(E.compareEquipment(s,g.uid))+`<h3>部位强化 · +${num(s.slotLevels[g.slot])}</h3><p class="muted">强化保存在部位，换装继承。成功确定，不碎装。</p>${costLine('enhanceSlot',{slot:g.slot})}<div class="item-actions">${act('强化部位','enhanceSlot',{slot:g.slot},'primary')}${act('跨境重铸','recastGear',{uid:g.uid},'secondary',g.tier>=s.paths[s.route].realm)}${ui('词条洗炼','reroll',{uid:g.uid},'secondary')}${act('道品觉醒','awakenGear',{uid:g.uid},'primary',g.rarity!==5)}</div>${costLine('recastGear',{uid:g.uid})}${costLine('awakenGear',{uid:g.uid})}<p class="safe-note">重铸保留品质、套装、专属效果与词条。已穿戴、锁定和预设引用的装备受到保护。</p><div class="item-actions">${ui('分解此装备','confirm',{type:'recycleGear',payload:{uid:g.uid,confirm:g.rarity===5},label:'分解 '+gearName(g),text:g.rarity===5?'这是红色道品装备。分解会永久移除该实例，请确认已有替代。':'分解返还材料与天道尘。'},'danger small',K.protectedGear(s,g.uid))}</div>`,ui('返回背包','equipment',{},'secondary'));
 }
 function rerollModal(p){
  const g=s.bag.find(x=>x.uid===p.uid);if(!g)return closeModal();const pending=s.rerollPending;
@@ -212,7 +277,7 @@ function alchemyModal(){
 function treasuresModal(){
  frame('灵宝图鉴 · 12件',`<div class="list">${Object.entries(C.treasures).map(([id,t])=>{const own=s.ownedTreasures[id];return `<article class="item rarity-${t.rarity}">${itemIcon('treasure',id,t.name.slice(0,1))}<div class="item-main"><strong>${esc(t.name)}${own?' · '+own.level+'级':''}</strong><small>${esc(rar(t.rarity).name)} · ${t.kind==='active'?'主动':'被动'}${own?' · 持有'+num(own.count):' · 未获得'}</small><p>${esc(t.description)}</p>${source(t)}${own?costLine('upgradeTreasure',{id}):''}<div class="item-actions">${own?act('灵宝升级','upgradeTreasure',{id},'primary small'):''}${own?act('装配','equipTreasure',{id,index:t.kind==='active'?0:1},'secondary small',!K.unlocks(s).treasureSlots):''}${own?ui('分解一件','confirm',{type:'recycleTreasure',payload:{id,confirm:t.rarity===5},label:'分解 '+t.name,text:'会移除一件灵宝并回收天道尘，配置和预设中的最后一件受到保护。'},'ghost small'):''}</div></div></article>`;}).join('')}</div>`,ui('调整灵宝槽','loadout',{},'primary'));
 }
-function recycleModal(){frame('整理与分解',`<p>已穿戴、锁定与预设引用的物品自动保护。红装只能逐件明确确认。</p><p class="muted gap-top">建议先保护准备保留的装备，再批量整理低品质。</p><div class="grid-3 gap-top">${[0,1,2].map(i=>act('分解至'+rar(i).name,'bulkRecycle',{maxRarity:i},'secondary')).join('')}</div><p class="safe-note">红、橙、紫默认不参加此处批量整理。分解回收可用于强化与洗炼。</p>`,ui('查看背包','equipment',{},'primary'));}
+function recycleModal(){frame('整理与分解',`<p>已穿戴、锁定与预设引用的物品自动保护。红装只能逐件明确确认。</p><p class="muted gap-top">建议先保护准备保留的装备，再批量整理低品质。</p><div class="grid-3 gap-top">${[0,1,2].map(i=>ui('预览至'+rar(i).name,'recycle-preview',{maxRarity:i},'secondary')).join('')}</div><p class="safe-note">红、橙、紫默认不参加此处批量整理。分解回收可用于强化与洗炼。</p>`,ui('查看背包','equipment',{},'primary'));}
 function targetModal(){const list=targetList();frame('选择红色定向',`<p class="muted">更换目标保留红计数及“下一红必定向”。保证基础物品身份，不保证随机词条。</p><label class="gap-top">当前可用目标${select('gacha-target',[{id:'',name:'取消定向'},...list],s.gacha.target||'')}</label><p class="section-note">${s.gacha.fateGuarantee?'已积累下一红必定向状态。':'首红50%目标；若未中，下红必定目标。'}</p>`,act('保存定向','setGachaTarget',{},'primary'));}
 function oddsModal(){
  const rows=Q?.gachaTable||[{category:'equipment',weights:[4,8,9,5,3.5,.5]},{category:'treasure',weights:[0,3,4,5,2.7,.3]},{category:'technique',weights:[3,7,6,3,.8,.2]},{category:'pill',weights:[10,8,1,1,0,0]},{category:'material',weights:[8,4,2,1,0,0]}],names={equipment:'装备',gear:'装备',treasure:'灵宝',technique:'功法',pill:'丹药',material:'材料'};
@@ -265,7 +330,7 @@ function battleSettingsModal(){
  const rules=s.battleRules||{healBelow:.35,reserveInterrupt:true,shieldBeforeBurst:true},retry=s.autoRetry||{enabled:false,maxRuns:1,stopOnRed:true,stopOnDefeat:true};
  frame('战斗规则与逐场重战','<h3>自动神通条件</h3><label>血量低于此比例优先治疗'+select('battle-heal-threshold',[{id:.25,name:'25%'},{id:.35,name:'35%'},{id:.5,name:'50%'},{id:.65,name:'65%'}],rules.healBelow)+'</label><label class="check-line"><input id="battle-reserve-interrupt" type="checkbox"'+(rules.reserveInterrupt?' checked':'')+'>保留打断，等待敌人关键读条</label><label class="check-line"><input id="battle-shield-burst" type="checkbox"'+(rules.shieldBeforeBurst?' checked':'')+'>蓄力爆发优先等护盾保护</label><div class="item-actions">'+act('保存神通规则','setBattleRules',{},'primary')+'</div><h3>妖王自动重战</h3><label class="check-line"><input id="battle-retry-enabled" type="checkbox"'+(retry.enabled?' checked':'')+'>胜利后逐场再战，前台真实运行</label><label>本轮最多场数'+select('battle-retry-runs',Array.from({length:10},(_,i)=>({id:i+1,name:(i+1)+'场'})),retry.maxRuns||1)+'</label><label class="check-line"><input id="battle-retry-red" type="checkbox"'+(retry.stopOnRed?' checked':'')+'>获得红装立即停止</label><p class="safe-note">仅妖王可自动重战。战败、空间不足、达到上限均停止；后台暂停，不离线领奖。</p><div class="item-actions">'+act('保存重战设置','setAutoRetry',{},'secondary')+'</div>',ui('返回','close',{},'ghost'));
 }
-function settingsModal(){frame('洞府设置',`<label>道号<input id="rename-input" maxlength="16" value="${esc(s.player.name)}" autocomplete="off"></label><div class="form-actions">${act('更改道号','rename',{},'secondary')}</div><h3>存档与迁移</h3><p class="muted">关键操作先保存再展示结果。旧版本进度保留备份；导入前校验完整结构，文件上限1 MiB。</p><div class="grid-2 gap-top">${ui('导出备份','export-save',{},'primary')}${ui('导入存档','import-save',{},'secondary')}</div><h3>离线单机</h3><p class="muted">修为最多补算24小时，设施储藏七天。后台战斗暂停，返回后手动继续，不离线完成首次挑战。</p><p class="safe-note">版本 V3 · 无支付 · 无每日登录门槛。请定期导出备份。</p>`,ui('玩法指引','help',{},'secondary'));}
+function settingsModal(){frame('洞府设置',`<label>道号<input id="rename-input" maxlength="16" value="${esc(s.player.name)}" autocomplete="off"></label><div class="form-actions">${act('更改道号','rename',{},'secondary')}</div><h3>存档与迁移</h3><p class="${saveHealthy?'muted':'negative'}">${saveHealthy?'当前进度已保存。':'最近保存失败，请重试保存或导出当前进度。'}</p><div class="form-actions">${ui('重试保存','retry-save',{},'secondary')}</div><p class="muted">关键操作先保存再展示结果。旧版本进度保留备份；导入前校验完整结构，文件上限1 MiB。</p><div class="grid-2 gap-top">${ui('导出备份','export-save',{},'primary')}${ui('导入存档','import-save',{},'secondary')}</div><h3>离线单机</h3><p class="muted">修为最多补算24小时，设施储藏七天。后台战斗暂停，返回后手动继续，不离线完成首次挑战。</p><p class="safe-note">版本 V3.1 · 无支付 · 无每日登录门槛。请定期导出备份。</p>`,ui('玩法指引','help',{},'secondary'));}
 function helpModal(){frame('修行指引',`<div class="stack">${[['01','逐层修行','每境一至十层，修为满后晋级。十层圆满需完成试炼，再主动突破。两路线分别保存进度。'],['02','功法与配装','1心法、4神通、2秘术逐步开放。调整出招顺序、治疗、净化和打断，寻找适合妖王的配置。'],['03','自由历练','资源、宗门、妖王、塔、洞天、突破六类。查看来源与奖励后自选挑战，已开放内容可以回刷。'],['04','灵装与炼丹','六部位强化跟随部位。最高红色可通过蓝图定向打造。普通炼丹必成，控火争取额外数量。'],['05','天道与机缘','第二境一层开放抽取。橙红10次保底、红80次保底、目标最坏160次。公开概率与历史记录。'],['06','山海与同行','六章主线、18支线、三结局。宗门委托按行动完成，成年伙伴关系与共修不强制主线。'],['07','存档与后台','后台暂停战斗，离线只补基础修行与设施。安卓可用系统文件选择器导出备份。']].map(([n,title,desc])=>`<div class="guide-step"><span>${n}</span><div><strong>${esc(title)}</strong><p>${esc(desc)}</p></div></div>`).join('')}</div>`,ui('继续仙途','close',{},'primary'));}
 function conversationModal(p){
  const c=C.companions[p.companion],r=s.companions[p.companion];if(!c||!r)return closeModal();
@@ -316,13 +381,15 @@ function run(type,p={},interactive=true){
   updateChrome();renderPage();renderEncounter();
   if(type==='draw'||type==='drawWithJade'){uiState.drawResults=r.data?.results||[];startDrawAnimation();}
   else if(type==='buyJade'||type==='exchangeJade'){showModal('shop');}
-  else if(type==='startDungeon'){closeModal();}
+  else if(type==='startDungeon'){closeModal();document.getElementById('encounter-container')?.scrollIntoView({block:'start',behavior:motionBehavior()});}
+  else if(type==='autoEquip'){showModal('equipment');}
+  else if(type==='bulkRecycle'){showModal('recycle');}
   else if(type==='talk'){showModal('conversation',{companion:p.companion,text:r.message});}
   else if(['researchRecipe','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob'].includes(type)){showModal('alchemy');}
   else if(type==='rerollGear'||type==='acceptReroll'){showModal('reroll',{uid:p.uid});}
   else if(type==='jointInvite'||type==='jointStep'){s.joint?showModal('joint'):closeModal();}
   else if(type==='jointCancel'||type==='setLoadout'||type==='loadPreset'||type==='leaveBattle'||type==='recycleGear'||type==='resetTechnique'){closeModal();}
-  else if(modal&&['upgradeTechnique','learnTechnique','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','craftPill','usePill','equipGear','lockGear','enhanceSlot','recastGear','awakenGear','upgradeTreasure','equipTreasure','recycleTreasure','exchangeDust','talk','gift','savePreset','setTechniqueBranch'].includes(type)){const m=modal;if(m.type==='tech-branch')techBranch(m.p);else showModal(m.type,m.p);}
+  else if(modal&&['upgradeTechnique','learnTechnique','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','craftPill','usePill','equipGear','claimOverflow','lockGear','enhanceSlot','recastGear','awakenGear','upgradeTreasure','equipTreasure','recycleTreasure','exchangeDust','talk','gift','savePreset','setTechniqueBranch'].includes(type)){const m=modal;if(m.type==='tech-branch')techBranch(m.p);else showModal(m.type,m.p);}
   if(type==='setGachaTarget')closeModal();
   return r;
  }catch(e){s=JSON.parse(before);if(interactive)toast('操作未完成，进度已恢复。');console.error(e);return{ok:false,message:'操作异常'};}
@@ -331,16 +398,19 @@ function run(type,p={},interactive=true){
 function settle(show=false){
  if(!s)return;const before=JSON.stringify(s);try{const r=E.advance(s,Date.now());if(!persist(s)){s=JSON.parse(before);return;}updateChrome();if(show){const x=r.offlineSummary||r.summary;if(x&&(x.elapsedMs||(x.seconds||x.elapsedSeconds||0)*1000)>60000)showModal('offline',{summary:x});}}catch(e){s=JSON.parse(before);}
 }
-function boot(){
- if(!s)s=E.createState(Date.now());try{localStorage.setItem(AGE,'yes');}catch(e){}
+function boot(fresh=false){
+ const before=s?JSON.parse(JSON.stringify(s)):null;
+ if(!s)s=E.createState(Date.now());
  if(s.battle)E.act(s,{type:'pauseBattle',paused:true},Date.now());
- persist(s);mounted=true;mount();lastFrame=lastPassive=Date.now();clearInterval(timer);
+ if(!persist(s)){s=before;if(!s||fresh)return false;if(s.battle)E.act(s,{type:'pauseBattle',paused:true},Date.now());}
+ try{localStorage.setItem(AGE,'yes');}catch(e){}
+ mounted=true;mount();lastFrame=lastPassive=Date.now();clearInterval(timer);
  timer=setInterval(()=>{
   if(!s||!mounted||document.hidden||busy)return;const now=Date.now(),seconds=Math.min(1,(now-lastFrame)/1000);lastFrame=now;
   if(s.battle){const before=JSON.stringify(s),beforeBattle=!!s.battle;try{E.tick(s,seconds);if((beforeBattle&&!s.battle)||now-lastPersist>1000){if(!persist(s)){s=JSON.parse(before);if(s.battle)E.act(s,{type:'pauseBattle',paused:true},now);}}}catch(e){s=JSON.parse(before);}renderEncounter();if(beforeBattle&&!s.battle){renderPage();if(s.lastBattleResult)showModal('battle-report');}}
   if(now-lastPassive>=1000){const priorRank=K.pathRank(s),before=JSON.stringify(s);try{E.advance(s,now);if(now-lastPersist>5000&&!persist(s,true))s=JSON.parse(before);}catch(e){s=JSON.parse(before);}lastPassive=now;updateChrome();if(K.pathRank(s)!==priorRank)renderPage();}
  },250);
- settle(true);
+ settle(true);return true;
 }
 function download(raw,name,type='application/json'){const blob=new Blob([raw],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function exportSave(){if(!s)return;settle();const raw=JSON.stringify(s,null,2);try{if(window.Native&&typeof window.Native.exportSave==='function')window.Native.exportSave(raw);else download(raw,'wendao-lingqi-'+new Date().toISOString().slice(0,10)+'.json');toast('已打开备份导出。');}catch(e){toast('导出未成功，请重试。');}}
@@ -353,9 +423,11 @@ function acceptImport(raw){
 }
 function handleUi(id,p){
  if(id==='close')return closeModal();
+ if(id==='journey-go')return followJourney(p.id);
+ if(id==='retry-save'){const ok=persist(s);if(ok)toast('当前进度已保存。');return settingsModal();}
  if(id==='summon-skip'||id==='reveal-all'){closeModal();return showModal('draw-results',{skip:true});}
- if(id==='enter'){if(!document.getElementById('accept-age')?.checked)return toast('请确认年满23岁。');if(recovery)s=E.createState(Date.now());recovery=null;return boot();}
- if(id==='new-game'){s=E.createState(Date.now());recovery=null;return boot();}
+ if(id==='enter'){if(!document.getElementById('accept-age')?.checked)return toast('请确认年满23岁。');const before=s;if(recovery)s=E.createState(Date.now());if(boot(true))recovery=null;else s=before;return;}
+ if(id==='new-game'){const before=s;s=E.createState(Date.now());if(boot(true))recovery=null;else s=before;return;}
  if(id==='export-save')return exportSave();if(id==='import-save')return importPicker();if(id==='export-recovery'){let raw=recovery?.raw;try{raw=raw||localStorage.getItem(KEY+'-recovery');}catch(e){}if(raw){try{if(window.Native&&typeof window.Native.exportRecovery==='function')window.Native.exportRecovery(raw);else download(raw,'wendao-recovery.txt','text/plain');}catch(e){toast('恢复备份导出未成功，请重试。');}}return;}
  if(id==='dungeon-type'){uiState.dungeonType=p.id;return renderPage();}
  if(id==='ending-story'){uiState.sideTab='story';return navigate('fate');}
@@ -385,10 +457,18 @@ document.addEventListener('change',event=>{
  if(id==='filter-gear-slot'){uiState.gearSlot=read(id);equipmentModal();}
  if(id==='filter-gear-rarity'){uiState.gearRarity=read(id);equipmentModal();}
  if(id==='filter-gear-set'){uiState.gearSet=read(id);equipmentModal();}
+ if(id==='filter-gear-sort'){uiState.gearSort=read(id);equipmentModal();}
  if(['dungeon-tier','dungeon-difficulty','dungeon-floor','dungeon-practice'].includes(id)&&uiState.selectedDungeon){const x=dungeonPreview({id:uiState.selectedDungeon,tier:Number(read('dungeon-tier')||s.paths[s.route].realm),difficulty:Number(read('dungeon-difficulty')||0),floor:Number(read('dungeon-floor')||1),practice:!!document.getElementById('dungeon-practice')?.checked});if(x)text('dungeon-live-preview',(x.practice?'试阵无奖励':'当前预览：'+price(x.rewards))+(x.requirements?' · '+(Array.isArray(x.requirements)?x.requirements.join('、'):x.requirements):''));}
  if(['forge-slot','forge-set','forge-rarity'].includes(id))text('forge-live-cost',price(costing('forgeGear',{slot:read('forge-slot'),set:read('forge-set'),rarity:Number(read('forge-rarity'))})));
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){closeModal();return;}
+ if(e.key!=='Tab'||layer.hidden)return;
+ const nodes=Array.from(layer.querySelectorAll('button,input,select,a[href],[tabindex="0"]')).filter(el=>!el.disabled&&!el.hidden&&el.getClientRects().length),first=nodes[0],last=nodes[nodes.length-1];
+ if(!first){e.preventDefault();layer.querySelector('[role="dialog"]')?.focus();return;}
+ if(e.shiftKey&&(document.activeElement===first||!nodes.includes(document.activeElement))){e.preventDefault();last.focus();}
+ else if(!e.shiftKey&&(document.activeElement===last||!nodes.includes(document.activeElement))){e.preventDefault();first.focus();}
+});
 fileInput.addEventListener('change',async()=>{const f=fileInput.files?.[0];if(!f)return;try{if(f.size>MAX)return toast('存档超过1 MiB。');acceptImport(await f.text());}catch(e){toast('无法读取存档。');}finally{fileInput.value='';}});
 function lifecycle(state){
  if(!s||!mounted)return;if(state==='pause'){const before=JSON.stringify(s);try{E.advance(s,Date.now());if(s.battle)E.act(s,{type:'pauseBattle',paused:true},Date.now());if(!persist(s,true))s=JSON.parse(before);}catch(e){s=JSON.parse(before);}}
@@ -398,7 +478,7 @@ document.addEventListener('visibilitychange',()=>lifecycle(document.hidden?'paus
 window.addEventListener('pagehide',()=>lifecycle('pause'));
 window.onNativeLifecycle=lifecycle;window.onNativeImport=acceptImport;window.onNativeMessage=message=>toast(String(message));
 window.onNativeBack=()=>{if(!mounted)return false;if(!layer.hidden){closeModal();return true;}if(page!=='cultivation'){navigate('cultivation');return true;}return false;};
-window.Lingqi={state:()=>s?JSON.parse(JSON.stringify(s)):null,view:()=>s?currentView():null,act:(type,p)=>run(type,p||{}),navigate,showModal,save:()=>persist(s),import:acceptImport};
+window.Lingqi={journey:()=>s?E.journey(s):null,state:()=>s?JSON.parse(JSON.stringify(s)):null,view:()=>s?currentView():null,act:(type,p)=>run(type,p||{}),navigate,showModal,save:()=>persist(s),import:acceptImport};
 load();let age=false;try{age=localStorage.getItem(AGE)==='yes';}catch(e){}
 if(!age)gate();else if(recovery)recoveryScreen();else boot();
 })();

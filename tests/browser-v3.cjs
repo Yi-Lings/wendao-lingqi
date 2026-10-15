@@ -1,8 +1,10 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const ROOT=process.env.LINGQI_ROOT||'/tmp/lingqi-game',BASE=process.env.LINGQI_URL||'http://127.0.0.1:8787/';
+const ROOT=process.env.LINGQI_ROOT||path.resolve(__dirname,'..'),BASE=process.env.LINGQI_URL||'http://127.0.0.1:8787/';
 const {chromium}=require(path.join(ROOT,'qa-tools/node_modules/playwright')),E=require(path.join(ROOT,'web/engine.js')),C=E.catalog;
 const FILTER=process.env.LINGQI_FILTER||'';
+const browserDir=path.join(ROOT,'qa-tools/browsers');
+const browserRevision=process.env.LINGQI_CHROMIUM?null:fs.readdirSync(browserDir).filter(x=>x.startsWith('chromium_headless_shell-')).sort().pop();
 const KEY='lingqi-save-v2',AGE='lingqi-age-confirmed',DIST=path.join(ROOT,'dist');
 const report={filter:FILTER||null,partial:!!FILTER,startedAt:new Date().toISOString(),url:BASE,tests:[],pageErrors:[],consoleErrors:[],failedRequests:[],badResponses:[],externalRequests:[],screenshots:[],fixtureNotice:'Fresh-account tests have no state/resource injection. Later UI integration tests explicitly use a validated mid-game fixture; they do not establish economic reachability or full-game balance.'};
 const ok=(x,m)=>assert.ok(x,m);let browser,fixturePage;
@@ -22,7 +24,7 @@ async function api(p,type,params={}){return p.evaluate(({type,params})=>window.L
 async function restore(p,s){s.lastAt=Date.now();ok(await p.evaluate(raw=>window.Lingqi.import(raw),JSON.stringify(s)),'fixture imported');await close(p);}
 (async()=>{
  fs.mkdirSync(DIST,{recursive:true});
- browser=await chromium.launch({headless:true,ignoreDefaultArgs:['--disable-dev-shm-usage'],executablePath:process.env.LINGQI_CHROMIUM||path.join(ROOT,'qa-tools/browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell'),args:['--no-sandbox','--disable-gpu'],env:{...process.env,FONTCONFIG_FILE:path.join(ROOT,'qa-tools/fonts.conf')}});
+ browser=await chromium.launch({headless:true,ignoreDefaultArgs:['--disable-dev-shm-usage'],executablePath:process.env.LINGQI_CHROMIUM||path.join(browserDir,browserRevision,'chrome-headless-shell-linux64/chrome-headless-shell'),args:['--no-sandbox','--disable-gpu'],env:{...process.env,FONTCONFIG_FILE:path.join(ROOT,'qa-tools/fonts.conf')}});
  report.browser=await browser.version();
  const fresh=await make(),p=fresh.page;
  await test('fresh: age confirmation, one-layer start and initial assets','fresh',async()=>{ok(await p.locator('#accept-age').isVisible(),'age visible');await ui(p,'enter');ok((await state(p))===null,'unchecked cannot enter');await p.locator('#accept-age').check();await ui(p,'enter');ok((await state(p)).paths.magic.layer===1,'numeric first layer');ok((await p.locator('#page-content').innerText()).includes('炼气一层'),'one-layer UI');await nav(p,'heaven');await ui(p,'gacha-pool');const lockedPool=await p.locator('#modal-layer').innerText();ok(lockedPool.includes('第二境'),'unopened pool explains unlock');ok(!/Infinity|NaN/.test(lockedPool),'unopened pool has no invalid probability');await close(p);await nav(p,'cultivation');await overflow(p);return{startStones:(await state(p)).stones};});

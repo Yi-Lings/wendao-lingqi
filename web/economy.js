@@ -278,6 +278,59 @@
     K.add(s,'stones',30*(g.tier+1)*(g.rarity+1));
     if(g.rarity===5)addMaterial(s,'soul',1);
   }
+  // Previews use the same protected-item rules and never consume resources or RNG.
+  function recyclePreview(s,maxRarity){
+    if(!int(maxRarity,0,4))return null;
+    var items=s.bag.filter(function(g){return g.rarity<=maxRarity&&!protect(s,g.uid)&&!(s.rerollPending&&s.rerollPending.uid===g.uid);});
+    var rewards={stones:0,dust:0};
+    items.forEach(function(g){rewards.stones+=30*(g.tier+1)*(g.rarity+1);rewards.dust+=[1,2,4,8,20,60][g.rarity];});
+    // Report the amount that can actually fit under the currency cap.
+    rewards.stones=Math.min(rewards.stones,1e12-s.stones);rewards.dust=Math.min(rewards.dust,1e12-s.dust);
+    return {uids:items.map(function(g){return g.uid;}),count:items.length,protectedCount:s.bag.length-items.length,rewards:rewards};
+  }
+  function equipmentBonuses(a){
+    var list=[];
+    Object.keys(a.sets).forEach(function(id){[2,4].forEach(function(n){if(a.sets[id]>=n)list.push({id:id+':'+n,label:C.sets[id].name+(n===2?'二件':'四件')});});});
+    a.redEffects.forEach(function(id){list.push({id:'red:'+id,label:C.sets[id].name+'道品特效'});});
+    return list;
+  }
+  function equipmentDifference(before,after){
+    var old=equipmentBonuses(before),next=equipmentBonuses(after),delta={};
+    ['power','attack','defense','maxHp','maxMp','crit','critDamage','dodge','cooldownReduction','healing','penetration','mpRegen'].forEach(function(id){delta[id]=after[id]-before[id];});
+    return {before:before,after:after,delta:delta,gained:next.filter(function(x){return !old.some(function(y){return y.id===x.id;});}),lost:old.filter(function(x){return !next.some(function(y){return y.id===x.id;});})};
+  }
+  function compareEquipment(s,uid){
+    var g=gear(s,uid);if(!g)return null;
+    var equipped=Object.assign({},s.equipped);equipped[g.slot]=g.uid;
+    return Object.assign({uid:uid,currentUid:s.equipped[g.slot],equipped:equipped},equipmentDifference(K.attributes(s),K.attributes(Object.assign({},s,{equipped:equipped}))));
+  }
+  function recommendEquipment(s){
+    var before=Object.assign({},s.equipped),groups={},byUid=new Map(s.bag.map(function(g){return [g.uid,g];}));
+    function localScore(g){var a=K.gearStats(s,g);return a.attack*5+a.defense*4+a.hp;}
+    SLOT_KEYS.forEach(function(slot){
+      var ranked=s.bag.filter(function(g){return g.slot===slot;}).map(function(g){return {gear:g,score:localScore(g)};}).sort(function(a,b){return b.score-a.score;});
+      var counts={};groups[slot]=ranked.filter(function(x){counts[x.gear.set]=(counts[x.gear.set]||0)+1;return counts[x.gear.set]<=2;}).map(function(x){return x.gear;});
+      var current=byUid.get(before[slot]);if(current&&!groups[slot].some(function(g){return g.uid===current.uid;}))groups[slot].push(current);
+    });
+    function stats(eq){return K.attributes(Object.assign({},s,{equipped:eq}));}
+    var seeds=[before],greedy=Object.assign({},before);
+    SLOT_KEYS.forEach(function(slot){if(groups[slot].length)greedy[slot]=groups[slot][0].uid;});seeds.push(greedy);
+    Object.keys(C.sets).forEach(function(set){var eq=Object.assign({},greedy);SLOT_KEYS.forEach(function(slot){var g=groups[slot].find(function(x){return x.set===set;});if(g)eq[slot]=g.uid;});seeds.push(eq);});
+    var winner=before,baseline=stats(before),best=baseline.power;
+    seeds.forEach(function(seed){
+      var eq=Object.assign({},seed),score=stats(eq).power;
+      for(var pass=0;pass<4;pass++){
+        var changed=false;
+        SLOT_KEYS.forEach(function(slot){
+          var chosen=eq[slot];groups[slot].forEach(function(g){var test=Object.assign({},eq);test[slot]=g.uid;var power=stats(test).power;if(power>score){score=power;chosen=g.uid;}});
+          if(eq[slot]!==chosen){eq[slot]=chosen;changed=true;}
+        });
+        if(!changed)break;
+      }
+      if(score>best){winner=eq;best=score;}
+    });
+    return Object.assign({from:before,equipped:Object.assign({},winner),changes:SLOT_KEYS.filter(function(slot){return before[slot]!==winner[slot];}).map(function(slot){return {slot:slot,from:before[slot],to:winner[slot]};})},equipmentDifference(baseline,stats(winner)));
+  }
   var FIRE_KEYS=['low','medium','high'];
   var FIRE_HINTS={
     low:'药液开始翻涌，丹纹正在闭合；收为文火，避免冲散药性。',
@@ -418,18 +471,12 @@
       s.equipped[g.slot]=g.uid;return yes('已装备'+gearTitle(g));
     }
     if(a.type==='autoEquip'){
-      var changed=0;
-      SLOT_KEYS.forEach(function(slot){
-        var list=s.bag.filter(function(x){return x.slot===slot;});
-        if(!list.length)return;
-        var best=list.reduce(function(a,b){
-          var aa=K.gearStats(s,a),bb=K.gearStats(s,b);
-          function score(v){return (v.attack||0)*3+(v.defense||0)*2+(v.maxHp||v.hp||0)*0.2+(v.crit||0)*80+(v.penetration||0)*80;}
-          return score(bb)>score(aa)?b:a;
-        });
-        if(s.equipped[slot]!==best.uid){s.equipped[slot]=best.uid;changed++;}
-      });
-      return yes(changed?'已按基础属性装备'+changed+'件；套装搭配可手动调整':'当前装备已是推荐配置');
+      var plan=recommendEquipment(s);
+      if(a.expected){
+        if(!a.expected.from||!a.expected.equipped||!SLOT_KEYS.every(function(slot){return a.expected.from[slot]===s.equipped[slot]&&a.expected.equipped[slot]===plan.equipped[slot];}))return no('装备已变化，请重新查看推荐方案');
+      }
+      s.equipped=plan.equipped;
+      return yes(plan.changes.length?'已调整'+plan.changes.length+'件装备，整套战力提升'+plan.delta.power:'当前配置已是推荐方案',{changes:plan.changes,delta:plan.delta,gained:plan.gained,lost:plan.lost});
     }
     if(a.type==='lockGear'){
       g=gear(s,a.uid);if(!g)return no('装备不存在');g.locked=!g.locked;
@@ -445,6 +492,8 @@
     }
     if(a.type==='bulkRecycle'){
       if(!int(a.maxRarity,0,4))return no('批量分解不会包含红装');
+      var preview=recyclePreview(s,a.maxRarity);
+      if(a.uids!==undefined&&(!Array.isArray(a.uids)||a.uids.length!==preview.count||a.uids.some(function(uid,i){return uid!==preview.uids[i];})))return no('背包或保护状态已变化，请重新预览分解');
       var recycled=[];
       s.bag=s.bag.filter(function(x){
         if(x.rarity>a.maxRarity||protect(s,x.uid)||(s.rerollPending&&s.rerollPending.uid===x.uid))return true;
@@ -622,6 +671,7 @@
     alchemyCapacity:alchemyCapacity,alchemyView:alchemyView,alchemyBonus:alchemyBonus,
     targets:targets,gachaPool:pools,gachaTable:TABLE,affixes:AFFIXES,exchangeList:EXCHANGES,
     checkLoadout:checkLoadout,limits:{bag:MAX_BAG,overflow:MAX_OVERFLOW,history:200},
+    recyclePreview:recyclePreview,compareEquipment:compareEquipment,recommendEquipment:recommendEquipment,
     redChance:function(pity){var n=pity+1;return n>=80?1:n>50?0.01+(n-50)*0.005:0.01;}
   };
 });

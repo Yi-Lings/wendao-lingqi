@@ -1,6 +1,6 @@
-# 问道灵契 Android V3
+# 问道灵契 Android V3.1
 
-包名 `com.lingqi.game`，versionCode 3、versionName 3.0，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
+release 包名 `com.lingqi.game`，debug 包名 `com.lingqi.game.preview`；versionCode 4、versionName 3.1，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
 
 ## 标准 Gradle 构建
 
@@ -13,11 +13,11 @@ gradle --no-daemon -p android :app:assembleDebug
 
 Android Gradle Plugin 固定为 8.7.3。Web 资源直接从 `web/` 打包，无需 npm 安装。Debug APK 在 `android/app/build/outputs/apk/debug/app-debug.apk`，使用本机生成的调试签名。Gradle release 默认不签名，禁止把私钥加入工程。
 
-`.github/workflows/android.yml` 在 push、pull request 或手动触发时运行 V3 游戏测试并生成 debug APK；工作流不使用发布私钥。Debug APK 无法覆盖原个人发布签名的安装包，应在独立测试设备安装或先备份再卸载旧包。
+`.github/workflows/android.yml` 在 push、pull request 或手动触发时运行 V3 游戏测试并生成 debug APK；工作流不使用发布私钥。Debug APK 名称为“灵契·测试版”，使用独立包名，与原个人发布包并存。原版导出 JSON 后可在测试版导入，无需卸载原版。不同包名不会自动共享私有存档。
 
 ## 保持旧签名的个人发布包
 
-当前设备保留了原精简工具链：
+准备精简工具链，并提供原发布签名后：
 
 ```sh
 python3 tools/prepare-tools.py
@@ -54,4 +54,4 @@ sh build-android.sh
 
 ## 验证边界
 
-原生源码已在现有 ECJ/API35 工具链编译通过。当前连接的是 Linux VPS，没有 adb、Android 设备或模拟器，因此没有真机验证。最终构建、签名、浏览器与逻辑测试结果记录在 `docs/ANDROID_VALIDATION.md`；它们不能替代 Android 文件选择器、系统返回、进程恢复、API35 布局和 30 分钟持续运行测试。
+原生源码已在现有 ECJ/API35 工具链编译通过。当前连接的是 Linux 环境，未连接 Android 设备或模拟器，因此没有真机验证。V3.1 构建、签名、浏览器与逻辑测试结果记录在 `docs/ITERATION_V3_1.md`；原 V3 记录保留在 `docs/ANDROID_VALIDATION.md`；它们不能替代 Android 文件选择器、系统返回、进程恢复、API35 布局和 30 分钟持续运行测试。

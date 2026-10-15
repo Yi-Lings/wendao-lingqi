@@ -13,6 +13,48 @@ function breakthroughCost(s,route){
   if((s.pills['break'+r]||0)>0){cost.pills={['break'+r]:1};cost.stones=0;}
   return cost;
 }
+function journey(s){
+  const p=s.paths[s.route],needed=K.xpNeeded(s),full=p.xp>=needed,terminal=p.realm===5;
+  const cost=p.layer===10&&!terminal?breakthroughCost(s):{},missing=[];
+  for(const [key,value] of Object.entries(cost)){
+    if(typeof value==='number'&&value>(s[key]||0))missing.push({id:key,have:s[key]||0,need:value,shortage:value-(s[key]||0)});
+    else if(value&&typeof value==='object')for(const [id,count] of Object.entries(value))if(count>(s[key][id]||0))missing.push({id,have:s[key][id]||0,need:count,shortage:count-(s[key][id]||0)});
+  }
+  const trial=terminal?s.progress.endingTrials[s.route]:!!s.progress.trialWins[s.route+':'+p.realm];
+  const checks=[{id:'xp',label:p.layer===10?'圆满修为':'本层修为',done:full,current:p.xp,required:needed}];
+  if(p.layer===10){checks.push({id:'trial',label:terminal?'自证大道试炼':'境界试炼',done:trial});if(!terminal)checks.push({id:'materials',label:'突破材料',done:!missing.length});}
+  const goals=[];
+  function goal(id,title,description,label,target){return {id,title,description,label,target};}
+  const action=(type,payload={})=>({kind:'action',type,payload}),ui=(type,payload={})=>({kind:'ui',type,payload});
+  const dungeon=id=>ui('source',{id});
+  let next;
+  if(s.battle||s.exploration||s.joint)next=goal('encounter','继续当前历练',s.battle?'战斗进行中。先完成本场，再调整成长与配装。':s.joint?'共修灵息仍在流转，完成或取消后继续修行。':'洞天尚有未完成的节点，奖励按归途结算。','返回历练',{kind:'encounter'});
+  else if(p.layer===10&&terminal&&trial)next=goal('finale',s.story.ending?'大道已证 · 自由游历':'书写山海归途',s.story.ending?'可继续探索两条仙途、六流派与未完成的故事。':'完成山海卷的剩余章节，再亲自选择结局。',s.story.ending?'自由历练':'前往山海卷',s.story.ending?{kind:'page',type:'adventure'}:ui('ending-story'));
+  else if(full&&p.layer<10)next=goal('level-up','道基已稳 · 可以晋级','本层修为已满，晋级保留溢出的修为。','晋升下一层',action('levelUp'));
+  else if(full&&!trial)next=goal('trial',terminal?'终境圆满 · 自证大道':'十层圆满 · 迎接试炼','修为已满。先查看试炼，再开始正式挑战。','查看境界试炼',dungeon('trial'));
+  else if(full&&!missing.length)next=goal('breakthrough','诸事齐备 · 突破下一境','圆满修为、境界试炼和材料全部就绪。','突破下一境',action('breakthrough'));
+  else if(full&&missing.length){
+    const item=missing[0],name=C.materials[item.id]?.name||({stones:'灵石'})[item.id]||C.recipes[item.id]?.name||item.id;
+    const source=C.materials[item.id]?.source?.id||'resource_herb';
+    next=goal('material:'+item.id,'备齐突破材料',name+' '+item.have+' / '+item.need+'，尚缺 '+item.shortage+'。前往对应秘境补齐。','前往材料来源',dungeon(source));
+  }else if(!s.training)next=goal('training','灵息已停 · 继续修行','开启洞府静修后，离线也会积累基础修为。','开始修行',action('setTraining',{enabled:true}));
+  else{
+    const pills=Object.values(C.recipes).filter(r=>r.kind==='qi'&&s.pills[r.id]>0&&(r.realm<p.realm||r.realm===p.realm&&(r.layer||1)<=p.layer)).sort((a,b)=>a.effect.xp-b.effect.xp);
+    const pill=pills.find(r=>r.effect.xp>=needed-p.xp)||pills[pills.length-1];
+    next=pill?goal('pill:'+pill.id,'丹香入道 · 加速修行','可服用'+pill.name+'，获得 '+pill.effect.xp+' 修为；溢出转为储备。','服用'+pill.name,action('usePill',{id:pill.id})):goal('cultivate','灵息运转 · 积累修为','洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。','前往灵草秘境',dungeon('resource_herb'));
+  }
+  goals.push(next);
+  if(!s.battle&&!s.exploration&&!s.joint){
+    if(s.wisdomTickets)goals.push(goal('wisdom','悟道已凝成',s.wisdomTickets+'张感应券等待领取。','领取悟道券',action('claimWisdom')));
+    if(s.rewardOverflow.length)goals.push(goal('overflow','奖励盒待整理',s.rewardOverflow.length+'件装备等待入囊。','整理背包',ui('equipment')));
+    const story=S.view(s);
+    if(story.chapterReady)goals.push(goal('chapter:'+s.story.chapter,'山海卷 · '+story.currentChapter.name,'章节目标已完成，亲自选择剧情方向。','前往山海卷',ui('ending-story')));
+    if(story.sidequestProgress.some(q=>q.ready)||story.commissions.some(q=>q.ready))goals.push(goal('quests','同行回响 · 奖励可领取','支线或宗门委托已完成，前往仙缘查看。','查看仙缘',ui('ending-story')));
+    if(K.maxRank(s)>=2&&!s.autoSmall&&p.layer<10)goals.push(goal('auto-small','让修行更从容','开启自动小层晋级。大境突破仍由你主动完成。','开启自动小层',action('setAutoSmall',{enabled:true})));
+  }
+  const milestones=[{rank:2,label:'资源秘境'},{rank:4,label:'宗门 · 三神通 · 秘术'},{rank:6,label:'问道塔'},{rank:8,label:'洞天探索'},{rank:10,label:'天道感应 · 四神通 · 灵宝'},{rank:13,label:'第二秘术 · 被动灵宝'},{rank:16,label:'完整灵宝槽'}];
+  return {realmLabel:K.realmLabel(s),checks,missing,goals,primary:next,trainingPerMinute:K.trainingPerTick(s)*20,etaSeconds:s.training&&!full?Math.ceil((needed-p.xp)/K.trainingPerTick(s))*3:null,nextUnlock:milestones.find(x=>x.rank>K.pathRank(s))||null};
+}
 function baseHandle(s,a,now){
   const route=a.route||s.route;
   if(a.type==='switchRoute'){
@@ -89,6 +131,7 @@ function tick(s,seconds){
 }
 function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(result.error);return JSON.stringify(result.state);}
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
+  journey,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
   modules:{core:K,economy:Q,combat:B,story:S}};

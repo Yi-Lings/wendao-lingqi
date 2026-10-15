@@ -1,8 +1,12 @@
-# 问道 · 灵契 V3
+# 问道 · 灵契 V3.1
 
 原创安卓竖屏单机修仙游戏：逐层修行、六流派功法构筑、自选副本、装备炼丹、天道感应与剧情同行。游戏资源随 APK 打包，安装后离线运行。
 
-[直接下载 Android V3.0 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-v3.apk) · [画面与交付说明](docs/RELEASE_V3.md) · [GitHub 仓库](https://github.com/Yi-Lings/wendao-lingqi)
+[已发布 Android V3.0 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v3.0.0/wendao-lingqi-v3.apk) · [画面与交付说明](docs/RELEASE_V3.md) · [GitHub 仓库](https://github.com/Yi-Lings/wendao-lingqi)
+
+**2026-10-14：V3.1 优化迭代已完成。** 新增实时仙途目标、整套战力配装预览、装备对比与排序、批量分解预览、弹窗焦点恢复和保存失败重试。142 项逻辑检查、46 项浏览器检查通过。详情见 [V3.1 优化方案与验证](docs/ITERATION_V3_1.md)。
+
+新版测试 APK 为 `dist/wendao-lingqi-v3.1-preview.apk`，使用独立包名 `com.lingqi.game.preview`，可与原 V3 共存；可通过导出/导入 JSON 迁移存档。当前没有原发布私钥，未替换上方的 V3.0 正式下载。
 
 个人发布 APK 约45.8MiB，最低Android8.0，沿用旧签名。源码构建输出为 `dist/lingqi-game.apk`；仓库分片可用 `python3 tools/assemble-apk.py` 合并并校验。
 
@@ -46,7 +50,7 @@ npm test
 node --test tests/v3*.cjs
 ```
 
-`tests/browser-v3.cjs` 是单独的 Playwright 浏览器检查，需要额外准备 `qa-tools` 下的 Playwright、Chromium headless shell 和可用中文字体，再启动上面的本地服务。设置 `LINGQI_ROOT` 为本机仓库目录、`LINGQI_URL` 为服务地址；浏览器路径不同时使用 `LINGQI_CHROMIUM`：
+`npm run test:browser` 顺序运行原 V3 回归和 V3.1 增强检查；`tests/browser-v3.cjs` 是其中的 Playwright 回归检查，需要额外准备 `qa-tools` 下的 Playwright、Chromium headless shell 和可用中文字体，再启动上面的本地服务。设置 `LINGQI_ROOT` 为本机仓库目录、`LINGQI_URL` 为服务地址；默认会发现 `qa-tools/browsers` 中已安装的 Chromium；也可使用 `LINGQI_CHROMIUM` 指定其他浏览器路径：
 
 ```sh
 LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
@@ -54,7 +58,7 @@ LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
 
 ## Android 构建
 
-最低 Android 8.0（API 26），目标与编译 API 35，包名 `com.lingqi.game`，版本 3.0、versionCode 3。
+最低 Android 8.0（API 26），目标与编译 API 35，release 包名 `com.lingqi.game`，版本 3.1、versionCode 4；debug 包使用 `com.lingqi.game.preview`。
 
 标准开发构建使用 Java 17、Gradle 8.9、Android SDK platform 35 与 build-tools 35.0.0：
 
@@ -71,7 +75,7 @@ python3 tools/prepare-tools.py
 sh build-android.sh
 ```
 
-首次工具下载需要网络。发布脚本仅使用已有签名，可通过 `LINGQI_SIGNING_DIR` 指定私有目录；缺少原签名时停止，不创建新密钥。Debug 包或不同签名无法覆盖原个人发布包，请先导出存档再更换安装。
+首次工具下载需要网络。发布脚本仅使用已有签名，可通过 `LINGQI_SIGNING_DIR` 指定私有目录；缺少原签名时停止，不创建新密钥。Debug 包使用独立包名，与原个人发布包并存；从原版导出 JSON，再导入测试版即可迁移存档。正式覆盖升级仍需原签名。
 
 详细要求、原生保存接口与设备检查边界见 [Android 说明](android/README.md)。私钥、个人存档、工具链二进制和构建缓存不进入仓库。
 

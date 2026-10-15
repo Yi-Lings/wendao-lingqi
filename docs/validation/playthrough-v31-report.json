@@ -1,0 +1,177 @@
+{
+  "method": "accelerated legal engine actions; no real-time browser/device claim",
+  "results": [
+    {
+      "route": "magic",
+      "startTimestamp": 1700000000000,
+      "seed": 3487918080,
+      "actions": 926,
+      "battles": 115,
+      "wins": 115,
+      "losses": 0,
+      "combatSeconds": 1714.0000000000007,
+      "waitHours": 2520,
+      "saves": 268,
+      "maxEquippedRarity": 3,
+      "draws": 0,
+      "simulatedHours": 2520,
+      "realm": "渡劫十层·圆满",
+      "secondaryRoute": {
+        "realm": 0,
+        "layer": 1,
+        "xp": 0,
+        "reserve": 0
+      },
+      "visitedNodes": 60,
+      "tower": 60,
+      "uniqueBosses": 12,
+      "chapter": 6,
+      "ending": "guardian",
+      "redGearEquipped": 0,
+      "redTreasuresEquipped": 0,
+      "steps": [
+        {
+          "realm": 0,
+          "realmLabel": "炼气十层·圆满",
+          "hours": 672,
+          "battles": 24,
+          "tower": 10,
+          "chapter": 1,
+          "power": 1034
+        },
+        {
+          "realm": 1,
+          "realmLabel": "筑基十层·圆满",
+          "hours": 840,
+          "battles": 47,
+          "tower": 20,
+          "chapter": 2,
+          "power": 2102
+        },
+        {
+          "realm": 2,
+          "realmLabel": "金丹十层·圆满",
+          "hours": 1176,
+          "battles": 64,
+          "tower": 30,
+          "chapter": 3,
+          "power": 3509
+        },
+        {
+          "realm": 3,
+          "realmLabel": "元婴十层·圆满",
+          "hours": 1680,
+          "battles": 81,
+          "tower": 40,
+          "chapter": 4,
+          "power": 5723
+        },
+        {
+          "realm": 4,
+          "realmLabel": "化神十层·圆满",
+          "hours": 2352,
+          "battles": 98,
+          "tower": 50,
+          "chapter": 5,
+          "power": 9854
+        },
+        {
+          "realm": 5,
+          "realmLabel": "渡劫十层·圆满",
+          "hours": 2520,
+          "battles": 115,
+          "tower": 60,
+          "chapter": 6,
+          "power": 18229
+        }
+      ],
+      "failures": []
+    },
+    {
+      "route": "body",
+      "startTimestamp": 1700000000000,
+      "seed": 3487918080,
+      "actions": 999,
+      "battles": 115,
+      "wins": 115,
+      "losses": 0,
+      "combatSeconds": 3139.8000000000015,
+      "waitHours": 2520,
+      "saves": 282,
+      "maxEquippedRarity": 3,
+      "draws": 0,
+      "simulatedHours": 2520,
+      "realm": "破虚十层·圆满",
+      "secondaryRoute": {
+        "realm": 0,
+        "layer": 1,
+        "xp": 0,
+        "reserve": 0
+      },
+      "visitedNodes": 60,
+      "tower": 60,
+      "uniqueBosses": 12,
+      "chapter": 6,
+      "ending": "guardian",
+      "redGearEquipped": 0,
+      "redTreasuresEquipped": 0,
+      "steps": [
+        {
+          "realm": 0,
+          "realmLabel": "炼体十层·圆满",
+          "hours": 672,
+          "battles": 24,
+          "tower": 10,
+          "chapter": 1,
+          "power": 1074
+        },
+        {
+          "realm": 1,
+          "realmLabel": "锻骨十层·圆满",
+          "hours": 840,
+          "battles": 47,
+          "tower": 20,
+          "chapter": 2,
+          "power": 2212
+        },
+        {
+          "realm": 2,
+          "realmLabel": "凝血十层·圆满",
+          "hours": 1176,
+          "battles": 64,
+          "tower": 30,
+          "chapter": 3,
+          "power": 3676
+        },
+        {
+          "realm": 3,
+          "realmLabel": "通脉十层·圆满",
+          "hours": 1680,
+          "battles": 81,
+          "tower": 40,
+          "chapter": 4,
+          "power": 5963
+        },
+        {
+          "realm": 4,
+          "realmLabel": "金身十层·圆满",
+          "hours": 2352,
+          "battles": 98,
+          "tower": 50,
+          "chapter": 5,
+          "power": 10200
+        },
+        {
+          "realm": 5,
+          "realmLabel": "破虚十层·圆满",
+          "hours": 2520,
+          "battles": 115,
+          "tower": 60,
+          "chapter": 6,
+          "power": 18766
+        }
+      ],
+      "failures": []
+    }
+  ]
+}
