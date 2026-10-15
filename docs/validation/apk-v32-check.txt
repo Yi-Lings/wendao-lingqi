@@ -1,0 +1,11 @@
+package: name='com.lingqi.game.preview' versionCode='5' versionName='3.2' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+minSdkVersion:'26'
+targetSdkVersion:'35'
+application-label:'灵契·测试版'
+launchable-activity: name='com.lingqi.game.MainActivity'  label='' icon=''
+All 24 packaged game assets exactly match source.
+V3 artwork: v3-heroes.png, v3-hero-expressions.png, v3-forge.png, v3-world.png, v3-map-atlas-a.png, v3-map-atlas-b.png, v3-monster-atlas.png, v3-boss-atlas.png, v3-items-atlas.png, v3-skills-atlas.png, v3-summon.png, v3-shop.png, v3-chapter-atlas.png, v3-cardback.png
+Game modules: data.js, core.js, economy.js, combat.js, story.js, engine.js, app.js
+classes.dex bytes: 1532
+APK bytes: 48071713
+APK SHA256: ace8168648ae748b81e1f7055dd9e9e04b929a4485f45db04e89ebc37038d52d

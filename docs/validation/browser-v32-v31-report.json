@@ -1,0 +1,99 @@
+{
+  "startedAt": "2026-10-15T00:25:50.354Z",
+  "url": "http://127.0.0.1:8787/",
+  "tests": [
+    {
+      "name": "fresh: live journey accelerates with an owned pill, then advances exactly one layer",
+      "passed": true,
+      "durationMs": 683
+    },
+    {
+      "name": "fresh: an outdated journey link cannot repeat a consumed pill action",
+      "passed": true,
+      "durationMs": 25
+    },
+    {
+      "name": "keyboard: dialogs contain Tab focus and restore the original settings button",
+      "passed": true,
+      "durationMs": 152
+    },
+    {
+      "name": "journey: passive XP updates the visible goal without a reload",
+      "passed": true,
+      "durationMs": 1019
+    },
+    {
+      "name": "journey: tenth-layer materials link opens the real source and terminal guidance stays in six realms",
+      "passed": true,
+      "durationMs": 471
+    },
+    {
+      "name": "equipment: sorted whole-build comparisons and reviewed recommendations apply only after acceptance",
+      "passed": true,
+      "durationMs": 1725
+    },
+    {
+      "name": "equipment: item protection refresh preserves dialog scroll and keyboard focus",
+      "passed": true,
+      "durationMs": 79
+    },
+    {
+      "name": "recycling: preview shows exact count and refunds, cancellation changes nothing, confirmation persists",
+      "passed": true,
+      "durationMs": 1473
+    },
+    {
+      "name": "saving: recommendation and recycling failure roll back all equipment, rewards and RNG",
+      "passed": true,
+      "durationMs": 928
+    },
+    {
+      "name": "combat: repeated rendering preserves focused targets and paused combat avoids DOM churn",
+      "passed": true,
+      "durationMs": 2087
+    },
+    {
+      "name": "saving: failed first save keeps the age gate and can be retried without phantom progress",
+      "passed": true,
+      "durationMs": 737
+    },
+    {
+      "name": "saving: existing valid progress still opens readably when boot persistence fails",
+      "passed": true,
+      "durationMs": 1028
+    },
+    {
+      "name": "responsive: new goal, recommendation, comparison and recycle dialogs fit 320, 360, 412 and desktop",
+      "passed": true,
+      "durationMs": 3683
+    },
+    {
+      "name": "performance: full 300-item bag gives a non-decreasing plan and a responsive sorted inventory",
+      "passed": true,
+      "durationMs": 901,
+      "details": {
+        "recommendMs": 45.699999999953434,
+        "inventoryMs": 120.30000000004657,
+        "delta": 482
+      }
+    }
+  ],
+  "screenshots": [
+    "v31-mobile-journey.png",
+    "v31-mobile-terminal-goal.png",
+    "v31-mobile-recommendation.png",
+    "v31-mobile-equipment.png",
+    "v31-mobile-recycle-preview.png",
+    "v31-mobile-save-recovery.png",
+    "v31-desktop-journey.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "fixtureNotice": "Fresh-account onboarding uses no injected resources. Advanced equipment, trial and persistence checks use validated fixtures; these are not evidence of economic reachability or device performance.",
+  "browser": "151.0.7922.34",
+  "passed": true,
+  "finishedAt": "2026-10-15T00:26:06.691Z"
+}

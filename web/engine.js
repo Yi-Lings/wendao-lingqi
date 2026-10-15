@@ -13,6 +13,46 @@ function breakthroughCost(s,route){
   if((s.pills['break'+r]||0)>0){cost.pills={['break'+r]:1};cost.stones=0;}
   return cost;
 }
+function worldView(s){
+  const w=s.wanderings||{stance:'insight',records:[]},seen=new Map(w.records.map(x=>[x.id,x]));
+  const events=C.worldEvents.map(event=>{
+    const record=seen.get(event.id),reasons=[];
+    if(K.pathRank(s)<event.realm*10+event.layer-1)reasons.push('需要当前主修达到'+C.routes[s.route].realmNames[event.realm]+event.layer+'层');
+    if(event.previous&&!seen.has(event.previous))reasons.push('先完成《'+C.worldEvents.find(x=>x.id===event.previous).name+'》');
+    if(event.requiredDungeon&&!(s.progress.dungeonWins[event.requiredDungeon]>0))reasons.push('先通关'+C.dungeons[event.requiredDungeon].name);
+    return {...event,completed:!!record,record:record?copy(record):null,available:!record&&!reasons.length,reasons};
+  });
+  const insight=K.daoInsight(s);
+  return {...insight,events,available:events.filter(x=>x.available).length,completed:seen.size,total:events.length,regions:C.regions.map(region=>({...region,completed:events.filter(x=>x.realm===region.realm&&x.completed).length,total:3,available:events.filter(x=>x.realm===region.realm&&x.available).length})),paths:Object.values(C.daoPaths).map(path=>({...path,marks:insight.marks[path.id],active:insight.stance===path.id}))};
+}
+function worldHandle(s,a,now){
+  if(!['resolveEncounter','setDaoStance'].includes(a.type))return null;
+  if(s.battle||s.exploration||s.joint)return no('先结束战斗、洞天或共修，再处理历世与道心');
+  if(!s.wanderings)s.wanderings={stance:'insight',records:[]};
+  if(a.type==='setDaoStance'){
+    if(!Object.prototype.hasOwnProperty.call(C.daoPaths,a.id))return no('道心主张无效');
+    if(s.wanderings.stance===a.id)return no('已在参悟此道心');
+    s.wanderings.stance=a.id;K.log(s,'道心转向'+C.daoPaths[a.id].name+'，已获得的印记全部保留。',now);
+    return yes('已参悟'+C.daoPaths[a.id].name+'道心');
+  }
+  const event=worldView(s).events.find(x=>x.id===a.id);if(!event)return no('历世事件不存在');
+  if(event.completed)return no('此番机缘已经记入手札，不会重复结算');
+  if(!event.available)return no(event.reasons.join('；'));
+  const choice=event.choices.find(x=>x.id===a.choice);if(!choice)return no('请选择当前事件中的道路');
+  if(!K.spend(s,choice.cost))return no('历世所需材料不足，可先准备或选择求真道路');
+  K.grant(s,choice.reward,s.route);
+  s.wanderings.records.push({id:event.id,choice:choice.id,route:s.route,rank:K.pathRank(s),at:now});
+  K.log(s,'历世《'+event.name+'》：'+choice.outcome+' 获得'+C.daoPaths[choice.id].name+'印记。',now);
+  return yes(choice.outcome,{eventId:event.id,choiceId:choice.id,reward:copy(choice.reward),mark:choice.id});
+}
+function preparation(s){
+  const load=s.loadouts[s.route],p=s.paths[s.route],skills=load.skills.map(id=>C.techniques[id]).filter(Boolean);
+  const pills=load.pills.map(id=>C.recipes[id]).filter(x=>x&&s.pills[x.id]>0&&(x.realm<p.realm||x.realm===p.realm&&(x.layer||1)<=p.layer));
+  return {dao:K.daoInsight(s),roles:[['interrupt','打断'],['purify','净化'],['shield','护盾'],['heal','回复']].map(([id,name])=>{
+    const techniques=skills.filter(x=>!!x.rules?.[id]).map(x=>x.name),consumables=pills.filter(x=>!!x.effect?.[id]).map(x=>x.name+' ×'+s.pills[x.id]);
+    return {id,name,ready:techniques.length+consumables.length>0,techniques,pills:consumables};
+  })};
+}
 function journey(s){
   const p=s.paths[s.route],needed=K.xpNeeded(s),full=p.xp>=needed,terminal=p.realm===5;
   const cost=p.layer===10&&!terminal?breakthroughCost(s):{},missing=[];
@@ -51,6 +91,8 @@ function journey(s){
     if(story.chapterReady)goals.push(goal('chapter:'+s.story.chapter,'山海卷 · '+story.currentChapter.name,'章节目标已完成，亲自选择剧情方向。','前往山海卷',ui('ending-story')));
     if(story.sidequestProgress.some(q=>q.ready)||story.commissions.some(q=>q.ready))goals.push(goal('quests','同行回响 · 奖励可领取','支线或宗门委托已完成，前往仙缘查看。','查看仙缘',ui('ending-story')));
     if(K.maxRank(s)>=2&&!s.autoSmall&&p.layer<10)goals.push(goal('auto-small','让修行更从容','开启自动小层晋级。大境突破仍由你主动完成。','开启自动小层',action('setAutoSmall',{enabled:true})));
+    const event=worldView(s).events.find(x=>x.available);
+    if(event)goals.push(goal('world:'+event.id,'历世机缘 · '+event.name,'山海有新的抉择，奖励与道心印记随选择确定。','前往历世',ui('world-event',{id:event.id})));
   }
   const milestones=[{rank:2,label:'资源秘境'},{rank:4,label:'宗门 · 三神通 · 秘术'},{rank:6,label:'问道塔'},{rank:8,label:'洞天探索'},{rank:10,label:'天道感应 · 四神通 · 灵宝'},{rank:13,label:'第二秘术 · 被动灵宝'},{rank:16,label:'完整灵宝槽'}];
   return {realmLabel:K.realmLabel(s),checks,missing,goals,primary:next,trainingPerMinute:K.trainingPerTick(s)*20,etaSeconds:s.training&&!full?Math.ceil((needed-p.xp)/K.trainingPerTick(s))*3:null,nextUnlock:milestones.find(x=>x.rank>K.pathRank(s))||null};
@@ -109,6 +151,7 @@ function act(state,action,now){
   const candidate=copy(state);
   try{
     let result=baseHandle(candidate,action,now);
+    if(result===null)result=worldHandle(candidate,action,now);
     if(result===null)result=Q.handle(candidate,action,now);
     if(result===null)result=B.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
@@ -131,7 +174,7 @@ function tick(s,seconds){
 }
 function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(result.error);return JSON.stringify(result.state);}
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
-  journey,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
+  journey,worldView,daoInsight:K.daoInsight,preparation,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
   modules:{core:K,economy:Q,combat:B,story:S}};

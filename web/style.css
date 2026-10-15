@@ -98,3 +98,128 @@
 @media (prefers-reduced-motion: reduce) {
   html, body, .modal-body { scroll-behavior: auto !important; }
 }
+
+/* V3.2: a readable cultivation journal and a six-region world, on phone and desktop. */
+:root { --parchment: #f0ddb0; --river: #173d42; --world-line: #a58e5c66; }
+.realm-sidebar { display: none; }
+.map-banner .landscape-art { position: absolute; left: 0; top: 50%; width: 100%; height: 0; padding-top: 100%; transform: translateY(-50%); background-repeat: no-repeat; }
+.map-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, #06232ba8, transparent 75%); pointer-events: none; }
+.map-banner > span { z-index: 1; }
+.hero-scene.page-adventure, .hero-scene.page-cave,
+.hero-scene.page-fate, .hero-scene.page-heaven { height: 190px; }
+.hero-scene:not(.page-cultivation) .scene-description { max-width: 72%; }
+.hero-scene:not(.page-cultivation) .realm-orb { width: 80px; height: 80px; bottom: 18px; top: auto; }
+.hero-scene:not(.page-cultivation) .realm-orb strong { font-size: 21px; }
+.adventure-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 14px; }
+.adventure-switch .btn { min-height: 44px; }
+.world-regions { display: flex; gap: 8px; overflow-x: auto; padding: 2px 1px 13px; margin-bottom: 2px; scrollbar-width: thin; }
+.region-chip { flex: 0 0 auto; min-height: 42px; font-size: 11px; border-color: var(--world-line); background: #0a252c; color: var(--muted); }
+.region-chip.active { border-color: var(--gold); color: var(--parchment); background: #4a48272e; }
+.world-event-list { display: grid; gap: 0; }
+.world-event { display: flex; gap: 12px; padding: 20px 0; border-top: 1px solid #6a82614d; }
+.world-event h3 { font-size: 16px; color: var(--parchment); margin: 0; }
+.world-event p { font-size: 12px; color: #c8d4c9; line-height: 1.9; margin: 8px 0; }
+.world-event small { font-size: 10px; color: var(--muted); }
+.world-event.locked { opacity: .78; }
+.world-event.available .event-number { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 18px #b19b4b1a; }
+.world-event.completed .event-number { color: var(--jade); border-color: #81d7bd66; }
+.event-number { align-self: flex-start; flex: 0 0 34px; width: 34px; height: 34px; border: 1px solid var(--world-line); display: grid; place-items: center; border-radius: 50%; color: var(--muted); font: 16px Wendao, serif; }
+.event-copy { flex: 1; min-width: 0; }
+.event-copy .tag { flex-shrink: 0; font-size: 9px; }
+.event-intro { font: 16px/2 Wendao, serif !important; color: var(--parchment) !important; }
+.encounter-choices { display: grid; gap: 10px; }
+.encounter-choice { background: #06232c; border: 1px solid #a38b5966; border-radius: 10px; padding: 14px; }
+.encounter-choice strong { color: var(--parchment); font-size: 13px; line-height: 1.7; }
+.encounter-choice .row { align-items: flex-start; gap: 9px; }
+.encounter-choice .tag { white-space: nowrap; flex-shrink: 0; }
+.encounter-choice p { margin: 7px 0; }
+.encounter-choice small { display: block; color: var(--muted); font-size: 10px; }
+.encounter-choice .btn { width: 100%; min-height: 44px; }
+.dao-summary { display: flex; align-items: center; gap: 13px; }
+.dao-summary strong { font: 20px Wendao, serif; color: var(--gold); }
+.dao-seal { flex-shrink: 0; width: 45px; height: 52px; border: 1px solid #d1b77380; display: grid; place-items: center; font: 27px Wendao, serif; color: var(--gold); background: linear-gradient(145deg, #d9b96b1a, #082a2a); border-radius: 6px 6px 17px 6px; }
+.dao-marks { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
+.dao-marks span { flex: 1; display: flex; justify-content: space-between; padding: 8px 11px; border-bottom: 1px solid #6c816947; color: var(--muted); font-size: 11px; }
+.dao-marks span.active { color: var(--gold); border-color: var(--gold); background: #a8904e0c; }
+.dao-path-list { display: grid; gap: 12px; }
+.dao-path { display: flex; align-items: flex-start; gap: 13px; padding: 15px; border: 1px solid var(--world-line); border-radius: 10px; background: #07252b; }
+.dao-path > div { flex: 1; min-width: 0; }
+.dao-path h3 { margin: 0 0 6px; font-size: 17px; color: var(--parchment); }
+.dao-path.active { border-color: var(--gold); background: linear-gradient(130deg, #a288421a, #07252b); }
+.dao-path .positive { display: block; font-size: 11px; margin-top: 8px; }
+.journal-list { padding-left: 6px; }
+.journal-entry { position: relative; border-left: 1px solid var(--world-line); padding: 2px 0 22px 20px; }
+.journal-entry::before { content: ''; position: absolute; left: -4px; top: 7px; height: 7px; width: 7px; border-radius: 50%; background: var(--gold); }
+.journal-entry h3 { margin: 8px 0; font: 19px Wendao, serif; color: var(--parchment); }
+.journal-entry small { font-size: 10px; color: var(--muted); }
+.journal-entry p { line-height: 1.9; }
+.journal-outcome { margin: 15px 0 4px; padding: 18px; border-left: 2px solid var(--gold); background: #a58d4e0d; }
+.journal-outcome h3 { color: var(--parchment); margin: 9px 0; font: 19px Wendao, serif; }
+.journal-outcome p { line-height: 1.9; }
+.preparation-panel { border: 1px solid #78957055; border-radius: 9px; padding: 12px; margin-top: 15px; background: #061e25; }
+.preparation-panel h3 { margin: 0; font-size: 15px; }
+.preparation-roles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }
+.preparation-roles > div { padding: 8px; background: #173c3e70; border-radius: 5px; min-width: 0; }
+.preparation-roles strong { display: block; color: #b4c7bd; font-size: 11px; }
+.preparation-roles .ready strong { color: var(--jade); }
+.preparation-roles small { display: block; margin-top: 4px; font-size: 10px; color: var(--muted); overflow-wrap: anywhere; line-height: 1.65; }
+@media (min-width: 1000px) {
+  body { background: radial-gradient(ellipse at 38% 5%, #1d4947 0, #06171f 65%); }
+  .game-shell { max-width: 1280px; padding: 0 24px 35px 254px; min-height: 100vh; overflow: visible; box-shadow: none; }
+  .realm-sidebar { display: block; position: fixed; top: 28px; left: max(22px, calc((100vw - 1280px) / 2 + 22px)); width: 204px; color: var(--ink); text-align: center; z-index: 10; }
+  .realm-sidebar h2 { display: flex; justify-content: center; gap: 17px; font: 29px Wendao, serif; color: var(--gold); margin: 10px 0 21px; }
+  .realm-sidebar h2 span { color: var(--ink); }
+  .realm-sidebar .eyebrow { font-size: 9px; letter-spacing: 2px; color: var(--muted); }
+  .sidebar-seal { width: 48px; height: 48px; border: 1px solid var(--world-line); border-radius: 50%; display: grid; place-items: center; color: var(--gold); font: 27px Wendao, serif; margin: 0 auto 12px; background: #c8ac6310; }
+  .realm-sidebar > strong { font: 19px Wendao, serif; color: var(--parchment); }
+  .realm-sidebar p { font-size: 12px; line-height: 1.8; margin: 7px 0; }
+  .realm-sidebar .sidebar-dao { color: var(--jade); font-size: 11px; margin-top: 14px; }
+  .sidebar-chapter { margin-top: 343px; border-top: 1px solid #7886674d; padding-top: 20px; font-size: 10px; color: var(--muted); }
+  .sidebar-chapter strong { display: block; color: var(--parchment); font: 17px Wendao, serif; margin-top: 8px; }
+  .realm-sidebar .sidebar-note { color: #718b85; font: 11px/2 Wendao, serif; margin-top: 21px; }
+  .topbar { padding: 23px 0 18px; border-bottom: 0; }
+  .topbar .brand { font-size: 22px; letter-spacing: 2px; }
+  .resource-bar { border: 1px solid #5b796b55; border-radius: 10px; padding: 13px 20px; margin-bottom: 17px; background: #0e2b3280; }
+  .hero-scene { height: 270px; border: 1px solid #9f94694d; border-radius: 14px; overflow: hidden; }
+  .hero-scene.page-adventure, .hero-scene.page-cave, .hero-scene.page-fate, .hero-scene.page-heaven { height: 220px; }
+  .scene-copy { padding-left: 26px; }
+  .scene-copy h1 { font-size: 34px; }
+  .scene-path { left: 26px; }
+  .realm-orb { right: 31px; }
+  .page-content { padding: 22px 0; }
+  .page-content[data-view='cultivation'] { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .page-content[data-view='cultivation'] > .page-heading { grid-column: 1 / -1; margin: 0; }
+  .page-content[data-view='cultivation'] > .panel { margin: 0; }
+  .nav-bottom { position: fixed; top: 306px; left: max(22px, calc((100vw - 1280px) / 2 + 22px)); bottom: auto; width: 204px; max-width: none; height: auto; transform: none; display: flex; flex-direction: column; gap: 7px; padding: 0; border: 0; box-shadow: none; backdrop-filter: none; background: transparent; }
+  .nav-bottom button { flex-direction: row; justify-content: flex-start; align-items: center; gap: 15px; min-height: 48px; padding: 12px 19px; border: 1px solid transparent; border-radius: 8px; }
+  .nav-bottom button svg { width: 22px; height: 22px; }
+  .nav-bottom button span { font-size: 13px; letter-spacing: 3px; }
+  .nav-bottom button.active { border-color: #c2a96466; background: linear-gradient(90deg, #b7a05926, #193b3a80); color: var(--gold); }
+  .nav-bottom button.active::before, .nav-bottom button.active::after { display: none; }
+  .encounter { margin: 18px 0; }
+  .enemy-card { min-width: 140px; }
+  .battle-skills { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .world-regions { gap: 9px; }
+  .world-event-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 19px; }
+  .world-event { gap: 10px; padding-top: 22px; }
+  .world-event .row.spaced { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .world-event p { min-height: 84px; }
+  .world-event small { display: block; min-height: 36px; }
+  .dao-summary { max-width: 100%; }
+  .toast { bottom: 30px; left: calc(50% + 110px); }
+  .scene-copy p { max-width: 420px; }
+}
+@media (max-width: 999px) {
+  .hero-scene:not(.page-cultivation) #scene-description { display: none; }
+}
+@media (min-width: 1000px) and (max-height: 730px) {
+  .sidebar-chapter, .realm-sidebar .sidebar-note { display: none; }
+}
+@media (max-width: 370px) {
+  .world-event { gap: 8px; }
+  .event-number { flex-basis: 28px; width: 28px; height: 28px; font-size: 13px; }
+  .world-event h3 { font-size: 14px; }
+  .encounter-choice .row { flex-direction: column; gap: 6px; }
+  .dao-path { padding: 12px; gap: 9px; }
+  .dao-seal { width: 36px; height: 44px; font-size: 23px; }
+}

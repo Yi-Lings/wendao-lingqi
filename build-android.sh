@@ -50,7 +50,7 @@ manifest.getroot().set('package','com.lingqi.game')
 manifest.write(build/'AndroidManifest.xml',encoding='utf-8',xml_declaration=True)
 PY
 "$TASK_TOOLS/aapt2" compile --dir "$TASK_SRC/res" -o "$TASK_BUILD/resources.zip"
-"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code 4 --version-name 3.1
+"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code 5 --version-name 3.2
 "$TASK_JAVA" -jar "$TASK_TOOLS/ecj.jar" -8 -proc:none -nowarn -classpath "$TASK_TOOLS/android.jar" -d "$TASK_BUILD/classes" "@$TASK_BUILD/sources.list"
 python3 - "$TASK_BUILD" <<'PY'
 import pathlib,sys,zipfile

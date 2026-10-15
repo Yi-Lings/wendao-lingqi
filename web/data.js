@@ -393,9 +393,43 @@ const shop={jadePerDraw:60,historyLimit:50,packages:[
  {id:'p648',name:'万象道藏',priceYuan:648,jade:9000}
 ]};
 const limits={bag:300,overflow:1000,drawHistory:200,battleReports:20,saveBytes:1048576,number:1e12};
+const daoPaths={
+ resolve:{id:'resolve',name:'破障',glyph:'锋',description:'迎难破局，以决断磨砺锋芒。',effect:'每枚破障印记：攻击 +0.4%，暴击 +0.1 个百分点。',perMark:{attack:.004,crit:.001}},
+ compassion:{id:'compassion',name:'护生',glyph:'生',description:'护持众生，以承担稳固道基。',effect:'每枚护生印记：气血 +0.5%，防御 +0.3%。',perMark:{hp:.005,defense:.003}},
+ insight:{id:'insight',name:'求真',glyph:'观',description:'辨明因果，以洞察贯通万法。',effect:'每枚求真印记：穿透 +0.2 个百分点，真元每秒回复 +0.04。',perMark:{penetration:.002,mpRegen:.04}}
+};
+// Original encounters. Each has one free option, a visible cost and a single persistent resolution.
+const encounterSeeds=[
+ ['bridge_lantern','雾桥借火','山雾吞没了归途。守桥人抱着熄灭的灯，渡桥的采药人还未归来。',['斩开雾障，拓出归路','借灵草续灯，接回采药人','观察水声，循旧桥标记'],['你留下的剑痕成为新的路标。','桥头的灯一直亮到最后一人归来。','雾散之后，你把安全的渡桥时辰刻在岸边。']],
+ ['village_well','古井回响','村中旧井灵息紊乱，井下的碎阵仍在汲取田间水气。',['击碎锁井阵枢','为村民调配护脉药','校对阵纹，改写水路'],['旧阵崩解，山泉重新流入田畦。','村民平安转移，你等到井息重新稳定。','你找出被反写的一笔，让碎阵自行停歇。']],
+ ['mountain_bell','山钟遗声','废亭的钟声惊动飞禽，钟腹却保存着一份未寄出的修行札记。',['引雷淬钟，平息异响','修复亭柱，供行人避雨','抄录札记，留一份给后来者'],['山钟重归清越，你听见自己的灵息更稳。','避雨的行人把亭名重新写在石上。','旧主人的疑问，在你的注解中有了新答案。']],
+ ['lake_ferry','镜湖摆渡','湖心灵涡困住一艘渡舟。舟上的修士争论是弃货还是等待。',['劈开灵涡，抢出航道','先送伤者与船工上岸','测量涡流，找到回旋的空隙'],['航道在风浪中重新打开。','货物可以重置，生还的人会记得这次渡湖。','你将回旋之法记下，交给下一位船工。']],
+ ['cloud_garden','云圃失衡','云府的灵植一半枯萎，一半疯长。园主人请你决定先救哪一处。',['截断失控的灵根','分药移栽，保全幼苗','辨别两种相反的灵息'],['混乱平息，留下的灵根足以重新开圃。','幼苗在新土中安定下来。','两股灵息交替引流，云圃找回平衡。']],
+ ['old_sundial','断晷藏影','残缺日晷把来客的影子映向不同时辰，铜盘底下藏着旧阵图。',['以器火重铸晷针','先护住迷失在影中的访客','记录三次投影的细微偏差'],['重铸的晷针将所有影子指向此刻。','最后一位访客离开时，向你郑重道谢。','你以偏差还原阵图，带走的是解法而非铜盘。']],
+ ['mist_archive','雾海遗卷','雾海中漂来的残卷记着一场旧盟争执，却缺了最关键的一页。',['破开封匣，追寻遗卷','修补残卷，归还守卷人','交叉比对三种相矛盾的记载'],['封匣之下是一份尚可核实的证词。','守卷人终于愿意讲出那年未尽的事。','你保留疑问，也厘清了被混淆的时间。']],
+ ['stone_echo','石林问影','石林不断重演一位修士的败局，每一次回声都在催促你出手。',['击破回声中心的虚影','稳住被回声扰乱的旅人','耐心看完每一次不同的败局'],['虚影消散，你没有把它的恐惧带走。','旅人的呼吸渐稳，回声也不再刺耳。','你看清败因并非迟疑，而是遗漏了一次防护。']],
+ ['ash_letter','灰烬家书','古府灰烬中有一封从未送出的家书，收信的村落已迁离故地。',['驱散古府守影，取出信物','备药寻访迁居的后人','沿迁徙记号重绘旧日路线'],['信物不再被守影困在旧日。','信交到后人手中，失落的名字再次被念起。','一条清楚的路线，把两段相隔的岁月连接起来。']],
+ ['root_crossing','地脉岔流','赤霄地脉分出三股暗流，矿工必须在今日撤离最深的矿段。',['凿开石壁，开辟新路','护送矿工逐一出井','查明暗流交替的节律'],['新路稳固下来，废弃的支撑石化成可用矿料。','人数清点无缺，你才最后离开。','矿工按节律穿过暗流，无需再赌运气。']],
+ ['forge_oath','残炉之约','残炉旁的炼器人想修一把旧剑，也想保住曾共同守炉的约定。',['锻去裂纹，重成剑骨','备药护脉，陪他完成最后一锤','找出炉温失衡的真正原因'],['旧剑的裂痕成为新的锻纹。','最后一锤落下时，两人都还稳稳站着。','一处微小风口被校正，炉火终于不再暴走。']],
+ ['red_spring','赤泉归流','封泉让山民得水，却让山下药田失去灵息。两边都在等你的决定。',['击通旁脉，另开泉道','护住饮水，再逐田补药','测算水量，建立轮换引流'],['旁脉承担了新的水路。','最难熬的旱日过去，药田保住了根。','引流次序被刻在泉边，人人都能查验。']],
+ ['star_watch','星桥守望','断裂的星桥两端亮起求援灯。桥身只容一次完整的灵力灌注。',['以剑势稳住断桥','将护身药留给最后渡桥的人','推算星潮间歇，重排过桥顺序'],['断桥多撑住了一刻，足以让众人离开。','你等到对岸的最后一盏灯也亮起。','这一轮星潮中，没有人被留在半途。']],
+ ['moon_mirror','月镜无尘','宫中月镜放大每个人最执着的愿望，求解的人越来越难离开。',['打碎困人的镜阵','守住清醒者，逐一唤回同伴','辨认镜中愿望与真实记忆的差别'],['镜光归于平静，愿望仍由人自己承担。','被唤醒的人重新找到彼此。','你留下辨镜之法，让后来人不必重复迷失。']],
+ ['furnace_seal','天炉余烬','熔炉封印将尽，一位器修仍想取回师门留下的最后一件器物。',['镇住炉口，斩断火链','护住器修，先保全生者','读懂封印，寻找可逆的开炉之法'],['火链停歇，器物从余烬中重见天光。','器修愿意把未完成的传承交到新的人手里。','封印缓缓开启，又在取物后完整闭合。']],
+ ['deep_river','凌渊摆灯','玄河上的长明灯逐盏熄灭，来访者问你是否还要走向更深处。',['以道锋定住河上风浪','沿河补灯，接应仍在渡河的人','观察灯灭的顺序，寻找暗流源头'],['浪潮退去，你的脚步不再被风声牵动。','每一盏补亮的灯都照见一个归来的人。','源头不在河底，而在一处被忽略的回流。']],
+ ['last_disciple','山门新雪','终境山门外，新来的修士把你的经历当作唯一正确的答案。',['示范破局，也让他亲自试剑','备好伤药，让他安心走自己的路','把尚未解答的问题一并交给他'],['他记住了出剑的方法，也记住何时该收剑。','新雪上多了一行与众不同的脚印。','你的经验成为参考，而非束缚。']],
+ ['quiet_sky','长明问心','雷云散尽后的寂静中，山海万象向你问起：这一路，你留下了什么？',['以行动作答，继续踏破未知','以守望作答，照见后来者','以求索作答，为未解之事留白'],['你记得自己为何出发，也愿意继续前行。','长明不只在远处，也在每一次回身。','大道仍有未解，正因如此才值得再走一程。']]
+];
+const worldEvents=encounterSeeds.map((row,index)=>{
+ const realm=Math.floor(index/3),part=index%3,k=realm+1,previous=part?encounterSeeds[index-1][0]:null;
+ const choices=Object.keys(daoPaths).map((id,i)=>({id,label:row[3][i],outcome:row[4][i],
+   cost:id==='resolve'?{stones:60*k*k}:id==='compassion'?{materials:{herb:3*k}}:{},
+   reward:id==='resolve'?{xp:120*realmXpFactors[realm],materials:{ore:6+realm*4,essence:1+realm}}:id==='compassion'?{xp:100*realmXpFactors[realm],stones:100*k*k,materials:{lotus:2+realm}}:{xp:80*realmXpFactors[realm],materials:{insight:3+realm*3}}
+ }));
+ return {id:row[0],name:row[1],description:row[2],realm,layer:[3,5,8][part],previous,requiredDungeon:index===0?'resource_herb':null,choices,artKey:'map_'+(realm*2+Number(part===2))};
+});
 const catalog={version:3,contentVersion:3,realms,routes,layerXp,realmXpFactors,rarities,slots,schools,techniques,
  facilities,recipes,treasures,sets,gearTargets,materials,dungeons,bosses,towerFloors,towerThemes,caveRooms,caves,trials,
- chapters,sidequests,companions,commissions,tasks:commissions,regions,endings,gacha,shop,limits,
+ chapters,sidequests,companions,commissions,tasks:commissions,regions,endings,gacha,shop,limits,daoPaths,worldEvents,
  tickMs:1000,offlineCapMs:86400000,productionCapMs:604800000,sweepCapMs:28800000,
  techniqueLevelCaps:[5,8,11,14,17,20],enhanceCaps:[5,8,12,16,20,20],
  jointCost:{stones:30,materials:{herb:2}},jointCooldownMs:1800000,bondThreshold:40,jointThreshold:55,

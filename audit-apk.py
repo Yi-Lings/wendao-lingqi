@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Verify the APK manifest and every embedded Web resource without Android hardware."""
-import argparse, hashlib, json, os, pathlib, re, subprocess, zipfile
+import argparse, hashlib, json, os, pathlib, re, shutil, subprocess, zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
@@ -37,8 +37,20 @@ with zipfile.ZipFile(apk) as archive:
         with p.open('rb') as source, archive.open(name) as packed:
             assert digest(source) == digest(packed), name + ' differs from tested source'
     dex_bytes = archive.getinfo('classes.dex').file_size
-result = subprocess.run([str(tools / 'aapt2'), 'dump', 'badging', str(apk)],
-                        env={**os.environ, 'LD_LIBRARY_PATH': str(tools / 'lib64')},
+sdk = os.environ.get('ANDROID_HOME') or os.environ.get('ANDROID_SDK_ROOT')
+candidates = [tools / 'aapt2']
+if sdk:
+    candidates.append(pathlib.Path(sdk) / 'build-tools/35.0.0/aapt2')
+if shutil.which('aapt2'):
+    candidates.append(pathlib.Path(shutil.which('aapt2')))
+aapt2 = next((p for p in candidates if p.is_file()), None)
+if aapt2 is None:
+    raise SystemExit('aapt2 not found: prepare tools/android or set ANDROID_HOME to an SDK with build-tools 35.0.0')
+native_libs = str(aapt2.parent / 'lib64')
+if os.environ.get('LD_LIBRARY_PATH'):
+    native_libs += os.pathsep + os.environ['LD_LIBRARY_PATH']
+result = subprocess.run([str(aapt2), 'dump', 'badging', str(apk)],
+                        env={**os.environ, 'LD_LIBRARY_PATH': native_libs},
                         check=True, text=True, capture_output=True)
 badging = result.stdout
 package = 'com.lingqi.game.preview' if args.variant == 'debug' else 'com.lingqi.game'
@@ -59,5 +71,6 @@ report += 'V3 artwork: ' + ', '.join(art) + '\n'
 report += 'Game modules: ' + ', '.join(modules) + '\n'
 report += 'classes.dex bytes: ' + str(dex_bytes) + '\n'
 report += 'APK bytes: ' + str(apk.stat().st_size) + '\nAPK SHA256: ' + sha256 + '\n'
+pathlib.Path(args.report).parent.mkdir(parents=True, exist_ok=True)
 pathlib.Path(args.report).write_text(report, encoding='utf-8')
 print(report, end='')

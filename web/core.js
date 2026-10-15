@@ -137,7 +137,7 @@ function createState(now){
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
     companions:Object.fromEntries(Object.keys(C.companions||{}).map(id=>[id,{affinity:0,bond:false,cooldownUntil:0,lastTalkAt:-60000,questStep:0}])),
     story:{chapter:0,mercy:0,truth:0,ending:null,completed:[],sideCompleted:[]},
-    joint:null,battle:null,exploration:null,battleReports:[],
+    joint:null,battle:null,exploration:null,battleReports:[],wanderings:{stance:'insight',records:[]},
     gacha:{highPity:0,redPity:0,target:null,fateGuarantee:false,history:[],total:0},
     rngStreams:{gacha:seed^0x9e3779b9,loot:seed^0x85ebca6b,world:seed^0xc2b2ae35},
     lastAt:now,carryMs:0,productionCarryMs:0,wisdomCarryMs:0,wisdomTickets:0,sweepMs:0,
@@ -210,6 +210,13 @@ function protectedGear(s,uid){
   if(!g)return false;if(g.locked||Object.values(s.equipped).includes(uid))return true;
   return routes.some(route=>(s.presets[route]||[]).some(p=>p&&p.equipped&&Object.values(p.equipped).includes(uid)));
 }
+function daoInsight(s){
+  const w=s.wanderings||{stance:'insight',records:[]},marks={resolve:0,compassion:0,insight:0};
+  for(const r of w.records||[])if(own(marks,r.choice))marks[r.choice]++;
+  const path=own(C.daoPaths,w.stance)?C.daoPaths[w.stance]:C.daoPaths.insight,bonus={};
+  for(const [id,value] of Object.entries(path.perMark))bonus[id]=value*marks[path.id];
+  return {stance:path.id,name:path.name,marks,total:(w.records||[]).length,bonus};
+}
 function attributes(s,route){
   route=route||s.route;const p=s.paths[route],rank=pathRank(s,route),body=route==='body',load=s.loadouts[route]||defaultLoadout(),u=unlocks(s,route);
   const a={attack:(body?18:22)+rank*(body?2.6:3),defense:(body?8:5)+rank*(body?1.25:.9),
@@ -231,6 +238,7 @@ function attributes(s,route){
     if(heart.school==='shadow')a.dotDamage+=.15;
     if(heart.school==='array'){a.healing+=.15;a.mpRegen+=.5;}}
   for(const [school,count] of Object.entries(a.sets)){const set=(C.sets||{})[school];if(!set)continue;if(count>=2)stats(set.twoStats);if(count>=4)stats(set.fourStats);}
+  stats(daoInsight(s).bonus);
   for(const id of a.treasures){const item=C.treasures[id],owned=s.ownedTreasures[id];if(item&&owned){const values=item.rules&&item.rules.stats||item.stats||{};stats(Object.fromEntries(Object.entries(values).map(([k,v])=>[k,v*(1+(owned.level-1)*.05)])));}}
   a.attack=Math.floor(a.attack*(1+percent.attack));a.defense=Math.floor(a.defense*(1+percent.defense));
   a.maxHp=Math.floor(a.maxHp*(1+percent.maxHp));a.maxMp=Math.floor(a.maxMp*(1+percent.maxMp));
@@ -348,6 +356,22 @@ function validateAlchemy(s){
   }
   if(active>1)throw Error('同时控火的炉数超过上限');
 }
+function validateWanderings(s){
+  if(s.wanderings===undefined)s.wanderings={stance:'insight',records:[]};
+  const w=object(s.wanderings,'历世手札');
+  if(Object.keys(w).some(k=>!['stance','records'].includes(k)))throw Error('历世手札包含未知字段');
+  catalogKey(C.daoPaths,w.stance,'道心主张');array(w.records,18,'历世记录');const seen=new Set();
+  for(const r of w.records){
+    object(r,'历世记录');if(Object.keys(r).some(k=>!['id','choice','route','rank','at'].includes(k)))throw Error('历世记录字段无效');
+    const event=C.worldEvents.find(x=>x.id===r.id);if(!event||seen.has(r.id))throw Error('历世事件未知或重复');
+    catalogKey(C.daoPaths,r.choice,'历世选择');if(!event.choices.some(x=>x.id===r.choice))throw Error('历世选择无效');
+    if(!routeOk(r.route))throw Error('历世路线无效');integer(r.rank,event.realm*10+event.layer-1,59,'历世时境界');
+    if(r.rank>pathRank(s,r.route))throw Error('历世记录超过实际路线境界');integer(r.at,0,MAX_TIME,'历世时间');
+    if(event.previous&&!seen.has(event.previous))throw Error('历世记录缺少前置事件');
+    if(event.requiredDungeon&&!(s.progress.dungeonWins[event.requiredDungeon]>0))throw Error('历世记录缺少历练前置');
+    seen.add(r.id);
+  }
+}
 function validateV3(raw){
   if(raw.version!==3)throw Error('存档版本不兼容');const s=raw;
   integer(s.contentVersion,3,3,'内容版本');integer(s.revision,0,CAP,'事务序号');
@@ -386,6 +410,7 @@ function validateV3(raw){
     for(const p of s.presets[route])if(p){if(p.loadout){validateLoadout(s,p.loadout,route,true);object(p.equipped,'预设装备');for(const slot of slots){const uid=p.equipped[slot];if(uid!==null&&!s.bag.some(g=>g.uid===uid&&g.slot===slot))throw Error('预设使用不存在装备');}}else validateLoadout(s,p,route,true);}}
   object(s.facilities,'facilities');for(const id of ['field','furnace','forge','library','array'])integer(s.facilities[id],1,10,'设施');
   validateAlchemy(s);
+  validateWanderings(s);
   object(s.progress,'progress');for(const field of ['firstClears','sectTrials']){array(s.progress[field],1000,field);if(new Set(s.progress[field]).size!==s.progress[field].length)throw Error('首通重复');for(const id of s.progress[field])if(!validClearKey(id))throw Error('通关记录 ID 无效');}
   integer(s.progress.tower,0,60,'塔层');object(s.progress.stars,'三星');for(const [id,n] of Object.entries(s.progress.stars)){if(!validClearKey(id))throw Error('三星 ID 无效');integer(n,0,3,'星数');}
   object(s.progress.trialWins,'试炼');for(const [id,b] of Object.entries(s.progress.trialWins)){if(!/^(body|magic):[0-5]$/.test(id))throw Error('突破试炼 ID 无效');boolean(b,'试炼胜利');}
@@ -551,5 +576,5 @@ function validate(raw){
     state=validateV3(state);return {ok:true,state,migrated,error:null,migrationReport:state.migrationReport||null};
   }catch(e){return {ok:false,state:null,migrated:false,error:cleanText(e.message,200)};}
 }
-return {catalog:C,createState,validate,attributes,view,techniqueEffects,learnRecipe,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
+return {catalog:C,createState,validate,attributes,view,techniqueEffects,learnRecipe,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,daoInsight,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
 });
