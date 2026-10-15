@@ -512,3 +512,12 @@ V4交付已完成：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/dow
 本轮具体修复与剩余需求见 [43项需求追踪](docs/REQUIREMENTS_TRACEABILITY.md)、[V4.1迭代方案](docs/ITERATION_PLAN_V4_1.md)。源改完成：原生导出快照隔离；持久化后展示失败保留真实所得；尘兑换/仙修晋层结算；剩余剧情条件直达；斗技/秘境对白与实际人物；道劫胜利后的境界文本；表情/三仙阶背景/Boss裁片；短屏战斗触控；45PNG与13旧图藏画阁。冻结源d1519c3，326逻辑/当前浏览器/64嵌入资源/106APK文件/114构建输入/实际DEX/v2签名验证通过。Actions37590588262成功，APK132183784字节、ZIP132247258字节，匿名HTTP200与公开SHA/ZIP CRC/内部HTML均匹配。全部代码/资源/证据/分片已同步work。长篇内容和真机体验按下一阶段方案实施，不误标完成。
 
 V4.1公开交付：[APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-v4-1-preview.apk)、[离线试玩ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-preview.zip)。完整大小/hash/验收和剩余事项见 [交付报告](docs/validation/V4_1_ALIGNMENT_2026-10-07.md)。下一批先做专属计数/全文回顾/体修术语，再扩第一二卷与三仙阶任务，详见ITERATION_PLAN_V4_1。
+
+
+## 22. V4.2 历世与道心（2026-10-15）
+
+按本轮用户要求调研《鬼谷八荒》《觅长生》《了不起的修仙模拟器》与《凡人修仙传》《仙逆》《一念永恒》的官方资料，推导原创事件、道心与准备机制。调研原始链接、访问边界见 docs/RESEARCH_V3_2.md；已实现范围、数值、前端取舍、存档约束见 docs/ITERATION_V4_2.md。
+
+将历史 main 的 V3.1 可靠性与 V3.2 新玩法合入完整 V4.1 预览开发线，保留六页面、剧情闭关、飞升、音画及生产结算。18 段事件与 54 个选择按两路线真实境界开放，每角色只结算一次；三条道心用实际记录计算属性。推荐与回收先预览，失败保存可重试，手机/桌面布局与焦点操作补齐。
+
+359 项逻辑及 139 项浏览器检查通过；APK 107 个 Web 文件与冻结源码一致，实际离线 HTML 可结算奇遇并刷新恢复。报告、散列、截图位于 docs/validation/v42。APK、离线网页和完整源码以 v4.2.0-preview 交付，main/work 统一同步。长期经济和 Android 真机验证仍待后续实测。
