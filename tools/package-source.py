@@ -18,7 +18,7 @@ output.parent.mkdir(parents=True, exist_ok=True)
 listed = subprocess.run(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'],
                         cwd=ROOT, check=True, capture_output=True).stdout.decode('utf-8').split('\0')
 allowed_roots = {'web', 'tests', 'docs', 'android', 'tools', '.github'}
-allowed_files = {'README.md', 'LICENSE', '.gitignore', 'package.json', 'plan.md', 'audit-apk.py', 'build-android.sh'}
+allowed_files = {'README.md', 'HANDOFF.md', 'LICENSE', '.gitignore', 'package.json', 'plan.md', 'audit-apk.py', 'build-android.sh'}
 private = {'node_modules', 'qa-tools', '.git', '.gradle', 'build', '__pycache__', 'signing'}
 files = []
 for name in sorted(set(listed)):
@@ -37,7 +37,8 @@ prefix = 'wendao-lingqi-v' + version
 manifest = {'version': version, 'createdAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
             'baseCommit': subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, check=True,
                                          capture_output=True, text=True).stdout.strip(),
-            'files': {}, 'notice': 'Source snapshot includes uncommitted iteration changes; excludes keys, toolchains, caches and historical APKs.'}
+            'files': {}, 'notice': 'Source snapshot excludes keys, toolchains, caches and historical APKs.',
+            'workingTreeClean': not bool(subprocess.run(['git', 'status', '--porcelain'], cwd=ROOT, check=True, capture_output=True, text=True).stdout.strip())}
 with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
     for p in files:
         data = p.read_bytes()

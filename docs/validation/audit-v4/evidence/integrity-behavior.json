@@ -1,0 +1,195 @@
+{
+  "source": "1caa5c7598b63c76b097d5b2acd2f9f7531bd35f",
+  "startedAt": "2026-10-07T07:22:12.320Z",
+  "method": "Actual source application in Chromium, all browser JavaScript pinned from accepted source commit. Native file persistence/export semantics modeled from MainActivity.java and independently verified in APK DEX. No Android device claim.",
+  "cases": [
+    {
+      "name": "Native preview export overwrites formal native slot before picker completion",
+      "observed": {
+        "before": {
+          "nativeName": "正式仙途原存档",
+          "formalName": "正式仙途原存档",
+          "previewName": "试玩行者",
+          "calls": {
+            "load": 0,
+            "persist": 0,
+            "export": 0
+          }
+        },
+        "after": {
+          "nativeName": "试玩行者",
+          "formalName": "正式仙途原存档",
+          "exportName": "试玩行者",
+          "calls": {
+            "load": 0,
+            "persist": 0,
+            "export": 1
+          }
+        },
+        "returned": {
+          "name": "试玩行者",
+          "formalName": "试玩行者",
+          "calls": {
+            "load": 1,
+            "persist": 2,
+            "export": 0
+          }
+        },
+        "defectReproduced": true
+      },
+      "completed": true
+    },
+    {
+      "name": "Failed draw native persistence restores rewards, pity, RNG and currency",
+      "observed": {
+        "action": {
+          "ok": false,
+          "message": "存档未成功，已撤回"
+        },
+        "unchanged": true,
+        "nativeUnchanged": true,
+        "settlementVisible": false
+      },
+      "completed": true
+    },
+    {
+      "name": "Post-commit settlement renderer exception splits memory from persisted rewards",
+      "observed": {
+        "action": {
+          "ok": false,
+          "message": "操作异常"
+        },
+        "memoryEqualsBefore": true,
+        "storedEqualsMemory": false,
+        "memoryGearCount": 42,
+        "storedGearCount": 43,
+        "nativeCommitted": true,
+        "fault": "Injected read-only settlement model failure after native persistence; no natural runtime failure asserted"
+      },
+      "completed": true
+    },
+    {
+      "name": "Battle exit uses persisted confirmation, grants no loot and restores adventure scroll",
+      "observed": {
+        "battleGone": true,
+        "outcome": "exit",
+        "rewards": null,
+        "title": "历练已结束",
+        "scroll": 0,
+        "page": "adventure",
+        "beforeScroll": 0
+      },
+      "completed": true
+    },
+    {
+      "name": "Dust orange gear reward exists but no actual-item settlement is shown",
+      "observed": {
+        "actionOk": true,
+        "gained": [
+          {
+            "uid": "g43",
+            "set": "shadow",
+            "slot": "weapon",
+            "rarity": 4
+          }
+        ],
+        "dustSpent": 120,
+        "title": "天道尘兑换",
+        "hasSettlement": false,
+        "newGearCards": [],
+        "defectReproduced": true
+      },
+      "completed": true
+    },
+    {
+      "name": "仙界静修 has result, 晋层 has only toast, and entering ascension music is deferred",
+      "observed": {
+        "before": {
+          "unlocked": true,
+          "scene": "home",
+          "paused": false,
+          "muted": false,
+          "musicPlaying": [
+            "home"
+          ],
+          "activeEffects": [],
+          "counts": {
+            "ui": 1
+          },
+          "blocked": 1,
+          "playbackFailures": 0,
+          "musicStarts": 0
+        },
+        "instant": {
+          "unlocked": true,
+          "scene": "home",
+          "paused": false,
+          "muted": false,
+          "musicPlaying": [
+            "home"
+          ],
+          "activeEffects": [],
+          "counts": {
+            "ui": 1
+          },
+          "blocked": 1,
+          "playbackFailures": 0,
+          "musicStarts": 0
+        },
+        "meditation": {
+          "ok": true,
+          "reward": {
+            "xp": 660,
+            "yuan": 24
+          },
+          "title": "仙界静修 · 凝练已成",
+          "items": "登仙 1层\n\n仙界修为 +660\n\n仙元 +24\n\n实际投入：灵石 9,000 · 炼器精华 6 · 参悟 12\n\n修为与仙元已经凝定，储备可用于下一层修炼。"
+        },
+        "afterFade": {
+          "unlocked": true,
+          "scene": "ascension",
+          "paused": false,
+          "muted": false,
+          "musicPlaying": [
+            "ascension"
+          ],
+          "activeEffects": [
+            "success"
+          ],
+          "counts": {
+            "ui": 1,
+            "success": 1
+          },
+          "blocked": 2,
+          "playbackFailures": 0,
+          "musicStarts": 2
+        },
+        "level": {
+          "ok": true,
+          "beforeLayer": 1,
+          "afterLayer": 2,
+          "dialog": null,
+          "toast": "登仙 2层，仙界修行带来的力量已提升"
+        },
+        "paused": {
+          "unlocked": true,
+          "scene": "ascension",
+          "paused": true,
+          "muted": false,
+          "musicPlaying": [],
+          "activeEffects": [],
+          "counts": {
+            "ui": 2,
+            "success": 1
+          },
+          "blocked": 3,
+          "playbackFailures": 0,
+          "musicStarts": 2
+        }
+      },
+      "completed": true
+    }
+  ],
+  "pageErrors": [],
+  "finishedAt": "2026-10-07T07:22:19.794Z"
+}

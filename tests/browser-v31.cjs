@@ -75,7 +75,7 @@ function fixture(){
   await p.waitForFunction(()=>document.querySelector('#journey-body').textContent.includes('可以晋级'),null,{timeout:3000});
  });
  await test('journey: tenth-layer materials link opens the real source and terminal guidance stays in six realms',async()=>{
-  const s=fixture();s.paths.magic.layer=10;s.paths.magic.xp=E.modules.core.xpNeeded(s);s.progress.trialWins['magic:0']=true;s.materials.ore=0;
+  const s=fixture();s.paths.magic.layer=10;s.paths.magic.xp=E.modules.core.xpNeeded(s);s.progress.trialWins['magic:0']=true;s.ritualLegacyWins['magic:0']=true;s.materials.ore=0;
   await restore(p,s);assert.equal(await p.evaluate(()=>window.Lingqi.journey().primary.id),'material:ore');
   await p.locator('#journey-body [data-ui="journey-go"]').click();assert((await p.locator('#modal-layer').innerText()).includes(E.catalog.dungeons.resource_ore.name));await close(p);
   s.paths.magic.realm=5;s.paths.magic.xp=E.modules.core.xpNeeded(s);s.progress.endingTrials.magic=true;
@@ -94,12 +94,18 @@ function fixture(){
   assert.deepEqual((await state(q)).equipped,after.equipped);await q.evaluate(()=>window.Lingqi.showModal('equipment'));await shot(q,'v31-mobile-equipment.png');await close(q);
  });
  await test('equipment: item protection refresh preserves dialog scroll and keyboard focus',async()=>{
-  await q.evaluate(()=>window.Lingqi.showModal('equipment'));
-  await q.evaluate(()=>document.querySelector('.modal-body').scrollTop=280);
-  const btn=q.locator('[data-action="lockGear"]').nth(3);await btn.focus();
+  await q.evaluate(()=>window.Lingqi.showModal('gear-detail',{uid:window.Lingqi.state().bag[3].uid}));
+  await q.evaluate(()=>document.querySelector('.modal-body').scrollTop=180);
+  const btn=q.locator('[data-action="lockGear"]').first();await btn.focus();
   const before=await q.evaluate(()=>document.querySelector('.modal-body').scrollTop);await btn.press('Enter');
   const after=await q.evaluate(()=>({scroll:document.querySelector('.modal-body').scrollTop,focus:document.activeElement.dataset.action}));
   assert(Math.abs(after.scroll-before)<=3,'scroll position survives re-render');assert.equal(after.focus,'lockGear');await close(q);
+ });
+ await test('keyboard: item detail inspection contains focus and returns to its parent inventory',async()=>{
+  await q.evaluate(()=>window.Lingqi.showModal('equipment'));await q.locator('.selection-info').first().click();
+  assert(await q.locator('.selection-inspect-card').isVisible());
+  for(let i=0;i<8;i++){await q.keyboard.press('Tab');assert(await q.evaluate(()=>document.querySelector('.selection-inspect-card').contains(document.activeElement)));}
+  await q.keyboard.press('Escape');assert.equal(await q.locator('.selection-inspect-card').count(),0);assert(await q.locator('#modal-layer [role="dialog"]').isVisible());await close(q);
  });
  await test('recycling: preview shows exact count and refunds, cancellation changes nothing, confirmation persists',async()=>{
   await q.evaluate(()=>window.Lingqi.showModal('recycle'));
@@ -153,7 +159,7 @@ function fixture(){
  await test('performance: full 300-item bag gives a non-decreasing plan and a responsive sorted inventory',async()=>{
   const s=fixture(),Q=E.modules.economy;while(s.bag.length<300){const n=s.bag.length;Q.addGear(s,Q.createGear(s,{slot:Object.keys(E.catalog.slots)[n%6],set:Object.keys(E.catalog.sets)[Math.floor(n/6)%6],rarity:n%6,tier:0}));}
   const f=await make({fixture:s});const timing=await f.p.evaluate(()=>{const start=performance.now(),plan=window.IdleEngine.recommendEquipment(window.Lingqi.state()),recommendMs=performance.now()-start;window.Lingqi.showModal('equipment');return {recommendMs,inventoryMs:performance.now()-start-recommendMs,delta:plan.delta.power};});
-  assert(timing.delta>=0);assert.equal(await f.p.locator('[data-action="lockGear"]').count(),300);await overflow(f.p);await f.context.close();return timing;
+  assert(timing.delta>=0);assert.equal((await state(f.p)).bag.length,300);assert(await f.p.locator('.selection-cell').count()>0);assert(await f.p.locator('.selection-cell').count()<=12);await overflow(f.p);await f.context.close();return timing;
  });
  assert.equal(report.pageErrors.length,0,JSON.stringify(report.pageErrors));assert.equal(report.consoleErrors.length,0,JSON.stringify(report.consoleErrors));
  assert.equal(report.failedRequests.length,0,JSON.stringify(report.failedRequests));assert.equal(report.badResponses.length,0);assert.equal(report.externalRequests.length,0);

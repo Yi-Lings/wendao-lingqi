@@ -1,0 +1,401 @@
+{
+  "filter": null,
+  "partial": false,
+  "startedAt": "2026-10-07T07:43:02.098Z",
+  "url": "http://127.0.0.1:8787/",
+  "tests": [
+    {
+      "name": "fresh: age confirmation, one-layer start and initial assets",
+      "kind": "fresh",
+      "passed": true,
+      "durationMs": 410,
+      "details": {
+        "startStones": 120
+      }
+    },
+    {
+      "name": "fresh: freely chosen resource dungeon starts, pauses, resumes and wins",
+      "kind": "fresh",
+      "passed": true,
+      "durationMs": 43939,
+      "details": {
+        "time": 42.09,
+        "stones": 1080,
+        "wins": 1,
+        "rewards": {
+          "stones": 960,
+          "xp": 100,
+          "tickets": 7,
+          "materials": {
+            "herb": 12,
+            "lotus": 3,
+            "crystal0": 3,
+            "insight": 3
+          },
+          "fragments": {},
+          "techniques": [],
+          "gear": [],
+          "treasures": [],
+          "blueprints": [],
+          "contribution": 0,
+          "recipes": [
+            "purify0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "fresh: earned or crafted XP advances exactly one small layer",
+      "kind": "fresh",
+      "passed": true,
+      "durationMs": 129,
+      "details": {
+        "realm": 0,
+        "layer": 2,
+        "stones": 1080
+      }
+    },
+    {
+      "name": "fresh: current account persists across reload",
+      "kind": "fresh",
+      "passed": true,
+      "durationMs": 596
+    },
+    {
+      "name": "fixture: six pages and mobile dialogs render without overflow",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 712
+    },
+    {
+      "name": "fixture: 48 techniques and school/type filter plus source link",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2074
+    },
+    {
+      "name": "fixture: 18 alchemy recipes; crafting and qi use",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1780
+    },
+    {
+      "name": "fixture: red forging, six slots, protection and enhancement",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 782,
+      "details": {
+        "red": "g3"
+      }
+    },
+    {
+      "name": "fixture: loadout selects skills and presets retain configuration",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1789
+    },
+    {
+      "name": "fixture: gacha probabilities, target selection, hard red and reload",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1274,
+      "details": {
+        "target": "gear_sword_weapon",
+        "total": 11
+      }
+    },
+    {
+      "name": "fixture: simulated jade shop direct credit exchange reload and failed-save rollback",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1898
+    },
+    {
+      "name": "fixture: animated jade ten-pull skip and mid-animation reload preserve prizes and pity",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 6544
+    },
+    {
+      "name": "fixture: six dungeon families selectable and all can begin",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 6571
+    },
+    {
+      "name": "fixture: manual skill, target, tactical pause and battle reload",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2423
+    },
+    {
+      "name": "fixture: story choice and sect action persist",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2302
+    },
+    {
+      "name": "fixture: adult companion bond and complete joint session with reload",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2527
+    },
+    {
+      "name": "fixture: export download, valid import and invalid-import protection",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 650
+    },
+    {
+      "name": "fixture: Native persistence failure rolls back reward and RNG",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 41
+    },
+    {
+      "name": "fixture: both cultivation routes preserve progress and unlock auto-small by highest path",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 231
+    },
+    {
+      "name": "fixture: completed trial permits one major breakthrough and preserves route",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 511
+    },
+    {
+      "name": "fixture: passive XP unlocks advancement button without navigation",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 6418
+    },
+    {
+      "name": "fixture: two-hour offline summary agrees with HUD and never clears challenges",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1644
+    },
+    {
+      "name": "fixture: 360 px HUD handles large inventories without horizontal overflow",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 1049
+    },
+    {
+      "name": "fixture: alchemy UI queue, three fire rounds, reload, reward once and storage rollback",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2765,
+      "details": {
+        "baseCount": 3,
+        "bonus": 1,
+        "rounds": 3
+      }
+    },
+    {
+      "name": "fixture: alchemy capacity, ordinary payout and cancellation refund",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2317,
+      "details": {
+        "capacity": 2
+      }
+    },
+    {
+      "name": "fixture: terminal trial links to final chapter, all three endings persist and no seventh realm",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 10763
+    },
+    {
+      "name": "recovery: corrupt stored data retained and exportable without overwrite",
+      "kind": "recovery",
+      "passed": true,
+      "durationMs": 1181
+    },
+    {
+      "name": "fixture: collection pages screenshots and readable red UI",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2911
+    },
+    {
+      "name": "responsive: 360 px six pages and probability dialog",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2075
+    },
+    {
+      "name": "responsive: 412 px six pages and probability dialog",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 2090
+    },
+    {
+      "name": "responsive: 1440 px six pages and probability dialog",
+      "kind": "fixture",
+      "passed": true,
+      "durationMs": 3533
+    },
+    {
+      "name": "asset integrity: local resources and browser diagnostics",
+      "kind": "environment",
+      "passed": true,
+      "durationMs": 1186
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "screenshots": [
+    "v3-mobile-shop.png",
+    "v3-mobile-summon.png",
+    "v3-mobile-draw.png",
+    "v3-mobile-battle.png",
+    "v3-mobile-conversation.png",
+    "v3-mobile-alchemy.png",
+    "v3-mobile-home.png",
+    "v3-mobile-dungeons.png",
+    "v3-mobile-forge.png",
+    "v3-mobile-heaven.png",
+    "v3-mobile-companions.png",
+    "v3-desktop-home.png"
+  ],
+  "fixtureNotice": "Fresh-account tests have no state/resource injection. Later UI integration tests explicitly use a validated mid-game fixture; they do not establish economic reachability or full-game balance.",
+  "browser": "151.0.7922.173",
+  "assetFiles": [
+    {
+      "name": "v3-world.png",
+      "exists": true
+    },
+    {
+      "name": "v3-forge.png",
+      "exists": true
+    },
+    {
+      "name": "v3-map-atlas-a.png",
+      "exists": true
+    },
+    {
+      "name": "v3-map-atlas-b.png",
+      "exists": true
+    },
+    {
+      "name": "v3-boss-atlas.png",
+      "exists": true
+    },
+    {
+      "name": "v3-skills-atlas.png",
+      "exists": true
+    },
+    {
+      "name": "v3-heroes.png",
+      "exists": true
+    },
+    {
+      "name": "v3-items-atlas.png",
+      "exists": true
+    },
+    {
+      "name": "v3-hero-expressions.png",
+      "exists": true
+    },
+    {
+      "name": "v3-monster-atlas.png",
+      "exists": true
+    },
+    {
+      "name": "v3-summon.png",
+      "exists": true
+    },
+    {
+      "name": "v3-shop.png",
+      "exists": true
+    },
+    {
+      "name": "v3-chapter-atlas.png",
+      "exists": true
+    },
+    {
+      "name": "v3-cardback.png",
+      "exists": true
+    }
+  ],
+  "decodedAssets": [
+    {
+      "name": "v3-world.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "name": "v3-forge.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "name": "v3-map-atlas-a.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "name": "v3-map-atlas-b.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "name": "v3-boss-atlas.png",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "name": "v3-skills-atlas.png",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "name": "v3-heroes.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "name": "v3-items-atlas.png",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "name": "v3-hero-expressions.png",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "name": "v3-monster-atlas.png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "name": "v3-summon.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "name": "v3-shop.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "name": "v3-chapter-atlas.png",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "name": "v3-cardback.png",
+      "width": 1086,
+      "height": 1448
+    }
+  ],
+  "finishedAt": "2026-10-07T07:44:59.334Z",
+  "passed": true
+}

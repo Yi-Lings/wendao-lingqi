@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const E=require('../web/engine.js');
+const {readyJourneyFixture}=require('./story-fixtures.cjs');
 const NOW=1791244800000;
 function ready(){
  const s=E.createState(NOW);
@@ -8,6 +9,7 @@ function ready(){
  return s;
 }
 function claim(s,choice){
+ readyJourneyFixture(s,'chapter_'+s.story.chapter,choice,NOW);
  const r=E.act(s,{type:'claimChapter',choice},NOW);
  assert.equal(r.ok,true,r.message);assert.equal(E.validate(E.serialize(s)).ok,true);
  return r;

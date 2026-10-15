@@ -1,0 +1,6270 @@
+{
+  "startedAt": "2026-10-07T06:30:31.269Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Explicit rich legacy-terminal and combat-attribute UI fixtures; ceremony stages and layout fixtures are reached through E.act and true simulated battle wins. Zero-injection economic reachability is tested separately in v3-playthrough.cjs.",
+  "tests": [
+    {
+      "name": "fresh celestial gate victory, farewell and actual flight continue into paid immortal training and a real hunt",
+      "passed": true,
+      "detail": {
+        "readPosition": 1,
+        "oldGateWins": 2,
+        "freshGateWins": 1,
+        "realm": "登仙",
+        "layer": 2,
+        "huntWins": 1,
+        "powerBefore": 392304,
+        "powerAfter": 491616
+      }
+    },
+    {
+      "name": "failed final flight save retains the paid return scene and grants no immortal power until a single successful retry",
+      "passed": true,
+      "detail": {
+        "rollback": true,
+        "grantedYuan": 100,
+        "permanentPowerSaved": true
+      }
+    },
+    {
+      "name": "missing real mortal completion and future immortal challenges remain blocked without changing the save",
+      "passed": true,
+      "detail": {
+        "missingOathBlocked": true,
+        "futureChallengeBlocked": true
+      }
+    },
+    {
+      "name": "all actual ceremony and three-realm stages keep footer controls visible at short portrait and landscape sizes",
+      "passed": true,
+      "detail": {
+        "validatedStages": 19,
+        "viewports": 5,
+        "measurements": 95,
+        "metrics": [
+          {
+            "name": "preparation",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 314.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "preparation"
+          },
+          {
+            "name": "invitation",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "invitation"
+          },
+          {
+            "name": "vow",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 334.265625,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 145.734375
+            },
+            "actions": [
+              {
+                "top": 358.0625,
+                "bottom": 472,
+                "left": 13,
+                "right": 120.328125,
+                "width": 107.328125,
+                "height": 113.9375
+              },
+              {
+                "top": 358.0625,
+                "bottom": 472,
+                "left": 126.328125,
+                "right": 233.65625,
+                "width": 107.328125,
+                "height": 113.9375
+              },
+              {
+                "top": 358.0625,
+                "bottom": 472,
+                "left": 239.65625,
+                "right": 347,
+                "width": 107.34375,
+                "height": 113.9375
+              }
+            ],
+            "dialogue": {
+              "top": 258.765625,
+              "bottom": 334.265625,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "vow"
+          },
+          {
+            "name": "vow-reply",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "vow"
+          },
+          {
+            "name": "condense",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "condense"
+          },
+          {
+            "name": "trial-reading",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "trial"
+          },
+          {
+            "name": "trial-challenge",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "trial",
+            "currentChallenge": {
+              "top": 229.8125,
+              "bottom": 269.8125,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 158.375,
+                "bottom": 283.375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "return",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "return"
+          },
+          {
+            "name": "ready",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ready"
+          },
+          {
+            "name": "ascended-0-1",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 314.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 310.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-0-10",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-0",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-1",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 314.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 310.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-10",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-1",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-1",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 292.234375,
+              "bottom": 332.234375,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 220.796875,
+                "bottom": 332.5625,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-10",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 292.234375,
+              "bottom": 332.234375,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 220.796875,
+                "bottom": 332.5625,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-2",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 292.234375,
+              "bottom": 332.234375,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 220.796875,
+                "bottom": 332.5625,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "perfected",
+            "size": {
+              "width": 360,
+              "height": 480
+            },
+            "viewport": {
+              "width": 360,
+              "height": 480
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 480
+            },
+            "footer": {
+              "top": 408.203125,
+              "bottom": 480,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 40
+              },
+              {
+                "top": 432,
+                "bottom": 472,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 332.703125,
+              "bottom": 408.203125,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 75.5
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 292.234375,
+              "bottom": 332.234375,
+              "height": 40,
+              "left": 271,
+              "right": 335,
+              "clip": {
+                "top": 220.796875,
+                "bottom": 332.5625,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "preparation",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "preparation"
+          },
+          {
+            "name": "invitation",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "invitation"
+          },
+          {
+            "name": "vow",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 471.671875,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 168.328125
+            },
+            "actions": [
+              {
+                "top": 503.0625,
+                "bottom": 621,
+                "left": 13,
+                "right": 120.328125,
+                "width": 107.328125,
+                "height": 117.9375
+              },
+              {
+                "top": 503.0625,
+                "bottom": 621,
+                "left": 126.328125,
+                "right": 233.65625,
+                "width": 107.328125,
+                "height": 117.9375
+              },
+              {
+                "top": 503.0625,
+                "bottom": 621,
+                "left": 239.65625,
+                "right": 347,
+                "width": 107.34375,
+                "height": 117.9375
+              }
+            ],
+            "dialogue": {
+              "top": 378.5,
+              "bottom": 471.671875,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "vow"
+          },
+          {
+            "name": "vow-reply",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 453.4375,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "vow"
+          },
+          {
+            "name": "condense",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "condense"
+          },
+          {
+            "name": "trial-reading",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "trial"
+          },
+          {
+            "name": "trial-challenge",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 453.4375,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "trial",
+            "currentChallenge": {
+              "top": 388.4375,
+              "bottom": 428.4375,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 306.4375,
+                "bottom": 445.4375,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "return",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "return"
+          },
+          {
+            "name": "ready",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 347,
+                "width": 334,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 453.4375,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ready"
+          },
+          {
+            "name": "ascended-0-1",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-0-10",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-0",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-1",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-10",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-1",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 344.71875,
+              "bottom": 384.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 262.71875,
+                "bottom": 401.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-1",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 372.71875,
+              "bottom": 412.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 290.71875,
+                "bottom": 423.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-10",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 372.71875,
+              "bottom": 412.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 290.71875,
+                "bottom": 423.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-2",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 372.71875,
+              "bottom": 412.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 290.71875,
+                "bottom": 423.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "perfected",
+            "size": {
+              "width": 360,
+              "height": 640
+            },
+            "viewport": {
+              "width": 360,
+              "height": 640
+            },
+            "documentWidth": 360,
+            "screen": {
+              "top": 0,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 640
+            },
+            "footer": {
+              "top": 546.609375,
+              "bottom": 640,
+              "left": 0,
+              "right": 360,
+              "width": 360,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 13,
+                "right": 177,
+                "width": 164,
+                "height": 43
+              },
+              {
+                "top": 578,
+                "bottom": 621,
+                "left": 183,
+                "right": 347,
+                "width": 164,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 431.25,
+              "bottom": 546.609375,
+              "left": 12,
+              "right": 348,
+              "width": 336,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 265,
+              "scroll": 265
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 372.71875,
+              "bottom": 412.71875,
+              "height": 40,
+              "left": 270,
+              "right": 334,
+              "clip": {
+                "top": 290.71875,
+                "bottom": 423.71875,
+                "left": 15,
+                "right": 345
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "preparation",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "preparation"
+          },
+          {
+            "name": "invitation",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "invitation"
+          },
+          {
+            "name": "vow",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 662.390625,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 181.609375
+            },
+            "actions": [
+              {
+                "top": 693.78125,
+                "bottom": 825,
+                "left": 16,
+                "right": 131.328125,
+                "width": 115.328125,
+                "height": 131.21875
+              },
+              {
+                "top": 693.78125,
+                "bottom": 825,
+                "left": 137.328125,
+                "right": 252.65625,
+                "width": 115.328125,
+                "height": 131.21875
+              },
+              {
+                "top": 693.78125,
+                "bottom": 825,
+                "left": 258.65625,
+                "right": 374,
+                "width": 115.34375,
+                "height": 131.21875
+              }
+            ],
+            "dialogue": {
+              "top": 569.21875,
+              "bottom": 662.390625,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "vow"
+          },
+          {
+            "name": "vow-reply",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "vow"
+          },
+          {
+            "name": "condense",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "condense"
+          },
+          {
+            "name": "trial-reading",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "trial"
+          },
+          {
+            "name": "trial-challenge",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "trial",
+            "currentChallenge": {
+              "top": 418.6875,
+              "bottom": 458.6875,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 336.6875,
+                "bottom": 475.6875,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "return",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "return"
+          },
+          {
+            "name": "ready",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 374,
+                "width": 358,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ready"
+          },
+          {
+            "name": "ascended-0-1",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 420.40625,
+              "bottom": 460.40625,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 338.40625,
+                "bottom": 477.40625,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-0-10",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 414,
+              "bottom": 454,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 332,
+                "bottom": 471,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-0",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 382.75,
+              "bottom": 422.75,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 300.75,
+                "bottom": 439.75,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-1",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 420.40625,
+              "bottom": 460.40625,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 338.40625,
+                "bottom": 477.40625,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-10",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 414,
+              "bottom": 454,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 332,
+                "bottom": 471,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-1",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 657.4375,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 382.75,
+              "bottom": 422.75,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 300.75,
+                "bottom": 439.75,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-1",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 420.40625,
+              "bottom": 460.40625,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 338.40625,
+                "bottom": 477.40625,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-10",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 402.90625,
+              "bottom": 442.90625,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 320.90625,
+                "bottom": 459.90625,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-2",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 382.75,
+              "bottom": 422.75,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 300.75,
+                "bottom": 439.75,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "perfected",
+            "size": {
+              "width": 390,
+              "height": 844
+            },
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "documentWidth": 390,
+            "screen": {
+              "top": 0,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 844
+            },
+            "footer": {
+              "top": 750.609375,
+              "bottom": 844,
+              "left": 0,
+              "right": 390,
+              "width": 390,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 16,
+                "right": 192,
+                "width": 176,
+                "height": 43
+              },
+              {
+                "top": 782,
+                "bottom": 825,
+                "left": 198,
+                "right": 374,
+                "width": 176,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 635.25,
+              "bottom": 750.609375,
+              "left": 13,
+              "right": 377,
+              "width": 364,
+              "height": 115.359375
+            },
+            "text": {
+              "client": 276,
+              "scroll": 276
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 385.40625,
+              "bottom": 425.40625,
+              "height": 40,
+              "left": 295,
+              "right": 359,
+              "clip": {
+                "top": 303.40625,
+                "bottom": 442.40625,
+                "left": 20,
+                "right": 370
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "preparation",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 115.03125,
+              "bottom": 226.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 111.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "preparation"
+          },
+          {
+            "name": "invitation",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 124.03125,
+              "bottom": 217.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "invitation"
+          },
+          {
+            "name": "vow",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 151.890625,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 208.109375
+            },
+            "actions": [
+              {
+                "top": 175.6875,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 441.40625,
+                "width": 80.28125,
+                "height": 176.3125
+              },
+              {
+                "top": 175.6875,
+                "bottom": 352,
+                "left": 447.40625,
+                "right": 527.703125,
+                "width": 80.296875,
+                "height": 176.3125
+              },
+              {
+                "top": 175.6875,
+                "bottom": 352,
+                "left": 533.703125,
+                "right": 613.984375,
+                "width": 80.28125,
+                "height": 176.3125
+              }
+            ],
+            "dialogue": {
+              "top": 64.875,
+              "bottom": 140.375,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 75.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "vow"
+          },
+          {
+            "name": "vow-reply",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 124.03125,
+              "bottom": 217.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "vow"
+          },
+          {
+            "name": "condense",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 275.40625,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 84.59375
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 117.640625,
+              "bottom": 211.140625,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "condense"
+          },
+          {
+            "name": "trial-reading",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 124.03125,
+              "bottom": 217.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "trial"
+          },
+          {
+            "name": "trial-challenge",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 133.03125,
+              "bottom": 208.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 75.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "trial",
+            "currentChallenge": {
+              "top": 229.8125,
+              "bottom": 269.8125,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 158.375,
+                "bottom": 283.375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "return",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 124.03125,
+              "bottom": 217.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "return"
+          },
+          {
+            "name": "ready",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 288.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 71.796875
+            },
+            "actions": [
+              {
+                "top": 312,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 614,
+                "width": 252.875,
+                "height": 40
+              }
+            ],
+            "dialogue": {
+              "top": 133.03125,
+              "bottom": 208.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 75.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ready"
+          },
+          {
+            "name": "ascended-0-1",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 112.03125,
+              "bottom": 223.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 111.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-0-10",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-0",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-1",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 112.03125,
+              "bottom": 223.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 111.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-10",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-1",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-1",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-10",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-2",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "perfected",
+            "size": {
+              "width": 640,
+              "height": 360
+            },
+            "viewport": {
+              "width": 640,
+              "height": 360
+            },
+            "documentWidth": 640,
+            "screen": {
+              "top": 0,
+              "bottom": 360,
+              "left": 10,
+              "right": 630,
+              "width": 620,
+              "height": 360
+            },
+            "footer": {
+              "top": 282.203125,
+              "bottom": 360,
+              "left": 345.125,
+              "right": 630,
+              "width": 284.875,
+              "height": 77.796875
+            },
+            "actions": [
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 361.125,
+                "right": 484.5625,
+                "width": 123.4375,
+                "height": 46
+              },
+              {
+                "top": 306,
+                "bottom": 352,
+                "left": 490.5625,
+                "right": 614,
+                "width": 123.4375,
+                "height": 46
+              }
+            ],
+            "dialogue": {
+              "top": 121.03125,
+              "bottom": 214.53125,
+              "left": 358.125,
+              "right": 617,
+              "width": 258.875,
+              "height": 93.5
+            },
+            "text": {
+              "client": 171,
+              "scroll": 171
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 270.046875,
+              "bottom": 310.046875,
+              "height": 40,
+              "left": 251.125,
+              "right": 315.125,
+              "clip": {
+                "top": 198.609375,
+                "bottom": 323.609375,
+                "left": 30,
+                "right": 325
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "preparation",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "preparation"
+          },
+          {
+            "name": "invitation",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "invitation"
+          },
+          {
+            "name": "vow",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 748.078125,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 151.921875
+            },
+            "actions": [
+              {
+                "top": 779.46875,
+                "bottom": 881,
+                "left": 426,
+                "right": 618,
+                "width": 192,
+                "height": 101.53125
+              },
+              {
+                "top": 779.46875,
+                "bottom": 881,
+                "left": 624,
+                "right": 816,
+                "width": 192,
+                "height": 101.53125
+              },
+              {
+                "top": 779.46875,
+                "bottom": 881,
+                "left": 822,
+                "right": 1014,
+                "width": 192,
+                "height": 101.53125
+              }
+            ],
+            "dialogue": {
+              "top": 666.078125,
+              "bottom": 748.078125,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 82
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "vow"
+          },
+          {
+            "name": "vow-reply",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 724.609375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 82
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "vow"
+          },
+          {
+            "name": "condense",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "condense"
+          },
+          {
+            "name": "trial-reading",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "trial"
+          },
+          {
+            "name": "trial-challenge",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 724.609375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 82
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "trial",
+            "currentChallenge": {
+              "top": 401.6875,
+              "bottom": 441.6875,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 336.6875,
+                "bottom": 458.6875,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "return",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "return"
+          },
+          {
+            "name": "ready",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 1014,
+                "width": 588,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 724.609375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 82
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ready"
+          },
+          {
+            "name": "ascended-0-1",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 398.5625,
+              "bottom": 438.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 455.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-0-10",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 398.5625,
+              "bottom": 438.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 455.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-0",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 361.984375,
+              "bottom": 401.984375,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 296.984375,
+                "bottom": 418.984375,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-1",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 415.5625,
+              "bottom": 455.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 472.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-1-10",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 415.5625,
+              "bottom": 455.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 472.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-1",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 370.484375,
+              "bottom": 410.484375,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 288.484375,
+                "bottom": 427.484375,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-1",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 415.5625,
+              "bottom": 455.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 472.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "ascended-2-10",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 415.5625,
+              "bottom": 455.5625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 333.5625,
+                "bottom": 472.5625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "trial-won-2",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 370.484375,
+              "bottom": 410.484375,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 288.484375,
+                "bottom": 427.484375,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          },
+          {
+            "name": "perfected",
+            "size": {
+              "width": 1440,
+              "height": 900
+            },
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "documentWidth": 1440,
+            "screen": {
+              "top": 0,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 900
+            },
+            "footer": {
+              "top": 806.609375,
+              "bottom": 900,
+              "left": 410,
+              "right": 1030,
+              "width": 620,
+              "height": 93.390625
+            },
+            "actions": [
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 426,
+                "right": 717,
+                "width": 291,
+                "height": 43
+              },
+              {
+                "top": 838,
+                "bottom": 881,
+                "left": 723,
+                "right": 1014,
+                "width": 291,
+                "height": 43
+              }
+            ],
+            "dialogue": {
+              "top": 713.4375,
+              "bottom": 806.609375,
+              "left": 423,
+              "right": 1017,
+              "width": 594,
+              "height": 93.171875
+            },
+            "text": {
+              "client": 506,
+              "scroll": 506
+            },
+            "label": "ascended",
+            "currentChallenge": {
+              "top": 408.40625,
+              "bottom": 448.40625,
+              "height": 40,
+              "left": 935,
+              "right": 999,
+              "clip": {
+                "top": 326.40625,
+                "bottom": 465.40625,
+                "left": 430,
+                "right": 1010
+              },
+              "hit": "BUTTON",
+              "unobstructed": true,
+              "fullyVisible": true
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "screenshots": [
+    "ascension-xuanlv-390x844.png",
+    "ascension-gate-390x844.png",
+    "ascension-farewell-390x844.png",
+    "ascension-new-realm-390x844.png",
+    "ascension-vow-360x480.png",
+    "ascension-trial-challenge-360x480.png",
+    "ascension-ascended-2-10-360x480.png",
+    "ascension-vow-640x360.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "badResponses": [],
+  "failedRequests": [],
+  "finishedAt": "2026-10-07T06:30:54.130Z",
+  "passed": true
+}

@@ -1,0 +1,10 @@
+PASS formal query uses Native loading and commits the original character
+PASS human preview snapshot export and cancellation preserve formal Native and sibling slots
+PASS ascension preview snapshot export and cancellation preserve formal Native and sibling slots
+PASS failed Native ten-draw persistence restores currencies, rewards, UID, pity and random streams
+PASS postcommit feedback failure retains the saved forge UID and random state and reports presentationFailed
+PASS dust orange equipment shows the actual saved item and restores the source without a second grant
+PASS dust orange treasure shows the actual saved item and restores the source without a second grant
+PASS real meditation followed by celestial advancement shows the saved new layer without fabricated rewards
+PASS actual ascension-open control synchronously switches music and the real media clock advances with one loop
+{"passed":true,"tests":9,"failed":[],"pageErrors":[],"consoleErrors":[],"expectedConsoleErrors":[{"test":"postcommit renderer fault","error":"Error: LINGQI_QA_EXPECTED_POSTCOMMIT_MODEL_FAILURE\n    at Object.model (eval at evaluate (:311:30), <anonymous>:1:347)\n    at run (http://127.0.0.1:8787/app.js:675:127)\n    at Object.act (http://127.0.0.1:8787/app.js:829:107)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:393)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"}],"badResponses":[],"failedRequests":[]}

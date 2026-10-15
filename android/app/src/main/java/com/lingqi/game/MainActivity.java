@@ -121,7 +121,14 @@ public final class MainActivity extends Activity {
     }
 
     private static boolean isEntry(String url) {
-        return ENTRY.equals(url) || (url != null && url.startsWith(ENTRY + "#"));
+        if (url == null) return false;
+        int fragment = url.indexOf('#');
+        String destination = fragment < 0 ? url : url.substring(0, fragment);
+        return ENTRY.equals(destination)
+                || (ENTRY + "?preview=0").equals(destination)
+                || (ENTRY + "?preview=1").equals(destination)
+                || (ENTRY + "?preview=1&immortal=1").equals(destination)
+                || (ENTRY + "?immortal=1&preview=1").equals(destination);
     }
     private static boolean isAsset(Uri uri) {
         String path = uri.getPath();
@@ -227,7 +234,8 @@ public final class MainActivity extends Activity {
         try {
             pendingExportRecovery = recovery;
             pendingExport = recovery ? boundedText(text) : validatedSave(text);
-            if (!recovery && !writeInternalSave(pendingExport)) throw new IllegalStateException("could not preserve save");
+            // Export is a snapshot operation. Preview saves use this bridge too;
+            // only persistSave may replace the formal character's saveFile.
             if (!preserveExport(pendingExport)) throw new IllegalStateException("could not preserve export");
             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);

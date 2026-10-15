@@ -1,0 +1,2169 @@
+{
+  "title": "云门长明",
+  "bpm": 80,
+  "beatsPerBar": 4,
+  "bars": 32,
+  "duration": 96.0,
+  "mode": "D yu pentatonic: D F G A C",
+  "seed": 7102026,
+  "sampleRate": 44100,
+  "sections": [
+    {
+      "start": 0,
+      "end": 24,
+      "name": "云门初映"
+    },
+    {
+      "start": 24,
+      "end": 48,
+      "name": "叩阶升行"
+    },
+    {
+      "start": 48,
+      "end": 72,
+      "name": "玉阙展开"
+    },
+    {
+      "start": 72,
+      "end": 96,
+      "name": "星海回响"
+    }
+  ],
+  "musicEvents": [
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 0.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 0.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 0.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 38,
+      "pitchHz": 73.41619,
+      "start": 0.0,
+      "duration": 6.7,
+      "gain": 0.0624,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 3.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 3.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 3.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 53,
+      "pitchHz": 174.61412,
+      "start": 6.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 6.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 6.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 41,
+      "pitchHz": 87.30706,
+      "start": 6.0,
+      "duration": 6.7,
+      "gain": 0.0624,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 53,
+      "pitchHz": 174.61412,
+      "start": 9.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 9.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 9.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 12.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 12.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 12.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 43,
+      "pitchHz": 97.99886,
+      "start": 12.0,
+      "duration": 6.7,
+      "gain": 0.0624,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 15.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 15.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 15.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 18.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 18.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 18.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 45,
+      "pitchHz": 110.0,
+      "start": 18.0,
+      "duration": 6.7,
+      "gain": 0.0624,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 21.0,
+      "duration": 4.05,
+      "gain": 0.1152,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 21.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 21.0,
+      "duration": 4.05,
+      "gain": 0.0816,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 24.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 24.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 24.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 38,
+      "pitchHz": 73.41619,
+      "start": 24.0,
+      "duration": 6.7,
+      "gain": 0.0858,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 24.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 25.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 26.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 53,
+      "pitchHz": 174.61412,
+      "start": 27.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 27.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 27.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 27.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 28.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 29.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 30.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 30.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 30.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 43,
+      "pitchHz": 97.99886,
+      "start": 30.0,
+      "duration": 6.7,
+      "gain": 0.0858,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 30.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 31.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 32.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 33.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 33.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 33.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 33.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 34.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 35.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 36.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 36.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 36.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 48,
+      "pitchHz": 130.81278,
+      "start": 36.0,
+      "duration": 6.7,
+      "gain": 0.0858,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 36.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 37.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 84,
+      "pitchHz": 1046.50226,
+      "start": 38.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 39.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 39.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 39.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 39.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 40.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 41.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 42.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 42.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 42.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 43,
+      "pitchHz": 97.99886,
+      "start": 42.0,
+      "duration": 6.7,
+      "gain": 0.0858,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 42.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 43.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 44.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 45.0,
+      "duration": 4.05,
+      "gain": 0.1584,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 45.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 45.0,
+      "duration": 4.05,
+      "gain": 0.1122,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 45.375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 46.5,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 47.4375,
+      "duration": 2.25,
+      "gain": 0.19,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 48.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 48.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 48.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 38,
+      "pitchHz": 73.41619,
+      "start": 48.0,
+      "duration": 6.7,
+      "gain": 0.1144,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 48.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 49.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 50.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 53,
+      "pitchHz": 174.61412,
+      "start": 51.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 51.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 51.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 51.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 52.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 53.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 54.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 54.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 54.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 43,
+      "pitchHz": 97.99886,
+      "start": 54.0,
+      "duration": 6.7,
+      "gain": 0.1144,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 54.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 55.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 56.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 57.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 57.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 57.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 57.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 58.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 59.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 60.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 60.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 60.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 48,
+      "pitchHz": 130.81278,
+      "start": 60.0,
+      "duration": 6.7,
+      "gain": 0.1144,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 60.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 61.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 84,
+      "pitchHz": 1046.50226,
+      "start": 62.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 63.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 63.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 63.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 63.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 64.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 65.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 66.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 66.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 66.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 43,
+      "pitchHz": 97.99886,
+      "start": 66.0,
+      "duration": 6.7,
+      "gain": 0.1144,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 66.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 67.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 68.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 69.0,
+      "duration": 4.05,
+      "gain": 0.2112,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 69.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 69.0,
+      "duration": 4.05,
+      "gain": 0.1496,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 69.375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": -0.36
+    },
+    {
+      "voice": "plucked",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 70.5,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 71.4375,
+      "duration": 2.25,
+      "gain": 0.23,
+      "pan": 0.32
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 72.0,
+      "duration": 4.05,
+      "gain": 0.1248,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 72.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 72.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 38,
+      "pitchHz": 73.41619,
+      "start": 72.0,
+      "duration": 6.7,
+      "gain": 0.0676,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 73.125,
+      "duration": 2.65,
+      "gain": 0.1,
+      "pan": 0.25
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 75.0,
+      "duration": 4.05,
+      "gain": 0.1248,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 75.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 75.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 76.125,
+      "duration": 2.65,
+      "gain": 0.1,
+      "pan": 0.25
+    },
+    {
+      "voice": "bowed",
+      "midi": 53,
+      "pitchHz": 174.61412,
+      "start": 78.0,
+      "duration": 4.05,
+      "gain": 0.1248,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 60,
+      "pitchHz": 261.62557,
+      "start": 78.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 78.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 41,
+      "pitchHz": 87.30706,
+      "start": 78.0,
+      "duration": 6.7,
+      "gain": 0.0676,
+      "pan": -0.06
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 79.125,
+      "duration": 2.65,
+      "gain": 0.1,
+      "pan": 0.25
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 81.0,
+      "duration": 4.05,
+      "gain": 0.1248,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 81.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 81.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.44
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 82.125,
+      "duration": 2.65,
+      "gain": 0.1,
+      "pan": 0.25
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 84.0,
+      "duration": 4.05,
+      "gain": 0.1248,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 84.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 84.0,
+      "duration": 4.05,
+      "gain": 0.0884,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 45,
+      "pitchHz": 110.0,
+      "start": 84.0,
+      "duration": 6.7,
+      "gain": 0.0676,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 55,
+      "pitchHz": 195.99772,
+      "start": 87.0,
+      "duration": 4.05,
+      "gain": 0.0936,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 87.0,
+      "duration": 4.05,
+      "gain": 0.0663,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 87.0,
+      "duration": 4.05,
+      "gain": 0.0663,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 90.0,
+      "duration": 4.05,
+      "gain": 0.0624,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 90.0,
+      "duration": 4.05,
+      "gain": 0.0442,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 90.0,
+      "duration": 4.05,
+      "gain": 0.0442,
+      "pan": 0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 38,
+      "pitchHz": 73.41619,
+      "start": 90.0,
+      "duration": 6.7,
+      "gain": 0.0338,
+      "pan": -0.06
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 93.0,
+      "duration": 4.05,
+      "gain": 0.0312,
+      "pan": -0.44
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 93.0,
+      "duration": 4.05,
+      "gain": 0.0221,
+      "pan": 0.0
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 93.0,
+      "duration": 4.05,
+      "gain": 0.0221,
+      "pan": 0.44
+    },
+    {
+      "voice": "woodwind",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 6.0,
+      "duration": 2.45,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 9.75,
+      "duration": 2.45,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 12.0,
+      "duration": 2.45,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 15.0,
+      "duration": 3.2,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 18.0,
+      "duration": 2.45,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 21.0,
+      "duration": 1.7,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 22.5,
+      "duration": 1.7,
+      "gain": 0.41,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 24.0,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 25.5,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 27.0,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 28.5,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 30.0,
+      "duration": 2.45,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 33.0,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 34.5,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 36.0,
+      "duration": 2.45,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 39.0,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 40.5,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 42.0,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 43.5,
+      "duration": 1.7,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 45.0,
+      "duration": 3.2,
+      "gain": 0.46,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 48.0,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 49.5,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 51.0,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 52.5,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 84,
+      "pitchHz": 1046.50226,
+      "start": 54.0,
+      "duration": 3.2,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 57.0,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 58.5,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 60.0,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 61.5,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 63.0,
+      "duration": 2.45,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 66.0,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 67.5,
+      "duration": 1.7,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 69.0,
+      "duration": 3.2,
+      "gain": 0.54,
+      "pan": -0.08
+    },
+    {
+      "voice": "woodwind",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 72.0,
+      "duration": 2.45,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 75.0,
+      "duration": 1.7,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 76.5,
+      "duration": 1.7,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 78.0,
+      "duration": 2.45,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 81.0,
+      "duration": 2.45,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 84.0,
+      "duration": 1.7,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 85.5,
+      "duration": 1.7,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 87.0,
+      "duration": 2.45,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "woodwind",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 90.0,
+      "duration": 3.95,
+      "gain": 0.35,
+      "pan": 0.1
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 48.25,
+      "duration": 5.75,
+      "gain": 0.25,
+      "pan": 0.42
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 54.25,
+      "duration": 5.75,
+      "gain": 0.25,
+      "pan": 0.42
+    },
+    {
+      "voice": "bowed",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 60.25,
+      "duration": 5.75,
+      "gain": 0.25,
+      "pan": 0.42
+    },
+    {
+      "voice": "bowed",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 66.25,
+      "duration": 5.75,
+      "gain": 0.25,
+      "pan": 0.42
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 72.25,
+      "duration": 5.75,
+      "gain": 0.16,
+      "pan": 0.42
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 78.25,
+      "duration": 5.75,
+      "gain": 0.16,
+      "pan": 0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 0.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": -0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 18.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": 0.4
+    },
+    {
+      "voice": "bronze",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 24.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": -0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 45.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": 0.4
+    },
+    {
+      "voice": "bronze",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 48.03,
+      "duration": 5.7,
+      "gain": 0.23,
+      "pan": -0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 60.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": -0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 72.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": -0.42
+    },
+    {
+      "voice": "bronze",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 90.03,
+      "duration": 5.7,
+      "gain": 0.15,
+      "pan": 0.4
+    }
+  ],
+  "ascensionRiseEvents": [
+    {
+      "voice": "plucked",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 0.1,
+      "duration": 2.15,
+      "gain": 0.44,
+      "pan": -0.35
+    },
+    {
+      "voice": "bronze",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 0.18,
+      "duration": 3.8,
+      "gain": 0.15,
+      "pan": 0.325
+    },
+    {
+      "voice": "plucked",
+      "midi": 65,
+      "pitchHz": 349.22823,
+      "start": 0.38,
+      "duration": 2.15,
+      "gain": 0.465,
+      "pan": -0.21
+    },
+    {
+      "voice": "bronze",
+      "midi": 77,
+      "pitchHz": 698.45646,
+      "start": 0.46,
+      "duration": 3.8,
+      "gain": 0.164,
+      "pan": 0.195
+    },
+    {
+      "voice": "plucked",
+      "midi": 67,
+      "pitchHz": 391.99544,
+      "start": 0.66,
+      "duration": 2.15,
+      "gain": 0.49,
+      "pan": -0.07
+    },
+    {
+      "voice": "bronze",
+      "midi": 79,
+      "pitchHz": 783.99087,
+      "start": 0.74,
+      "duration": 3.8,
+      "gain": 0.178,
+      "pan": 0.065
+    },
+    {
+      "voice": "plucked",
+      "midi": 69,
+      "pitchHz": 440.0,
+      "start": 0.94,
+      "duration": 2.15,
+      "gain": 0.515,
+      "pan": 0.07
+    },
+    {
+      "voice": "bronze",
+      "midi": 81,
+      "pitchHz": 880.0,
+      "start": 1.02,
+      "duration": 3.8,
+      "gain": 0.192,
+      "pan": -0.065
+    },
+    {
+      "voice": "plucked",
+      "midi": 72,
+      "pitchHz": 523.25113,
+      "start": 1.22,
+      "duration": 2.15,
+      "gain": 0.54,
+      "pan": 0.21
+    },
+    {
+      "voice": "bronze",
+      "midi": 84,
+      "pitchHz": 1046.50226,
+      "start": 1.3,
+      "duration": 3.8,
+      "gain": 0.206,
+      "pan": -0.195
+    },
+    {
+      "voice": "plucked",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 1.5,
+      "duration": 2.15,
+      "gain": 0.565,
+      "pan": 0.35
+    },
+    {
+      "voice": "bronze",
+      "midi": 86,
+      "pitchHz": 1174.65907,
+      "start": 1.58,
+      "duration": 3.8,
+      "gain": 0.22,
+      "pan": -0.325
+    },
+    {
+      "voice": "bronze",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 1.86,
+      "duration": 4.7,
+      "gain": 0.5,
+      "pan": -0.08
+    },
+    {
+      "voice": "bowed",
+      "midi": 50,
+      "pitchHz": 146.83238,
+      "start": 1.62,
+      "duration": 4.95,
+      "gain": 0.25,
+      "pan": -0.35
+    },
+    {
+      "voice": "bowed",
+      "midi": 57,
+      "pitchHz": 220.0,
+      "start": 1.62,
+      "duration": 4.95,
+      "gain": 0.25,
+      "pan": 0.35
+    },
+    {
+      "voice": "bowed",
+      "midi": 62,
+      "pitchHz": 293.66477,
+      "start": 1.62,
+      "duration": 4.95,
+      "gain": 0.25,
+      "pan": 0
+    },
+    {
+      "voice": "bowed",
+      "midi": 74,
+      "pitchHz": 587.32954,
+      "start": 1.62,
+      "duration": 4.95,
+      "gain": 0.25,
+      "pan": 0.2
+    }
+  ]
+}

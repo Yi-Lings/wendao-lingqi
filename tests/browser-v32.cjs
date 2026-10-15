@@ -20,7 +20,7 @@ async function test(name,fn){const at=Date.now();try{const details=await fn();re
 const state=p=>p.evaluate(()=>window.Lingqi.state());
 async function close(p){if(await p.locator('#modal-layer [role="dialog"]').isVisible())await p.keyboard.press('Escape');}
 async function ui(p,id){const modal=p.locator('#modal-layer [role="dialog"]'),scope=await modal.isVisible()?modal:p.locator('#app');await scope.locator('[data-ui="'+id+'"]:visible').first().click();}
-async function shot(p,name){await p.waitForTimeout(260);await p.evaluate(()=>{document.getElementById('toast').hidden=true;window.scrollTo({top:0,behavior:'instant'});});await p.screenshot({path:path.join(DIST,name),fullPage:false});report.screenshots.push(name);}
+async function shot(p,name){await p.waitForTimeout(260);await p.evaluate(()=>{document.getElementById('toast').hidden=true;window.scrollTo({top:0,behavior:'instant'});document.getElementById('page-content').scrollTop=0;});await p.screenshot({path:path.join(DIST,name),fullPage:false});report.screenshots.push(name);}
 async function restore(p,s){s.lastAt=Date.now();assert(await p.evaluate(raw=>window.Lingqi.import(raw),JSON.stringify(s)));await close(p);}
 async function overflow(p){assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1&&document.body.scrollWidth<=innerWidth+1),'viewport overflow');}
 async function resolve(p,id,choice){await p.evaluate(id=>window.Lingqi.showModal('world-event',{id}),id);
@@ -82,9 +82,8 @@ async function resolve(p,id,choice){await p.evaluate(id=>window.Lingqi.showModal
  await test('responsive: phone, tablet and desktop layouts keep controls in bounds and dialogs keyboard accessible',async()=>{
   for(const width of [320,360,390,768,1024,1440]){
    const g=await make({width,height:width>=1000?900:780,reduced:width===320});await overflow(g.p);
-   const desktop=await g.p.locator('.realm-sidebar').isVisible();assert.equal(desktop,width>=1000);
    const nav=await g.p.locator('.nav-bottom').boundingBox();assert(nav&&nav.x>=0&&nav.x+nav.width<=width+1);
-   await ui(g.p,'world');await overflow(g.p);await g.p.evaluate(()=>window.Lingqi.showModal('world-event',{id:'bridge_lantern'}));await overflow(g.p);
+   await ui(g.p,'world');await overflow(g.p);if(width>=1000)assert((await g.p.locator('.game-shell').boundingBox()).width>800);await g.p.evaluate(()=>window.Lingqi.showModal('world-event',{id:'bridge_lantern'}));await overflow(g.p);
    for(let i=0;i<10;i++){await g.p.keyboard.press('Tab');assert(await g.p.evaluate(()=>document.querySelector('[role="dialog"]').contains(document.activeElement)));}
    await close(g.p);if(width===1440){await shot(g.p,'v32-desktop-world.png');await g.p.locator('[data-page="cultivation"]').click();await shot(g.p,'v32-desktop-home.png');}
    if(width===320)await shot(g.p,'v32-small-world-reduced.png');await g.context.close();

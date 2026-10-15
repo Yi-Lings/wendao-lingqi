@@ -24,13 +24,13 @@ test('journey shows an earned layer advance and uses the active route only',()=>
  const s=full(E.createState(NOW));assert.equal(E.journey(s).primary.id,'level-up');
  s.paths.body={realm:4,layer:10,xp:0,reserve:0};s.paths.body.xp=K.xpNeeded(s,'body');
  assert.equal(E.journey(s).primary.id,'level-up');
- s.route='body';assert.equal(E.journey(s).primary.id,'trial');
+ s.route='body';assert.equal(E.journey(s).primary.id,'ritual');
  assert.equal(E.journey(s).checks.length,3);
 });
 test('tenth-layer guidance requires full XP, then trial, then exact materials, then breakthrough',()=>{
  const s=tenth();s.paths.magic.xp=0;assert.notEqual(E.journey(s).primary.id,'trial');
- full(s);assert.equal(E.journey(s).primary.id,'trial');
- s.progress.trialWins['magic:0']=true;s.stones=0;s.materials.ore=0;s.materials.lotus=0;
+ full(s);assert.equal(E.journey(s).primary.id,'ritual');
+ s.ritualLegacyWins['magic:0']=true;s.progress.trialWins['magic:0']=true;s.stones=0;s.materials.ore=0;s.materials.lotus=0;
  let j=E.journey(s);assert.equal(j.primary.id,'material:stones');
  assert.deepEqual(j.missing.map(x=>[x.id,x.shortage]),[['stones',50],['lotus',3],['ore',3]]);
  s.stones=50;s.materials.lotus=3;s.materials.ore=3;
@@ -39,14 +39,14 @@ test('tenth-layer guidance requires full XP, then trial, then exact materials, t
  assert.notEqual(E.journey(s).primary.id,'breakthrough');
 });
 test('breakthrough guidance respects the alternative pill cost and never spends it in a preview',()=>{
- const s=tenth();s.progress.trialWins['magic:0']=true;s.stones=0;s.pills.break0=1;
+ const s=tenth();s.progress.trialWins['magic:0']=true;s.ritualLegacyWins['magic:0']=true;s.stones=0;s.pills.break0=1;
  const before=JSON.stringify(s),j=E.journey(s);assert.equal(j.missing.length,0);
  assert.equal(j.primary.id,'breakthrough');assert.equal(JSON.stringify(s),before);
 });
 test('terminal guidance uses endingTrials and cannot propose a seventh realm',()=>{
  for(const route of ['body','magic']){
   const s=tenth(route,5);s.progress.trialWins[route+':5']=true;
-  assert.equal(E.journey(s).primary.id,'trial');assert.equal(E.journey(s).checks.length,2);
+  assert.equal(E.journey(s).primary.id,'ritual');assert.equal(E.journey(s).checks.length,2);
   s.progress.endingTrials[route]=true;
   assert.equal(E.journey(s).primary.id,'finale');assert.equal(E.journey(s).nextUnlock,null);
   assert(!E.journey(s).goals.some(g=>g.target.type==='breakthrough'));

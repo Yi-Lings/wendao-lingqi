@@ -1,17 +1,18 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension);
   if(node)module.exports=api;else root.IdleEngine=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const no=message=>({ok:false,message,error:message});
 const yes=(message,data)=>({ok:true,message,data:data||{}});
 function breakthroughCost(s,route){
-  const p=s.paths[route||s.route],r=p.realm;if(r===5)return {};
-  const cost={stones:50*Math.pow(r+1,2),materials:{lotus:3+r*2,ore:3+r*3}};
-  if((s.pills['break'+r]||0)>0){cost.pills={['break'+r]:1};cost.stones=0;}
-  return cost;
+ route=route||s.route;const p=s.paths[route],r=p.realm;
+ if(s.ritual&&s.ritual.route===route&&s.ritual.realm===r&&s.ritual.phase==='trial')return {};
+ if(r===5)return {};
+ if(T.view(s,route).legacyReady){const cost={stones:50*Math.pow(r+1,2),materials:{lotus:3+r*2,ore:3+r*3}};if((s.pills['break'+r]||0)>0){cost.pills={['break'+r]:1};cost.stones=0;}return cost;}
+ return {pills:{['break'+r]:1},materials:{lotus:3+r*2,ore:3+r*3}};
 }
 function worldView(s){
   const w=s.wanderings||{stance:'insight',records:[]},seen=new Map(w.records.map(x=>[x.id,x]));
@@ -27,7 +28,7 @@ function worldView(s){
 }
 function worldHandle(s,a,now){
   if(!['resolveEncounter','setDaoStance'].includes(a.type))return null;
-  if(s.battle||s.exploration||s.joint)return no('先结束战斗、洞天或共修，再处理历世与道心');
+  if(s.battle||s.exploration||s.joint||(s.ritual&&s.ritual.phase!=='complete'))return no('先结束当前历练、闭关或共修，再处理历世与道心');
   if(!s.wanderings)s.wanderings={stance:'insight',records:[]};
   if(a.type==='setDaoStance'){
     if(!Object.prototype.hasOwnProperty.call(C.daoPaths,a.id))return no('道心主张无效');
@@ -69,7 +70,10 @@ function journey(s){
   const dungeon=id=>ui('source',{id});
   let next;
   if(s.battle||s.exploration||s.joint)next=goal('encounter','继续当前历练',s.battle?'战斗进行中。先完成本场，再调整成长与配装。':s.joint?'共修灵息仍在流转，完成或取消后继续修行。':'洞天尚有未完成的节点，奖励按归途结算。','返回历练',{kind:'encounter'});
+  else if(s.ritual&&s.ritual.phase!=='complete')next=goal('ritual','继续闭关 · 护道破境','闭关的准备与问心尚未完成，先回到当前仪式。','继续闭关',{kind:'ui',type:'ritual-open',payload:{route:s.route}});
+  else if(s.ascension?.stage==='ascended')next=goal('ascension','仙途再启 · 继续修行','仙界境界、天路与真意由你继续探索。','进入仙界',{kind:'ui',type:'ascension-open',payload:{}});
   else if(p.layer===10&&terminal&&trial)next=goal('finale',s.story.ending?'大道已证 · 自由游历':'书写山海归途',s.story.ending?'可继续探索两条仙途、六流派与未完成的故事。':'完成山海卷的剩余章节，再亲自选择结局。',s.story.ending?'自由历练':'前往山海卷',s.story.ending?{kind:'page',type:'adventure'}:ui('ending-story'));
+  else if(p.layer===10&&full&&!T.view(s).legacyReady&&!T.view(s).canBreakthrough)next=goal('ritual','道基圆满 · 闭关护道','备好主药与阵材，完成吐纳、护阵与问心，再亲自迎接试炼。','进入闭关',{kind:'ui',type:'ritual-open',payload:{route:s.route}});
   else if(full&&p.layer<10)next=goal('level-up','道基已稳 · 可以晋级','本层修为已满，晋级保留溢出的修为。','晋升下一层',action('levelUp'));
   else if(full&&!trial)next=goal('trial',terminal?'终境圆满 · 自证大道':'十层圆满 · 迎接试炼','修为已满。先查看试炼，再开始正式挑战。','查看境界试炼',dungeon('trial'));
   else if(full&&!missing.length)next=goal('breakthrough','诸事齐备 · 突破下一境','圆满修为、境界试炼和材料全部就绪。','突破下一境',action('breakthrough'));
@@ -102,6 +106,7 @@ function baseHandle(s,a,now){
   if(a.type==='switchRoute'){
     if(!C.routes[a.route])return no('修炼路线无效');
     if(s.battle||s.exploration)return no('结束当前历练后再切换路线');
+    if(s.ritual&&s.ritual.phase!=='complete')return no('先完成当前闭关，或收阵取回丹材后再转修');
     if(s.route===a.route)return no('当前已在此路线');
     s.route=a.route;K.log(s,'转修'+C.routes[a.route].name+'，另一条路线进度保留。',now);
     return yes('已切换至'+C.routes[a.route].name);
@@ -136,7 +141,9 @@ function baseHandle(s,a,now){
     const p=s.paths[route];if(p.layer!==10||p.xp<K.xpNeeded(s,route))return no('达到十层并填满圆满修为后才能突破');
     if(p.realm===5)return no(s.progress.endingTrials[route]?'已完成终境圆满，可推进终章':'终境圆满需要完成自证大道试炼');
     if(!s.progress.trialWins[route+':'+p.realm])return no('先完成当前大境突破试炼');
+    if(!T.view(s,route).canBreakthrough)return no('先备齐主药与阵材，完成闭关吐纳、护阵与问心');
     const cost=breakthroughCost(s,route);if(!K.spend(s,cost))return no('突破材料不足，可前往药圃与矿石秘境');
+    T.remember(s,now);if(s.ritual&&s.ritual.route===route)s.ritual=null;
     p.realm++;p.layer=1;p.xp=0;K.addXp(s,0,route);K.add(s.stats,'breakthroughs',1);
     K.log(s,'突破成功：'+C.routes[route].realmNames[p.realm]+'一层。',now);
     return yes('突破成功，进入'+C.routes[route].realmNames[p.realm]+'一层',{route,realm:p.realm,layer:1});
@@ -150,9 +157,13 @@ function act(state,action,now){
   if(!Number.isSafeInteger(now)||now<0||now>8640000000000000)return no('操作时间无效');
   const candidate=copy(state);
   try{
-    let result=baseHandle(candidate,action,now);
+    let result=null;
+    if(action.type==='startDungeon'&&action.id==='trial'&&!action.practice){if(action.route&&action.route!==candidate.route)return no('先转修对应路线再进入其护道试炼');const ritual=T.view(candidate,action.route||candidate.route);if(!ritual.canTrial&&!ritual.legacyReady)return no('先在修行页进入闭关，备丹、吐纳、护阵与问心后再入劫');}
+    result=baseHandle(candidate,action,now);
     if(result===null)result=worldHandle(candidate,action,now);
-    if(result===null)result=Q.handle(candidate,action,now);
+    if(result===null)result=T.handle(candidate,action,now);
+    if(result===null){result=A.handle(candidate,action,now);if(result?.ok&&result.data?.battleRequest){const started=B.handle(candidate,{type:'startDungeon',...result.data.battleRequest},now);if(!started?.ok)return started||no('仙界出征未能开始');result.data=Object.assign({},result.data,started.data||{});}}
+    if(result===null)result=Q.handle(candidate,action,now,R);
     if(result===null)result=B.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
     if(result===null)return no('未识别的操作');
@@ -166,7 +177,7 @@ function act(state,action,now){
 }
 function view(s){
   const core=K.view(s),story=S.view(s);
-  return Object.assign({},core,story,{battle:B.battleView(s),breakthroughCost:breakthroughCost(s),canBreakthrough:s.paths[s.route].realm<5&&s.paths[s.route].layer===10&&s.paths[s.route].xp>=K.xpNeeded(s)&&!!s.progress.trialWins[s.route+':'+s.paths[s.route].realm],gachaTargets:Q.targets?Q.targets(s):[],rewardOverflow:s.rewardOverflow||[]});
+  return Object.assign({},core,story,{battle:B.battleView(s),breakthroughCost:breakthroughCost(s),canBreakthrough:T.view(s).canBreakthrough,ritual:T.view(s),ascension:A.view(s),competitions:B.competitionsView?B.competitionsView(s):[],gachaTargets:Q.targets?Q.targets(s):[],rewardOverflow:s.rewardOverflow||[]});
 }
 function tick(s,seconds){
   if(typeof seconds!=='number'||!Number.isFinite(seconds)||seconds<0)return no('战斗时间无效');
@@ -174,8 +185,8 @@ function tick(s,seconds){
 }
 function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(result.error);return JSON.stringify(result.state);}
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
-  journey,worldView,daoInsight:K.daoInsight,preparation,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
+  journey,worldView,preparation,daoInsight:K.daoInsight,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
-  modules:{core:K,economy:Q,combat:B,story:S}};
+  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A}};
 });

@@ -1,0 +1,42 @@
+{
+  "fileName": "wendao-lingqi-v4-preview.apk",
+  "size": 126858599,
+  "sha256": "d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424",
+  "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
+  "packageId": "com.lingqi.game.preview",
+  "versionCode": 4,
+  "versionName": "4.0",
+  "sourceCommit": "1caa5c7598b63c76b097d5b2acd2f9f7531bd35f",
+  "parts": [
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part01",
+      "size": 25165824,
+      "sha256": "bc5803a78a31f3e35e4a9ddba2a6e508c81e5b4e9e2efd2c78998c7b671c99d0"
+    },
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part02",
+      "size": 25165824,
+      "sha256": "b7054738b88a46923e6d9a14a27ff08520e5a7da852bf8cd0808b5ff7fb77866"
+    },
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part03",
+      "size": 25165824,
+      "sha256": "8ad6ccb543a4cf032e7349706464f1451e920f9423be63e60d4716cbb684524f"
+    },
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part04",
+      "size": 25165824,
+      "sha256": "2876c55672c379245f33b82c82b147bcd2fc68e7e2f9774eb1948dd9745714e3"
+    },
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part05",
+      "size": 25165824,
+      "sha256": "fb61fd36e28bbbcbf0455008dcc8b70cfd02845b4ede766b6de71be3ad20ca3f"
+    },
+    {
+      "name": "wendao-lingqi-v4-preview.apk.part06",
+      "size": 1029479,
+      "sha256": "99d5ebaff6e03215f92803032a62a65eadb526f94f217983faf66166b1d85415"
+    }
+  ]
+}

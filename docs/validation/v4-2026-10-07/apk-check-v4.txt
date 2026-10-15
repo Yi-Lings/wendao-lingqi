@@ -1,0 +1,12 @@
+package: name='com.lingqi.game.preview' versionCode='4' versionName='4.0' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+minSdkVersion:'26'
+targetSdkVersion:'35'
+application-label:'问道·灵契·体验'
+launchable-activity: name='com.lingqi.game.MainActivity'  label='' icon=''
+All 103 packaged game assets exactly match source.
+Game artwork: v3-heroes.png, v3-hero-expressions.png, v3-forge.png, v3-world.png, v3-map-atlas-a.png, v3-map-atlas-b.png, v3-monster-atlas.png, v3-boss-atlas.png, v3-items-atlas.png, v3-skills-atlas.png, v3-summon.png, v3-shop.png, v3-chapter-atlas.png, v3-cardback.png, v4-weapons-atlas.png, v4-armor-atlas.png, v4-utilities-atlas.png, v4-treasures-atlas.png, v4-pills-atlas.png, v4-basic-skills-atlas.png, v5-gear-quality-0.png, v5-gear-quality-1.png, v5-gear-quality-2.png, v5-gear-quality-3.png, v5-gear-quality-4.png, v5-gear-quality-5.png, v6-gear-quality-0.png, v6-gear-quality-1.png, v6-gear-quality-2.png, v6-gear-quality-3.png, v6-gear-quality-4.png, v6-gear-quality-5.png, v6-techniques-atlas.png, v6-treasures-atlas.png, v6-pills-atlas.png, v6-utilities-atlas.png, story-arena.png, story-secret.png, v7-rivals-atlas.png, v7-encounters-atlas.png, v7-immortal-beasts-atlas.png, v7-immortal-mentors-atlas.png, story-heaven.png
+Offline audio: bgm-home, bgm-battle, bgm-heaven, ui, success, error, battle-hit, battle-skill, victory, defeat, summon-rise, reveal, red-awaken, red-impact, bgm-ascension, ascension-rise
+Game modules: data.js, art-crops.js, art-identity.js, equipment-art.js, game-art.js, mentor-art.js, monster-art.js, story-scenes.js, ascension-scenes.js, ascension.js, breakthrough-ritual.js, core.js, builds.js, economy.js, combat.js, story.js, engine.js, audio.js, selection.js, equipment-sources.js, rewards.js, activity-rewards.js, art-layout.js, preview.js, story-screen.js, ritual-screen.js, ascension-screen.js, app.js
+DEX files: classes.dex, classes2.dex; total bytes: 25368
+APK bytes: 126858599
+APK SHA256: d230cc061eda39b85eff3d5e11ffc62bdf55f229734d3bd5a3c2c6813994b424

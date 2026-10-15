@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "d1519c3b4b122fd3f8f41da5c95d189c42219a9f",
+  "apk": {
+    "fileName": "wendao-lingqi-v4-1-preview.apk",
+    "size": 132183784,
+    "sha256": "59a32e09cbeb06547c4c36c1a5e1332bf0e172e557f6c8da0b1cf1348d47f4e6",
+    "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
+    "packageId": "com.lingqi.game.preview",
+    "versionCode": 5,
+    "versionName": "4.1"
+  },
+  "html": {
+    "file": "wendao-lingqi-preview.html",
+    "bytes": 176700528,
+    "sha256": "2f08e6a63d56f8239a2f389643b90749ae61347cc54e230b2526ef8879c35e20"
+  },
+  "zip": {
+    "file": "wendao-lingqi-preview.zip",
+    "bytes": 132247258,
+    "sha256": "e362c3df24d39dd95498ad160f4bbb097ebc8acf9f30c58002ae749ea75aa428"
+  },
+  "embeddedAssets": 64,
+  "buildInputs": 114,
+  "gameFiles": 106
+}

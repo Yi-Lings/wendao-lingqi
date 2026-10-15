@@ -1,0 +1,222 @@
+{
+  "startedAt": "2026-10-07T07:42:38.653Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Rich public preview and legally driven ascension fixtures establish transaction/UI stages. Date.now is fixed to prevent passive-state drift; HTMLMediaElement and performance clocks remain real. Native bridge is a snapshot-only mock of the corrected Java API, not an Android system-picker test.",
+  "sourceHashes": {
+    "web/app.js": "9c858850e397a92cbbfddc404fe92ea8a6e97497daeba9ef1844176b9b379675",
+    "web/activity-rewards.js": "54a9dac7eab79da065d2c34ebd9a708729d4cdc5b44b68f23ce20eea5d4695ab",
+    "web/audio.js": "6718c15feef35d46cf5f5e0f6a2a292d71fdc98bd419f039a309738b6d076c71",
+    "web/ascension-screen.js": "89dbd7cb2b0f755ee2a44c22b6bbef60c57c71debc0fb6542843f263fd994775",
+    "android/app/src/main/java/com/lingqi/game/MainActivity.java": "42d084e58bc720bb4d6d4e9e0d61cf4da5582bbfa9378c9bedf4535c04eae3d4"
+  },
+  "tests": [
+    {
+      "name": "formal query uses Native loading and commits the original character",
+      "passed": true,
+      "durationMs": 1443,
+      "detail": {
+        "name": "正式仙途完整性回归",
+        "query": "?preview=0",
+        "operations": [
+          {
+            "operation": "load",
+            "query": "?preview=0"
+          },
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          },
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "human preview snapshot export and cancellation preserve formal Native and sibling slots",
+      "passed": true,
+      "durationMs": 1992,
+      "detail": {
+        "query": "?preview=1",
+        "previewKey": "lingqi-preview-save-v1",
+        "exportName": "试玩行者",
+        "formalNativeUnchangedOnExportAndCancel": true,
+        "siblingUnchanged": true,
+        "returnedName": "正式仙途完整性回归",
+        "previewOperations": [
+          {
+            "operation": "export",
+            "query": "?preview=1"
+          },
+          {
+            "operation": "cancelExport",
+            "query": "?preview=1"
+          }
+        ],
+        "formalDepartureSaves": [
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          },
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ascension preview snapshot export and cancellation preserve formal Native and sibling slots",
+      "passed": true,
+      "durationMs": 2009,
+      "detail": {
+        "query": "?preview=1&immortal=1",
+        "previewKey": "lingqi-ascension-preview-save-v1",
+        "exportName": "天门试玩行者",
+        "formalNativeUnchangedOnExportAndCancel": true,
+        "siblingUnchanged": true,
+        "returnedName": "正式仙途完整性回归",
+        "previewOperations": [
+          {
+            "operation": "export",
+            "query": "?preview=1&immortal=1"
+          },
+          {
+            "operation": "cancelExport",
+            "query": "?preview=1&immortal=1"
+          }
+        ],
+        "formalDepartureSaves": [
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          },
+          {
+            "operation": "persist",
+            "query": "?preview=0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "failed Native ten-draw persistence restores currencies, rewards, UID, pity and random streams",
+      "passed": true,
+      "durationMs": 1180,
+      "detail": {
+        "rollback": true,
+        "fields": [
+          "tickets",
+          "jade",
+          "dust",
+          "bag",
+          "ownedTreasures",
+          "techniques",
+          "fragments",
+          "pills",
+          "materials",
+          "gacha",
+          "rngStreams",
+          "nextUid",
+          "revision"
+        ],
+        "noReveal": true
+      }
+    },
+    {
+      "name": "postcommit feedback failure retains the saved forge UID and random state and reports presentationFailed",
+      "passed": true,
+      "durationMs": 1406,
+      "detail": {
+        "presentationFailed": true,
+        "committedUid": "g43",
+        "nextUid": 44,
+        "randomStreamsMatchDisk": true,
+        "subsequentForgeUid": "g44",
+        "expectedConsoleError": "LINGQI_QA_EXPECTED_POSTCOMMIT_MODEL_FAILURE"
+      }
+    },
+    {
+      "name": "dust orange equipment shows the actual saved item and restores the source without a second grant",
+      "passed": true,
+      "durationMs": 2863,
+      "detail": {
+        "item": "orangeGear",
+        "kind": "gear",
+        "id": "g43",
+        "quantity": 1,
+        "displayed": "天品\n天品·玄武·天灵宝冠 3阶\n冠 · 3阶\n查看属性\n×1",
+        "dustSpent": 120,
+        "closedWithoutReward": true,
+        "sourceRestored": "天道尘兑换"
+      }
+    },
+    {
+      "name": "dust orange treasure shows the actual saved item and restores the source without a second grant",
+      "passed": true,
+      "durationMs": 2012,
+      "detail": {
+        "item": "orangeTreasure",
+        "kind": "treasure",
+        "id": "t8",
+        "quantity": 1,
+        "displayed": "天品\n雷池令\n查看详情\n×1",
+        "dustSpent": 150,
+        "closedWithoutReward": true,
+        "sourceRestored": "天道尘兑换"
+      }
+    },
+    {
+      "name": "real meditation followed by celestial advancement shows the saved new layer without fabricated rewards",
+      "passed": true,
+      "durationMs": 1987,
+      "detail": {
+        "meditationXp": 660,
+        "meditationYuan": 24,
+        "layer": 2,
+        "remainingXpAndReserve": 180,
+        "yuanUnchangedOnAdvance": true,
+        "newPower": 491616,
+        "powerBefore": 482510,
+        "resultText": "登仙 2层\n\n仙阶带来的气血、攻击与防御已经提升，新的仙界天路向你开放。"
+      }
+    },
+    {
+      "name": "actual ascension-open control synchronously switches music and the real media clock advances with one loop",
+      "passed": true,
+      "durationMs": 3276,
+      "detail": {
+        "instantScene": "ascension",
+        "clockBefore": 0.159151,
+        "clockAfter": 0.51102,
+        "clockDelta": 0.35186900000000004,
+        "finalTracks": [
+          "ascension"
+        ],
+        "playbackFailures": 0,
+        "backgroundStopped": true
+      }
+    }
+  ],
+  "screenshots": [
+    "integrity-human-export-canceled.png",
+    "integrity-immortal-export-canceled.png",
+    "integrity-postcommit-saved-fallback.png",
+    "integrity-orangeGear-actual-settlement.png",
+    "integrity-orangeTreasure-actual-settlement.png",
+    "integrity-celestial-layer2-saved.png",
+    "integrity-ascension-real-audio.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "expectedConsoleErrors": [
+    {
+      "test": "postcommit renderer fault",
+      "error": "Error: LINGQI_QA_EXPECTED_POSTCOMMIT_MODEL_FAILURE\n    at Object.model (eval at evaluate (:311:30), <anonymous>:1:347)\n    at run (http://127.0.0.1:8787/app.js:675:127)\n    at Object.act (http://127.0.0.1:8787/app.js:829:107)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:393)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    }
+  ],
+  "badResponses": [],
+  "failedRequests": [],
+  "finishedAt": "2026-10-07T07:42:57.266Z",
+  "passed": true
+}

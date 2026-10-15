@@ -4,6 +4,7 @@ const assert=require('node:assert/strict');
 const E=require('../web/engine.js');
 const C=require('../web/data.js');
 const S=require('../web/story.js');
+const {readyJourneyFixture}=require('./story-fixtures.cjs');
 const NOW=1791244800000;
 const clone=x=>JSON.parse(JSON.stringify(x));
 function valid(s,label){
@@ -23,7 +24,7 @@ function meet(s,requirements){
   else if(r.key==='bossWins'){s.progress.bossWins[r.id]=r.count;s.stats.bosses=Math.max(s.stats.bosses,r.count);}
   else if(r.key==='dungeonWins')s.progress.dungeonWins[r.id]=r.count;
   else if(r.key==='tower')s.progress.tower=Math.max(s.progress.tower,r.count);
-  else if(r.key==='endingTrial')s.progress.endingTrials[s.route]=true;
+  else if(r.key==='endingTrial'){s.progress.endingTrials[s.route]=true;s.ritualLegacyWins[s.route+':5']=true;}
   else if(r.key==='affinity')s.companions[r.id].affinity=Math.max(s.companions[r.id].affinity,r.count);
   else if(r.key==='sectTrialCount')s.progress.sectTrials=Object.values(C.dungeons).filter(x=>x.type==='sect').slice(0,r.count).map(x=>x.id);
   else s.stats[r.key]=Math.max(s.stats[r.key]||0,r.count);
@@ -55,7 +56,7 @@ for(const route of ['magic','body']){
  test('all six chapters and ending on '+route+' with untouched secondary path and no romance',()=>{
   let s=fixture(route);
   for(const ch of C.chapters){
-   s=meet(s,ch.requirements);const before=clone(s),result=E.act(s,{type:'claimChapter',choice:ch.id%2?'seek':'protect'},NOW);
+   s=meet(s,ch.requirements);const choice=ch.id%2?'seek':'protect';readyJourneyFixture(s,'chapter_'+ch.id,choice,NOW);const before=clone(s),result=E.act(s,{type:'claimChapter',choice},NOW);
    assert.equal(result.ok,true,ch.name+': '+result.message);
    assert.equal(result.data.chapter,ch.id);
    assert.equal(s.story.chapter,ch.id+1);
@@ -79,7 +80,7 @@ for(const quest of C.sidequests){
    const ids=C.companions[quest.companion].questIds;
    s.story.sideCompleted=ids.slice(0,quest.step);s.companions[quest.companion].questStep=quest.step;
   }
-  s=meet(s,quest.requirements);
+  s=meet(s,quest.requirements);s=meet(s,[{key:'rank',count:S.episode(quest.id).unlockRank||0}]);readyJourneyFixture(s,quest.id,'protect',NOW);
   const before=clone(s),result=E.act(s,{type:'claimSidequest',id:quest.id},NOW);
   assert.equal(result.ok,true,result.message);assert(s.story.sideCompleted.includes(quest.id));
   rewardCheck(before,s,quest.reward,quest.id);
@@ -96,7 +97,7 @@ test('personal followups require actual predecessor despite high affinity',()=>{
 });
 test('all eighteen sidequests can complete together with no bond',()=>{
  let s=fixture('magic',5,10);
- for(const q of C.sidequests){s=meet(s,q.requirements);const r=E.act(s,{type:'claimSidequest',id:q.id},NOW);assert.equal(r.ok,true,q.id+': '+r.message);}
+ for(const q of C.sidequests){s=meet(s,q.requirements);readyJourneyFixture(s,q.id,'protect',NOW);const r=E.act(s,{type:'claimSidequest',id:q.id},NOW);assert.equal(r.ok,true,q.id+': '+r.message);}
  assert.equal(s.story.sideCompleted.length,18);assert.equal(new Set(s.story.sideCompleted).size,18);
  assert.equal(s.blueprints.filter(x=>C.schools[x]).length,6);assert(Object.values(s.companions).every(x=>x.questStep===4&&!x.bond));
  valid(s,'complete sidequests');
@@ -136,7 +137,7 @@ test('repeatable commission needs additional activity and keeps consumed tally a
  valid(s,'commission tier history');
 });
 test('all three endings have valid save roundtrips and reject repeat selection',()=>{
- for(const id of Object.keys(C.endings)){let s=fixture('magic',5,10);s.story.chapter=6;s.story.mercy=3;s.story.truth=3;s.story.completed=C.chapters.map(c=>c.id);
+ for(const id of Object.keys(C.endings)){let s=fixture('magic',5,10);s.story.chapter=6;s.story.mercy=3;s.story.truth=3;s.story.completed=C.chapters.map(c=>c.id);s.progress.endingTrials.magic=true;s.ritualLegacyWins['magic:5']=true;
   const r=E.act(s,{type:'ending',choice:id},NOW);assert(r.ok,r.message);s=valid(s,id);
   assert.equal(s.story.ending.id,id);deniedUnchanged(s,{type:'ending',choice:id},id+' duplicate');
  }
@@ -174,4 +175,55 @@ test('actual research credits training route tier and switching retains separate
  for(let i=0;i<3;i++){const r=E.act(s,{type:'upgradeTechnique',id:'thunder_skill_0'},NOW);assert.equal(r.ok,true,r.message);}
  assert.equal(s.stats.studyTier2,3);assert.equal(s.stats.studyTier1,3);
  const r=E.act(s,{type:'claimCommission',id:'study'},NOW);assert.equal(r.ok,true,r.message);valid(s,'actual research commission');
+});
+
+test('meeting numerical chapter requirements does not skip scenes, clues, fresh activity or return dialogue',()=>{
+ let s=meet(fixture(),C.chapters[0].requirements);
+ deniedUnchanged(s,{type:'claimChapter',choice:'protect'},'requirements without a lived story');
+ deniedUnchanged(s,{type:'advanceStory',episode:'chapter_0'},'cannot skip entry');
+ deniedUnchanged(s,{type:'beginStory',episode:'chapter_1'},'future chapter cannot open');
+ assert(E.act(s,{type:'beginStory',episode:'chapter_0'},NOW).ok);
+ const intro=S.journeyView(s,'chapter_0');assert.equal(intro.stage,'intro');assert(intro.line.text.length>15,'the opening contains actual dialogue');
+ deniedUnchanged(s,{type:'chooseStory',episode:'chapter_0',choice:'protect'},'cannot choose before reading');
+ const {toMission,creditMissionFixture,finishJourney}=require('./story-fixtures.cjs');
+ toMission(s,'chapter_0','protect',NOW);
+ assert.equal(S.journeyView(s,'chapter_0').mission.current,0,'old completed fights are baseline, never fresh mission credit');
+ deniedUnchanged(s,{type:'advanceStory',episode:'chapter_0'},'return without fresh activity');
+ deniedUnchanged(s,{type:'claimChapter',choice:'protect'},'claim without fresh activity');
+ creditMissionFixture(s,'chapter_0');
+ deniedUnchanged(s,{type:'claimChapter',choice:'protect'},'claim before hearing the return dialogue');
+ readyJourneyFixture(s,'chapter_0','protect',NOW);deniedUnchanged(s,{type:'claimChapter',choice:'seek'},'choice cannot be changed when collecting');
+ assert(E.act(s,{type:'claimChapter',choice:'protect'},NOW).ok);assert.equal(s.story.completed.length,1);
+ deniedUnchanged(s,{type:'beginStory',episode:'chapter_0'},'completed scene cannot grant again');
+});
+
+test('scene clues require reading every declared clue and save halfway without rewards',()=>{
+ let s=fixture();const holdings=clone({stones:s.stones,tickets:s.tickets,materials:s.materials,techniques:s.techniques});
+ assert(E.act(s,{type:'beginStory',episode:'chapter_0'},NOW).ok);
+ let guard=0;while(S.journeyView(s,'chapter_0').stage==='intro'&&guard++<50)assert(E.act(s,{type:'advanceStory',episode:'chapter_0'},NOW).ok);
+ const v=S.journeyView(s,'chapter_0');assert.equal(v.stage,'survey');assert(v.episode.clues.length>=2);
+ deniedUnchanged(s,{type:'inspectStory',episode:'chapter_0',clue:'unrelated-secret'},'foreign clue');
+ deniedUnchanged(s,{type:'advanceStory',episode:'chapter_0'},'unread clues block');
+ const clue=v.episode.clues[0].id;assert(E.act(s,{type:'inspectStory',episode:'chapter_0',clue},NOW).ok);
+ s=valid(s,'mid-survey save');assert.deepEqual(S.journeyView(s,'chapter_0').entry.clues,[clue]);
+ assert(E.act(s,{type:'inspectStory',episode:'chapter_0',clue},NOW).ok);assert.equal(S.journeyView(s,'chapter_0').entry.clues.length,1,'re-reading never inflates discovery');
+ deniedUnchanged(s,{type:'advanceStory',episode:'chapter_0'},'one clue is insufficient');
+ assert.deepEqual({stones:s.stones,tickets:s.tickets,materials:s.materials,techniques:s.techniques},holdings,'dialogue and clues alone never produce reward');
+ const resumed=clone(s.story.journeys.chapter_0);assert(E.act(s,{type:'beginStory',episode:'chapter_0'},NOW).ok);assert.deepEqual(s.story.journeys.chapter_0,resumed,'begin resumes the saved line rather than resetting it');
+});
+
+test('sidequest numerical goals alone cannot replace its own predecessor and encounter',()=>{
+ let s=meet(fixture('magic',5,10),C.sidequests.find(q=>q.id==='world_forge').requirements);
+ deniedUnchanged(s,{type:'claimSidequest',id:'world_forge'},'forge counters alone');
+ const {toMission}=require('./story-fixtures.cjs');toMission(s,'world_forge','protect',NOW);
+ assert.equal(S.journeyView(s,'world_forge').mission.current,0,'only activity after making a promise counts');
+ deniedUnchanged(s,{type:'claimSidequest',id:'world_forge'},'unfinished actual forge mission');
+});
+
+test('legacy completed chapters and companion encounters remain complete without forced replay',()=>{
+ const s=fixture('magic',5,10);s.story.chapter=3;s.story.mercy=3;s.story.completed=[0,1,2];s.story.sideCompleted=['world_forge'];delete s.story.journeys;
+ const saved=valid(s,'legacy story migration');
+ assert.equal(S.journeyView(saved,'chapter_0').completed,true);assert.equal(S.journeyView(saved,'world_forge').completed,true);
+ assert.equal(S.journeyView(saved,'chapter_3').stage,'not-started');
+ deniedUnchanged(saved,{type:'beginStory',episode:'chapter_0'},'legacy reward not repeated');
 });

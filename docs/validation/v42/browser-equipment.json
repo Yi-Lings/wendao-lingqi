@@ -1,0 +1,674 @@
+{
+  "startedAt": "2026-10-15T00:47:41.674Z",
+  "url": "http://127.0.0.1:8787/",
+  "filter": null,
+  "fixtureTimestamp": 1792025261674,
+  "fixtureNotice": "Validated unlocked inventory fixtures exercise actual UI controls and saved state; no claim about economic reachability or global optimality.",
+  "tests": [
+    {
+      "name": "all six character slots open their exact replacement screen through equipment details",
+      "passed": true,
+      "durationMs": 8198,
+      "details": [
+        {
+          "slot": "weapon",
+          "current": "g3",
+          "candidates": [
+            "g9",
+            "g27",
+            "g39",
+            "g33",
+            "g21",
+            "g15"
+          ]
+        },
+        {
+          "slot": "armor",
+          "current": "g4",
+          "candidates": [
+            "g40",
+            "g22",
+            "g34",
+            "g28",
+            "g10",
+            "g16"
+          ]
+        },
+        {
+          "slot": "head",
+          "current": "g5",
+          "candidates": [
+            "g11",
+            "g41",
+            "g35",
+            "g29",
+            "g23",
+            "g17"
+          ]
+        },
+        {
+          "slot": "bracer",
+          "current": "g6",
+          "candidates": [
+            "g24",
+            "g42",
+            "g12",
+            "g30",
+            "g18",
+            "g36"
+          ]
+        },
+        {
+          "slot": "boots",
+          "current": "g7",
+          "candidates": [
+            "g13",
+            "g25",
+            "g43",
+            "g37",
+            "g31",
+            "g19"
+          ]
+        },
+        {
+          "slot": "charm",
+          "current": "g8",
+          "candidates": [
+            "g38",
+            "g14",
+            "g44",
+            "g32",
+            "g26",
+            "g20"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "long-press shows full current and candidate attributes without accidental replacement",
+      "passed": true,
+      "durationMs": 4124
+    },
+    {
+      "name": "pointer movement cancels inspection and replacement",
+      "passed": true,
+      "durationMs": 3923
+    },
+    {
+      "name": "candidate replacement updates current slot and persistent save while preserving page position",
+      "passed": true,
+      "durationMs": 4577,
+      "details": {
+        "oldUid": "g3",
+        "newUid": "g48",
+        "page": 1,
+        "scrollTop": 306
+      }
+    },
+    {
+      "name": "empty slot explains empty inventory without fabricated equipment",
+      "passed": true,
+      "durationMs": 2564
+    },
+    {
+      "name": "current-only slot explains empty inventory without fabricated equipment",
+      "passed": true,
+      "durationMs": 2427
+    },
+    {
+      "name": "sets entry presents real 2/4-piece activation, school synergy and all owned pieces",
+      "passed": true,
+      "durationMs": 2729,
+      "details": {
+        "initialActive": "body",
+        "swordUids": [
+          "g9",
+          "g10",
+          "g11",
+          "g12",
+          "g13",
+          "g14"
+        ]
+      }
+    },
+    {
+      "name": "one-click owned set changes all six slots and activates genuine attribute effects",
+      "passed": true,
+      "durationMs": 5147,
+      "details": {
+        "oldPower": 1688,
+        "newPower": 3266,
+        "activeSwordPieces": 6
+      }
+    },
+    {
+      "name": "six school recommendations explain roles, rotations and technique purposes",
+      "passed": true,
+      "durationMs": 5907,
+      "details": [
+        {
+          "school": "sword",
+          "position": "单体爆发 · 破甲连击",
+          "names": [
+            "太清剑谱",
+            "裂空剑",
+            "追影剑",
+            "归一斩",
+            "蚀魄印",
+            "残烬秘录",
+            "藏锋诀"
+          ]
+        },
+        {
+          "school": "body",
+          "position": "护盾承伤 · 打断反击",
+          "names": [
+            "不动金身诀",
+            "镇骨甲",
+            "伏岳掌",
+            "回山震",
+            "蚀魄印",
+            "残烬秘录",
+            "山骨秘录"
+          ]
+        },
+        {
+          "school": "thunder",
+          "position": "叠印爆发 · 雷术打断",
+          "names": [
+            "九霄雷经",
+            "引雷诀",
+            "五雷印",
+            "天罚",
+            "蚀魄印",
+            "余雷诀",
+            "残烬秘录"
+          ]
+        },
+        {
+          "school": "elements",
+          "position": "元素反应 · 群体控制",
+          "names": [
+            "五行合道经",
+            "青藤缚",
+            "火莲",
+            "寒潮",
+            "裂空剑",
+            "残烬秘录",
+            "藏锋诀"
+          ]
+        },
+        {
+          "school": "shadow",
+          "position": "持续侵蚀 · 消耗结算",
+          "names": [
+            "玄冥蚀魄经",
+            "蚀魄印",
+            "幽火",
+            "断魂",
+            "裂空剑",
+            "藏锋诀",
+            "噬影篇"
+          ]
+        },
+        {
+          "school": "array",
+          "position": "治疗续航 · 净化布阵",
+          "names": [
+            "星罗炼神法",
+            "星罗阵",
+            "回春术",
+            "净尘诀",
+            "蚀魄印",
+            "残烬秘录",
+            "清心诀"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "one-click recommendation atomically saves equipment, heart, skills and secrets with real persisted identities",
+      "passed": true,
+      "durationMs": 6441,
+      "details": {
+        "recommendedSchool": "sword",
+        "oldPower": 1688,
+        "newPower": 3306,
+        "equipment": {
+          "weapon": "g9",
+          "armor": "g28",
+          "head": "g11",
+          "bracer": "g30",
+          "boots": "g13",
+          "charm": "g14"
+        },
+        "loadout": {
+          "heart": "sword_heart_1",
+          "skills": [
+            "sword_skill_0",
+            "sword_skill_1",
+            "sword_skill_3",
+            "shadow_skill_0"
+          ],
+          "secrets": [
+            "shadow_secret_0",
+            "sword_secret_1"
+          ],
+          "treasures": [
+            "t10",
+            "t1",
+            "t11"
+          ],
+          "pills": [
+            "heal0",
+            "shield0",
+            "purify0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "improvement goals show future unlocks, sources and navigation from an incomplete build",
+      "passed": true,
+      "durationMs": 4681,
+      "details": {
+        "goals": [
+          {
+            "name": "归一斩",
+            "requirements": [],
+            "source": {
+              "type": "dungeon",
+              "id": "sect_sword_1",
+              "label": "宗门进阶 · 剑意试炼"
+            }
+          },
+          {
+            "name": "太清剑谱",
+            "requirements": [],
+            "source": {
+              "type": "dungeon",
+              "id": "sect_sword_1",
+              "label": "宗门进阶 · 剑意试炼"
+            }
+          },
+          {
+            "name": "归一剑经 · 10重目标",
+            "requirements": [],
+            "source": {
+              "type": "upgrade",
+              "id": "sword_heart_0",
+              "label": "参悟功法 · 归一剑经"
+            }
+          },
+          {
+            "name": "裂空剑 · 10重目标",
+            "requirements": [],
+            "source": {
+              "type": "upgrade",
+              "id": "sword_skill_0",
+              "label": "参悟功法 · 裂空剑"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fresh account recommendations respect starter ownership and locked skill/secret slots",
+      "passed": true,
+      "durationMs": 2216,
+      "details": {
+        "starterPower": 350,
+        "planSchool": "thunder",
+        "goals": [
+          "雷霄四件套",
+          "惊电步",
+          "天罚",
+          "五雷印"
+        ]
+      }
+    },
+    {
+      "name": "upgrade growth goal spends its exact cost, saves the new level and refreshes the next upgrade",
+      "passed": true,
+      "durationMs": 8054,
+      "details": {
+        "id": "sword_heart_1",
+        "oldLevel": 5,
+        "newLevel": 6,
+        "paid": {
+          "stones": 1440,
+          "materials": {
+            "insight": 7
+          }
+        },
+        "nextCost": {
+          "stones": 1680,
+          "materials": {
+            "insight": 8
+          }
+        }
+      }
+    },
+    {
+      "name": "forge growth goal opens the correct school and missing slot without spending resources",
+      "passed": true,
+      "durationMs": 4217,
+      "details": {
+        "set": "thunder",
+        "slot": "head",
+        "rarity": 3
+      }
+    },
+    {
+      "name": "save failure rolls back the entire set change and keeps previous durable save",
+      "passed": true,
+      "durationMs": 2946
+    },
+    {
+      "name": "save failure rolls back the entire recommendation change and keeps previous durable save",
+      "passed": true,
+      "durationMs": 3601
+    },
+    {
+      "name": "save failure rolls back the entire slot change and keeps previous durable save",
+      "passed": true,
+      "durationMs": 2082
+    },
+    {
+      "name": "paused battle locks gear, sets and recommendations while leaving gear inspection available",
+      "passed": true,
+      "durationMs": 2253
+    },
+    {
+      "name": "character, sets, recommendations and slot replacement fit 375px with screenshots",
+      "passed": true,
+      "durationMs": 3952,
+      "details": [
+        {
+          "name": "character",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": []
+        },
+        {
+          "name": "sets",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": [
+            {
+              "width": 351,
+              "x": 12,
+              "scrollWidth": 349,
+              "clientWidth": 349
+            }
+          ]
+        },
+        {
+          "name": "recommendation-techniques",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": [
+            {
+              "width": 351,
+              "x": 12,
+              "scrollWidth": 349,
+              "clientWidth": 349
+            }
+          ]
+        },
+        {
+          "name": "recommendation-gear",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": [
+            {
+              "width": 351,
+              "x": 12,
+              "scrollWidth": 349,
+              "clientWidth": 349
+            }
+          ]
+        },
+        {
+          "name": "recommendation-goals",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": [
+            {
+              "width": 351,
+              "x": 12,
+              "scrollWidth": 349,
+              "clientWidth": 349
+            }
+          ]
+        },
+        {
+          "name": "slot",
+          "width": 375,
+          "html": 375,
+          "body": 375,
+          "modal": [
+            {
+              "width": 351,
+              "x": 12,
+              "scrollWidth": 349,
+              "clientWidth": 349
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "character, sets, recommendations and slot replacement fit 390px with screenshots",
+      "passed": true,
+      "durationMs": 3430,
+      "details": [
+        {
+          "name": "character",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": []
+        },
+        {
+          "name": "sets",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": [
+            {
+              "width": 366,
+              "x": 12,
+              "scrollWidth": 364,
+              "clientWidth": 364
+            }
+          ]
+        },
+        {
+          "name": "recommendation-techniques",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": [
+            {
+              "width": 366,
+              "x": 12,
+              "scrollWidth": 364,
+              "clientWidth": 364
+            }
+          ]
+        },
+        {
+          "name": "recommendation-gear",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": [
+            {
+              "width": 366,
+              "x": 12,
+              "scrollWidth": 364,
+              "clientWidth": 364
+            }
+          ]
+        },
+        {
+          "name": "recommendation-goals",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": [
+            {
+              "width": 366,
+              "x": 12,
+              "scrollWidth": 364,
+              "clientWidth": 364
+            }
+          ]
+        },
+        {
+          "name": "slot",
+          "width": 390,
+          "html": 390,
+          "body": 390,
+          "modal": [
+            {
+              "width": 366,
+              "x": 12,
+              "scrollWidth": 364,
+              "clientWidth": 364
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "character, sets, recommendations and slot replacement fit 1280px with screenshots",
+      "passed": true,
+      "durationMs": 3996,
+      "details": [
+        {
+          "name": "character",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": []
+        },
+        {
+          "name": "sets",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": [
+            {
+              "width": 580,
+              "x": 350,
+              "scrollWidth": 578,
+              "clientWidth": 578
+            }
+          ]
+        },
+        {
+          "name": "recommendation-techniques",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": [
+            {
+              "width": 580,
+              "x": 350,
+              "scrollWidth": 578,
+              "clientWidth": 578
+            }
+          ]
+        },
+        {
+          "name": "recommendation-gear",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": [
+            {
+              "width": 580,
+              "x": 350,
+              "scrollWidth": 578,
+              "clientWidth": 578
+            }
+          ]
+        },
+        {
+          "name": "recommendation-goals",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": [
+            {
+              "width": 580,
+              "x": 350,
+              "scrollWidth": 578,
+              "clientWidth": 578
+            }
+          ]
+        },
+        {
+          "name": "slot",
+          "width": 1280,
+          "html": 1280,
+          "body": 1280,
+          "modal": [
+            {
+              "width": 580,
+              "x": 350,
+              "scrollWidth": 578,
+              "clientWidth": 578
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "all exercised browser surfaces have zero script, console, network or external request failures",
+      "passed": true,
+      "durationMs": 0,
+      "details": {
+        "observedErrors": 0
+      }
+    }
+  ],
+  "screenshots": [
+    "equipment-builds-upgrade-goals-375.png",
+    "equipment-builds-upgrade-goals-after-375.png",
+    "equipment-builds-forge-goal-375.png",
+    "equipment-builds-character-375.png",
+    "equipment-builds-sets-375.png",
+    "equipment-builds-techniques-375.png",
+    "equipment-builds-gear-375.png",
+    "equipment-builds-goals-375.png",
+    "equipment-builds-slot-375.png",
+    "equipment-builds-character-390.png",
+    "equipment-builds-sets-390.png",
+    "equipment-builds-techniques-390.png",
+    "equipment-builds-gear-390.png",
+    "equipment-builds-goals-390.png",
+    "equipment-builds-slot-390.png",
+    "equipment-builds-character-1280.png",
+    "equipment-builds-sets-1280.png",
+    "equipment-builds-techniques-1280.png",
+    "equipment-builds-gear-1280.png",
+    "equipment-builds-goals-1280.png",
+    "equipment-builds-slot-1280.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "browser": "151.0.7922.34",
+  "finishedAt": "2026-10-15T00:49:09.386Z",
+  "passed": true
+}

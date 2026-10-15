@@ -1,0 +1,393 @@
+{
+  "method": "read-only non-optimal engine strategy; initial state untouched except public actions; 3s per dialogue/action plus actual simulated combat; no resource grants or stage injection; not a human reading-time study",
+  "firstRealmPurePassiveXp": 8400,
+  "passive": [
+    {
+      "minutes": 0,
+      "path": {
+        "realm": 0,
+        "layer": 1,
+        "xp": 0,
+        "reserve": 0
+      },
+      "stones": 120,
+      "materials": {
+        "herb": 12,
+        "ore": 8,
+        "lotus": 3,
+        "insight": 8
+      },
+      "unlocks": {
+        "skillSlots": 2,
+        "secretSlots": 0,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": false,
+        "sect": false,
+        "tower": false,
+        "cave": false
+      }
+    },
+    {
+      "minutes": 3.25,
+      "path": {
+        "realm": 0,
+        "layer": 3,
+        "xp": 0,
+        "reserve": 0
+      },
+      "stones": 125,
+      "materials": {
+        "herb": 12,
+        "ore": 8,
+        "lotus": 3,
+        "insight": 8
+      },
+      "unlocks": {
+        "skillSlots": 2,
+        "secretSlots": 0,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": true,
+        "sect": false,
+        "tower": false,
+        "cave": false
+      }
+    },
+    {
+      "minutes": 10.75,
+      "path": {
+        "realm": 0,
+        "layer": 5,
+        "xp": 0,
+        "reserve": 0
+      },
+      "stones": 136,
+      "materials": {
+        "herb": 12,
+        "ore": 8,
+        "lotus": 3,
+        "insight": 8
+      },
+      "unlocks": {
+        "skillSlots": 3,
+        "secretSlots": 1,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": true,
+        "sect": true,
+        "tower": false,
+        "cave": false
+      }
+    },
+    {
+      "minutes": 26.5,
+      "path": {
+        "realm": 0,
+        "layer": 7,
+        "xp": 0,
+        "reserve": 0
+      },
+      "stones": 163,
+      "materials": {
+        "herb": 12,
+        "ore": 8,
+        "lotus": 3,
+        "insight": 8
+      },
+      "unlocks": {
+        "skillSlots": 3,
+        "secretSlots": 1,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": true,
+        "sect": true,
+        "tower": true,
+        "cave": false
+      }
+    },
+    {
+      "minutes": 30,
+      "path": {
+        "realm": 0,
+        "layer": 7,
+        "xp": 280,
+        "reserve": 0
+      },
+      "stones": 170,
+      "materials": {
+        "herb": 13,
+        "ore": 8,
+        "lotus": 3,
+        "insight": 8
+      },
+      "unlocks": {
+        "skillSlots": 3,
+        "secretSlots": 1,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": true,
+        "sect": true,
+        "tower": true,
+        "cave": false
+      }
+    },
+    {
+      "minutes": 105,
+      "path": {
+        "realm": 0,
+        "layer": 10,
+        "xp": 2200,
+        "reserve": 0
+      },
+      "stones": 295,
+      "materials": {
+        "herb": 15,
+        "ore": 9,
+        "lotus": 3,
+        "insight": 9
+      },
+      "unlocks": {
+        "skillSlots": 3,
+        "secretSlots": 1,
+        "treasureSlots": 0,
+        "gacha": false,
+        "resources": true,
+        "sect": true,
+        "tower": true,
+        "cave": true
+      }
+    }
+  ],
+  "guided": {
+    "events": [
+      {
+        "label": "starter qi pill",
+        "minute": 0.1,
+        "layer": 2,
+        "xp": 28,
+        "reserve": 0,
+        "power": 378,
+        "stones": 120,
+        "chapter": 0,
+        "materials": {
+          "herb": 12,
+          "ore": 8,
+          "lotus": 3,
+          "insight": 8
+        }
+      },
+      {
+        "label": "win resource_herb",
+        "minute": 1.58,
+        "layer": 2,
+        "xp": 160,
+        "reserve": 84,
+        "power": 378,
+        "stones": 1081,
+        "chapter": 0,
+        "materials": {
+          "herb": 24,
+          "ore": 8,
+          "lotus": 6,
+          "insight": 11
+        }
+      },
+      {
+        "label": "story fresh craft and use",
+        "minute": 2.08,
+        "layer": 4,
+        "xp": 4,
+        "reserve": 0,
+        "power": 447,
+        "stones": 1067,
+        "chapter": 0,
+        "materials": {
+          "herb": 20,
+          "ore": 8,
+          "lotus": 5,
+          "insight": 11
+        }
+      },
+      {
+        "label": "win arena_0",
+        "minute": 2.7,
+        "layer": 4,
+        "xp": 146,
+        "reserve": 0,
+        "power": 447,
+        "stones": 1347,
+        "chapter": 0,
+        "materials": {
+          "herb": 24,
+          "ore": 8,
+          "lotus": 5,
+          "insight": 15
+        }
+      },
+      {
+        "label": "chapter0 reward",
+        "minute": 6.05,
+        "layer": 5,
+        "xp": 294,
+        "reserve": 0,
+        "power": 479,
+        "stones": 1854,
+        "chapter": 1,
+        "materials": {
+          "herb": 36,
+          "ore": 8,
+          "lotus": 8,
+          "insight": 23
+        }
+      },
+      {
+        "label": "win arena_0",
+        "minute": 7.17,
+        "layer": 5,
+        "xp": 472,
+        "reserve": 0,
+        "power": 479,
+        "stones": 2035,
+        "chapter": 1,
+        "materials": {
+          "herb": 40,
+          "ore": 8,
+          "lotus": 8,
+          "insight": 25
+        }
+      },
+      {
+        "label": "win arena_1",
+        "minute": 7.85,
+        "layer": 5,
+        "xp": 520,
+        "reserve": 128,
+        "power": 479,
+        "stones": 2375,
+        "chapter": 1,
+        "materials": {
+          "herb": 45,
+          "ore": 8,
+          "lotus": 9,
+          "insight": 30
+        }
+      },
+      {
+        "label": "win arena_2",
+        "minute": 8.77,
+        "layer": 6,
+        "xp": 350,
+        "reserve": 0,
+        "power": 511,
+        "stones": 3297,
+        "chapter": 1,
+        "materials": {
+          "herb": 45,
+          "ore": 12,
+          "lotus": 11,
+          "insight": 39
+        }
+      },
+      {
+        "label": "chapter1 current mission",
+        "minute": 8.77,
+        "layer": 6,
+        "xp": 350,
+        "reserve": 0,
+        "power": 511,
+        "stones": 3297,
+        "chapter": 1,
+        "materials": {
+          "herb": 45,
+          "ore": 12,
+          "lotus": 11,
+          "insight": 39
+        }
+      },
+      {
+        "label": "30 minute snapshot",
+        "minute": 30.1,
+        "layer": 8,
+        "xp": 318,
+        "reserve": 0,
+        "power": 580,
+        "stones": 3334,
+        "chapter": 1,
+        "materials": {
+          "herb": 46,
+          "ore": 12,
+          "lotus": 11,
+          "insight": 39
+        }
+      }
+    ],
+    "failures": [],
+    "current": {
+      "stage": "mission",
+      "mission": {
+        "goal": {
+          "key": "dungeonWins",
+          "id": "arena_2",
+          "count": 1,
+          "label": "赢下斗技决胜，夺得宗门斗技头名",
+          "nav": {
+            "page": "adventure",
+            "modal": "dungeon",
+            "payload": {
+              "id": "arena_2"
+            }
+          }
+        },
+        "current": 1,
+        "required": 1,
+        "done": true,
+        "index": 2,
+        "total": 3,
+        "canReturn": false
+      },
+      "requirements": [
+        {
+          "key": "rank",
+          "label": "任一路第二境一层",
+          "current": 7,
+          "required": 10,
+          "done": false,
+          "id": null
+        },
+        {
+          "key": "sect",
+          "label": "加入宗门",
+          "current": 0,
+          "required": 1,
+          "done": false,
+          "id": null
+        },
+        {
+          "key": "crafted",
+          "label": "炼丹三炉",
+          "current": 1,
+          "required": 3,
+          "done": false,
+          "id": null
+        },
+        {
+          "key": "bossWins",
+          "label": "击败青甲山君",
+          "current": 0,
+          "required": 1,
+          "done": false,
+          "id": "boss_0"
+        },
+        {
+          "key": "dungeonWins",
+          "label": "冲霄斗技夺魁",
+          "current": 1,
+          "required": 1,
+          "done": true,
+          "id": "arena_2"
+        }
+      ]
+    }
+  }
+}

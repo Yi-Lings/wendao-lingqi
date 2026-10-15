@@ -1,0 +1,10 @@
+PASS Visible gear crop during real red draw at 360×640
+PASS Visible technique crop during real red draw at 360×640
+PASS Visible treasure crop during real red draw at 360×640
+PASS Visible gear crop during real red draw at 390×480
+PASS Visible technique crop during real red draw at 390×480
+PASS Visible treasure crop during real red draw at 390×480
+PASS Visible gear crop during real red draw at 1440×900
+PASS Visible technique crop during real red draw at 1440×900
+PASS Visible treasure crop during real red draw at 1440×900
+{"passed":true,"total":9,"failed":[],"pageErrors":[]}

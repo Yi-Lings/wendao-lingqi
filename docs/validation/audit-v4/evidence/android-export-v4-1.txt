@@ -1,0 +1,4 @@
+Compiled Android export boundary: 6 checks passed
+startExport validates and preserves a separate snapshot; no formal-save call.
+preserveExport uses exportFile; persistSave still invokes writeInternalSave.
+This is compiled-code evidence, not a device or system-picker test.

@@ -1,0 +1,3 @@
+PASS offline HTML boots its independent playable preview with all media embedded
+PASS offline world choice commits once and the journal survives file reload
+{"passed":true,"tests":2,"pageErrors":[]}

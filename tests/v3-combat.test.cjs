@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const K=require('../web/core.js'),B=require('../web/combat.js'),C=require('../web/data.js');
+const {stockRitualFixture,toTrial}=require('./ritual-fixtures.cjs');
 const NOW=1700000000000,copy=x=>JSON.parse(JSON.stringify(x));
 function state(layer=7,realm=0){const s=K.createState(NOW);s.paths[s.route].layer=layer;s.paths[s.route].realm=realm;return s;}
 function action(s,type,fields={}){const r=B.handle(s,{type,...fields},NOW);assert.ok(r&&r.ok,type+': '+(r&&r.message));return r;}
@@ -65,8 +66,8 @@ test('defeat keeps realm and unspent consumables, and awards no currency or crys
   assert.deepEqual(snapshotMoney(s),before);assert.deepEqual(s.progress.firstClears,first);
 });
 
-test('repeat breakthrough practice has no economic reward and cannot itself change realm',()=>{
-  const s=state(10);s.paths[s.route].xp=K.xpNeeded(s,s.route);const before=snapshotMoney(s);
+test('repeat prepared breakthrough trial has no economic reward and cannot itself change realm',()=>{
+  const s=state(10);s.paths[s.route].xp=K.xpNeeded(s,s.route);stockRitualFixture(s);toTrial(s,NOW);const before=snapshotMoney(s);
   for(let i=0;i<2;i++){
     action(s,'startDungeon',{id:'trial',difficulty:0});victory(s);
     assert.equal(s.lastBattleResult.rewards,null);

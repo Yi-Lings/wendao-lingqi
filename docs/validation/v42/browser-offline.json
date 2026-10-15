@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-10-15T00:57:48.184Z",
+  "file": "wendao-lingqi-v4.2-preview.html",
+  "tests": [
+    {
+      "name": "offline HTML boots its independent playable preview with all media embedded",
+      "passed": true
+    },
+    {
+      "name": "offline world choice commits once and the journal survives file reload",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "passed": true,
+  "finishedAt": "2026-10-15T00:57:54.844Z"
+}

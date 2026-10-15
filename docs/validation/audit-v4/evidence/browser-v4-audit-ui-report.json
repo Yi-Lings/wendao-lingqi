@@ -1,0 +1,1842 @@
+{
+  "at": "2026-10-07T07:46:09.760Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Validated rich inventory and action-derived ceremony fixtures; no economic reachability claim.",
+  "tests": [
+    {
+      "name": "four viewports, six destinations and their real controls meet touch bounds",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "cultivation",
+          "targets": 15,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "character",
+          "targets": 36,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "adventure",
+          "targets": 22,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "cave",
+          "targets": 16,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "fate",
+          "targets": 14,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "page": "heaven",
+          "targets": 18,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "cultivation",
+          "targets": 15,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "character",
+          "targets": 36,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "adventure",
+          "targets": 22,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "cave",
+          "targets": 16,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "fate",
+          "targets": 14,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "page": "heaven",
+          "targets": 18,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "cultivation",
+          "targets": 15,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "character",
+          "targets": 36,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "adventure",
+          "targets": 22,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "cave",
+          "targets": 16,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "fate",
+          "targets": 14,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "page": "heaven",
+          "targets": 18,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "cultivation",
+          "targets": 15,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "character",
+          "targets": 36,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "adventure",
+          "targets": 22,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "cave",
+          "targets": 16,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "fate",
+          "targets": 14,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "page": "heaven",
+          "targets": 18,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        }
+      ]
+    },
+    {
+      "name": "same-page state actions and modal set application retain real scroll position",
+      "ok": true,
+      "detail": {
+        "pageScroll": 199,
+        "modalScroll": 598
+      }
+    },
+    {
+      "name": "six replacement slots, explicit details and long press keep the owned equipment identity",
+      "ok": true,
+      "detail": [
+        {
+          "slot": "weapon",
+          "targets": 19,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "slot": "armor",
+          "targets": 19,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "slot": "head",
+          "targets": 17,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "slot": "bracer",
+          "targets": 17,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "slot": "boots",
+          "targets": 17,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        },
+        {
+          "slot": "charm",
+          "targets": 17,
+          "minimumWidth": 40,
+          "minimumHeight": 40
+        }
+      ]
+    },
+    {
+      "name": "four viewports keep loadout, set and recommendation modal footers visible",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "id": "equipment-sets",
+          "text": "一键装配 玄武",
+          "x": 30,
+          "y": 559.390625,
+          "w": 146,
+          "h": 41,
+          "bottom": 600.390625,
+          "right": 176,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 26.59375,
+            "bottom": 613.59375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "id": "equipment-sets",
+          "text": "查看搭配功法",
+          "x": 184,
+          "y": 559.390625,
+          "w": 146,
+          "h": 41,
+          "bottom": 600.390625,
+          "right": 330,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 26.59375,
+            "bottom": 613.59375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "id": "build-recommendations",
+          "text": "一键装配推荐方案",
+          "x": 30,
+          "y": 559.390625,
+          "w": 146,
+          "h": 41,
+          "bottom": 600.390625,
+          "right": 176,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 26.59375,
+            "bottom": 613.59375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "id": "build-recommendations",
+          "text": "手动配置",
+          "x": 184,
+          "y": 559.390625,
+          "w": 146,
+          "h": 41,
+          "bottom": 600.390625,
+          "right": 330,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 26.59375,
+            "bottom": 613.59375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "id": "equipment-sets",
+          "text": "一键装配 玄武",
+          "x": 30,
+          "y": 755.234375,
+          "w": 161,
+          "h": 41,
+          "bottom": 796.234375,
+          "right": 191,
+          "clip": {
+            "left": 13,
+            "right": 377,
+            "top": 34.765625,
+            "bottom": 808.765625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "id": "equipment-sets",
+          "text": "查看搭配功法",
+          "x": 199,
+          "y": 755.234375,
+          "w": 161,
+          "h": 41,
+          "bottom": 796.234375,
+          "right": 360,
+          "clip": {
+            "left": 13,
+            "right": 377,
+            "top": 34.765625,
+            "bottom": 808.765625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "id": "build-recommendations",
+          "text": "一键装配推荐方案",
+          "x": 30,
+          "y": 755.234375,
+          "w": 161,
+          "h": 41,
+          "bottom": 796.234375,
+          "right": 191,
+          "clip": {
+            "left": 13,
+            "right": 377,
+            "top": 34.765625,
+            "bottom": 808.765625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "id": "build-recommendations",
+          "text": "手动配置",
+          "x": 199,
+          "y": 755.234375,
+          "w": 161,
+          "h": 41,
+          "bottom": 796.234375,
+          "right": 360,
+          "clip": {
+            "left": 13,
+            "right": 377,
+            "top": 34.765625,
+            "bottom": 808.765625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "id": "equipment-sets",
+          "text": "一键装配 玄武",
+          "x": 30,
+          "y": 405.796875,
+          "w": 146,
+          "h": 41,
+          "bottom": 446.796875,
+          "right": 176,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 20.203125,
+            "bottom": 460.203125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "id": "equipment-sets",
+          "text": "查看搭配功法",
+          "x": 184,
+          "y": 405.796875,
+          "w": 146,
+          "h": 41,
+          "bottom": 446.796875,
+          "right": 330,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 20.203125,
+            "bottom": 460.203125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "id": "build-recommendations",
+          "text": "一键装配推荐方案",
+          "x": 30,
+          "y": 405.796875,
+          "w": 146,
+          "h": 41,
+          "bottom": 446.796875,
+          "right": 176,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 20.203125,
+            "bottom": 460.203125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "id": "build-recommendations",
+          "text": "手动配置",
+          "x": 184,
+          "y": 405.796875,
+          "w": 146,
+          "h": 41,
+          "bottom": 446.796875,
+          "right": 330,
+          "clip": {
+            "left": 13,
+            "right": 347,
+            "top": 20.203125,
+            "bottom": 460.203125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "id": "equipment-sets",
+          "text": "一键装配 玄武",
+          "x": 48,
+          "y": 290.59375,
+          "w": 268,
+          "h": 41,
+          "bottom": 331.59375,
+          "right": 316,
+          "clip": {
+            "left": 31,
+            "right": 609,
+            "top": 15.40625,
+            "bottom": 344.40625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "id": "equipment-sets",
+          "text": "查看搭配功法",
+          "x": 324,
+          "y": 290.59375,
+          "w": 268,
+          "h": 41,
+          "bottom": 331.59375,
+          "right": 592,
+          "clip": {
+            "left": 31,
+            "right": 609,
+            "top": 15.40625,
+            "bottom": 344.40625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "id": "build-recommendations",
+          "text": "一键装配推荐方案",
+          "x": 48,
+          "y": 290.59375,
+          "w": 268,
+          "h": 41,
+          "bottom": 331.59375,
+          "right": 316,
+          "clip": {
+            "left": 31,
+            "right": 609,
+            "top": 15.40625,
+            "bottom": 344.40625
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "id": "build-recommendations",
+          "text": "手动配置",
+          "x": 324,
+          "y": 290.59375,
+          "w": 268,
+          "h": 41,
+          "bottom": 331.59375,
+          "right": 592,
+          "clip": {
+            "left": 31,
+            "right": 609,
+            "top": 15.40625,
+            "bottom": 344.40625
+          },
+          "hit": true
+        }
+      ]
+    },
+    {
+      "name": "story, ritual and ascension scenes retain visible actions in four viewports",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "scene": "story",
+          "text": "走入这一幕",
+          "x": 13,
+          "y": 577,
+          "w": 334,
+          "h": 44,
+          "bottom": 621,
+          "right": 347,
+          "clip": {
+            "left": 0,
+            "right": 360,
+            "top": 0,
+            "bottom": 640
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "scene": "story",
+          "text": "走入这一幕",
+          "x": 16,
+          "y": 781,
+          "w": 358,
+          "h": 44,
+          "bottom": 825,
+          "right": 374,
+          "clip": {
+            "left": 0,
+            "right": 390,
+            "top": 0,
+            "bottom": 844
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "scene": "story",
+          "text": "走入这一幕",
+          "x": 13,
+          "y": 424,
+          "w": 334,
+          "h": 44,
+          "bottom": 468,
+          "right": 347,
+          "clip": {
+            "left": 0,
+            "right": 360,
+            "top": 0,
+            "bottom": 480
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "scene": "story",
+          "text": "走入这一幕",
+          "x": 361.125,
+          "y": 304,
+          "w": 252.875,
+          "h": 44,
+          "bottom": 348,
+          "right": 614,
+          "clip": {
+            "left": 10,
+            "right": 630,
+            "top": 0,
+            "bottom": 360
+          },
+          "hit": true
+        }
+      ]
+    },
+    {
+      "name": "four red scenes keep primary and skip visible without losing committed prizes",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "skip": {
+            "text": "跳过演出",
+            "x": 260,
+            "y": 16,
+            "w": 76,
+            "h": 40,
+            "bottom": 56,
+            "right": 336,
+            "clip": {
+              "left": 0,
+              "right": 360,
+              "top": 0,
+              "bottom": 640
+            },
+            "hit": true
+          },
+          "primary": {
+            "text": "收下道品 · 查看全部",
+            "x": 61,
+            "y": 554.5,
+            "w": 238,
+            "h": 45,
+            "bottom": 599.5,
+            "right": 299,
+            "clip": {
+              "left": 0,
+              "right": 360,
+              "top": 0,
+              "bottom": 640
+            },
+            "hit": true
+          }
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "skip": {
+            "text": "跳过演出",
+            "x": 286,
+            "y": 22,
+            "w": 76,
+            "h": 40,
+            "bottom": 62,
+            "right": 362,
+            "clip": {
+              "left": 0,
+              "right": 390,
+              "top": 0,
+              "bottom": 844
+            },
+            "hit": true
+          },
+          "primary": {
+            "text": "收下道品 · 查看全部",
+            "x": 76,
+            "y": 747.5,
+            "w": 238,
+            "h": 45,
+            "bottom": 792.5,
+            "right": 314,
+            "clip": {
+              "left": 0,
+              "right": 390,
+              "top": 0,
+              "bottom": 844
+            },
+            "hit": true
+          }
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "skip": {
+            "text": "跳过演出",
+            "x": 260,
+            "y": 12,
+            "w": 76,
+            "h": 40,
+            "bottom": 52,
+            "right": 336,
+            "clip": {
+              "left": 0,
+              "right": 360,
+              "top": 0,
+              "bottom": 480
+            },
+            "hit": true
+          },
+          "primary": {
+            "text": "收下道品 · 查看全部",
+            "x": 61,
+            "y": 404.5,
+            "w": 238,
+            "h": 40,
+            "bottom": 444.5,
+            "right": 299,
+            "clip": {
+              "left": 0,
+              "right": 360,
+              "top": 0,
+              "bottom": 480
+            },
+            "hit": true
+          }
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "skip": {
+            "text": "跳过演出",
+            "x": 536,
+            "y": 13,
+            "w": 76,
+            "h": 40,
+            "bottom": 53,
+            "right": 612,
+            "clip": {
+              "left": 0,
+              "right": 640,
+              "top": 0,
+              "bottom": 360
+            },
+            "hit": true
+          },
+          "primary": {
+            "text": "收下道品 · 查看全部",
+            "x": 178.25,
+            "y": 306,
+            "w": 210,
+            "h": 40,
+            "bottom": 346,
+            "right": 388.25,
+            "clip": {
+              "left": 0,
+              "right": 640,
+              "top": 0,
+              "bottom": 360
+            },
+            "hit": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "real boss battles keep skills and commands usable on short portrait and landscape",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "skill": {
+            "text": "裂空剑\n9真元",
+            "x": 9,
+            "y": 324.375,
+            "w": 40.5,
+            "h": 58,
+            "bottom": 382.375,
+            "right": 49.5,
+            "clip": {
+              "left": 9,
+              "right": 351,
+              "top": 311.984375,
+              "bottom": 381.984375
+            },
+            "hit": true
+          }
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "skill": {
+            "text": "裂空剑\n9真元",
+            "x": 331.9375,
+            "y": 149.078125,
+            "w": 72.265625,
+            "h": 61.578125,
+            "bottom": 210.65625,
+            "right": 404.203125,
+            "clip": {
+              "left": 0,
+              "right": 640,
+              "top": 0,
+              "bottom": 360
+            },
+            "hit": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "all remaining story prerequisites scroll independently and link to their actual target",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "text": "前往",
+          "x": 286,
+          "y": 127.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 167.03125,
+          "right": 327,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 84.4375,
+            "bottom": 432.4375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "text": "前往",
+          "x": 286,
+          "y": 182.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 222.03125,
+          "right": 327,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 84.4375,
+            "bottom": 432.4375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "text": "前往",
+          "x": 286,
+          "y": 237.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 277.03125,
+          "right": 327,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 84.4375,
+            "bottom": 432.4375
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "text": "前往",
+          "x": 316,
+          "y": 132.890625,
+          "w": 41,
+          "h": 40,
+          "bottom": 172.890625,
+          "right": 357,
+          "clip": {
+            "left": 24,
+            "right": 368,
+            "top": 90.296875,
+            "bottom": 626.296875
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "text": "前往",
+          "x": 316,
+          "y": 187.890625,
+          "w": 41,
+          "h": 40,
+          "bottom": 227.890625,
+          "right": 357,
+          "clip": {
+            "left": 24,
+            "right": 368,
+            "top": 90.296875,
+            "bottom": 626.296875
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "text": "前往",
+          "x": 316,
+          "y": 242.890625,
+          "w": 41,
+          "h": 40,
+          "bottom": 282.890625,
+          "right": 357,
+          "clip": {
+            "left": 24,
+            "right": 368,
+            "top": 90.296875,
+            "bottom": 626.296875
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "text": "前往",
+          "x": 288,
+          "y": 104.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 144.03125,
+          "right": 329,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 70.03125,
+            "bottom": 293.03125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "text": "前往",
+          "x": 288,
+          "y": 155.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 195.03125,
+          "right": 329,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 70.03125,
+            "bottom": 293.03125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "text": "前往",
+          "x": 288,
+          "y": 206.03125,
+          "w": 41,
+          "h": 40,
+          "bottom": 246.03125,
+          "right": 329,
+          "clip": {
+            "left": 24,
+            "right": 338,
+            "top": 70.03125,
+            "bottom": 293.03125
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "text": "前往",
+          "x": 273.125,
+          "y": 105.6875,
+          "w": 41,
+          "h": 40,
+          "bottom": 145.6875,
+          "right": 314.125,
+          "clip": {
+            "left": 34,
+            "right": 323,
+            "top": 71.6875,
+            "bottom": 349.6875
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "text": "前往",
+          "x": 273.125,
+          "y": 156.6875,
+          "w": 41,
+          "h": 40,
+          "bottom": 196.6875,
+          "right": 314.125,
+          "clip": {
+            "left": 34,
+            "right": 323,
+            "top": 71.6875,
+            "bottom": 349.6875
+          },
+          "hit": true
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "text": "前往",
+          "x": 273.125,
+          "y": 207.6875,
+          "w": 41,
+          "h": 40,
+          "bottom": 247.6875,
+          "right": 314.125,
+          "clip": {
+            "left": 34,
+            "right": 323,
+            "top": 71.6875,
+            "bottom": 349.6875
+          },
+          "hit": true
+        }
+      ]
+    },
+    {
+      "name": "historical art collection exposes all thirteen paintings with contained original images",
+      "ok": true,
+      "detail": [
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v3-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-weapons-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-armor-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-utilities-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-treasures-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 2172,
+          "h": 724
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-pills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1774,
+          "h": 887
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v4-basic-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-0.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-1.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-2.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-3.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-4.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 640
+          },
+          "file": "v5-gear-quality-5.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v3-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-weapons-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-armor-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-utilities-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-treasures-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 2172,
+          "h": 724
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-pills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1774,
+          "h": 887
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v4-basic-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-0.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-1.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-2.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-3.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-4.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 390,
+            "height": 844
+          },
+          "file": "v5-gear-quality-5.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v3-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-weapons-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-armor-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-utilities-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-treasures-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 2172,
+          "h": 724
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-pills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1774,
+          "h": 887
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v4-basic-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-0.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-1.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-2.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-3.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-4.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 360,
+            "height": 480
+          },
+          "file": "v5-gear-quality-5.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v3-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-weapons-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-armor-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-utilities-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-treasures-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 2172,
+          "h": 724
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-pills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1774,
+          "h": 887
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v4-basic-skills-atlas.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1448,
+          "h": 1086
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-0.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-1.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-2.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-3.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-4.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        },
+        {
+          "size": {
+            "width": 640,
+            "height": 360
+          },
+          "file": "v5-gear-quality-5.png",
+          "fit": "contain",
+          "repeat": "no-repeat",
+          "w": 1254,
+          "h": 1254
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "acceptance-cultivation-360x640.png",
+    "acceptance-character-360x640.png",
+    "acceptance-adventure-360x640.png",
+    "acceptance-cave-360x640.png",
+    "acceptance-fate-360x640.png",
+    "acceptance-heaven-360x640.png",
+    "acceptance-facility-action-360x640.png",
+    "acceptance-cultivation-390x844.png",
+    "acceptance-character-390x844.png",
+    "acceptance-adventure-390x844.png",
+    "acceptance-cave-390x844.png",
+    "acceptance-fate-390x844.png",
+    "acceptance-heaven-390x844.png",
+    "acceptance-facility-action-390x844.png",
+    "acceptance-cultivation-360x480.png",
+    "acceptance-character-360x480.png",
+    "acceptance-adventure-360x480.png",
+    "acceptance-cave-360x480.png",
+    "acceptance-fate-360x480.png",
+    "acceptance-heaven-360x480.png",
+    "acceptance-facility-action-360x480.png",
+    "acceptance-cultivation-640x360.png",
+    "acceptance-character-640x360.png",
+    "acceptance-adventure-640x360.png",
+    "acceptance-cave-640x360.png",
+    "acceptance-fate-640x360.png",
+    "acceptance-heaven-640x360.png",
+    "acceptance-facility-action-640x360.png",
+    "acceptance-same-page-scroll.png",
+    "acceptance-actual-longpress.png",
+    "acceptance-equipment-sets-360x640.png",
+    "acceptance-build-recommendations-360x640.png",
+    "acceptance-equipment-sets-390x844.png",
+    "acceptance-build-recommendations-390x844.png",
+    "acceptance-equipment-sets-360x480.png",
+    "acceptance-build-recommendations-360x480.png",
+    "acceptance-equipment-sets-640x360.png",
+    "acceptance-build-recommendations-640x360.png",
+    "acceptance-story-360x640.png",
+    "acceptance-ritual-360x640.png",
+    "acceptance-ascension-vow-360x640.png",
+    "acceptance-story-390x844.png",
+    "acceptance-ritual-390x844.png",
+    "acceptance-ascension-vow-390x844.png",
+    "acceptance-story-360x480.png",
+    "acceptance-ritual-360x480.png",
+    "acceptance-ascension-vow-360x480.png",
+    "acceptance-story-640x360.png",
+    "acceptance-ritual-640x360.png",
+    "acceptance-ascension-vow-640x360.png",
+    "acceptance-red-360x640.png",
+    "acceptance-red-390x844.png",
+    "acceptance-red-360x480.png",
+    "acceptance-red-640x360.png",
+    "acceptance-boss-360x480.png",
+    "acceptance-boss-640x360.png",
+    "acceptance-story-prerequisites-360x640.png",
+    "acceptance-story-prerequisites-390x844.png",
+    "acceptance-story-prerequisites-360x480.png",
+    "acceptance-story-prerequisites-640x360.png",
+    "acceptance-art-collection-0-360x640.png",
+    "acceptance-art-collection-12-360x640.png",
+    "acceptance-art-collection-0-390x844.png",
+    "acceptance-art-collection-12-390x844.png",
+    "acceptance-art-collection-0-360x480.png",
+    "acceptance-art-collection-12-360x480.png",
+    "acceptance-art-collection-0-640x360.png",
+    "acceptance-art-collection-12-640x360.png"
+  ],
+  "errors": [],
+  "badResponses": [],
+  "partial": false,
+  "filter": null,
+  "passed": true
+}

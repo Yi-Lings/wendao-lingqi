@@ -6,17 +6,34 @@ ROOT = pathlib.Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('apk', nargs='?', default=str(ROOT / 'dist/lingqi-game.apk'))
 parser.add_argument('--report', default=str(ROOT / 'dist/apk-check.txt'))
-parser.add_argument('--variant', choices=['release', 'debug'], default='release')
+parser.add_argument('--variant', choices=['release','debug'], default='release')
+parser.add_argument('--package-id')
+parser.add_argument('--version-code')
+parser.add_argument('--version-name')
 args = parser.parse_args()
 apk = pathlib.Path(args.apk)
+config = (ROOT / 'android/app/build.gradle').read_text(encoding='utf-8')
+args.package_id = args.package_id or ('com.lingqi.game.preview' if args.variant == 'debug' else 'com.lingqi.game')
+args.version_code = args.version_code or re.search(r'\bversionCode\s+(\d+)', config).group(1)
+args.version_name = args.version_name or re.search(r"\bversionName\s+'([^']+)'", config).group(1)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'core.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'app.js']
+modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'monster-art.js', 'story-scenes.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
-       'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png']
+       'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',
+       'v4-weapons-atlas.png', 'v4-armor-atlas.png', 'v4-utilities-atlas.png',
+       'v4-treasures-atlas.png', 'v4-pills-atlas.png', 'v4-basic-skills-atlas.png',
+       'v5-gear-quality-0.png', 'v5-gear-quality-1.png', 'v5-gear-quality-2.png',
+       'v5-gear-quality-3.png', 'v5-gear-quality-4.png', 'v5-gear-quality-5.png',
+       'v6-gear-quality-0.png', 'v6-gear-quality-1.png', 'v6-gear-quality-2.png',
+       'v6-gear-quality-3.png', 'v6-gear-quality-4.png', 'v6-gear-quality-5.png',
+       'v6-techniques-atlas.png', 'v6-treasures-atlas.png', 'v6-pills-atlas.png', 'v6-utilities-atlas.png', 'story-arena.png', 'story-secret.png', 'v7-rivals-atlas.png', 'v7-encounters-atlas.png', 'v7-immortal-beasts-atlas.png', 'v7-immortal-mentors-atlas.png', 'story-heaven.png']
+audio = ['bgm-home', 'bgm-battle', 'bgm-heaven', 'ui', 'success', 'error',
+         'battle-hit', 'battle-skill', 'victory', 'defeat', 'summon-rise', 'reveal',
+         'red-awaken', 'red-impact', 'bgm-ascension', 'ascension-rise']
 assets = [p for p in sorted((ROOT / 'web').rglob('*')) if p.is_file()]
-required = modules + ['index.html', 'style.css'] + ['assets/' + name for name in art]
-assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required V3 asset missing'
+required = modules + ['index.html', 'style.css', 'wayfarer.css', 'item-art.css', 'selection.css', 'layout.css', 'battle.css', 'builds.css', 'rewards.css', 'activity-rewards.css', 'art-layout.css', 'story-screen.css', 'ritual-screen.css', 'ascension-screen.css'] + ['assets/' + name for name in art] + ['assets/audio/' + name + '.mp3' for name in audio] + ['assets/audio/manifest.json', 'assets/audio/ascension-manifest.json']
+assert all((ROOT / 'web' / name).is_file() and (ROOT / 'web' / name).stat().st_size for name in required), 'Required game asset missing'
 
 def digest(stream):
     h = hashlib.sha256()
@@ -30,46 +47,42 @@ with zipfile.ZipFile(apk) as archive:
     names = archive.namelist()
     assert len(names) == len(set(names)), 'Duplicate ZIP entries'
     assert 'classes.dex' in names and archive.getinfo('classes.dex').file_size > 0
+    assert archive.testzip() is None, 'APK ZIP CRC mismatch'
+    dex_names = [name for name in names if name.startswith('classes') and name.endswith('.dex')]
+    assert any(b'Lcom/lingqi/game/MainActivity;' in archive.read(name) for name in dex_names), 'Native launch class missing'
+    assert any(b'Lcom/lingqi/game/MainActivity$SaveBridge;' in archive.read(name) for name in dex_names), 'Native save bridge missing'
     expected = {'assets/' + p.relative_to(ROOT / 'web').as_posix() for p in assets}
     assert {n for n in names if n.startswith('assets/') and not n.endswith('/')} == expected, 'APK asset set differs from source'
     for p in assets:
         name = 'assets/' + p.relative_to(ROOT / 'web').as_posix()
         with p.open('rb') as source, archive.open(name) as packed:
             assert digest(source) == digest(packed), name + ' differs from tested source'
-    dex_bytes = archive.getinfo('classes.dex').file_size
+    dex_bytes = sum(archive.getinfo(name).file_size for name in dex_names)
 sdk = os.environ.get('ANDROID_HOME') or os.environ.get('ANDROID_SDK_ROOT')
 candidates = [tools / 'aapt2']
-if sdk:
-    candidates.append(pathlib.Path(sdk) / 'build-tools/35.0.0/aapt2')
-if shutil.which('aapt2'):
-    candidates.append(pathlib.Path(shutil.which('aapt2')))
+if sdk: candidates.append(pathlib.Path(sdk) / 'build-tools/35.0.0/aapt2')
+if shutil.which('aapt2'): candidates.append(pathlib.Path(shutil.which('aapt2')))
 aapt2 = next((p for p in candidates if p.is_file()), None)
-if aapt2 is None:
-    raise SystemExit('aapt2 not found: prepare tools/android or set ANDROID_HOME to an SDK with build-tools 35.0.0')
-native_libs = str(aapt2.parent / 'lib64')
-if os.environ.get('LD_LIBRARY_PATH'):
-    native_libs += os.pathsep + os.environ['LD_LIBRARY_PATH']
+if aapt2 is None: raise SystemExit('aapt2 missing: prepare tools/android or set ANDROID_HOME to SDK 35')
 result = subprocess.run([str(aapt2), 'dump', 'badging', str(apk)],
-                        env={**os.environ, 'LD_LIBRARY_PATH': native_libs},
+                        env={**os.environ, 'LD_LIBRARY_PATH': str(aapt2.parent / 'lib64') + os.pathsep + os.environ.get('LD_LIBRARY_PATH','')},
                         check=True, text=True, capture_output=True)
 badging = result.stdout
-package = 'com.lingqi.game.preview' if args.variant == 'debug' else 'com.lingqi.game'
-gradle_source = (ROOT / 'android/app/build.gradle').read_text(encoding='utf-8')
-version_code = re.search(r'\bversionCode\s+(\d+)', gradle_source).group(1)
-version_name = re.search(r"\bversionName\s+'([^']+)'", gradle_source).group(1)
-assert "name='" + package + "'" in badging
-assert "versionCode='" + version_code + "'" in badging and "versionName='" + version_name + "'" in badging
+assert "name='" + args.package_id + "'" in badging
+assert "versionCode='" + args.version_code + "'" in badging and "versionName='" + args.version_name + "'" in badging
 assert "sdkVersion:'26'" in badging or "minSdkVersion:'26'" in badging
 assert "targetSdkVersion:'35'" in badging
+assert "launchable-activity: name='com.lingqi.game.MainActivity'" in badging
 assert 'uses-permission:' not in badging, 'APK declares a permission'
 lines = [s for s in badging.splitlines() if s.startswith(('package:', 'sdkVersion:', 'minSdkVersion:', 'targetSdkVersion:', 'application-label:', 'launchable-activity:', 'uses-permission:'))]
 with apk.open('rb') as source:
     sha256 = digest(source)
 report = '\n'.join(lines) + '\n'
 report += 'All ' + str(len(assets)) + ' packaged game assets exactly match source.\n'
-report += 'V3 artwork: ' + ', '.join(art) + '\n'
+report += 'Game artwork: ' + ', '.join(art) + '\n'
+report += 'Offline audio: ' + ', '.join(audio) + '\n'
 report += 'Game modules: ' + ', '.join(modules) + '\n'
-report += 'classes.dex bytes: ' + str(dex_bytes) + '\n'
+report += 'DEX files: ' + ', '.join(dex_names) + '; total bytes: ' + str(dex_bytes) + '\n'
 report += 'APK bytes: ' + str(apk.stat().st_size) + '\nAPK SHA256: ' + sha256 + '\n'
 pathlib.Path(args.report).parent.mkdir(parents=True, exist_ok=True)
 pathlib.Path(args.report).write_text(report, encoding='utf-8')
