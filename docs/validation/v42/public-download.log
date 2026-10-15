@@ -1,0 +1,7 @@
+{"downloaded": "wendao-lingqi-v4.2-preview.apk.sha256", "bytes": 97, "sha256": "6600b4f53513697c6535746dd6ff90c0f618cae724eec6ead49e812d3adfcd57"}
+{"downloaded": "wendao-lingqi-v4.2-preview.zip.sha256", "bytes": 97, "sha256": "4fcfefaac663f7bb16bf9ac9eb3eac7fbaa6139959a95a003c77e430bf304362"}
+{"downloaded": "wendao-lingqi-v4.2-preview.apk", "bytes": 132270355, "sha256": "c95ca6c9dd4aa247463a95f6acda26da2f8fbd59a90fe0652f3d4098a8e38959"}
+{"downloaded": "wendao-lingqi-v4.2.0-source.zip.sha256", "bytes": 98, "sha256": "c338c8cb1bbe01ba5fb9499e22005ef89fe29cc0e5271be40e7333e5db004a33"}
+{"downloaded": "wendao-lingqi-v4.2-preview.zip", "bytes": 132264519, "sha256": "63ebb051b70fc842901e6ab97f2127347e6f25bc82ac13d2155a8ed425ed5b2c"}
+{"downloaded": "wendao-lingqi-v4.2.0-source.zip", "bytes": 216727858, "sha256": "672690807d049207029fd33ceb9ae1f7ea3d61d8af1c050cbf7a205b15a399e2"}
+PASS: all six anonymous public downloads, checksums, ZIP contents and complete source manifest verified.

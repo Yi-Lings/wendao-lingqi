@@ -42,3 +42,10 @@ GitHub 发布标签 `v4.2.0-preview`：
 各文件附 SHA-256。APK 的 SHA-256 为 `c95ca6c9dd4aa247463a95f6acda26da2f8fbd59a90fe0652f3d4098a8e38959`。体验包使用调试签名，可与 V3 正式包共存；原版先导出 JSON 再导入体验版。没有原发布私钥，本轮不生成替代正式签名。
 
 V3.1 与早期 V3.2 的开发提交、测试和截图均保留在版本历史中；V3.2 阶段的成果以本次整合版交付，不再创建独立的旧机制发布。
+
+
+## 公开发布复核
+
+[GitHub V4.2 体验版](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.2.0-preview)已发布，[发布任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/38664037389)及两个分支的 Android CI 全部成功。六个附件均从公开地址匿名完整下载，GitHub digest、随附 SHA-256 与本地 APK/网页散列一致；网页 ZIP CRC/内部 HTML 通过，源码快照的 527 个文件与冻结提交逐一匹配。源码包独立解压运行再次通过 359 项逻辑检查。
+
+发布源码标签为 `1c4a24430c3860a9644299c1190445e887dc8d54`，之后仅补充公开交付证明。发布附件的实际大小、散列、公开 URL 见 [公开复核记录](validation/v42/public-release.json)，界面图片见 [截图入口](validation/v42/README.md)。

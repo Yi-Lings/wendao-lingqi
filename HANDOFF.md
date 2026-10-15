@@ -2,6 +2,12 @@
 
 更新：2026-10-15（UTC）。本轮用户要求继续迭代、调研常见修仙游戏和小说、优化机制/玩法/前端，并将全部成果提交 GitHub；直接提交和发布已获授权。
 
+## 公开交付已完成
+
+V4.2 已发布：https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.2.0-preview 。发布任务 https://github.com/Yi-Lings/wendao-lingqi/actions/runs/38664037389 成功，Android CI 两个分支均成功。六个附件已匿名完整下载，SHA-256、离线 HTML/ZIP 和源码 ZIP 的 527 个文件逐项核对通过。完整源码包独立解压后 359 项检查也通过。
+
+冻结发布源码/标签为 `1c4a24430c3860a9644299c1190445e887dc8d54`；后续提交只补充公开发布证据。原 APK 构建输入基于 `78efa5ed9b6d8e1bec3ee4ae9455ff286e036733`，两者游戏和 Android 输入相同。公开下载证明见 docs/validation/v42/public-release.json，截图入口见 docs/validation/v42/README.md。main/work 已统一同步；历史发布保留。
+
 ## 当前版本
 
 V4.2 已将主分支 V3.1/V3.2 开发成果与远端 V4.1 预览开发线整合，保留双方历史。`main` 与 `work` 同步最新源码；V3/V4/V4.1 历史标签和 Release 保留。旧文档中“main 保留 V3”“仅推送 work”的约定已由本轮同步要求替代。
