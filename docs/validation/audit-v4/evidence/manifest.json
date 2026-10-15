@@ -1,4 +1,64 @@
 {
+  "V4_1_ORIGINAL_ASSETS.json": {
+    "bytes": 12255,
+    "sha256": "b73382aaff381816c557ad9cb9fba1a48264849f939e0827e17c263ca160f2da"
+  },
+  "acceptance-actual-longpress.png": {
+    "bytes": 154734,
+    "sha256": "b18799a556bf23ff027aa126565ab10d8b6b51e98ec4c830dbfe9e7cc2d06de8"
+  },
+  "acceptance-art-collection-0-360x480.png": {
+    "bytes": 184345,
+    "sha256": "05fa61bf80b06b313d9a43f7b4706165a0b2b400485ff9b386a7c8f437d3bf1a"
+  },
+  "acceptance-art-collection-12-640x360.png": {
+    "bytes": 91293,
+    "sha256": "18b9e47a33e75fbfdecd7dd1d2b4fa4a41b9eac5c42f271e6aa3a717854b66ba"
+  },
+  "acceptance-ascension-vow-360x480.png": {
+    "bytes": 266966,
+    "sha256": "4685222c2e2e8839242ed9cacd02b322704e941cfd3c2d68fdf1b7819d67ee82"
+  },
+  "acceptance-boss-360x480.png": {
+    "bytes": 176215,
+    "sha256": "56c52733367da037b3e4e70656d105e32a96395f1802ed59d6f8994f43fddc8e"
+  },
+  "acceptance-boss-640x360.png": {
+    "bytes": 275180,
+    "sha256": "ef3da7e9651ed0b78b5e891bca0bae258552e2aed658a5c159c1276270e5e152"
+  },
+  "acceptance-character-390x844.png": {
+    "bytes": 258318,
+    "sha256": "51ff0058dba1fb4bf6cf5c8d856d1519ffba60f1a1d06e098a8d934c4fb809fb"
+  },
+  "acceptance-red-360x480.png": {
+    "bytes": 209403,
+    "sha256": "1d450efa8ea213cd84a112b0c82942da38f795e244828fc10dba1703d785eecc"
+  },
+  "acceptance-red-640x360.png": {
+    "bytes": 236553,
+    "sha256": "8a083d0f1aaea6023a7ac9ead9d6e4488a880702250a72630cff6a47b183ce29"
+  },
+  "acceptance-ritual-360x480.png": {
+    "bytes": 207852,
+    "sha256": "3dec5b80d038af1547361826aace9b40c66532ecbd381812860b35c38108523e"
+  },
+  "acceptance-story-prerequisites-360x480.png": {
+    "bytes": 201534,
+    "sha256": "4f1de92c87e0ee64b052657402826db0f37a5ac1b6beaf6f43b440279363e98a"
+  },
+  "acceptance-story-prerequisites-640x360.png": {
+    "bytes": 271770,
+    "sha256": "aa4dc94de3d1d1bbb69441ca398442c0f99727835122d99660bee4a16e644269"
+  },
+  "alchemy-real-return.png": {
+    "bytes": 87554,
+    "sha256": "dc8084ffc03d117eecda8e91bff299ab70989004d63449f56ee86980c7a60d7d"
+  },
+  "alchemy-real-settlement.png": {
+    "bytes": 96511,
+    "sha256": "6b29dc36679a13fa1dae9a6d756b633e237aa6631fcc6423f211a1137964acf7"
+  },
   "android-export-v4-1.txt": {
     "bytes": 273,
     "sha256": "385461c2530b4bf9af378774e5ec42541918dff46c63e629677b89319f6cdbd2"
@@ -59,9 +119,61 @@
     "bytes": 843,
     "sha256": "4b9a430434c0c9983bb5d8b245c1249501846006aeeb125c1420698e5b565b1b"
   },
+  "gear-q0-1.png": {
+    "bytes": 967098,
+    "sha256": "db4763647775928e5a49437deab6d453847e7ccb9c02c76423d6c884dde27ed8"
+  },
+  "gear-q0-2.png": {
+    "bytes": 968894,
+    "sha256": "851e65209d964e086bf8a7fa36e93b9dccc661deb5117ac6e5200fc8d67f247a"
+  },
+  "gear-q1-1.png": {
+    "bytes": 1122408,
+    "sha256": "74603ce694658cada2a89a78a814b9361a6518338d513ae2fb4fca9de3b01256"
+  },
+  "gear-q1-2.png": {
+    "bytes": 1126655,
+    "sha256": "096356d63092f5fa1ce9b27692d87522f35bb25304573af69f13f1500cc5a22b"
+  },
+  "gear-q2-1.png": {
+    "bytes": 1138632,
+    "sha256": "ef9a4a750c0bd0f670a94309a6a8f98a3f9a64432ffd143bb8682a02c8661fc6"
+  },
+  "gear-q2-2.png": {
+    "bytes": 1192082,
+    "sha256": "ebf6482a69cb5580907c0040406c0e4ce02a93f662157e4708d4aa834f6fdff6"
+  },
+  "gear-q3-1.png": {
+    "bytes": 1278995,
+    "sha256": "c860f316c19d0d7f5c9490bbdafe296285842ed00e819d3ee115ea28edd903f0"
+  },
+  "gear-q3-2.png": {
+    "bytes": 1291443,
+    "sha256": "dbd49dd030e981cc11dd21a86e9dd96e2d58958121bb5554f6f10e53ecdb2211"
+  },
+  "gear-q4-1.png": {
+    "bytes": 1337223,
+    "sha256": "53901e5a857a7f74e539ab2e6741c523030e051de1b983d4a304c713fce46c8b"
+  },
+  "gear-q4-2.png": {
+    "bytes": 1378942,
+    "sha256": "e79b1c00015e36f5d248059cb19b6ff07d9fc484e1fc6477e662bef9496f3bf9"
+  },
+  "gear-q5-1.png": {
+    "bytes": 1370315,
+    "sha256": "e30849e505769cf5e2adedd4a200d7b30236108d918546d32724c6bca899ee35"
+  },
+  "gear-q5-2.png": {
+    "bytes": 1375354,
+    "sha256": "9aa784de92d49be81681491f577731078e81d471ee1171cd35393c554111396f"
+  },
   "general-regression.log": {
     "bytes": 2650,
     "sha256": "d2b8a7eeb5494d8a9a550d6777b9bb8bacde131286e5b8529cd4bb8c83713aeb"
+  },
+  "github-run-v4-1.json": {
+    "bytes": 1480,
+    "sha256": "c28f6889849f26f9810c19f8ffb41ad7c96056378145a80a377fc762b4ac2bc8"
   },
   "gradle-v4-1.log": {
     "bytes": 2190,
@@ -71,9 +183,37 @@
     "bytes": 1325,
     "sha256": "61bcfefb4e199d0cd9258631411891d70f12799ec8ff1c180735332790698107"
   },
+  "integrity-ascension-real-audio.png": {
+    "bytes": 408800,
+    "sha256": "f312bb9a445390004abdc5d245cbf0ba1e26c7e5f9b3373763036a154f698a61"
+  },
   "integrity-behavior.json": {
     "bytes": 5449,
     "sha256": "fb2f2b2c3359cd7301d1d849de8d75fd216adc8fb85256a46b4d41fa8f4a8758"
+  },
+  "integrity-celestial-layer2-saved.png": {
+    "bytes": 243189,
+    "sha256": "58c02803aa00eec292bdfdb72abb745733c1cb56188447ad77014da33d9d2f4d"
+  },
+  "integrity-human-export-canceled.png": {
+    "bytes": 160398,
+    "sha256": "bec6b38dff6ecfe716775396df30f04d28da11e4542648007e61f9b738b1e608"
+  },
+  "integrity-immortal-export-canceled.png": {
+    "bytes": 160756,
+    "sha256": "5d96c8a527a7346f7f3b9b43e4573be41a6668af3209930374590679a286b9e3"
+  },
+  "integrity-orangeGear-actual-settlement.png": {
+    "bytes": 156298,
+    "sha256": "8b67d1ceb41502627bfc07fc047bc2d17b15e6e78e440fee7bedc0495cea071d"
+  },
+  "integrity-orangeTreasure-actual-settlement.png": {
+    "bytes": 151522,
+    "sha256": "29b006368e91867c0f5010fb691a9e04403dd595782bfbb6e789bd18a7442cab"
+  },
+  "integrity-postcommit-saved-fallback.png": {
+    "bytes": 222606,
+    "sha256": "14a3b07ec79bf0f6318afaa41cebccd021708a6dca39dc7bf71cd7bf4c126a16"
   },
   "integrity-regression.log": {
     "bytes": 1473,
@@ -87,9 +227,21 @@
     "bytes": 324,
     "sha256": "c5756caa2ba43b9b81a22dd39a3d3b879cf2ca81283af4d891d4d7a62cc373dc"
   },
+  "pills.png": {
+    "bytes": 1348717,
+    "sha256": "3b2fe83799e698ce55b077d73b1a1aa481b1859c71eb97a198ef232e7062974d"
+  },
   "provenance-v4-1.txt": {
     "bytes": 112,
     "sha256": "497ed626175f8694479e7cee2505f00ef5ac89011f76b3f3d85c67a23a1d5519"
+  },
+  "public-apk-check.txt": {
+    "bytes": 2101,
+    "sha256": "cc846b02e89d030de62eb00fc54e7436037bf89baa792efaa3ccd1877640829c"
+  },
+  "public-download-verification.json": {
+    "bytes": 1418,
+    "sha256": "8dbb8823ba0a21f501d52b30377ef0676812e7241040f855f53d27d61868e859"
   },
   "red-art-report.json": {
     "bytes": 29501,
@@ -99,13 +251,49 @@
     "bytes": 588,
     "sha256": "02b5b7eab3fac1728828015c7326bbbd511087c12a8f58c8ce40ab04705d0079"
   },
+  "release-v4-1.json": {
+    "bytes": 1910,
+    "sha256": "e9fef112cabb976159fe32bb18ef8aaeefcf8cde1dcc35d3eaaca0de627d5c51"
+  },
+  "release-v4-old-current.json": {
+    "bytes": 10472,
+    "sha256": "08e55f323f5485e26d371f45537f270e25571fcba4c9545cbab7f86afc9cac3e"
+  },
+  "resource-purchase-committed.png": {
+    "bytes": 62831,
+    "sha256": "d5b89ed388858de961df8d9e7f65f54c33198e59fa813a9aa89e8e25c04ccdf9"
+  },
   "story-ritual-regression.log": {
     "bytes": 905,
     "sha256": "71a8c667572f4f189f3d61e30abab17f4ecce675bec25e084c62cb7bec2a89bc"
   },
+  "techniques-1.png": {
+    "bytes": 1430071,
+    "sha256": "82f73cb3da921288d130e16b3b2665b47b7b7a94b407f78387f8f853433d90c2"
+  },
+  "techniques-2.png": {
+    "bytes": 1480287,
+    "sha256": "d169292993dd0ffc3418e1e0e44378b9795c43a80502c2d8ab12176d5ec1f1a5"
+  },
+  "treasures.png": {
+    "bytes": 988056,
+    "sha256": "82ae23ae8e55bf666c7871df71ec7755d778a8eb8895f5ae4fba7b557c6e3c1e"
+  },
   "ui-diagnostic.json": {
     "bytes": 639987,
     "sha256": "ffb1dd069d49a169926e42eaf5d882f71c7fb6025e38632114c5213e0eccd2e7"
+  },
+  "utilities-1.png": {
+    "bytes": 1206014,
+    "sha256": "e1956e384bb30c74f228eca93a36f0a8742e89efbe3efe09a8638af1edda66a5"
+  },
+  "utilities-2.png": {
+    "bytes": 1394491,
+    "sha256": "971b0a57c0fe76930cc63fd662aabe44551a64a3241bf8c30565dc4c2a2c1202"
+  },
+  "v6-unused-replacement-cells.png": {
+    "bytes": 316337,
+    "sha256": "9fc72774bde27d00d69e672f332ebde5c616598de2c232223e6f232a452bf843"
   },
   "web-build.log": {
     "bytes": 424,

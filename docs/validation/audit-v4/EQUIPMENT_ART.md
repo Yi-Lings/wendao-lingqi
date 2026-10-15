@@ -418,3 +418,5 @@ python dist/audit-v4/art-contact-sheets.py
 | `escort` / 迷路采药人 | `v6-utilities-atlas.png` r6c4 | `(629, 1022, 834, 1254)` | 通过：背药篓、持杖采药人 | [11658](../../ART_ASSET_MANIFEST.json#L11658) |
 | `relic` / 封存书匣 | `v6-utilities-atlas.png` r6c5 | `(836, 1022, 1039, 1254)` | 通过：实际木书匣，内书页与玉石 | [11689](../../ART_ASSET_MANIFEST.json#L11689) |
 | `exit` / 归途阵门 | `v6-utilities-atlas.png` r6c6 | `(1041, 1022, 1254, 1254)` | 通过：石砌阵门与蓝色出口光 | [11720](../../ART_ASSET_MANIFEST.json#L11720) |
+
+本报告的18张逐物品联系表及2张旧图/未启用图格补充图已保存在 [evidence/](evidence/)，330项矩形与实际名称记录见equipment-runtime-records.json。未修改源PNG来制作游戏素材；联系表只供QA观察。

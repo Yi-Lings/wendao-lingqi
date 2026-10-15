@@ -29,19 +29,19 @@
 
 | 审查状态 | 具体成果 | 证据与下一步 |
 | --- | --- | --- |
-| 已修，提交边界 | 原生导出只保存独立导出快照，不把试玩 JSON 写入正式原生槽；持久化成功后，展示异常不能撤回已提交的经济状态 | 原问题和 DEX / Native mock 证据见 [INTEGRITY.md](validation/audit-v4/INTEGRITY.md)；本轮新脚本 [browser-v4-integrity.cjs](../tests/browser-v4-integrity.cjs) 九组全部通过；预期故障错误单列 1 条，正常错误 0，最终 npm/新产物仍待验 |
+| 已修，提交边界 | 原生导出只保存独立导出快照，不把试玩 JSON 写入正式原生槽；持久化成功后，展示异常不能撤回已提交的经济状态 | 原问题和 DEX / Native mock 证据见 [INTEGRITY.md](validation/audit-v4/INTEGRITY.md)；本轮新脚本 [browser-v4-integrity.cjs](../tests/browser-v4-integrity.cjs) 九组全部通过；预期故障错误单列 1 条，正常错误 0，326/326逻辑、新APK/HTML及公开下载已验证，见最终交付记录 |
 | 已修，真实反馈 | 尘兑换随机装备/灵宝展示实际 UID / 名称 / 消耗；仙修晋层展示保存后的层级与属性；进入叙事立即同步音乐；胜利和凝定仙阶语气分开 | `activity-rewards.js`、`app.js`、`ascension-scenes.js`；旧试阵胜利不能被文案冒称已付费升级 |
 | 已修，故事目标 | 全屏故事和札记显示剩余总条件、真实计数与逐项入口；主按钮说明真正将补齐的事项 | `story.js:requirementNav`、`story-screen.js`、`app.js:storyJournal/missionTravel`；当前任务完成与章节可收束分开 |
 | 已修，世界语义 | 第二/三卷实际对手、阵心名字、场所对应；三仙阶各自背景、表情别名、仙兽身份标题；Boss 实测裁片、双卫独立肖像、寒鸦分身 | [WORLD_ART.md](validation/audit-v4/WORLD_ART.md)、[STORY_FLOW.md](validation/audit-v4/STORY_FLOW.md)；保留原图字节 |
 | 已修，新图与旧图用途 | 原创书院/炼丹房双格内景及镜湖医舍雨夜完整场景；夜景新增后原 44 PNG 逐字节保持，当前 45 PNG；藏画阁访问此前缺少正常用途的 13 张原图 | [INTERIOR_ART.md](validation/audit-v4/INTERIOR_ART.md)、[INFIRMARY_ART.md](validation/audit-v4/INFIRMARY_ART.md)；原器物继续放相符身份，旧图归档有明确说明，不强绑错装备 |
 | 覆盖，当前源页面 | 四视口九组真实操作验收全部通过、68 张截图；六主页、六部位、长按、套装/推荐、短横屏满配战斗、红卡、缺项来源和藏画 | [UI_PLAYTEST.md](validation/audit-v4/UI_PLAYTEST.md)；有效中后期夹具只用于 UI/事务，不用于证明自然成长 |
 | 部分，内容与选择 | 当前可玩骨架、身份爽点和三仙阶成长已存在；主线偏短，目标类型/分支后果和仙界行动仍薄 | 见第 1 节基线；第 4～7 节均为下一迭代设计 |
-| 已实现并专项覆盖，产物待验 | 新原生/网页/构建关键文件绑定、防止 Java-only 修改重发旧 APK；既有 web byte-match 与固定签名等防线保留 | [check-artifact-sources.py](../tools/check-artifact-sources.py) / [v3-artifact-provenance.cjs](../tests/v3-artifact-provenance.cjs) 13 项通过；导出隔离 DEX 检查如预期拒绝旧实际 V4 包，新编译包6项DEX边界已通过 |
+| 已实现并验证交付 | 新原生/网页/构建关键文件绑定、防止 Java-only 修改重发旧 APK；既有 web byte-match 与固定签名等防线保留 | [check-artifact-sources.py](../tools/check-artifact-sources.py) / [v3-artifact-provenance.cjs](../tests/v3-artifact-provenance.cjs) 13 项通过；导出隔离 DEX 检查如预期拒绝旧实际 V4 包，新编译包6项DEX边界已通过 |
 | 待验，设备/真人 | 真实文件选择器、进程重建、Android/WebView/30 分钟稳定性；阅读理解、主观音画与自然节奏 | 第 9～10 节列出取证步骤；没有设备或真人时保留未验收 |
 
-当前 Android 源码已设为 **4.1 / versionCode5**，尚不表示新安装包已经编译。原生实际 Java 入口 19 项、本轮行为契约 5 项、红品真实像素 9 项、通用浏览器 32 项、故事/闭关 10 项、飞升 4 项（含 95 布局）及完整性 9 项已回归。游戏模块源修改已收口，最终 `npm test` 总数、新 APK 编译/DEX/签名、单 HTML 及发布下载仍按实际执行结果补证。当前单 HTML 已生成 176700528 字节、64 内嵌资源，验收正在收尾，不提前写通过。
+当前 **V4.1 / versionCode5** 新APK已编译并发布。逻辑326/326；实际Java入口19、本轮行为契约5、红品像素9、通用浏览器32、故事/闭关10、飞升4（含95布局）与完整性9全部通过。106APK游戏文件精确匹配源、114构建输入与冻结Git树匹配、实际DEX6项/签名/对齐通过。单HTML176700528字节、64内嵌资源，24通过/0失败/1受管file跳过。Actions37590588262成功，公开APK/ZIP匿名HTTP200下载、全包与公开checksum及内部HTML原字节核验通过。
 
-本轮源码修复的收口顺序为：提交完整改动与证据 → 冻结源检查点 → 全量逻辑及受影响浏览器 → 新单文件 / APK 构建和源码绑定审计 → 新分片 / manifest → 发布 → 匿名下载实际字节核验 → 回写计划 / handoff。原 V4 和 V3 保留，不能将原下载报告当成新包已验收。
+本轮源码修复已执行完整收口：提交完整改动与证据 → 冻结源检查点 → 全量逻辑及受影响浏览器 → 新单文件 / APK 构建和源码绑定审计 → 新分片 / manifest → 发布 → 匿名下载实际字节核验 → 回写计划 / handoff。原 V4 和 V3 保留，不能将原下载报告当成新包已验收。
 
 ## 3. 下一迭代的原则与实施次序
 

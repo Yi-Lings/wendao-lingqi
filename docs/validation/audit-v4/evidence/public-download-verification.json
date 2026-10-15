@@ -1,0 +1,38 @@
+{
+  "verifiedAtHongKong": "2026-10-07T16:02:10.124199+08:00",
+  "releaseTag": "v4.1.0-preview",
+  "sourceCommit": "d1519c3b4b122fd3f8f41da5c95d189c42219a9f",
+  "publicationCommit": "e238ff289cfa6489f7895a4e1048593f1224859f",
+  "runId": 37590588262,
+  "runConclusion": "success",
+  "downloads": [
+    {
+      "file": "wendao-lingqi-v4-1-preview.apk",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-v4-1-preview.apk",
+      "httpStatus": 200,
+      "bytes": 132183784,
+      "sha256": "59a32e09cbeb06547c4c36c1a5e1332bf0e172e557f6c8da0b1cf1348d47f4e6",
+      "matchesLocallyTestedBytes": true,
+      "publicChecksumMatches": true
+    },
+    {
+      "file": "wendao-lingqi-preview.zip",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-preview.zip",
+      "httpStatus": 200,
+      "bytes": 132247258,
+      "sha256": "e362c3df24d39dd95498ad160f4bbb097ebc8acf9f30c58002ae749ea75aa428",
+      "matchesLocallyTestedBytes": true,
+      "publicChecksumMatches": true
+    }
+  ],
+  "zipCrcPassed": true,
+  "html": {
+    "file": "wendao-lingqi-preview.html",
+    "bytes": 176700528,
+    "sha256": "2f08e6a63d56f8239a2f389643b90749ae61347cc54e230b2526ef8879c35e20"
+  },
+  "htmlByteIdentical": true,
+  "oldV4AssetsUnchanged": true,
+  "mainUnchanged": "28d4dcee4281b9ae713510f4e5e6e61ecf8802b6",
+  "deviceTested": false
+}
