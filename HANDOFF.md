@@ -12,7 +12,7 @@ V4.2 已将主分支 V3.1/V3.2 开发成果与远端 V4.1 预览开发线整合�
 
 Android 包名 com.lingqi.game.preview、versionCode 6、versionName 4.2，最低 API 26，目标 API 35，使用已有体验调试证书。APK 132270355 字节，SHA-256 c95ca6c9dd4aa247463a95f6acda26da2f8fbd59a90fe0652f3d4098a8e38959；`audit-apk.py --variant debug` 自动读取当前 Gradle 版本并核对全部资源。没有 Android 实体设备或模拟器验证，不把浏览器/签名通过当作真机验收。
 
-交付标签 v4.2.0-preview，计划发布 APK、独立离线网页 ZIP、完整源码 ZIP 和各自 SHA-256；公开状态以 GitHub Release 为准。完整源码包运行 `python3 tools/package-source.py`，包含 HANDOFF、源码、原始音画、调研、方案、测试与证据，不含签名私钥/工具链/缓存/历史 APK。
+交付标签 v4.2.0-preview，发布 APK、独立离线网页 ZIP、完整源码 ZIP 和各自 SHA-256；公开状态以 GitHub Release 为准。本环境直传附件遇上传认证限制，当前发布命令为 `gh workflow run publish-preview.yml --ref work`；Actions 根据 releases/parts-v42/manifest.json 重组已测试的同一 APK 并核对 v42-artifact-manifest.json，不替换签名。完整源码包运行 `python3 tools/package-source.py`，包含 HANDOFF、源码、原始音画、调研、方案、测试与证据，不含签名私钥/工具链/缓存/历史 APK。
 
 历世字段 wanderings 保持 V3 存档兼容，缺字段补空手札；全部事件结果、资源及印记在同一保存事务提交。战斗、洞天、共修和闭关禁止道心改动。UI 夹具、长期经济与真实 Android 体验的边界不变；长期剧情/仙界内容扩充仍可参考 V4.1 方案。
 

@@ -1,3 +1,13 @@
+# V4.2 当前交付
+
+最新版本为 `v4.2.0-preview`，包含 APK、离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。对应发布使用 `.github/workflows/publish-preview.yml`，与下方历史 V4.1/V4/V3 流程分开。
+
+当前环境的 GitHub API 与 Git 推送可用，`uploads.github.com` 直传被上传接口的认证限制拒绝，因此使用 Actions 上传附件。`parts-v42` 保存已通过本地测试的 APK 分片；manifest 声明全部冻结 Web/Android 输入、原始源码提交、每片/完整文件散列及证书。Actions 先核对来源、重组同一 APK、审计版本/资源/签名，重新生成并匹配离线 HTML 与 ZIP，最后生成完整源码快照并发布；不在 Actions 替换体验证书。
+
+`v42-artifact-manifest.json` 声明本地已验收 APK/HTML/ZIP 的大小与 SHA-256。完整源码快照排除所有历史 APK/分片，仅保留发布清单及说明。用户无需处理分片，直接使用 Release 附件。
+
+## 历史发布记录
+
 # 当前体验交付与历史包
 
 当前版本为 [V4.1 对齐修正版](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.1.0-preview)。直接下载完整 [APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-v4-1-preview.apk) 或 [离线网页ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.1.0-preview/wendao-lingqi-preview.zip)，无需下载分片。全部代码与资源在 [work分支](https://github.com/Yi-Lings/wendao-lingqi/tree/work)。

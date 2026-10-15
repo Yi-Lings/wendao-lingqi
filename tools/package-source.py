@@ -17,7 +17,7 @@ output = args.output or ROOT / 'dist' / ('wendao-lingqi-v' + version + '-source.
 output.parent.mkdir(parents=True, exist_ok=True)
 listed = subprocess.run(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'],
                         cwd=ROOT, check=True, capture_output=True).stdout.decode('utf-8').split('\0')
-allowed_roots = {'web', 'tests', 'docs', 'android', 'tools', '.github'}
+allowed_roots = {'web', 'tests', 'docs', 'android', 'tools', '.github', 'releases'}
 allowed_files = {'README.md', 'HANDOFF.md', 'LICENSE', '.gitignore', 'package.json', 'plan.md', 'audit-apk.py', 'build-android.sh'}
 private = {'node_modules', 'qa-tools', '.git', '.gradle', 'build', '__pycache__', 'signing'}
 files = []
@@ -26,6 +26,8 @@ for name in sorted(set(listed)):
     if not name or p.is_absolute() or '..' in p.parts or set(p.parts) & private:
         continue
     if p.parts[0] not in allowed_roots and name not in allowed_files:
+        continue
+    if p.parts[0] == 'releases' and p.suffix not in {'.md', '.json', '.sha256'}:
         continue
     if p.suffix in {'.apk', '.pk8', '.pem', '.keystore', '.jks'} or p.as_posix().startswith('tools/android/'):
         continue

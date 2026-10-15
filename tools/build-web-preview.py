@@ -188,7 +188,7 @@ def main() -> None:
     if args.zip:
         zip_path = output.with_suffix('.zip')
         instructions = ('问道 · 灵契 — 离线试玩\n\n'
-                        '解压后，用 Chrome、Edge 或其他现代浏览器打开 wendao-lingqi-preview.html。\n'
+                        f'解压后，用 Chrome、Edge 或其他现代浏览器打开 {output.name}。\n'
                         '所有图片、音乐和音效已经放在 HTML 内，不需要联网、安装软件或运行命令。\n'
                         '首次进入需确认年龄；点击按钮后音乐才开始播放，声音可在设置里调整。\n'
                         '试玩使用单独存档，预置材料和已开放内容方便体验，不代表正式流程的自然进度。\n'
