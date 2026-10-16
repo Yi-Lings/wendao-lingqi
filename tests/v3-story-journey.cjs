@@ -10,7 +10,9 @@ const copy=x=>JSON.parse(JSON.stringify(x));
 function act(s,a){const result=E.act(s,a,NOW);assert.equal(result.ok,true,a.type+': '+result.message);return result;}
 function denied(s,a){const before=JSON.stringify(s),r=E.act(s,a,NOW);assert.equal(r.ok,false,a.type+' must reject');assert.equal(JSON.stringify(s),before,'rejection remains atomic');}
 function metric(s,r,n){
- if(r.key==='rank'){if(S.value(s,r)<n)s.paths[s.route]={realm:Math.floor(n/10),layer:n%10+1,xp:0,reserve:0};}
+ if(r.key==='pillBatch'){const row=s.production.pills[r.id]||(s.production.pills[r.id]={batches:0,quantity:0});row.batches=n;row.quantity=Math.max(n,row.quantity);}
+ else if(r.key==='gearForge')s.production.gear[r.id]=n;
+ else if(r.key==='rank'){if(S.value(s,r)<n)s.paths[s.route]={realm:Math.floor(n/10),layer:n%10+1,xp:0,reserve:0};}
  else if(r.key==='sect'){s.sect.joined=true;s.sect.school='sword';}
  else if(r.key==='tower')s.progress.tower=n;
  else if(r.key==='dungeonWins'||r.key==='bossWins'){if(r.id)s.progress[r.key][r.id]=n;else s.stats.bosses=n;}
@@ -60,8 +62,8 @@ test('reading and investigating persist at exact dialogue position and require b
 });
 
 test('pre-existing accomplishments cannot finish a story, while actual new alchemy can fulfil an agreed action',()=>{
- const pair=['chapter_0',...C.sidequests.filter(q=>!q.previous).map(q=>q.id)].flatMap(id=>['protect','seek'].map(choice=>({id,choice,ep:S.episode(id)}))).find(x=>x.ep.choices[x.choice].goal.key==='crafted');assert(pair,'at least one medicinal story uses actual crafting');
- const s=stock();meet(s,pair.ep.requirements);s.stats.crafted=Math.max(s.stats.crafted,37);toMission(s,pair.id,pair.choice);
+ const pair=['chapter_0',...C.sidequests.filter(q=>!q.previous).map(q=>q.id)].flatMap(id=>['protect','seek'].map(choice=>({id,choice,ep:S.episode(id)}))).find(x=>x.ep.choices[x.choice].goal.key==='pillBatch');assert(pair,'at least one medicinal story uses actual crafting');
+ const s=stock();meet(s,pair.ep.requirements);s.stats.crafted=Math.max(s.stats.crafted,37);s.production.pills[pair.ep.choices[pair.choice].goal.id]={batches:37,quantity:37};toMission(s,pair.id,pair.choice);
  const view=S.journeyView(s,pair.id);assert.equal(view.entry.baseline,37);assert.equal(view.mission.current,0);assert.equal(view.mission.done,false);denied(s,{type:'advanceStory',episode:pair.id});
  act(s,{type:'craftPill',id:'heal0',count:view.mission.required});assert.equal(S.journeyView(s,pair.id).mission.done,true);assert.equal(S.journeyView(s,pair.id).stage,'mission','new action still needs a return conversation');
  toReady(s,pair.id);const result=pair.ep.kind==='chapter'?act(s,{type:'claimChapter',choice:pair.choice}):act(s,{type:'claimSidequest',id:pair.id});assert(result.data.reward);

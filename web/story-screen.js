@@ -82,7 +82,7 @@ function footnote(view,episode){
 function controls(view,episode,id){
  const params={episode:id},stage=view.stage;
  if(view.accessible===false)return ui('先回到眼前的旅途','story-exit',params,'primary');
- if(view.completed||stage==='completed')return ui('合上札记','story-exit',params,'primary');
+ if(view.completed||stage==='completed')return ui('重读全文','story-memory',params,'primary')+ui('合上札记','story-exit',params);
  if(stage==='not-started')return act('走入这一幕','beginStory',params);
  if(stage==='decision'){
   const choices=episode.choices||{};
@@ -126,5 +126,11 @@ function render(state,view){
  const text=inaccessible?'这一幕仍在远处。先把当前旅途走完，新的相遇便会自然到来。':lineText({...view,stage},episode);
  return `<section class="narrative-screen story-screen" data-narrative="story" data-story-episode="${esc(id)}" data-story-stage="${esc(stage)}" aria-label="${esc(title)}">${background(episode)}<div class="narrative-shade" aria-hidden="true"></div><header class="narrative-hud"><div class="narrative-hud-copy"><span class="narrative-overline">${esc(location)} · ${esc(stageLabels[stage]||'同行')}</span><h1>${esc(title)}</h1></div><div class="narrative-tools">${ui('札记','story-journal',params)}${ui('暂别','story-exit',params)}</div></header><div class="story-world" aria-label="当前剧情场景">${world}</div><section class="narrative-dialogue" aria-live="polite" aria-atomic="true" data-story-line="${lineIndex}">${speaker.portrait}<div class="narrative-dialogue-copy"><div class="narrative-speaker"><strong>${esc(speaker.name)}</strong><span>${esc(stageLabels[stage]||'')} ${['intro','reply','interlude','outro'].includes(stage)?'· '+(lineIndex+1):''}</span></div><div class="narrative-paragraph"><p>${esc(text)}</p></div></div></section><footer class="narrative-footer"><p class="narrative-hint">${esc(footnote({...view,stage},episode))}</p><div class="narrative-actions">${controls({...view,stage},episode,id)}</div></footer></section>`;
 }
-return Object.freeze({render});
+function renderMemory(state,view){
+ if(!view)return '';
+ const {episode,sections,active}=view,index=sections.findIndex(x=>x.id===active.id),params={episode:episode.id};
+ const branch=view.choiceKnown?`<p class="memory-choice">当时的选择 · ${esc(episode.choices[view.choice].label)}</p>`:`<div class="memory-choices" aria-label="旧记录分支文本查阅">${view.choices.map(c=>ui((c.id===view.choice?'正在查阅：':'查阅：')+c.label,'memory-choice',{...params,choice:c.id},c.id===view.choice?'primary':'quiet')).join('')}</div>`;
+ return `<section class="narrative-screen memory-screen" data-narrative="memory" data-memory-episode="${esc(episode.id)}" data-memory-section="${esc(active.id)}" aria-label="全文重读 · ${esc(episode.title)}">${background(episode)}<div class="narrative-shade" aria-hidden="true"></div><header class="narrative-hud"><div class="narrative-hud-copy"><span class="narrative-overline">往事长明 · 全文重读</span><h1>${esc(episode.title)}</h1></div><div class="narrative-tools">${ui('合上札记','story-exit',params)}</div></header><nav class="memory-sections" aria-label="分段阅读">${sections.map(section=>`<button type="button" class="narrative-button ${section.id===active.id?'primary':'quiet'}" aria-pressed="${section.id===active.id}" data-ui="memory-section" data-payload="${payload({...params,section:section.id})}">${esc(section.label)}</button>`).join('')}</nav><article class="memory-reading" tabindex="0" aria-label="${esc(active.label)}正文"><p class="memory-notice">${esc(view.notice)}</p>${branch}<h2 tabindex="-1">${esc(active.label)}</h2>${active.lines.map(raw=>{const line=typeof raw==='string'?{speaker:'narrator',text:raw}:raw,speaker=speakerView(line,state);return `<section class="memory-paragraph"><strong>${esc(speaker.name)}</strong><p>${esc(line.text)}</p></section>`;}).join('')}${active.id==='reply'?`<details class="memory-promises"><summary>这一程的实际约定</summary>${view.goals.map(g=>`<p>${esc(g.label)}</p>`).join('')}</details>`:''}</article><footer class="narrative-footer memory-footer"><p class="narrative-hint">只读札记 · ${index+1} / ${sections.length} 段</p><div class="narrative-actions">${index?ui('上一段','memory-section',{...params,section:sections[index-1].id}):''}${index<sections.length-1?ui('下一段','memory-section',{...params,section:sections[index+1].id},'primary'):ui('读毕 · 合卷','story-exit',params,'primary')}</div></footer></section>`;
+}
+return Object.freeze({render,renderMemory});
 });

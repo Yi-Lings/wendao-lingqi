@@ -1,6 +1,6 @@
-# 问道灵契 Android V4.2
+# 问道灵契 Android V4.3
 
-正式构建包名 `com.lingqi.game`，debug 体验包名 `com.lingqi.game.preview`，versionCode 6、versionName 4.2，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
+正式构建包名 `com.lingqi.game`，debug 体验包名 `com.lingqi.game.preview`，versionCode 7、versionName 4.3，最低 Android 8.0（API 26），目标与编译 API 35。原生 Java Activity 加载 APK 内的 Web 游戏，不请求网络、共享存储或账户权限。卸载、清除应用数据会删除进度，请先导出 JSON。
 
 ## 标准 Gradle 构建
 
@@ -54,11 +54,11 @@ sh build-android.sh
 
 ## 验证边界
 
-历史原生源码已用 ECJ/API35 编译通过，本轮采用 Gradle/JDK17/API35。当前连接的是 Linux VPS，没有 adb、Android 设备或模拟器，因此没有真机验证。V4.2 构建、签名、359 项逻辑检查及 139 项浏览器检查见 [本轮记录](../docs/ITERATION_V4_2.md) 和 [机器汇总](../docs/validation/v42/summary.json)；它们不能替代 Android 文件选择器、系统返回、进程恢复和 30 分钟持续运行测试。
+历史原生源码已用 ECJ/API35 编译通过，本轮采用 Gradle/JDK17/API35。当前连接的是 Linux VPS，没有 adb、Android 设备或模拟器，因此没有真机验证。V4.3 构建、签名、逻辑及浏览器检查见 [本轮记录](../docs/ITERATION_V4_3.md) 和 [机器汇总](../docs/validation/v43/summary.json)；它们不能替代 Android 文件选择器、系统返回、进程恢复和 30 分钟持续运行测试。
 
 
-## V4.2 本轮构建验证
+## V4.3 本轮构建验证
 
-2026-10-15 使用 Gradle 8.9/JDK 17/API 35 完成 `assembleDebug`，签名验证通过，107 个 Web 资源与源码逐字节一致。可运行 `python3 audit-apk.py android/app/build/outputs/apk/debug/app-debug.apk --variant debug` 复核版本、资源与 DEX；具体 APK 大小、SHA、证书以本轮验证文档为准。旧精简工具链接不完整，不能把 `aapt2` 单独存在当作release工具或旧私钥齐全。
+2026-10-16 使用 Gradle 8.9/JDK 17/API 35 完成 `assembleDebug`，签名验证通过，107 个 Web 资源与源码逐字节一致。可运行 `python3 audit-apk.py android/app/build/outputs/apk/debug/app-debug.apk --variant debug` 复核版本、资源与 DEX；具体 APK 大小、SHA、证书以本轮验证文档为准。旧精简工具链接不完整，不能把 `aapt2` 单独存在当作release工具或旧私钥齐全。
 
 体验包设置提供「正式仙途」「人界配装试玩」「天门飞升试玩」。三个存档隔离，后两者明示资源/修为夹具，不能声称试玩种子是自然取得的进度。旧发布版导出的JSON可在体验包导入以延续旧角色。

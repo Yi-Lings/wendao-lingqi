@@ -457,7 +457,7 @@
     if(a.type==='finishAlchemyJob'){
       if(job.status==='control')return no('请完成三轮控火，或取消并退回未成丹费用');
       n=job.count+job.bonus;if((s.pills[job.recipe]||0)+n>K.CAP)return no('该丹药数量已达存储上限，请先使用');
-      K.add(s.pills,job.recipe,n);K.add(s.stats,'crafted',n);K.add(s.stats,'craftedTier'+recipe.realm,n);
+      K.add(s.pills,job.recipe,n);K.add(s.stats,'crafted',n);K.add(s.stats,'craftedTier'+recipe.realm,n);K.recordPillProduction(s,job.recipe,job.count,n);
       jobs.splice(jobs.indexOf(job),1);
       return yes('炼成'+recipe.name+'×'+n+(job.bonus?'，控火额外'+job.bonus+'枚':''),{id:job.recipe,count:n,bonus:job.bonus,jobId:job.id});
     }
@@ -612,7 +612,7 @@
       if(!capacity(s,1))return no('请先整理背包与奖励盒');
       if(!pay(s,costs(s,a.type,a)))return no('打造材料不足');
       g=createGear(s,{slot:a.slot,set:a.set,rarity:a.rarity,tier:path(s).realm});addGear(s,g);
-      K.add(s.stats,'forged',1);return yes('打造成功：'+gearTitle(g),{gear:copy(g)});
+      K.add(s.stats,'forged',1);K.recordGearProduction(s,a.set,a.slot);return yes('打造成功：'+gearTitle(g),{gear:copy(g)});
     }
     if(a.type==='recastGear'){
       g=gear(s,a.uid);if(!g)return no('装备不存在');
@@ -667,7 +667,7 @@
       var control=a.control===undefined?0:a.control;if(!int(control,0,2))return no('控火方式无效');
       if((s.pills[a.id]||0)+n>K.CAP)return no('该丹药数量已达存储上限，请先使用');
       if(!pay(s,costs(s,a.type,{id:a.id,count:n})))return no('炼丹材料不足');
-      K.add(s.pills,a.id,n);K.add(s.stats,'crafted',n);K.add(s.stats,'craftedTier'+t.realm,n);
+      K.add(s.pills,a.id,n);K.add(s.stats,'crafted',n);K.add(s.stats,'craftedTier'+t.realm,n);K.recordPillProduction(s,a.id,n,n);
       return yes('炼成'+t.name+'×'+n,{id:a.id,count:n,bonus:0});
     }
     if(a.type==='usePill'){

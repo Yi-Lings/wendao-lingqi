@@ -133,6 +133,7 @@ function createState(now){
     slotLevels:Object.fromEntries(slots.map(id=>[id,0])),nextUid:3,ownedTreasures:{},blueprints:[],
     facilities:{field:1,furnace:1,forge:1,library:1,array:1},
     alchemy:{nextId:1,jobs:[]},
+    production:{pills:{},gear:{}},
     progress:{firstClears:[],stars:{},tower:0,sectTrials:[],trialWins:{},bossWins:{},dungeonWins:{},endingTrials:{body:false,magic:false}},
     stats:Object.fromEntries(statIds.map(id=>[id,0])),
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
@@ -360,7 +361,41 @@ function validateAlchemy(s){
   }
   if(active>1)throw Error('同时控火的炉数超过上限');
 }
+// Only actual output actions write these bounded, catalog-backed counters.
+function productionMetric(s,r){
+  if(r.key==='pillBatch')return s.production?.pills?.[r.id]?.batches||0;
+  if(r.key==='pillQuantity')return s.production?.pills?.[r.id]?.quantity||0;
+  if(r.key==='gearForge')return s.production?.gear?.[r.id]||0;
+  return null;
+}
+function recordPillProduction(s,id,batches,quantity){
+  if(!s.production)s.production={pills:{},gear:{}};
+  const row=s.production.pills[id]||(s.production.pills[id]={batches:0,quantity:0});
+  add(row,'batches',batches);add(row,'quantity',quantity);
+}
+function recordGearProduction(s,set,slot){
+  if(!s.production)s.production={pills:{},gear:{}};
+  add(s.production.gear,set+':'+slot,1);
+}
+function validateProduction(s){
+  if(s.production===undefined)s.production={pills:{},gear:{}};
+  const p=object(s.production,'制作记录');
+  if(Object.keys(p).some(k=>!['pills','gear'].includes(k)))throw Error('制作记录字段无效');
+  object(p.pills,'指定成丹记录');object(p.gear,'指定打造记录');
+  if(Object.keys(p.pills).length>Object.keys(C.recipes).length||Object.keys(p.gear).length>36)throw Error('制作记录数量无效');
+  for(const [id,row] of Object.entries(p.pills)){
+    catalogKey(C.recipes,id,'制作丹方');object(row,'丹方制作记录');
+    if(Object.keys(row).some(k=>!['batches','quantity'].includes(k)))throw Error('丹方制作字段无效');
+    integer(row.batches,0,CAP,'亲炼炉数');integer(row.quantity,row.batches,Math.min(CAP,row.batches*2),'实际成丹数量');
+  }
+  for(const [id,count] of Object.entries(p.gear)){
+    const parts=id.split(':');
+    if(parts.length!==2||!own(C.schools,parts[0])||!slots.includes(parts[1]))throw Error('打造身份无效');
+    integer(count,0,CAP,'指定打造件数');
+  }
+}
 function journeyMetric(s,r){
+  const produced=productionMetric(s,r);if(produced!==null)return produced;
   if(r.key==='rank')return maxRank(s);
   if(r.key==='maxRealm')return Math.floor(maxRank(s)/10);
   if(r.key==='sect')return s.sect.joined?1:0;
@@ -391,13 +426,14 @@ function validateJourneys(s){
     const ep=Array.isArray(collection)?collection.find(x=>x.id===id):collection[id];
     if(!catalog||!ep)throw Error('故事旅程 ID 无效');
     const e=object(journeys[id],'故事旅程');
-    if(Object.keys(e).some(key=>!['stage','line','clues','choice','baseline','missionIndex'].includes(key)))throw Error('故事旅程字段无效');
+    if(Object.keys(e).some(key=>!['stage','line','clues','choice','baseline','missionIndex','rulesVersion'].includes(key)))throw Error('故事旅程字段无效');
     if(!['intro','survey','decision','reply','mission','interlude','outro','ready','completed'].includes(e.stage))throw Error('故事旅程阶段无效');
     const isComplete=chapter?s.story.chapter>chapter.id:s.story.sideCompleted.includes(id);
     if((e.stage==='completed')!==isComplete)throw Error('故事旅程领取记录不一致');
     if(chapter&&!isComplete&&chapter.id!==s.story.chapter)throw Error('故事旅程不能跳过前卷');
     if(quest&&quest.previous&&!s.story.sideCompleted.includes(quest.previous))throw Error('故事旅程缺少前置同行');
     if(quest&&!isComplete&&maxRank(s)<Math.max(ep.unlockRank||0,...catalog.requirements.filter(r=>r.key==='rank').map(r=>r.count),0))throw Error('故事旅程修行阶段尚未开放');
+    if(e.rulesVersion!==undefined)integer(e.rulesVersion,1,2,'故事目标版本');
     const beforeChoice=['intro','survey','decision'].includes(e.stage);
     if(beforeChoice?e.choice!==null:!['protect','seek'].includes(e.choice))throw Error('故事旅程选择无效');
     array(e.clues,ep.clues.length,'现场线索');
@@ -405,7 +441,7 @@ function validateJourneys(s){
     if(e.stage==='intro'&&e.clues.length)throw Error('现场线索阶段无效');
     if(!['intro','survey'].includes(e.stage)&&e.clues.length!==ep.clues.length)throw Error('现场线索尚未齐全');
     const choices=Array.isArray(ep.choices)?Object.fromEntries(ep.choices.map(x=>[x.id,x])):ep.choices;
-    const goals=beforeChoice?[]:choices[e.choice].goals||[choices[e.choice].goal];
+    const goals=beforeChoice?[]:N.missionGoals(id,e.choice,e.rulesVersion||1);
     integer(e.missionIndex,0,beforeChoice?0:goals.length-1,'故事行动段落');
     if(e.stage==='reply'&&e.missionIndex!==0)throw Error('故事回应阶段无效');
     if(e.stage==='interlude'&&e.missionIndex>=goals.length-1)throw Error('故事中段对话阶段无效');
@@ -475,7 +511,7 @@ function validateV3(raw){
   object(s.loadouts,'loadouts');object(s.presets,'presets');for(const route of routes){validateLoadout(s,s.loadouts[route],route,false);array(s.presets[route],3,'预设');if(s.presets[route].length!==3)throw Error('预设槽错误');
     for(const p of s.presets[route])if(p){if(p.loadout){validateLoadout(s,p.loadout,route,true);object(p.equipped,'预设装备');for(const slot of slots){const uid=p.equipped[slot];if(uid!==null&&!s.bag.some(g=>g.uid===uid&&g.slot===slot))throw Error('预设使用不存在装备');}}else validateLoadout(s,p,route,true);}}
   object(s.facilities,'facilities');for(const id of ['field','furnace','forge','library','array'])integer(s.facilities[id],1,10,'设施');
-  validateAlchemy(s);
+  validateAlchemy(s);validateProduction(s);
   validateWanderings(s);
   object(s.progress,'progress');for(const field of ['firstClears','sectTrials']){array(s.progress[field],1000,field);if(new Set(s.progress[field]).size!==s.progress[field].length)throw Error('首通重复');for(const id of s.progress[field])if(!validClearKey(id))throw Error('通关记录 ID 无效');}
   integer(s.progress.tower,0,60,'塔层');object(s.progress.stars,'三星');for(const [id,n] of Object.entries(s.progress.stars)){if(!validClearKey(id))throw Error('三星 ID 无效');integer(n,0,3,'星数');}
@@ -643,5 +679,5 @@ function validate(raw){
     state=validateV3(state);return {ok:true,state,migrated,error:null,migrationReport:state.migrationReport||null};
   }catch(e){return {ok:false,state:null,migrated:false,error:cleanText(e.message,200)};}
 }
-return {daoInsight,catalog:C,createState,validate,attributes,view,techniqueEffects,learnRecipe,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
+return {productionMetric,recordPillProduction,recordGearProduction,daoInsight,catalog:C,createState,validate,attributes,view,techniqueEffects,learnRecipe,rng,add,log,spend,grant,pathRank,maxRank,unlocks,xpNeeded,addXp,levelUp,advance,gearStats,gearName,protectedGear,realmLabel,trainingPerTick,CAP,cultivationCapMs:CULT_CAP,productionCapMs:PROD_CAP,sweepCapMs:SWEEP_CAP};
 });

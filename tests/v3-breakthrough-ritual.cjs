@@ -71,7 +71,7 @@ test('all six realms and both routes retain distinct immersive scenes, rune clue
   titles.add(v.title);advanceToHeart(s);const h=R.view(s);hints.add(R.view(s).sequenceLabels.join('/'));questions.add(h.narration[0]);sequences.add(h.sequence.join('/'));
   assert.equal(s.ritual.reserved.materials.lotus,3+realm*2);assert.equal(s.ritual.reserved.materials.ore,3+realm*3);
  }
- assert.equal(titles.size,6);assert.equal(hints.size,6);assert.equal(questions.size,6);assert.equal(sequences.size,6);
+ assert.equal(titles.size,12);assert.equal(hints.size,6);assert.equal(questions.size,12);assert.equal(sequences.size,6);
 });
 
 test('actual recipe, resource and market guidance avoids requiring the not-yet-accessible trial for its own pill',()=>{

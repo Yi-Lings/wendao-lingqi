@@ -35,5 +35,5 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
  for(const key of ['pageErrors','consoleErrors','failedRequests','externalRequests'])assert.equal(report[key].length,0,JSON.stringify(report[key]));
  await context.close();report.passed=report.tests.every(x=>x.passed);
 })().catch(e=>{report.passed=false;report.fatal=e.stack;console.error(e);}).finally(async()=>{
- if(browser)await browser.close();report.finishedAt=new Date().toISOString();fs.writeFileSync(path.join(ROOT,'dist/browser-v42-offline-report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:report.passed,tests:report.tests.length,pageErrors:report.pageErrors}));if(!report.passed)process.exitCode=1;
+ if(browser)await browser.close();report.finishedAt=new Date().toISOString();fs.writeFileSync(path.join(ROOT,'dist',process.env.LINGQI_OFFLINE_REPORT||'browser-v42-offline-report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:report.passed,tests:report.tests.length,pageErrors:report.pageErrors}));if(!report.passed)process.exitCode=1;
 });

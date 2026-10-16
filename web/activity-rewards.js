@@ -71,6 +71,8 @@ function model(action,result,before,after){
     count=pill?.count||0;bonus=Math.min(count,Math.max(0,n(result.data?.bonus)));
     subtitle=(C.recipes[id]?.name||'丹炉所得')+' · '+number(count)+'枚';
     note=bonus?'基础成丹 '+number(count-bonus)+'枚 · 控火额外 '+number(bonus)+'枚'+(job?' · 火候契合 '+number(job.score)+'/3轮':''):'普通成丹，实际产量已存入丹囊。';
+    const batches=type==='finishAlchemyJob'?job?.count:result.data?.count;
+    note='本次亲炼 '+number(batches||0)+' 炉 · 实得 '+number(count)+' 枚。'+note;
   }else if(type==='forgeGear')subtitle=items.find(item=>item.kind==='gear')?.name||'定向打造';
   else if(type==='claimChapter')subtitle=C.chapters.find(ch=>ch.id===result.data?.chapter)?.name||'主线仙途';
   else if(type==='claimSidequest')subtitle=C.sidequests.find(q=>q.id===a.id)?.name||'山海机缘';

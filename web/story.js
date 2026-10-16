@@ -14,6 +14,7 @@ function completedEndingTrial(s,route){
   return !!(s.progress.endingTrials[route]&&(s.ritualLegacyWins&&s.ritualLegacyWins[route+':5']||s.ritual&&s.ritual.route===route&&s.ritual.realm===5&&s.ritual.phase==='complete'||Array.isArray(s.ritualHistory)&&s.ritualHistory.some(h=>h.route===route&&h.realm===5)));
 }
 function value(s,r){
+  const produced=K.productionMetric(s,r);if(produced!==null)return produced;
   if(r.key==='rank')return K.maxRank(s);
   if(r.key==='maxRealm')return maxTier(s);
   if(r.key==='sect')return s.sect.joined?1:0;
@@ -35,6 +36,8 @@ function requirementNav(s,r){
  if(key==='rank'||key==='maxRealm'||key==='endingTrial')return {page:'cultivation',...(key==='endingTrial'||p.layer===10?{kind:'ritual'}:{})};
  if(key==='tower')return {page:'adventure',modal:'dungeon',payload:{id:'tower',floor:Math.min(60,(s.progress.tower||0)+1)}};
  if(key==='bossWins'||key==='dungeonWins'||key==='manualWins')return {page:'adventure',modal:'dungeon',payload:{id:r.id|| (key==='bossWins'?'boss_0':'resource_herb')}};
+ if(key==='pillBatch'||key==='pillQuantity')return {page:'cave',modal:'alchemy',payload:{id:r.id}};
+ if(key==='gearForge'){const [set,slot]=String(r.id||'').split(':');return {page:'cave',modal:'forge',payload:{set,slot,rarity:0}};}
  if(key==='crafted')return {page:'cave',modal:'alchemy'};
  if(key==='forged')return {page:'cave',modal:'forge'};
  if(key==='sect')return {page:'fate',tab:'sect'};
@@ -52,12 +55,13 @@ function requirementView(s,requirements){return (requirements||[]).map(r=>({key:
 function satisfied(s,requirements){return requirementView(s,requirements).every(x=>x.done);}
 const stages=['intro','survey','decision','reply','mission','interlude','outro','ready','completed'];
 const missionGoals=choice=>choice.goals||[choice.goal];
-function episode(id){
+function episode(id,version=2){
   const collection=N&&N.episodes||{},scene=Array.isArray(collection)?collection.find(x=>x.id===id):collection[id];
   const chapter=typeof id==='string'&&/^chapter_[0-5]$/.test(id)?C.chapters[Number(id.slice(8))]:null;
   const quest=chapter?null:C.sidequests.find(x=>x.id===id),catalog=chapter||quest;
   if(!scene||!catalog)return null;
-  const choices=Array.isArray(scene.choices)?Object.fromEntries(scene.choices.map(x=>[x.id,x])):scene.choices;
+  const original=Array.isArray(scene.choices)?Object.fromEntries(scene.choices.map(x=>[x.id,x])):scene.choices;
+  const choices=Object.fromEntries(Object.entries(original).map(([key,choice])=>{const goals=N.missionGoals(id,key,version);return [key,{...choice,goals,goal:goals[0]}];}));
   return {...scene,clues:scene.clues.map(clue=>({...clue,title:clue.title||clue.label})),id,name:scene.name||catalog.name,title:scene.title||catalog.title||catalog.name,kind:chapter?'chapter':'sidequest',catalogId:catalog.id,artKey:scene.artKey||catalog.artKey,choices,requirements:catalog.requirements,reward:catalog.reward,previous:quest&&quest.previous||null};
 }
 function completed(s,ep){return ep.kind==='chapter'?s.story.chapter>ep.catalogId:s.story.sideCompleted.includes(ep.id);}
@@ -76,8 +80,8 @@ function linesFor(ep,entry){
   return [];
 }
 function journeyView(s,id){
-  const ep=episode(id);if(!ep)return null;
-  const saved=s.story.journeys&&s.story.journeys[id],isComplete=completed(s,ep),entry=saved?copy(saved):null;
+  const saved=s.story.journeys&&s.story.journeys[id],ep=episode(id,saved?saved.rulesVersion||1:2);if(!ep)return null;
+  const isComplete=completed(s,ep),entry=saved?copy(saved):null;
   const stage=isComplete?'completed':entry?entry.stage:'not-started',requirements=requirementView(s,ep.requirements);
   const goals=entry&&entry.choice?missionGoals(ep.choices[entry.choice]):[],goal=goals[entry&&entry.missionIndex||0]||null;
   const current=goal?Math.max(0,value(s,goal)-entry.baseline):0;
@@ -88,8 +92,18 @@ function journeyView(s,id){
   const line=selectedClue?{speaker:selectedClue.speaker||'narrator',text:selectedClue.text,expression:0}:lines[entry&&entry.line||0]||null;
   return {episode:ep,entry,line,stage,mission,requirements,missingRequirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,cluesRead:entry?entry.clues.length:0};
 }
+// Reading cursors are view parameters only, never save fields or game actions.
+function replayView(s,id,options={}){
+  const j=journeyView(s,id);if(!j||!j.completed)return null;
+  const ep=j.episode,known=!!j.entry?.choice,choice=known?j.entry.choice:options.choice==='seek'?'seek':'protect',selected=ep.choices[choice];
+  const sections=[{id:'intro',label:'相遇',lines:ep.intro},{id:'clues',label:'现场线索',lines:ep.clues.filter(c=>!j.entry||j.entry.clues.includes(c.id)).map(c=>({speaker:c.speaker||'narrator',text:c.title+'：'+c.text}))},{id:'reply',label:'抉择回应',lines:selected.reply}];
+  for(const [index,lines] of (selected.interludes||[]).entries())sections.push({id:'interlude_'+index,label:'第 '+(index+1)+' 幕归来',lines});
+  sections.push({id:'outro',label:'归来',lines:ep.outro[choice]});
+  const active=sections.find(section=>section.id===options.section)||sections[0];
+  return {episode:ep,choice,choiceKnown:known,choices:['protect','seek'].map(id=>({id,label:ep.choices[id].label})),sections,active,goals:missionGoals(selected),notice:known?'沿你当时的选择重读。阅读不改变进度，也不重复发放奖励。':'旧记录未保留抉择。以下是标记的分支文本查阅，不代表当时的经历。'};
+}
 function handleJourney(s,a,now){
-  const ep=episode(a.episode);if(!ep)return no('这段故事尚未开放');
+  const saved=s.story.journeys?.[a.episode],ep=episode(a.episode,saved?saved.rulesVersion||1:2);if(!ep)return no('这段故事尚未开放');
   if(completed(s,ep))return no('这段故事已经完成，奖励不会重复领取');
   if(!accessible(s,ep))return no(ep.previous?'先完成前一段故事，再继续同行':'这段故事需要先走到对应的修行阶段');
   if(!s.story.journeys)s.story.journeys={};
@@ -97,7 +111,7 @@ function handleJourney(s,a,now){
   if(a.type==='beginStory'){
     if(entry)return yes('回到未完的故事',{journey:journeyView(s,ep.id)});
     if(Object.keys(s.story.journeys).length>=24)return no('故事记录已满');
-    s.story.journeys[ep.id]={stage:'intro',line:0,clues:[],choice:null,baseline:0,missionIndex:0};
+    s.story.journeys[ep.id]={stage:'intro',line:0,clues:[],choice:null,baseline:0,missionIndex:0,rulesVersion:2};
     return yes('进入《'+ep.title+'》',{journey:journeyView(s,ep.id)});
   }
   if(!entry)return no('请先进入这段故事');
@@ -317,5 +331,5 @@ function handle(s,a,now){
   }
   return null;
 }
-return {handle,view,grantReward,requirementView,requirementNav,commissionView,value,episode,journeyView,stages,missionGoals,completedEndingTrial};
+return {replayView,handle,view,grantReward,requirementView,requirementNav,commissionView,value,episode,journeyView,stages,missionGoals,completedEndingTrial};
 });

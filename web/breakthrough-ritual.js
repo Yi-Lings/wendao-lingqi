@@ -70,6 +70,279 @@ function no(message){return {ok:false,message,error:message};}
 function yes(message,data){return {ok:true,message,data:data||{}};}
 function integer(n,min,max,label){if(!Number.isSafeInteger(n)||n<min||n>max)throw Error('破境存档无效：'+label);return n;}
 function object(o,label){if(!o||typeof o!=='object'||Array.isArray(o))throw Error('破境存档无效：'+label);return o;}
+const bodyTexts=[
+  {
+    "title": "石庭听骨",
+    "subtitle": "把站稳的一步，交给愿意承担的骨骼",
+    "trialName": "锻骨承力",
+    "introduction": [
+      "你站在雨后的石庭，赤足压住湿冷的石板。最后一次运力时，肩背先向前倾，脚下却没有跟上；圆满的力气，还没有学会同向。",
+      "月衡将护脉主药放到石凳上，提醒你先辨清哪处在借力，哪处在硬撑。锻骨不靠一口气绷到极限，退半步也是身体给出的回答。",
+      "灵莲铺在落脚处，玄铁托住护阵。药力缓慢散入筋骨，你先松开握紧的拳，听一遍呼吸与骨鸣。"
+    ],
+    "breath": [
+      "吸气，感受足底、膝与肩依次承力，不用肩背代替脚下站稳。",
+      "留住这一息，让骨鸣与脉搏相合。疼痛处先卸力，不把忍耐误当进步。",
+      "吐息，放松借力的肌肉，把稳住的一步交给骨架。"
+    ],
+    "hint": "青木护住筋络，水纹缓和旧伤，最后由厚土承住落脚。循木、水、土接通护阵。",
+    "array": [
+      "木纹托起筋络，肩背不必替每一步抢先发力。",
+      "水纹沿旧伤散开，僵紧的膝弯慢慢松下。",
+      "土纹与足底相合，三处承力终于落在同一条线上。"
+    ],
+    "dilemma": "石庭另一端有人滑倒。心中的声音催你继续加力，证明自己绝不会后退；你却看见那人就要落入护阵边缘。",
+    "choices": [
+      [
+        "protect",
+        "先留出扶人的手",
+        "站稳自己，也为别人留一点支撑。",
+        "你收回多余的力，侧身接住滑倒的人。脚下退了半步，膝与肩却没有再错开。",
+        "骨架记住的是可重复的一步。锻骨的起点，是能承住也能及时卸下的力量。"
+      ],
+      [
+        "truth",
+        "辨清哪里真的在承力",
+        "不把疼痛和僵硬都叫作坚韧。",
+        "你停下加力，沿足印找出偏斜处。原来一直抢先的是受伤的肩，替没有站稳的脚承担了重量。",
+        "护阵重新接通时，你不再追求最响的骨鸣。能说清每一步怎样落下，比硬撑更接近锻骨。"
+      ],
+      [
+        "promise",
+        "照约定把退路留好",
+        "答应归来的人，也要允许自己退一步。",
+        "你在石庭边补好可扶的栏杆，再回到阵心。有人需要接手时，不必先承担一次摔落。",
+        "第一道骨鸣落定，留下的不是不退的誓言，而是有力向前、也有余力回来的约定。"
+      ]
+    ]
+  },
+  {
+    "title": "泉畔归血",
+    "subtitle": "让血气循自己的节律流向每一道旧伤",
+    "trialName": "凝血归元",
+    "introduction": [
+      "温泉边的石台映出旧伤留下的浅痕。运力虽已稳固，血气却总在同一处折返；每逢急着出手，那里便先于拳锋发冷。",
+      "青岚把护阵绳放在你伸手可及处。她问的是今晚能否自己走回去，不是这一拳能否让谁闭嘴。",
+      "主药在温水中服下，药力只负责护住脉络。凝血还须你把停滞处一点点辨明，让气血重新汇流。"
+    ],
+    "breath": [
+      "吸气，顺着脉搏找到发冷的旧伤，不急着催快血流。",
+      "留息，分清安静的停顿与勉强压下的疼痛。",
+      "吐息，让温热的血气越过折返处，再沿原路缓缓归回。"
+    ],
+    "hint": "先用水纹辨流向，继以火纹温养旧伤，最后让金纹稳住血气。次序为水、火、金。",
+    "array": [
+      "水纹照出血流折返的位置。",
+      "火纹隔着护脉绳温养旧伤，没有催逼尚未恢复的肌肉。",
+      "金纹收束散逸的血气，脉搏仍按你自己的节律跳动。"
+    ],
+    "dilemma": "泉中的倒影递来一副从未受伤的身体，代价是忘掉当年救你脱险的人。你知道旧伤曾让你退下，也知道退下之后有人接住了你。",
+    "choices": [
+      [
+        "protect",
+        "留下相互救助的记忆",
+        "被扶起过，不会使今天的力量变轻。",
+        "你将手按在旧痕上，记起那个人怎样把护阵绳绕过你的肩。血气温热，没有抹去伤痕。",
+        "凝血不是从此无需别人，而是恢复之后也懂得为受伤的人留出接力的位置。"
+      ],
+      [
+        "truth",
+        "把旧伤看清再前行",
+        "知道边界，才有可以复验的恢复。",
+        "你逐段记下血气折返的变化，承认有一处尚未恢复到可以重压的程度。泉影因此散开。",
+        "汇流的血气没有绕过事实。新的力量建立在你肯听见身体的每一次回答上。"
+      ],
+      [
+        "promise",
+        "给重来的机会一个安排",
+        "准备比永远不再受伤的承诺可靠。",
+        "你把练习与休整的时辰一同记下，答应下一次动身前先检查这处旧伤。",
+        "血气回到掌心时，你记住了该怎样恢复，也记住了不能把休息永远推到最后。"
+      ]
+    ]
+  },
+  {
+    "title": "雾阶通脉",
+    "subtitle": "听见每一段经脉的迟疑，再让力量真正贯通",
+    "trialName": "通脉照影",
+    "introduction": [
+      "雾中的石阶一段高、一段低。血气已经充足，脚步却在第三阶忽然失去节律，手臂的发力比脚下晚了一拍。",
+      "素衍以细绳标出几处停顿，让你按身体真正能够承接的速度走一遍。贯通不是把最窄的一段强行撑开。",
+      "护脉主药缓和了冲撞。你将一手按在胸前、一手垂在身侧，重新听见从足底到指尖的传力。"
+    ],
+    "breath": [
+      "吸气，从脚下沿筋脉逐处感受，不越过那一拍迟疑。",
+      "留息，允许手臂等一等还未跟上的脚步。",
+      "吐息，把同一节律传到指尖，不逼任何一段独自抢先。"
+    ],
+    "hint": "金纹照见断续处，木纹护住尚弱的筋络，水纹接回流动。按金、木、水修整护阵。",
+    "array": [
+      "金纹映出三处迟滞，问题终于有了具体位置。",
+      "木纹为迟滞处留下缓冲，不让外力强行挤过。",
+      "水纹贯通前后节律，手脚第一次在同一息里落定。"
+    ],
+    "dilemma": "雾里出现一条笔直的捷径，只须切断那段最慢的经脉，就能让余下力量畅通。可那一段也连着你握住护阵绳的手。",
+    "choices": [
+      [
+        "protect",
+        "让缓慢的地方也能跟上",
+        "贯通不是只留下最强的一段。",
+        "你放慢整段步法，让气血等候迟滞处。掌中的绳不再颤动，指尖终于能回应脚下的停顿。",
+        "通脉留下了完整的身体。你不必牺牲一处退路，才换来另一处的迅疾。"
+      ],
+      [
+        "truth",
+        "核对每一处传力",
+        "不为笔直的解释舍弃真实的弯折。",
+        "你沿标绳重新走过石阶，发现所谓阻塞其实是两处步法互相催逼。改正顺序之后，迟滞自行散开。",
+        "经脉贯通有了可重复的节律，你也能向后来者说明怎样慢下来、怎样重新接上。"
+      ],
+      [
+        "promise",
+        "保留能停下的节律",
+        "共同前行，也包括共同等待。",
+        "你把停步的手势留给雾外的人。下一次节律错开，可以先停、再接，不必切断任何一处牵连。",
+        "指尖重新握紧护阵绳。这一次，它回应的是你自己的步伐和能够兑现的退路。"
+      ]
+    ]
+  },
+  {
+    "title": "赤炉立身",
+    "subtitle": "金身不是永不受伤，而是知道如何承受与交接",
+    "trialName": "金身护阵",
+    "introduction": [
+      "赤炉外的热风压向护阵。经脉已能贯通，护体的力却总想把所有冲击都截在胸前；背后无人知晓你还剩多少余力。",
+      "月衡在轮值牌上写明每一段承力的时间。金身要能守住别人，也要让接手的人看得见你何时需要换下。",
+      "主药护住筋脉，灵莲缓冲外压。你先练习把重量交回阵台，再重新站到最前的位置。"
+    ],
+    "breath": [
+      "吸气，感受护体之力怎样分散冲击，不把它全压在胸口。",
+      "留息，辨清还有余力与已经勉强之间的界线。",
+      "吐息，把一部分重量交给脚下阵台，允许护阵共同承受。"
+    ],
+    "hint": "土纹先承重，木纹接通轮值，火纹最后点灯。按土、木、火布阵，不让灯火先烧尽守阵的人。",
+    "array": [
+      "土纹托稳阵台，承力不再只剩一个位置。",
+      "木纹连接轮值处，每一次交接都有清晰的信号。",
+      "火纹沿外圈亮起，谁正在承力、谁已休整，都能被看见。"
+    ],
+    "dilemma": "赤炉里有一枚永不熄灭的护印。只要将它锁进胸口，别人就再不用问你是否疲惫；你也从此无法离开守阵的位置。",
+    "choices": [
+      [
+        "protect",
+        "先让守阵的人能够休息",
+        "被守护的人也包括站在最前的自己。",
+        "你没有收下护印，而是把空位留给接班的人。阵台晃了一下，随后被几双不同的手稳住。",
+        "金身并非一座不能退下的铁门。力量能承住冲击，也能让人从承受中归来。"
+      ],
+      [
+        "truth",
+        "公开每一段承力的代价",
+        "不把疲惫藏进无人可见的护印。",
+        "你把外压与余力写在轮值牌上。数字并不漂亮，却让接手的人知道该从哪里托起。",
+        "护体之力有了边界，边界不是软弱，而是让共同守阵成为真实安排的起点。"
+      ],
+      [
+        "promise",
+        "把轮换写进护阵",
+        "不让下一位守阵者重复无尽的硬撑。",
+        "你亲手试过换位的时机，确认交接时冲击不会落到后方的人身上，再将方法写下。",
+        "金身落定，轮值牌仍能被擦去重写。你留下的是可兑现的接力，不是必须燃尽的名字。"
+      ]
+    ]
+  },
+  {
+    "title": "裂隙留步",
+    "subtitle": "越过眼前的虚隙，也为下一步保留落脚之处",
+    "trialName": "破虚渡厄",
+    "introduction": [
+      "长桥的裂隙没有随雷声闭合。金身已足以抵御外压，可落脚点正在远去，蛮力不能把一条断路强行变成通途。",
+      "青岚把可退回的三处石标逐一点亮。她要你看清踏空之前还能抓住什么，也要看清对岸的人是否准备好接应。",
+      "护脉主药压住雷息造成的震颤。你先试最短的一步，再让身法与裂隙的开合相应。"
+    ],
+    "breath": [
+      "吸气，辨清裂隙开合的节律，不跟着雷声仓促起步。",
+      "留息，把尚未确定的落脚处保留为疑问。",
+      "吐息，先回到已经验证的石标，再试向前的一步。"
+    ],
+    "hint": "先以风纹辨间隙，再以水纹接节律，最后用土纹稳落点。循风、水、土护住步法。",
+    "array": [
+      "风纹标出裂隙开合之间短暂的余隙。",
+      "水纹将三处石标的节律接起，返程同样清楚。",
+      "土纹守住落点，前行不再需要赌上全部退路。"
+    ],
+    "dilemma": "雷中出现一条只容一人越过的近路。你可以立刻到达对岸，但回程的石标会随之熄灭，后来的人再找不到曾经的落脚点。",
+    "choices": [
+      [
+        "protect",
+        "留下能接住后来人的石标",
+        "抵达对岸，也要有人知道怎样跟上。",
+        "你等对岸的接应灯亮起，再沿三处石标前行。雷声未停，回来的路却始终没有熄灭。",
+        "破虚不是不再需要道路，而是能在裂隙间留下可辨、可返、可接续的一步。"
+      ],
+      [
+        "truth",
+        "先验证裂隙的规律",
+        "不把一次侥幸说成人人可走的路。",
+        "你放过第一次开合，记下第二次和第三次的差别。确认石标稳定之后，才将步法写进图中。",
+        "对岸近了一步，疑问也少了一处。你留下的记录允许别人复验，而非只能相信你的名号。"
+      ],
+      [
+        "promise",
+        "把返程一同带到对岸",
+        "约好归来，就不只练向前的那一步。",
+        "你先走完一段折返，确认接应的人也能回到原处，再踏向更远的裂隙。",
+        "雷息落下时，身法与承诺仍在同一节律。新的境界没有把你和来路割断。"
+      ]
+    ]
+  },
+  {
+    "title": "长明立身",
+    "subtitle": "破虚圆满之后，把亲手走过的路留给后来者",
+    "trialName": "自证大道",
+    "introduction": [
+      "最后一座石台安静地立在长明桥头。没有更高的炼体境界等你命名，只有一路的脚印、旧伤与被接住的时刻留在晨光中。",
+      "月衡收起没有用完的药签，素衍把返程图交给轮值的人。青岚问你，走到这里之后，还愿不愿意把第一步再教一遍。",
+      "主药护住最后一轮周身运力。你站回最初的承力姿势，感受筋骨、血气、经脉与护体如何在同一息里回应。"
+    ],
+    "breath": [
+      "吸气，记起足底怎样站稳，也记起有人曾为你托住第一次失衡。",
+      "留息，不急着给圆满再添一个名号。",
+      "吐息，让周身的力量完整落下，把余力留给还未走完的生活。"
+    ],
+    "hint": "火纹点亮来路，金纹辨清此身，木纹留出归途。按火、金、木完成终境护阵。",
+    "array": [
+      "火纹亮起，旧伤没有被抹去，走过的路也不必藏起。",
+      "金纹映出此身走过的痕迹，所有力量都能找到可以落定的位置。",
+      "木纹从桥头接向来路，前行与归来都不再依靠一人的私印。"
+    ],
+    "dilemma": "心中的回声说，唯有永不退下，后来的人才会记得你。桥下却有人已经学会第一步，正等你把最前的位置交给他。",
+    "choices": [
+      [
+        "protect",
+        "把位置交给能够接手的人",
+        "守护的完成，也可以是放心离开。",
+        "你让出半步，看着后来者独自站稳。那一步不够漂亮，却能在失衡时自己停下。",
+        "破虚圆满没有把你留成一尊不能移动的像。你可以陪人走，也可以走向自己的明天。"
+      ],
+      [
+        "truth",
+        "留下可以质疑的完整记录",
+        "不让自己的名字替代下一次核验。",
+        "你把曾经走错的几步也写进手记，标明何时重试、何时返回。后来者有权发现更好的办法。",
+        "终境自证留下了开放的路。此身的经历成为可供参照的答案，而非不许更改的命令。"
+      ],
+      [
+        "promise",
+        "回去完成仍未完成的约定",
+        "圆满不是与真实生活告别。",
+        "你收好护阵绳，记起尚未归还的药碗和约好的茶。力量已经落定，生活仍有下一页。",
+        "你为后来人点亮桥头的灯，自己走向山下。破虚圆满与未完的故事一同留下，不必再造一个空的新境界。"
+      ]
+    ]
+  }
+];
+function ritualText(route,realm){return route==='body'?Object.assign({},texts[realm],bodyTexts[realm]):texts[realm];}
 function key(route,realm){return route+':'+realm;}
 function full(s,route){const p=s.paths[route],needed=Math.round(C.layerXp[9]*C.realmXpFactors[p.realm]);return p.layer===10&&p.xp>=needed;}
 function reservation(realm){return {pills:{['break'+realm]:1},materials:{lotus:3+realm*2,ore:3+realm*3}};}
@@ -143,7 +416,7 @@ function guide(s,route){
     const research=!learned&&pill.researchCost.materials[id]||0,total=(needCraft?q:0)+(!learned&&needCraft?research:0)+(cost.materials[id]||0);
     craftingMaterials.push({kind:'material',id,name:names[id]||C.materials[id].name,required:total,owned:s.materials[id]||0,deficit:reserved?0:Math.max(0,total-(s.materials[id]||0)),source:copy(source[id]),recipeRequired:q,researchRequired:research,ritualRequired:cost.materials[id]||0});
   }
-  return {mandatoryPill:{id:pill.id,name:pill.name,count:1,owned:s.pills[pill.id]||0,reserved,learned,source:'furnace',researchCost:copy(pill.researchCost),craftCost:{stones:pill.stones,materials:copy(pill.materials)}},requirements,craftingMaterials,materialGuide:[
+  return {preparationText:route==='body'?pill.name+'的药性同样适合炼体护脉，保护筋骨、血气与经脉。'+(realm===5?'终境圆满重在周身运力落定。':'这次要凝定的是'+C.routes.body.realmNames[realm+1]+'的修行。'):'丹药护住经脉，阵材稳住灵息。先把退路和准备做足，再走向新的境界。',mandatoryPill:{id:pill.id,name:pill.name,count:1,owned:s.pills[pill.id]||0,reserved,learned,source:'furnace',researchCost:copy(pill.researchCost),craftCost:{stones:pill.stones,materials:copy(pill.materials)}},requirements,craftingMaterials,materialGuide:[
     {type:'research',id:pill.id,title:'研究'+pill.name+'丹方',description:learned?'已学会丹方，可以直接进入药炉炼制。':'在当前境界的药炉花费'+pill.researchCost.stones+'灵石与'+pill.researchCost.materials.insight+'参悟砂确定研究。无需通关本境试炼。'},
     {type:'craft',id:pill.id,title:'亲手炼制必需丹药',description:'药炉可直接炼制或排入炼丹队列。基础丹药产量确定；控火节奏提高额外成丹，不会吞掉基础产量。下列为丹方基础用料，升级药炉后的实际优惠以炼制页为准。'},
     {type:'dungeon',id:'resource_herb',title:'巡护'+source.herb.name,description:source.herb.description},
@@ -154,14 +427,14 @@ function guide(s,route){
 }
 function view(s,route){
   route=route||s.route;if(!routes.includes(route))return null;
-  const p=s.paths[route],text=texts[p.realm],r=s.ritual&&s.ritual.route===route&&s.ritual.realm===p.realm?s.ritual:null;
+  const p=s.paths[route],text=ritualText(route,p.realm),r=s.ritual&&s.ritual.route===route&&s.ritual.realm===p.realm?s.ritual:null;
   const busy=!!(s.battle||s.exploration),trialWon=won(s,route,p.realm),legacy=legacyReady(s,route),preparation=guide(s,route);
   let stage=r?r.phase:legacy?'ready':'preparation';if(stage==='trial'&&trialWon)stage='ready';
   const choices=[],narration=[],cue={title:'入静之前',text:'准备好必需丹药与护阵材料，圆满修为后再入静。',expected:null};
   let step=0,steps=3;
   if(stage==='breath'){
     step=r.breathStep;cue.title=['引息','守息','归息'][step];cue.text=text.breath[step];cue.expected=breathIds[step];
-    [['inhale','吸气','引外界灵息入体'],['hold','留息','稳住丹田的这一息'],['exhale','吐息','将灵息送入护阵']].forEach(v=>choices.push({id:v[0],label:v[1],description:v[2]}));narration.push(...text.introduction);
+    [['inhale','吸气',route==='body'?'辨认足底与筋骨的承力':'引外界灵息入体'],['hold','留息',route==='body'?'听清脉搏与身体的边界':'稳住丹田的这一息'],['exhale','吐息',route==='body'?'让周身力量随节律落下':'将灵息送入护阵']].forEach(v=>choices.push({id:v[0],label:v[1],description:v[2]}));narration.push(...text.introduction);
   }else if(stage==='array'){
     step=r.arrayStep;cue.title='接通第'+(step+1)+'枚阵纹';cue.text=text.hint;cue.expected=text.sequence[step];narration.push(step?text.array[step-1]:'调息已稳，脚下三枚阵纹仍在等你亲手接通。',text.hint);
     Object.entries(runes).forEach(([id,name])=>choices.push({id,label:name+'纹',description:'循护阵留下的线索触碰'+name+'纹'}));
@@ -169,7 +442,7 @@ function view(s,route){
     step=r.heartChoice?1:0;steps=2;cue.title=r.heartChoice?'听见自己的回答':'照见道心';cue.text=r.heartChoice?'静读这次选择在心境中留下的变化。确认之后，带着这个回答进入劫境。':text.dilemma;
     if(r.heartChoice){const c=text.choices.find(c=>c[0]===r.heartChoice);narration.push(c[3],c[4]);}else{narration.push(text.dilemma);text.choices.forEach(c=>choices.push({id:c[0],label:c[1],description:c[2]}));}
   }else if(stage==='trial'){
-    step=3;cue.title='携心入劫';cue.text='调息、护阵与道心准备已完成。现在面对'+C.trials[p.realm].name+'；失败不掉境界，已预留的材料不会再次扣除。';narration.push('阵纹亮起，你的回答仍回响在识海之中。劫境不是另一头等你击倒的普通怪物，而是这一路准备的最后检验。',C.trials[p.realm].description);
+    step=3;cue.title='携心入劫';cue.text='调息、护阵与道心准备已完成。现在面对'+(text.trialName||C.trials[p.realm].name)+'；失败不掉境界，已预留的材料不会再次扣除。';narration.push(route==='body'?'阵纹亮起，你站稳脚下的石台。筋骨、血气与护体的准备，会在接下来的真实交锋中得到检验。':'阵纹亮起，你的回答仍回响在识海之中。劫境不是另一头等你击倒的普通怪物，而是这一路准备的最后检验。',C.trials[p.realm].description);
   }else if(stage==='ready'){
     step=3;cue.title=p.realm===5?'让最后一息落定':'将新境界安放在心中';cue.text=legacy?'此前真实完成的试炼已保留，可直接承接旧进度。':p.realm===5?'最后的天隙回响已散去。先读完眼前的灯火，再亲自结束自证大道。':'劫境已过，灵息不再冲撞经脉。护阵材料与丹药已在入静时支付，凝定新境不会再次扣费。';
     narration.push(p.realm===5?'风停在长明桥头。没有新境界的名号从天上落下来，只有你刻下的那几行字，在晨光里变得清晰。':'阵心缓缓收拢。你听见门外仍有人走过，洞府的灯还亮着。新的力量不让世界变得遥远，只让你终于能够稳稳站在其中。');
@@ -179,7 +452,7 @@ function view(s,route){
   }else narration.push(...text.introduction.slice(0,2));
   const fullCultivation=full(s,route),available=preparation.requirements.every(x=>x.deficit===0),archivedOther=!!(s.ritual&&s.ritual.phase==='complete'&&s.ritual.route!==route),otherRitual=!!(s.ritual&&!r&&!archivedOther);
   const chapterMemory=s.story&&s.story.chapter>0?'你已经走过'+s.story.chapter+'段主线。这次入静将把那些真实经历与自己的回答一同留在破境回忆中。':'初入山门的经历仍在心中。尚未完成主线也可以循自己的修炼路线准备破境。';
-  return Object.assign({route,realm:p.realm,currentLabel:C.routes[route].realmNames[p.realm],targetLabel:C.routes[route].realmNames[Math.min(5,p.realm+1)],stage,title:text.title,subtitle:route==='body'?'以'+C.routes.body.realmNames[p.realm]+'之躯承住下一段道途 · '+text.subtitle:text.subtitle,introduction:text.introduction.slice(),narration,step,steps,totalSteps:9,choices,cue,sequence:stage==='breath'?breathIds.slice():text.sequence.slice(),sequenceLabels:stage==='breath'?['吸气','留息','吐息']:text.sequence.map(x=>runes[x]+'纹'),terminal:p.realm===5,fullCultivation,busy,otherRitual,canBegin:(!s.ritual||archivedOther)&&route===s.route&&!legacy&&!busy&&fullCultivation&&available,canTrial:!!r&&r.phase==='trial'&&!busy&&fullCultivation,canFinish:p.realm===5&&!busy&&trialWon&&!!r&&r.phase==='trial',canBreakthrough:p.realm<5&&!busy&&fullCultivation&&trialWon&&(legacy||!!r&&r.phase==='trial'),legacyReady:legacy,legacyCost:legacy?(p.realm===5?{}:Object.assign({stones:(s.pills['break'+p.realm]||0)>0?0:50*Math.pow(p.realm+1,2),materials:copy(reservation(p.realm).materials)},(s.pills['break'+p.realm]||0)>0?{pills:{['break'+p.realm]:1}}:{})):null,trialWon,heartChoice:r&&r.heartChoice||null,canContinue:!!r&&r.phase==='heart'&&!!r.heartChoice&&!busy,reservedCost:r?copy(r.reserved):null,chapterMemory,history:(s.ritualHistory||[]).filter(h=>h.route===route).map(h=>({realm:h.realm,choice:h.choice,at:h.at,title:texts[h.realm].title,answer:texts[h.realm].choices.find(c=>c[0]===h.choice)[4]}))},preparation);
+  return Object.assign({route,realm:p.realm,currentLabel:C.routes[route].realmNames[p.realm],targetLabel:C.routes[route].realmNames[Math.min(5,p.realm+1)],stage,title:text.title,subtitle:text.subtitle,introduction:text.introduction.slice(),narration,step,steps,totalSteps:9,choices,cue,sequence:stage==='breath'?breathIds.slice():text.sequence.slice(),sequenceLabels:stage==='breath'?['吸气','留息','吐息']:text.sequence.map(x=>runes[x]+'纹'),terminal:p.realm===5,fullCultivation,busy,otherRitual,canBegin:(!s.ritual||archivedOther)&&route===s.route&&!legacy&&!busy&&fullCultivation&&available,canTrial:!!r&&r.phase==='trial'&&!busy&&fullCultivation,canFinish:p.realm===5&&!busy&&trialWon&&!!r&&r.phase==='trial',canBreakthrough:p.realm<5&&!busy&&fullCultivation&&trialWon&&(legacy||!!r&&r.phase==='trial'),legacyReady:legacy,legacyCost:legacy?(p.realm===5?{}:Object.assign({stones:(s.pills['break'+p.realm]||0)>0?0:50*Math.pow(p.realm+1,2),materials:copy(reservation(p.realm).materials)},(s.pills['break'+p.realm]||0)>0?{pills:{['break'+p.realm]:1}}:{})):null,trialWon,heartChoice:r&&r.heartChoice||null,canContinue:!!r&&r.phase==='heart'&&!!r.heartChoice&&!busy,reservedCost:r?copy(r.reserved):null,chapterMemory,history:(s.ritualHistory||[]).filter(h=>h.route===route).map(h=>({realm:h.realm,choice:h.choice,at:h.at,title:ritualText(route,h.realm).title,answer:ritualText(route,h.realm).choices.find(c=>c[0]===h.choice)[4]}))},preparation);
 }
 function handle(s,a,now){
   if(!a||!['beginRitual','ritualBreath','ritualRune','ritualResolve','ritualHeart','continueRitual','cancelRitual','finishRitual'].includes(a.type))return null;
@@ -197,7 +470,7 @@ function handle(s,a,now){
     for(const [id,q] of Object.entries(cost.materials))if((s.materials[id]||0)<q)return no('护阵材料不足：'+(id==='lotus'?'灵莲':'玄铁')+'需'+q+'份，可巡护秘境或在集市直接补给');
     s.pills[pill.id]--;for(const [id,q] of Object.entries(cost.materials))s.materials[id]-=q;
     s.ritual={version:1,route,realm:p.realm,phase:'breath',startedAt:now,reserved:cost,breathStep:0,arrayStep:0,heartChoice:null,heartRead:false,completedAt:null};
-    return yes('亲手布好护阵，'+pill.name+'药力缓缓化开。先引息，不必急着入劫。',{phase:'breath',cost:copy(cost),narration:texts[p.realm].introduction.slice()});
+    return yes('亲手布好护阵，'+pill.name+'药力缓缓化开。先引息，不必急着入劫。',{phase:'breath',cost:copy(cost),narration:ritualText(route,p.realm).introduction.slice()});
   }
   const r=s.ritual;if(!r||r.route!==route||r.realm!==p.realm)return no('当前路线没有正在进行的破境入静');
   if(a.type==='cancelRitual'){
@@ -211,16 +484,16 @@ function handle(s,a,now){
     if(r.phase!=='breath'||!breathIds.includes(a.choice))return no('请循当前调息提示引息、留息或吐息');
     if(a.choice!==breathIds[r.breathStep]){r.breathStep=0;return yes('灵息稍乱，灯焰仍在。重新从吸气开始，不损失丹药或护阵材料。',{correct:false,phase:r.phase});}
     r.breathStep++;if(r.breathStep===3)r.phase='array';
-    return yes(texts[r.realm].breath[r.breathStep-1],{correct:true,phase:r.phase,step:r.breathStep});
+    return yes(ritualText(route,r.realm).breath[r.breathStep-1],{correct:true,phase:r.phase,step:r.breathStep});
   }
   if(a.type==='ritualRune'){
     if(r.phase!=='array'||!own(runes,a.choice))return no('请根据石室线索选择当前护阵的阵纹');
     if(a.choice!==texts[r.realm].sequence[r.arrayStep]){r.arrayStep=0;return yes('两道阵纹尚未接通。重新辨认线索即可，护阵材料没有额外消耗。',{correct:false,phase:r.phase});}
-    r.arrayStep++;if(r.arrayStep===3)r.phase='heart';return yes(texts[r.realm].array[r.arrayStep-1],{correct:true,phase:r.phase,step:r.arrayStep});
+    r.arrayStep++;if(r.arrayStep===3)r.phase='heart';return yes(ritualText(route,r.realm).array[r.arrayStep-1],{correct:true,phase:r.phase,step:r.arrayStep});
   }
   if(a.type==='ritualResolve'||a.type==='ritualHeart'){
     if(r.phase!=='heart'||r.heartChoice!==null||!heartIds.includes(a.choice))return no('请面对当前心境，选择一份自己愿意承受的回答');
-    r.heartChoice=a.choice;const c=texts[r.realm].choices.find(c=>c[0]===a.choice);
+    r.heartChoice=a.choice;const c=ritualText(route,r.realm).choices.find(c=>c[0]===a.choice);
     return yes('你作出回答，但没有急着越过它。先看清这份选择在心境中留下的变化。',{phase:'heart',choice:a.choice,narration:[c[3],c[4]]});
   }
   if(a.type==='continueRitual'){

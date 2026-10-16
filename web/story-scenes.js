@@ -281,6 +281,23 @@ chapterJourney(5,[line('narrator','山下递来的不是求救帖，是各城新
 // but never before their region is narratively accessible.
 for(const [id,rank] of Object.entries({world_forge:10,world_sect:4,world_tower:20,world_garden:2,world_relic:26,world_escort:50}))episodes[id].unlockRank=rank;
 
+// Version 1 is kept byte-for-byte in episodes for promises already accepted.
+// Version 2 names the actual recipe / set and slot; old totals are never guessed.
+function missionGoals(id,choice,version=2){
+  const ep=episodes[id],option=ep&&(Array.isArray(ep.choices)?ep.choices.find(x=>x.id===choice):ep.choices[choice]);
+  if(!option)return [];
+  const goals=option.goals||[option.goal];
+  if(version===1)return goals;
+  return goals.map(goal=>{
+    if(goal.key==='crafted'){
+      const recipe=(id==='chapter_0'&&choice==='seek'||id==='chapter_3'||id==='world_garden')?'purify0':'heal0';
+      const name=recipe==='purify0'?'清心散':'回春丹';
+      return {...goal,key:'pillBatch',id:recipe,label:goal.label.replace('一炉丹药','一炉'+name),nav:{page:'cave',modal:'alchemy',payload:{id:recipe}}};
+    }
+    if(goal.key==='forged')return {...goal,key:'gearForge',id:'array:charm',label:'亲手打造一件回春套装佩饰，验证可复用的护阵器（任意品质）',nav:{page:'cave',modal:'forge',payload:{set:'array',slot:'charm',rarity:0}}};
+    return goal;
+  });
+}
 function freeze(value){if(value&&typeof value==='object'&&!Object.isFrozen(value)){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;}
-return freeze({episodes});
+return freeze({episodes,missionGoals});
 });

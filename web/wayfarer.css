@@ -132,3 +132,22 @@
 @media (max-width:370px){.world-event{gap:8px}.event-number{width:28px;height:28px;flex-basis:28px}.encounter-choice .row{flex-direction:column}}
 .world-regions{flex-shrink:0}.world-event .item-actions{margin-top:9px}
 @media(min-width:1000px){.game-shell.world-mode{max-width:1120px}.game-shell.world-mode .nav-bottom{max-width:1120px}.world-mode .world-event-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.world-mode .world-event{gap:10px}.world-mode .world-event .row.spaced{flex-direction:column;align-items:flex-start;gap:6px}.world-mode .world-event p{min-height:85px}.world-mode .world-event small{display:block;min-height:36px}}
+
+/* Read-only story archives keep a single scrollable reading surface. */
+.narrative-screen.memory-screen{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto}
+.memory-screen .narrative-shade{background:linear-gradient(#071b23ef,#071b23d9)}
+.memory-sections{display:flex;gap:8px;overflow-x:auto;padding:8px clamp(12px,4vw,32px);scrollbar-width:thin}
+.memory-sections .narrative-button{flex:0 0 auto;min-height:40px;padding:8px 15px}
+.memory-reading{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px clamp(16px,5vw,56px) 28px;scrollbar-width:thin;line-height:1.95}
+.memory-reading>*{max-width:780px;margin-left:auto;margin-right:auto}
+.memory-reading h2{font-family:var(--font-display,serif);font-size:24px;color:var(--story-gold);margin-top:20px;margin-bottom:20px}
+.memory-notice{font-size:12px;color:var(--story-muted);border-left:2px solid var(--story-gold);padding:9px 14px;background:#0d2a30a8}
+.memory-choice{font-size:13px;color:var(--story-jade)}
+.memory-choices{display:grid;gap:8px;margin-top:12px}
+.memory-choices .narrative-button{text-align:left;white-space:normal}
+.memory-paragraph{margin-top:20px;margin-bottom:24px}
+.memory-paragraph>strong{display:block;font-size:12px;color:var(--story-gold);letter-spacing:2px;margin-bottom:6px}
+.memory-paragraph>p{font-size:16px;line-height:1.95;color:var(--story-ink);white-space:pre-wrap}
+.memory-promises{font-size:13px;color:var(--story-muted);padding:12px 0;border-top:1px solid #e5ca9133}
+.memory-screen .memory-footer{grid-row:auto;grid-column:auto}
+@media(max-height:500px){.memory-screen .narrative-hud{padding-top:8px;padding-bottom:8px}.memory-screen .narrative-hud h1{font-size:20px}.memory-screen .memory-footer{padding-top:6px;padding-bottom:6px}.memory-footer .narrative-hint{display:none}.memory-sections{padding-top:4px;padding-bottom:4px}.memory-reading{padding-top:10px}.memory-paragraph>p{font-size:14px}}

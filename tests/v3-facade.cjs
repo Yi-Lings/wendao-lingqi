@@ -55,8 +55,10 @@ function finishStory(s,id,choice){
  if(j.stage==='mission')for(let n=j.mission.current;n<j.mission.required;n++){
   const goal=j.mission.goal;
   if(goal.key==='dungeonWins'||goal.key==='bossWins')win(s,goal.id||'resource_herb');
+  else if(goal.key==='pillBatch'){if(!s.learnedRecipes.includes(goal.id))act(s,{type:'researchRecipe',id:goal.id});act(s,{type:'craftPill',id:goal.id,count:1});}
   else if(goal.key==='crafted')act(s,{type:'craftPill',id:'heal0',count:1});
   else if(goal.key==='study')act(s,{type:'upgradeTechnique',id:'thunder_skill_0'});
+  else if(goal.key==='gearForge'){const [set,slot]=goal.id.split(':');act(s,{type:'forgeGear',set,slot,rarity:0});}
   else if(goal.key==='forged')act(s,{type:'forgeGear',set:'sword',slot:'weapon',rarity:0});
   else if(goal.key==='manualWins'||goal.key==='kills')win(s,'resource_herb');
   else throw Error('Facade needs a real activity for '+JSON.stringify(goal));

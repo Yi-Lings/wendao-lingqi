@@ -77,6 +77,8 @@ function createState(now){
   act({type:'setGachaTarget',target:'gear_sword_weapon'});
   // The first real ten-pull demonstrates saved rewards and separate red-card reveals.
   s.gacha.redPity=79;s.gacha.highPity=9;s.gacha.fateGuarantee=true;s.rngStreams.gacha=45;
+  // Supplied preview inventory is not a player's newly fulfilled promise.
+  s.production={pills:{},gear:{}};
   const verified=E.validate(s);
   if(!verified.ok)throw Error('试玩存档校验失败：'+verified.error);
   return verified.state;

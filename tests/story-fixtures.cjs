@@ -22,7 +22,9 @@ function toMission(s,id,choice='protect',now=NOW,dispatch=actAt(s,now)){
 function creditMissionFixture(s,id){
  const v=S.journeyView(s,id),g=v.mission&&v.mission.goal;assert(g,id+' has a real mission');
  const count=Math.max(0,v.mission.required-v.mission.current);if(!count)return;
- if(g.key==='dungeonWins')s.progress.dungeonWins[g.id]=(s.progress.dungeonWins[g.id]||0)+count;
+ if(g.key==='pillBatch'){const row=s.production.pills[g.id]||(s.production.pills[g.id]={batches:0,quantity:0});row.batches+=count;row.quantity+=count;}
+ else if(g.key==='gearForge')s.production.gear[g.id]=(s.production.gear[g.id]||0)+count;
+ else if(g.key==='dungeonWins')s.progress.dungeonWins[g.id]=(s.progress.dungeonWins[g.id]||0)+count;
  else if(g.key==='bossWins'){
   if(g.id)s.progress.bossWins[g.id]=(s.progress.bossWins[g.id]||0)+count;
   s.stats.bosses=(s.stats.bosses||0)+count;

@@ -152,7 +152,11 @@ class Campaign {
         if(!E.previewDungeon(this.state,{id,difficulty:0}).allowed)return false;
         if(C.dungeons[id].type==='cave')this.completeCave(id);
         else this.clearWithRetry({id});
-      } else if(goal.key==='crafted')this.act({type:'craftPill',id:'heal0',count:1});
+      } else if(goal.key==='pillBatch'){
+        if(!this.state.learnedRecipes.includes(goal.id))this.act({type:'researchRecipe',id:goal.id});
+        this.act({type:'craftPill',id:goal.id,count:1});
+      } else if(goal.key==='gearForge'){const [set,slot]=goal.id.split(':');this.act({type:'forgeGear',set,slot,rarity:0});}
+      else if(goal.key==='crafted')this.act({type:'craftPill',id:'heal0',count:1});
       else if(goal.key==='pillsUsed')this.act({type:'usePill',id:'qi0'});
       else if(goal.key==='study') {
         const id=Object.keys(this.state.techniques).find(id=>this.available(id)&&this.state.techniques[id].level<20);

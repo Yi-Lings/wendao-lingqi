@@ -95,8 +95,10 @@ async function fulfilStoryMission(p,id){
   if(['dungeonWins','bossWins','manualWins','kills'].includes(goal.key)){
    await action(p,'startDungeon');await finishBattleClock(p);
    const after=await state(p);assert(after.lastBattleResult.win,'fresh actual mission battle victory');assert.equal(await p.locator('.battle-settlement').count(),1,'real battle reward page shown');
-  }else if(goal.key==='crafted')await action(p,'craftPill',q=>q.id==='heal0');
+  }else if(goal.key==='pillBatch'){if(!(await state(p)).learnedRecipes.includes(goal.id))await action(p,'researchRecipe',q=>q.id===goal.id);await action(p,'craftPill',q=>q.id===goal.id);}
+  else if(goal.key==='crafted')await action(p,'craftPill',q=>q.id==='heal0');
   else if(goal.key==='study')await action(p,'upgradeTechnique');
+  else if(goal.key==='gearForge')await action(p,'forgeGear');
   else if(goal.key==='forged')await action(p,'forgeGear');
   else throw Error('Browser must implement declared real goal '+JSON.stringify(goal));
   await dismissReward(p);await openStory(p,id);
