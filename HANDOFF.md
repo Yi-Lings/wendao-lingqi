@@ -1,12 +1,21 @@
 # 问道·灵契 V4.3 接手说明
 
+## V4.3 公开交付已完成
+
+Release：https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.3.0-preview 。发布源码/标签 0907fb361154edea78b67cd642a201cc2e7adf8e，APK 构建输入 e760eecf7024fdf69632e73f1fc1e5144fc58c50，二者全部 Web/Android 输入一致。后续提交只补交付证据和说明。
+
+Actions 38935165422 发布成功；main/work 两个 Android CI 均成功。375 项逻辑、155 项浏览器检查、107 个打包资源一致性、签名/对齐通过；源码包独立解压后再次通过 375 项检查。六个公开附件均匿名完整下载并核对 SHA-256，离线 ZIP CRC/HTML 与源码快照 666 个文件逐项通过，详见 docs/validation/v43/public-release.json。两个大 ZIP 使用 HTTP Range 并验证每段范围及完整文件散列；APK 为完整流式下载。没有 Android 真机验证。
+
+主工作流 publish-preview.yml 当前发布 V4.3。离线测试使用 LINGQI_PREVIEW_HTML 指向 dist/wendao-lingqi-v4.3-preview.html（测试文件 browser-v42-offline.cjs 为历史命名）。全部工程、素材、方案、截图和交付证据统一同步 main/work；保留历史标签。
+
+
 更新：2026-10-16 UTC。用户要求继续上一轮开发，既有“全部提交 GitHub、直接构建和发布”授权持续有效。沿用现有 checkout 与原创音画，保留历史标签。main/work 统一同步。
 
 当前实现：18 配方的亲炼炉数/实际数量、36 套装部位的打造记录；11 处新接剧情目标采用指定配方/部位；首卷守护/求证分别炼回春丹/清心散。`production` 有界并严格校验，不从旧库存/总计反推。故事 `rulesVersion` 缺失为 1、新接为 2，未完成旧约定保留指标、baseline、读到位置、完成及奖励。
 
 24 篇人界故事支持分段全文重读，游标只存在界面；已知历史只显示原分支，旧档无选择时明确标记文本查阅。六段炼体仪式按当前目标重写正文、动作提示和回忆，保留原费用、试炼、阵纹次序及兼容丹方。说明见 docs/ITERATION_V4_3.md。
 
-375 项逻辑、155 项浏览器检查（151 源页面＋4 实际离线文件）通过。报告与截图见 docs/validation/v43。冻结源码 e760eecf7024fdf69632e73f1fc1e5144fc58c50 已构建 Android 4.3/code7 和独立离线网页，107 个资源/签名/对齐通过，随后发布 v4.3.0-preview；最新公开状态以 Release 和补充证据为准。当前无 Android 真机/模拟器。
+375 项逻辑、155 项浏览器检查（151 源页面＋4 实际离线文件）通过。报告与截图见 docs/validation/v43。冻结源码 e760eecf7024fdf69632e73f1fc1e5144fc58c50 已构建 Android 4.3/code7 和独立离线网页，107 个资源/签名/对齐通过，已发布 v4.3.0-preview；最新公开状态以 Release 和补充证据为准。当前无 Android 真机/模拟器。
 
 发布使用 .github/workflows/publish-preview.yml，目标已更新 V4.3。APK 先在本地构建并检查，分片/来源 manifest 再交给 Actions 重组同一文件上传，保持体验证书。tools/verify-preview-release.py 从 package.json 推导当前系列并核对对应 manifest；直传上传接口限制仍使用 Actions 处理，不修改认证/TLS。
 

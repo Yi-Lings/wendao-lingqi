@@ -39,3 +39,12 @@ V3 存档结构保持兼容。没有制作记录的旧档补空记录，保留�
 Android 4.3/code7 已构建，签名与对齐通过，全部 107 个 Web 资源与冻结源码逐字节相同；APK 132216769 字节，SHA-256 `105f942e20a57ad71df323a799f51bb5c797803f0fd6aa772148f8725fceb6df`。单文件 HTML 内嵌 64 项原始资源，公开交付证据见 [验证目录](validation/v43/README.md)。
 
 本轮完成行动与回看的基础，没有把分段文字当作新增长篇任务。护送、现场修复、证据推理、仙界行动链与长期经济平衡仍待后续迭代；Android 真机安装、系统文件选择器、返回手势和持续运行仍未验收。
+
+
+## 公开交付
+
+[V4.3 体验版](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.3.0-preview)已公开发布，提供 APK、离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。[发布任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/38935165422)与两个分支的 Android CI 全部成功。
+
+六个附件均从公开地址匿名完整下载；APK/HTML/ZIP 与本地验收字节一致，源码 ZIP 的 666 个文件与冻结提交逐项相同，内附 manifest 和 ZIP CRC 通过。源码包独立解压后再次运行 375 项检查通过。实际大小、散列、公开 URL 与方法见 [公开下载证据](validation/v43/public-release.json)。
+
+发布标签对应 0907fb361154edea78b67cd642a201cc2e7adf8e；APK 构建输入对应 e760eecf7024fdf69632e73f1fc1e5144fc58c50，后续只补说明、构建材料和公开验证记录。安装、系统文件操作及长期手机性能仍不在本轮已验证范围内。

@@ -1,0 +1,56 @@
+{
+  "version": "4.3.0",
+  "verifiedAt": "2026-10-16T16:57:39.693098+00:00",
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.3.0-preview",
+  "releaseCommit": "0907fb361154edea78b67cd642a201cc2e7adf8e",
+  "assets": {
+    "wendao-lingqi-v4.3-preview.apk": {
+      "bytes": 132216769,
+      "sha256": "105f942e20a57ad71df323a799f51bb5c797803f0fd6aa772148f8725fceb6df",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3-preview.apk",
+      "githubDigest": "sha256:105f942e20a57ad71df323a799f51bb5c797803f0fd6aa772148f8725fceb6df",
+      "method": "completed earlier in this anonymous verification"
+    },
+    "wendao-lingqi-v4.3-preview.apk.sha256": {
+      "bytes": 97,
+      "sha256": "a594d005b3f20428d34ffc4ea917bade906349c01a0a43640b6d00f5f619e2a4",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3-preview.apk.sha256",
+      "githubDigest": "sha256:a594d005b3f20428d34ffc4ea917bade906349c01a0a43640b6d00f5f619e2a4",
+      "method": "completed earlier in this anonymous verification"
+    },
+    "wendao-lingqi-v4.3-preview.zip": {
+      "bytes": 132274497,
+      "sha256": "a406a5b946bd1464bb8c8e8af80df66aaf5c196b0080186835e2bce3f5f163a5",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3-preview.zip",
+      "githubDigest": "sha256:a406a5b946bd1464bb8c8e8af80df66aaf5c196b0080186835e2bce3f5f163a5",
+      "method": "anonymous HTTPS ranges, complete file verified"
+    },
+    "wendao-lingqi-v4.3-preview.zip.sha256": {
+      "bytes": 97,
+      "sha256": "468a97d5bd9fd722daa817fda2a404dd9919ff2904ac55a6f673f2652df498f5",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3-preview.zip.sha256",
+      "githubDigest": "sha256:468a97d5bd9fd722daa817fda2a404dd9919ff2904ac55a6f673f2652df498f5",
+      "method": "completed earlier in this anonymous verification"
+    },
+    "wendao-lingqi-v4.3.0-source.zip": {
+      "bytes": 246751880,
+      "sha256": "511005a525f3f91acff88b93e4f1ad24ac646dc97667a9b96a905f4613726399",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3.0-source.zip",
+      "githubDigest": "sha256:511005a525f3f91acff88b93e4f1ad24ac646dc97667a9b96a905f4613726399",
+      "method": "anonymous HTTPS ranges, complete file verified"
+    },
+    "wendao-lingqi-v4.3.0-source.zip.sha256": {
+      "bytes": 98,
+      "sha256": "20a7296d1458aef680da191cdc51e5a3ac24f8447d50b26e931181e3637d44be",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.3.0-preview/wendao-lingqi-v4.3.0-source.zip.sha256",
+      "githubDigest": "sha256:20a7296d1458aef680da191cdc51e5a3ac24f8447d50b26e931181e3637d44be",
+      "method": "completed earlier in this anonymous verification"
+    }
+  },
+  "anonymousDownloadVerified": true,
+  "offlineHtmlVerified": true,
+  "sourceManifestVerified": true,
+  "sourceFiles": 666,
+  "sourceArchiveLogicPassed": 375,
+  "physicalAndroidVerified": false
+}

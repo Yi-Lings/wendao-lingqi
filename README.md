@@ -88,7 +88,7 @@ node --test tests/v3*.cjs
 LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
 ```
 
-完整浏览器回归可运行 `npm run test:browser -- --full`；构建离线网页后另运行 `node tests/browser-v42-offline.cjs`。
+完整浏览器回归可运行 `npm run test:browser -- --full`；构建离线网页后另运行 `LINGQI_PREVIEW_HTML="$PWD/dist/wendao-lingqi-v4.3-preview.html" LINGQI_OFFLINE_REPORT=browser-v43-offline-report.json node tests/browser-v42-offline.cjs`。历史测试文件名保留，环境变量指定本轮实际产物。
 
 完整源码快照可运行 `python3 tools/package-source.py`，输出源码 ZIP、SHA-256 和逐文件清单，排除私钥、工具链、缓存及历史安装包。
 
