@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-10-16T16:48:18.075Z",
+  "file": "wendao-lingqi-v4.3-preview.html",
+  "tests": [
+    {
+      "name": "offline HTML boots its independent playable preview with all media embedded",
+      "passed": true
+    },
+    {
+      "name": "offline world choice commits once and the journal survives file reload",
+      "passed": true
+    },
+    {
+      "name": "offline actual crafting records the exact recipe and preserves it after file reload",
+      "passed": true
+    },
+    {
+      "name": "offline read-only full replay works with an explicitly supplied legacy completion and no external assets",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "replayFixtureNotice": "This case imports a validated supplied legacy completion solely to verify bundled replay UI; it is not evidence of naturally completing a chapter.",
+  "passed": true,
+  "finishedAt": "2026-10-16T16:48:28.897Z"
+}

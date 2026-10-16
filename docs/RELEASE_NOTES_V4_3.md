@@ -6,7 +6,7 @@
 
 旧档正在执行的约定沿用旧规则，保留 baseline、读到位置与完成奖励；没有制作明细的旧库存不反推记录。保留 V4.2 历世、道心、飞升、剧情、音画及原有玩法。
 
-375 项逻辑检查和全套浏览器回归通过，安装包、离线网页、完整源码、SHA-256 和公开下载校验一起交付。方案与验证入口：[V4.3 迭代记录](https://github.com/Yi-Lings/wendao-lingqi/blob/main/docs/ITERATION_V4_3.md)。
+375 项逻辑检查、155 项浏览器检查及 Android 构建/签名/107 个资源一致性审计通过，安装包、离线网页、完整源码、SHA-256 和公开下载校验一起交付。方案与验证入口：[V4.3 迭代记录](https://github.com/Yi-Lings/wendao-lingqi/blob/main/docs/ITERATION_V4_3.md)。
 
 APK 使用已有体验调试证书，包名 com.lingqi.game.preview，versionCode 7 / versionName 4.3，Android 8.0 起。离线网页解压后打开 wendao-lingqi-v4.3-preview.html；三个模式存档独立。原 V3 正式包先导出 JSON，再导入体验包。
 

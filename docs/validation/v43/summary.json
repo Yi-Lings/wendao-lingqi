@@ -2,7 +2,7 @@
   "version": "4.3.0",
   "logicPassed": 375,
   "logicFailed": 0,
-  "browserPassed": 151,
+  "browserPassed": 155,
   "browserFailed": 0,
   "browserSuites": {
     "browser-core.json": 32,
@@ -13,7 +13,8 @@
     "browser-story-ritual.json": 10,
     "browser-ascension.json": 4,
     "browser-integrity.json": 9,
-    "browser-v43.json": 14
+    "browser-v43.json": 14,
+    "browser-offline.json": 4
   },
   "webFileSha256": {
     "web/activity-rewards.css": "a1fae00cb07f48d582ef84d416845c2d5097c4dd39ce021e6e1f2fff92dd7077",
@@ -235,5 +236,22 @@
     "v43-body-heart-1280x800.png": "5602b1ac3e5dce62194cf6055ec86f137f45d4f1688cee1cb34e74e4fc331b28"
   },
   "physicalAndroidVerified": false,
-  "notice": "APK and offline package evidence will be added after the frozen-source builds. Rich UI fixtures do not establish natural pacing or long-term balance."
+  "notice": "Rich UI fixtures do not establish natural pacing or long-term balance. Physical Android verification remains pending.",
+  "artifacts": {
+    "wendao-lingqi-v4.3-preview.apk": {
+      "bytes": 132216769,
+      "sha256": "105f942e20a57ad71df323a799f51bb5c797803f0fd6aa772148f8725fceb6df"
+    },
+    "wendao-lingqi-v4.3-preview.html": {
+      "bytes": 176780896,
+      "sha256": "538b58d60534f48fa6e24d46b7cb2294870e32fbc94e80a3918cce68dd11805a"
+    },
+    "wendao-lingqi-v4.3-preview.zip": {
+      "bytes": 132274497,
+      "sha256": "a406a5b946bd1464bb8c8e8af80df66aaf5c196b0080186835e2bce3f5f163a5"
+    }
+  },
+  "verifiedAt": "2026-10-16T16:49:25.882002+00:00",
+  "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
+  "androidBuildVerified": true
 }

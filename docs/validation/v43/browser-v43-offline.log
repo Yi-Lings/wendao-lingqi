@@ -1,0 +1,5 @@
+PASS offline HTML boots its independent playable preview with all media embedded
+PASS offline world choice commits once and the journal survives file reload
+PASS offline actual crafting records the exact recipe and preserves it after file reload
+PASS offline read-only full replay works with an explicitly supplied legacy completion and no external assets
+{"passed":true,"tests":4,"pageErrors":[]}

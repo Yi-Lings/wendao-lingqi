@@ -1,3 +1,11 @@
+# V4.3 当前交付
+
+最新版本为 v4.3.0-preview，包含 Android APK、独立离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。主发布工作流 publish-preview.yml 已切到 V4.3；旧标签、分片与发布保留。
+
+parts-v43/manifest.json 将本地测试过的 APK 绑定到源码 e760eecf7024fdf69632e73f1fc1e5144fc58c50，记录全部输入、分片/全包 SHA 和体验证书。Actions 先验证来源并重组同一文件，再审计包/签名、复现离线 HTML/ZIP、生成完整源码快照并上传。v43-artifact-manifest.json 是预期字节清单。用户直接下载 Release 附件，无需处理分片。
+
+## 历史 V4.2 记录
+
 # V4.2 当前交付
 
 最新版本为 `v4.2.0-preview`，包含 APK、离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。对应发布使用 `.github/workflows/publish-preview.yml`，与下方历史 V4.1/V4/V3 流程分开。

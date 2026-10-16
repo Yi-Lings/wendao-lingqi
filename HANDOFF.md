@@ -6,7 +6,7 @@
 
 24 篇人界故事支持分段全文重读，游标只存在界面；已知历史只显示原分支，旧档无选择时明确标记文本查阅。六段炼体仪式按当前目标重写正文、动作提示和回忆，保留原费用、试炼、阵纹次序及兼容丹方。说明见 docs/ITERATION_V4_3.md。
 
-375 项逻辑、151 项源页面浏览器检查通过。报告与截图见 docs/validation/v43。当前正在冻结源码、构建 Android 4.3/code7 和独立离线网页，再发布 v4.3.0-preview；最新公开状态以 Release 和补充证据为准。当前无 Android 真机/模拟器。
+375 项逻辑、155 项浏览器检查（151 源页面＋4 实际离线文件）通过。报告与截图见 docs/validation/v43。冻结源码 e760eecf7024fdf69632e73f1fc1e5144fc58c50 已构建 Android 4.3/code7 和独立离线网页，107 个资源/签名/对齐通过，随后发布 v4.3.0-preview；最新公开状态以 Release 和补充证据为准。当前无 Android 真机/模拟器。
 
 发布使用 .github/workflows/publish-preview.yml，目标已更新 V4.3。APK 先在本地构建并检查，分片/来源 manifest 再交给 Actions 重组同一文件上传，保持体验证书。tools/verify-preview-release.py 从 package.json 推导当前系列并核对对应 manifest；直传上传接口限制仍使用 Actions 处理，不修改认证/TLS。
 

@@ -32,6 +32,25 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
   assert(before.records.some(x=>x.id===id));assert.equal(await p.locator('[data-action="resolveEncounter"]').count(),0);
   await p.reload({waitUntil:'networkidle',timeout:90000});assert.deepEqual(await p.evaluate(()=>window.Lingqi.state().wanderings),before);
  });
+ if(await p.evaluate(()=>!!window.Lingqi.state().production)){
+  await test('offline actual crafting records the exact recipe and preserves it after file reload',async()=>{
+   const before=await p.evaluate(()=>window.Lingqi.state().production.pills.heal0?.batches||0);
+   await p.evaluate(()=>window.Lingqi.showModal('alchemy'));
+   const buttons=p.locator('[data-action="craftPill"]');let found=false;
+   for(let i=0;i<await buttons.count();i++)if(await buttons.nth(i).evaluate(b=>JSON.parse(b.dataset.payload).id==='heal0')){await buttons.nth(i).click();found=true;break;}
+   assert(found);assert.equal(await p.evaluate(()=>window.Lingqi.state().production.pills.heal0.batches),before+1);
+   await p.reload({waitUntil:'networkidle',timeout:90000});assert.equal(await p.evaluate(()=>window.Lingqi.state().production.pills.heal0.batches),before+1);
+  });
+  await test('offline read-only full replay works with an explicitly supplied legacy completion and no external assets',async()=>{
+   report.replayFixtureNotice='This case imports a validated supplied legacy completion solely to verify bundled replay UI; it is not evidence of naturally completing a chapter.';
+   await p.evaluate(()=>{const now=Date.now();Date.now=()=>now;const s=window.Lingqi.state();s.training=false;s.lastAt=now;s.story={chapter:1,mercy:1,truth:0,ending:null,completed:[0],sideCompleted:[],journeys:{}};if(!window.Lingqi.import(JSON.stringify(s)))throw Error('Legacy replay fixture failed validation');window.Lingqi.navigate('fate');});
+   await p.locator('details.compact-details summary').filter({hasText:'仙途档案'}).click();
+   const before=await p.evaluate(()=>window.Lingqi.state());
+   const buttons=p.locator('[data-ui="story-memory"]');await buttons.first().click();await p.waitForSelector('[data-narrative="memory"]');
+   assert.match(await p.locator('.memory-notice').innerText(),/旧记录未保留抉择/);assert.equal(await p.locator('[data-narrative="memory"] [data-action]').count(),0);assert(await p.locator('.memory-paragraph').count()>2);
+   await p.locator('.memory-sections button').nth(1).click();assert.equal(await p.locator('.memory-screen').getAttribute('data-memory-section'),'clues');assert.deepEqual(await p.evaluate(()=>window.Lingqi.state()),before);
+  });
+ }
  for(const key of ['pageErrors','consoleErrors','failedRequests','externalRequests'])assert.equal(report[key].length,0,JSON.stringify(report[key]));
  await context.close();report.passed=report.tests.every(x=>x.passed);
 })().catch(e=>{report.passed=false;report.fatal=e.stack;console.error(e);}).finally(async()=>{
