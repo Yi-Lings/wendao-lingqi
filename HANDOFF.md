@@ -8,6 +8,8 @@
 
 V4.4 方案与验证见 docs/ITERATION_V4_4.md、docs/validation/v44。Android 4.4/code8，包名 com.lingqi.game.preview。publish-preview.yml 已切换 V4.4；离线测试从 package.json 推导当前文件名，也支持 LINGQI_PREVIEW_HTML。公开交付状态见本轮后续记录。尚无 Android 真机验收。
 
+394 项逻辑、174 项浏览器检查（169 源页面＋5 实际离线）通过，完整报告与截图已收录 docs/validation/v44；main/work Android CI 39012547822 / 39012548044 均成功。APK 冻结构建输入 450dabd83015d448a7193dcebb6e8d232f68d263，共 118 项；108 个打包资源逐字节匹配，原签名/对齐通过。APK 132224750 字节，SHA-256 4766dcb4721017cd9d2f4acd450ac1e0d68a62f88a0ccc343cc6a303053c8836。releases/parts-v44 为六分片及来源清单；Actions 发布时重组同一 APK 并验证 HTML/ZIP 散列。
+
 ## 历史 V4.3 记录
 
 以下为历史证据，当前任务规则和版本以上文为准。

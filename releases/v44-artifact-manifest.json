@@ -1,0 +1,19 @@
+{
+  "version": "4.4.0",
+  "sourceCommit": "450dabd83015d448a7193dcebb6e8d232f68d263",
+  "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
+  "files": {
+    "wendao-lingqi-v4.4-preview.apk": {
+      "bytes": 132224750,
+      "sha256": "4766dcb4721017cd9d2f4acd450ac1e0d68a62f88a0ccc343cc6a303053c8836"
+    },
+    "wendao-lingqi-v4.4-preview.html": {
+      "bytes": 176799060,
+      "sha256": "ba26378d1d6a8e1b11af0a4869cc448bc381c17ba5d2cfd52e3d7128ae878819"
+    },
+    "wendao-lingqi-v4.4-preview.zip": {
+      "bytes": 132281089,
+      "sha256": "b18361d258693a60dd9b64c128e75b158c072365a6801b4b00a24b8b2c2c5690"
+    }
+  }
+}
