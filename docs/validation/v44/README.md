@@ -1,7 +1,11 @@
 # V4.4 验证记录
 
-2026-10-17。394 项逻辑、174 项浏览器检查（169 源页面＋5 实际 file:// 离线文件）通过。108 个 Web 资源与 APK 逐字节相同，61 项原有 PNG/MP3 保留原字节；4.4/code8 的 APK 构建、签名与对齐通过。尚未进行 Android 真机验收。
+2026-10-17。394 项逻辑、174 项浏览器检查（169 源页面＋5 实际 file:// 离线文件）通过。108 个 Web 资源与 APK 逐字节相同，61 项原有 PNG/MP3 保留原字节；4.4/code8 的 APK 构建、签名与对齐通过。六个公开附件已匿名完整下载并核对，源码快照 823 个文件与发布提交逐项一致，相同源码独立解压后 394 项检查通过。尚未进行 Android 真机验收。
 
+- [V4.4 下载 APK、离线网页与源码](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.4.0-preview)
+- [六个公开附件、源码逐文件与散列证明](public-release.json)
+- [源码包独立运行日志](source-archive-node.log)
+- [GitHub 校验与发布任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39012775932)
 - [本轮求证方案与旧约定兼容](../../ITERATION_V4_4.md)
 - [逻辑、浏览器、资源散列与截图清单](summary.json)
 - [394 项逻辑检查原始日志](node.log)

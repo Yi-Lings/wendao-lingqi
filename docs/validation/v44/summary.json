@@ -270,5 +270,15 @@
   "sourceCommit": "450dabd83015d448a7193dcebb6e8d232f68d263",
   "verifiedAt": "2026-10-17T07:11:41.436468+00:00",
   "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
-  "androidBuildVerified": true
+  "androidBuildVerified": true,
+  "publicReleaseVerified": true,
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.4.0-preview",
+  "releaseCommit": "b536cdb08a01663ce8bda191e2626223aeda21ba",
+  "sourceArchive": {
+    "files": 823,
+    "logicPassed": 394,
+    "bytes": 279506790,
+    "sha256": "b99e16411cc99bfea8604bfdfd67786d88460168fa8965be92792f990ca44914",
+    "fileContentsMatchFrozenCommit": true
+  }
 }

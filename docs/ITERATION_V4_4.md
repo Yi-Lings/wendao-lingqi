@@ -39,3 +39,12 @@
 394 项逻辑与 174 项浏览器检查通过，包含 169 项源页面回归与 5 项实际离线文件检查。本轮新增 19 项逻辑检查和 18 项源界面检查。两路线完整合法行动模拟继续通过，旧 V1/V2 约定在全部九个保存阶段均可恢复。
 
 Android 4.4/code8 的 108 个打包资源逐字节匹配；118 个 Web/Android 构建输入冻结于 `450dabd83015d448a7193dcebb6e8d232f68d263`。APK 132224750 字节，SHA-256 `4766dcb4721017cd9d2f4acd450ac1e0d68a62f88a0ccc343cc6a303053c8836`，原体验签名及 ZIP 对齐通过。main/work 对应 Android CI 均成功。离线 HTML 内嵌 64 项资源，原 PNG/MP3 共 61 项逐字节保留。
+
+
+## 公开交付
+
+[V4.4 体验版](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.4.0-preview)已公开，提供 APK、离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。[发布任务](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39012775932)成功，两个分支 Android CI 成功。
+
+六个公开附件均匿名完整下载，使用 HTTP Range 并核对每段 Content-Range、完整大小与 SHA-256；APK/离线 HTML/ZIP 与本地验收字节一致。源码 ZIP 的 823 个文件与冻结发布提交逐项相同，ZIP CRC 与内附清单通过；同一源码快照独立解压后再次通过 394 项逻辑检查。完整散列、大小与 URL 见 [公开证明](validation/v44/public-release.json)。
+
+发布标签对应 `b536cdb08a01663ce8bda191e2626223aeda21ba`，APK 构建输入对应 `450dabd83015d448a7193dcebb6e8d232f68d263`；后续仅补交付记录与说明。两个分支同步全部工程、方案、119 张截图及验证记录，旧版本继续保留。Android 真机仍未验收。

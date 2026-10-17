@@ -1,5 +1,13 @@
 # 问道·灵契 V4.4 接手说明
 
+## V4.4 公开交付已完成
+
+Release：https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.4.0-preview 。发布标签/源码快照 b536cdb08a01663ce8bda191e2626223aeda21ba，APK 冻结构建输入 450dabd83015d448a7193dcebb6e8d232f68d263，全部 Web/Android 输入相同；后续提交只补验证记录与说明。
+
+发布任务 39012775932、main/work Android CI 39012547822 / 39012548044 均成功。394 项逻辑、174 项浏览器、108 个 APK 资源一致性、原体验签名与对齐通过；119 张截图见 docs/validation/v44。六个公开附件已匿名完整下载并验证 SHA-256、ZIP CRC、离线 HTML 与源码 823 个文件；相同源码快照独立解压后再次通过 394 项检查。所有详情见 docs/validation/v44/public-release.json。没有 Android 真机验收。
+
+main/work 统一同步，旧标签保留。主发布工作流现为 V4.4。下方历史记录保留，不覆盖当前规则与公开状态。
+
 更新：2026-10-17 UTC。用户继续迭代授权持续有效，完成后将全部工程、方案、截图与证据提交 main/work，并发布新的体验版；保留旧标签与体验签名。
 
 当前实现 V4.4「问证与归途」：前两卷 seek 分支接入 bell_flow 与 furnace_seal 两案。正式非试阵履历、两条已读证据、结论均吻合才推进求证。错误可重试且不花资源，成功不可改写，仍需归来对话和原有修行目标后一次性领取章节奖励。归档、全文、下一卷记忆按实际保存结果展示。
