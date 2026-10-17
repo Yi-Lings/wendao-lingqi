@@ -38,4 +38,4 @@
 
 394 项逻辑与 174 项浏览器检查通过，包含 169 项源页面回归与 5 项实际离线文件检查。本轮新增 19 项逻辑检查和 18 项源界面检查。两路线完整合法行动模拟继续通过，旧 V1/V2 约定在全部九个保存阶段均可恢复。
 
-Android 4.4/code8 的 108 个打包资源逐字节匹配；118 个 Web/Android 构建输入冻结于 `450dabd83015d448a7193dcebb6e8d232f68d263`。APK 132224750 字节，SHA-256 `4766dcb4721017cd9d2f4acd450ac1e0d68a62f88a0ccc343cc6a303053c8836`，原体验签名及 ZIP 对齐通过。main/work 对应 Android CI 均成功。离线 HTML 内嵌 64 项资源，原 PNG/MP3 共 63 项逐字节保留。
+Android 4.4/code8 的 108 个打包资源逐字节匹配；118 个 Web/Android 构建输入冻结于 `450dabd83015d448a7193dcebb6e8d232f68d263`。APK 132224750 字节，SHA-256 `4766dcb4721017cd9d2f4acd450ac1e0d68a62f88a0ccc343cc6a303053c8836`，原体验签名及 ZIP 对齐通过。main/work 对应 Android CI 均成功。离线 HTML 内嵌 64 项资源，原 PNG/MP3 共 61 项逐字节保留。
