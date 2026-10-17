@@ -1,8 +1,8 @@
-name: Publish verified V4.3 preview
+name: Publish verified V4.4 preview
 on:
   workflow_dispatch:
 concurrency:
-  group: wendao-v43-preview-publish
+  group: wendao-v44-preview-publish
   cancel-in-progress: false
 permissions:
   contents: write
@@ -20,20 +20,20 @@ jobs:
       - name: Verify game logic and frozen APK sources
         run: |
           npm test
-          python3 tools/check-artifact-sources.py --manifest releases/parts-v43/manifest.json --fetch-source
+          python3 tools/check-artifact-sources.py --manifest releases/parts-v44/manifest.json --fetch-source
       - name: Assemble the exact tested APK and standalone preview
         run: |
-          python3 tools/assemble-apk.py --parts releases/parts-v43 --output dist/wendao-lingqi-v4.3-preview.apk --checksum releases/wendao-lingqi-v4.3-preview.apk.sha256
-          python3 tools/build-web-preview.py --output dist/wendao-lingqi-v4.3-preview.html --zip
+          python3 tools/assemble-apk.py --parts releases/parts-v44 --output dist/wendao-lingqi-v4.4-preview.apk --checksum releases/wendao-lingqi-v4.4-preview.apk.sha256
+          python3 tools/build-web-preview.py --output dist/wendao-lingqi-v4.4-preview.html --zip
       - name: Verify package, signature and exact standalone output
         run: |
           TASK_SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
           TASK_BUILD_TOOLS="$TASK_SDK_ROOT/build-tools/35.0.0"
           test -x "$TASK_BUILD_TOOLS/aapt2"
           export ANDROID_HOME="$TASK_SDK_ROOT"
-          python3 audit-apk.py dist/wendao-lingqi-v4.3-preview.apk --variant debug --report dist/apk-preview-check.txt
-          "$TASK_BUILD_TOOLS/zipalign" -c -p 4 dist/wendao-lingqi-v4.3-preview.apk
-          "$TASK_BUILD_TOOLS/apksigner" verify --verbose --print-certs dist/wendao-lingqi-v4.3-preview.apk > dist/apk-signature.txt
+          python3 audit-apk.py dist/wendao-lingqi-v4.4-preview.apk --variant debug --report dist/apk-preview-check.txt
+          "$TASK_BUILD_TOOLS/zipalign" -c -p 4 dist/wendao-lingqi-v4.4-preview.apk
+          "$TASK_BUILD_TOOLS/apksigner" verify --verbose --print-certs dist/wendao-lingqi-v4.4-preview.apk > dist/apk-signature.txt
           python3 tools/verify-preview-release.py
       - name: Package the complete reviewed source
         run: python3 tools/package-source.py
@@ -41,18 +41,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TASK_RELEASE_TAG='v4.3.0-preview'
+          TASK_RELEASE_TAG='v4.4.0-preview'
           if ! gh release view "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release create "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V4.3 · 丹火与往事' --notes-file docs/RELEASE_NOTES_V4_3.md --prerelease --draft
+            gh release create "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V4.4 · 问证与归途' --notes-file docs/RELEASE_NOTES_V4_4.md --prerelease --draft
           fi
-          gh release upload "$TASK_RELEASE_TAG" dist/wendao-lingqi-v4.3-preview.apk dist/wendao-lingqi-v4.3-preview.apk.sha256 dist/wendao-lingqi-v4.3-preview.zip dist/wendao-lingqi-v4.3-preview.zip.sha256 dist/wendao-lingqi-v4.3.0-source.zip dist/wendao-lingqi-v4.3.0-source.zip.sha256 --repo "$GITHUB_REPOSITORY" --clobber
-          gh release edit "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V4.3 · 丹火与往事' --notes-file docs/RELEASE_NOTES_V4_3.md --prerelease --latest=false --draft=false
+          gh release upload "$TASK_RELEASE_TAG" dist/wendao-lingqi-v4.4-preview.apk dist/wendao-lingqi-v4.4-preview.apk.sha256 dist/wendao-lingqi-v4.4-preview.zip dist/wendao-lingqi-v4.4-preview.zip.sha256 dist/wendao-lingqi-v4.4.0-source.zip dist/wendao-lingqi-v4.4.0-source.zip.sha256 --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit "$TASK_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title '问道·灵契 V4.4 · 问证与归途' --notes-file docs/RELEASE_NOTES_V4_4.md --prerelease --latest=false --draft=false
       - uses: actions/upload-artifact@v4
         with:
-          name: v43-publication-verification
+          name: v44-publication-verification
           path: |
             dist/apk-preview-check.txt
             dist/apk-signature.txt
-            dist/wendao-lingqi-v4.3-preview.manifest.json
+            dist/wendao-lingqi-v4.4-preview.manifest.json
             dist/*.sha256
           if-no-files-found: error

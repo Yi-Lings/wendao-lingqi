@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension,node?require('./investigation.js'):root.WendaoInvestigation);
   if(typeof module==='object'&&module.exports)module.exports=api;else root.WendaoCore=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,N,R,A){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,N,R,A,I){
 'use strict';
 const CAP=1e12,MAX_TIME=8640000000000000,DAY=86400000,HOUR=3600000,TICK=3000,PRODUCTION=60000;
 const CULT_CAP=DAY,PROD_CAP=7*DAY,SWEEP_CAP=8*HOUR;
@@ -133,7 +133,7 @@ function createState(now){
     slotLevels:Object.fromEntries(slots.map(id=>[id,0])),nextUid:3,ownedTreasures:{},blueprints:[],
     facilities:{field:1,furnace:1,forge:1,library:1,array:1},
     alchemy:{nextId:1,jobs:[]},
-    production:{pills:{},gear:{}},
+    production:{pills:{},gear:{}},investigations:{},
     progress:{firstClears:[],stars:{},tower:0,sectTrials:[],trialWins:{},bossWins:{},dungeonWins:{},endingTrials:{body:false,magic:false}},
     stats:Object.fromEntries(statIds.map(id=>[id,0])),
     sect:{joined:false,school:null,contribution:0,rank:0,claimed:[],taskCounts:{}},
@@ -395,6 +395,7 @@ function validateProduction(s){
   }
 }
 function journeyMetric(s,r){
+  if(r.key==='investigation')return s.investigations?.[r.id]?.status==='resolved'?1:0;
   const produced=productionMetric(s,r);if(produced!==null)return produced;
   if(r.key==='rank')return maxRank(s);
   if(r.key==='maxRealm')return Math.floor(maxRank(s)/10);
@@ -433,7 +434,7 @@ function validateJourneys(s){
     if(chapter&&!isComplete&&chapter.id!==s.story.chapter)throw Error('故事旅程不能跳过前卷');
     if(quest&&quest.previous&&!s.story.sideCompleted.includes(quest.previous))throw Error('故事旅程缺少前置同行');
     if(quest&&!isComplete&&maxRank(s)<Math.max(ep.unlockRank||0,...catalog.requirements.filter(r=>r.key==='rank').map(r=>r.count),0))throw Error('故事旅程修行阶段尚未开放');
-    if(e.rulesVersion!==undefined)integer(e.rulesVersion,1,2,'故事目标版本');
+    if(e.rulesVersion!==undefined)integer(e.rulesVersion,1,3,'故事目标版本');
     const beforeChoice=['intro','survey','decision'].includes(e.stage);
     if(beforeChoice?e.choice!==null:!['protect','seek'].includes(e.choice))throw Error('故事旅程选择无效');
     array(e.clues,ep.clues.length,'现场线索');
@@ -526,7 +527,7 @@ function validateV3(raw){
   if(s.story.ending!==null){if(s.story.chapter!==6)throw Error('未完成剧情不能结局');const id=typeof s.story.ending==='string'?s.story.ending:s.story.ending.id;if(!['guardian','wanderer','teacher'].includes(id))throw Error('结局 ID 无效');}
   array(s.story.completed,6,'已完成章节');if(new Set(s.story.completed).size!==s.story.completed.length)throw Error('章节记录重复');for(const id of s.story.completed)if(!table(C.chapters).some(c=>c.id===id)||id>=s.story.chapter)throw Error('章节 ID 无效');
   array(s.story.sideCompleted,18,'支线');if(new Set(s.story.sideCompleted).size!==s.story.sideCompleted.length)throw Error('支线记录重复');for(const id of s.story.sideCompleted)if(!table(C.sidequests).some(q=>q.id===id))throw Error('支线 ID 无效');
-  if(R){R.normalize(s);R.validate(s);}validateJourneys(s);if(A){A.normalize(s);A.validate(s);}
+  if(R){R.normalize(s);R.validate(s);}I.validate(s);validateJourneys(s);if(A){A.normalize(s);A.validate(s);}
   object(s.gacha,'gacha');integer(s.gacha.highPity,0,9,'橙保底');integer(s.gacha.redPity,0,79,'红保底');integer(s.gacha.total,0,CAP,'累计感应');boolean(s.gacha.fateGuarantee,'定向');if(!targetOk(s.gacha.target))throw Error('感应目标无效');
   array(s.gacha.history,200,'感应历史');for(const h of s.gacha.history){object(h,'感应记录');integer(h.at,0,MAX_TIME,'抽取时间');integer(h.rarity,0,5,'抽取品质');if(!['gear','equipment','treasure','technique','pill','material','materials'].includes(h.category))throw Error('抽取类别无效');
     if(h.category==='gear'||h.category==='equipment'){if(!targetOk(h.id)||!String(h.id).startsWith('gear_'))throw Error('历史装备 ID 无效');if(h.uid!==undefined)gearUid(h.uid);}else if(h.category==='treasure')catalogKey(C.treasures,h.id,'历史灵宝');else if(h.category==='technique')catalogKey(C.techniques,h.id,'历史功法');else if(h.category==='pill')catalogKey(C.recipes,h.id,'历史丹药');else if(!materialIds.includes(h.id))throw Error('历史材料 ID 无效');

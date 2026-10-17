@@ -147,7 +147,13 @@ class Campaign {
   performStoryGoal(journey) {
     const goal=journey.mission.goal, needed=journey.mission.required-journey.mission.current;
     for(let n=0;n<needed;n++) {
-      if(goal.key==='dungeonWins'||goal.key==='bossWins') {
+      if(goal.key==='investigation'){
+        const c=E.modules.investigation.cases[goal.id];
+        if(!(this.state.progress.dungeonWins[c.source]>0)){if(!E.previewDungeon(this.state,{id:c.source,difficulty:0}).allowed)return false;this.clearWithRetry({id:c.source});}
+        this.act({type:'beginInvestigation',id:c.id});
+        for(const evidence of c.answer){this.act({type:'readEvidence',id:c.id,evidence});this.act({type:'selectEvidence',id:c.id,evidence});}
+        this.act({type:'submitInvestigation',id:c.id,hypothesis:c.conclusion});
+      }else if(goal.key==='dungeonWins'||goal.key==='bossWins') {
         const id=goal.id||(goal.key==='bossWins'?'boss_0':'resource_herb');
         if(!E.previewDungeon(this.state,{id,difficulty:0}).allowed)return false;
         if(C.dungeons[id].type==='cave')this.completeCave(id);

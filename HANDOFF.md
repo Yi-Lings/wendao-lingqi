@@ -1,3 +1,17 @@
+# 问道·灵契 V4.4 接手说明
+
+更新：2026-10-17 UTC。用户继续迭代授权持续有效，完成后将全部工程、方案、截图与证据提交 main/work，并发布新的体验版；保留旧标签与体验签名。
+
+当前实现 V4.4「问证与归途」：前两卷 seek 分支接入 bell_flow 与 furnace_seal 两案。正式非试阵履历、两条已读证据、结论均吻合才推进求证。错误可重试且不花资源，成功不可改写，仍需归来对话和原有修行目标后一次性领取章节奖励。归档、全文、下一卷记忆按实际保存结果展示。
+
+新任务 rulesVersion 3；旧 V1/V2 指标、baseline 和文字游标沿用原约定。investigation.js 独立纯规则/有界校验，core/story/engine 共用；没有反推旧档经历。案卷显示及全文阅读不写存档。手机单列、桌面双列，独立正文滚动与固定返回操作；保存失败完整回滚。
+
+V4.4 方案与验证见 docs/ITERATION_V4_4.md、docs/validation/v44。Android 4.4/code8，包名 com.lingqi.game.preview。publish-preview.yml 已切换 V4.4；离线测试从 package.json 推导当前文件名，也支持 LINGQI_PREVIEW_HTML。公开交付状态见本轮后续记录。尚无 Android 真机验收。
+
+## 历史 V4.3 记录
+
+以下为历史证据，当前任务规则和版本以上文为准。
+
 # 问道·灵契 V4.3 接手说明
 
 ## V4.3 公开交付已完成

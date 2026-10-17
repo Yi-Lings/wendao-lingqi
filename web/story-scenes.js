@@ -283,12 +283,12 @@ for(const [id,rank] of Object.entries({world_forge:10,world_sect:4,world_tower:2
 
 // Version 1 is kept byte-for-byte in episodes for promises already accepted.
 // Version 2 names the actual recipe / set and slot; old totals are never guessed.
-function missionGoals(id,choice,version=2){
+function missionGoals(id,choice,version=3){
   const ep=episodes[id],option=ep&&(Array.isArray(ep.choices)?ep.choices.find(x=>x.id===choice):ep.choices[choice]);
   if(!option)return [];
   const goals=option.goals||[option.goal];
   if(version===1)return goals;
-  return goals.map(goal=>{
+  const specific=goals.map(goal=>{
     if(goal.key==='crafted'){
       const recipe=(id==='chapter_0'&&choice==='seek'||id==='chapter_3'||id==='world_garden')?'purify0':'heal0';
       const name=recipe==='purify0'?'清心散':'回春丹';
@@ -296,6 +296,11 @@ function missionGoals(id,choice,version=2){
     }
     if(goal.key==='forged')return {...goal,key:'gearForge',id:'array:charm',label:'亲手打造一件回春套装佩饰，验证可复用的护阵器（任意品质）',nav:{page:'cave',modal:'forge',payload:{set:'array',slot:'charm',rarity:0}}};
     return goal;
+  });
+  if(version<3)return specific;
+  return specific.map((goal,index)=>{
+    const proof=choice==='seek'&&(id==='chapter_0'&&index===0?'bell_flow':id==='chapter_1'&&index===2?'furnace_seal':null);
+    return proof?{key:'investigation',id:proof,count:1,label:proof==='bell_flow'?'完成药谷取样，交叉核验两条热息流向的证据':'赢下试剑决胜，核验封签与值炉记录',nav:{page:'fate',kind:'investigation',payload:{id:proof}}}:goal;
   });
 }
 function freeze(value){if(value&&typeof value==='object'&&!Object.isFrozen(value)){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;}

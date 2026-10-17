@@ -10,7 +10,8 @@ const copy=x=>JSON.parse(JSON.stringify(x));
 function act(s,a){const result=E.act(s,a,NOW);assert.equal(result.ok,true,a.type+': '+result.message);return result;}
 function denied(s,a){const before=JSON.stringify(s),r=E.act(s,a,NOW);assert.equal(r.ok,false,a.type+' must reject');assert.equal(JSON.stringify(s),before,'rejection remains atomic');}
 function metric(s,r,n){
- if(r.key==='pillBatch'){const row=s.production.pills[r.id]||(s.production.pills[r.id]={batches:0,quantity:0});row.batches=n;row.quantity=Math.max(n,row.quantity);}
+ if(r.key==='investigation')require('./story-fixtures.cjs').proofFixture(s,r.id,NOW);
+ else if(r.key==='pillBatch'){const row=s.production.pills[r.id]||(s.production.pills[r.id]={batches:0,quantity:0});row.batches=n;row.quantity=Math.max(n,row.quantity);}
  else if(r.key==='gearForge')s.production.gear[r.id]=n;
  else if(r.key==='rank'){if(S.value(s,r)<n)s.paths[s.route]={realm:Math.floor(n/10),layer:n%10+1,xp:0,reserve:0};}
  else if(r.key==='sect'){s.sect.joined=true;s.sect.school='sword';}

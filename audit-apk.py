@@ -17,7 +17,7 @@ args.package_id = args.package_id or ('com.lingqi.game.preview' if args.variant 
 args.version_code = args.version_code or re.search(r'\bversionCode\s+(\d+)', config).group(1)
 args.version_name = args.version_name or re.search(r"\bversionName\s+'([^']+)'", config).group(1)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'monster-art.js', 'story-scenes.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
+modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'monster-art.js', 'story-scenes.js', 'investigation.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
        'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',

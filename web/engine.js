@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension,node?require('./investigation.js'):root.WendaoInvestigation);
   if(node)module.exports=api;else root.IdleEngine=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A,I){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const no=message=>({ok:false,message,error:message});
@@ -165,6 +165,7 @@ function act(state,action,now){
     if(result===null){result=A.handle(candidate,action,now);if(result?.ok&&result.data?.battleRequest){const started=B.handle(candidate,{type:'startDungeon',...result.data.battleRequest},now);if(!started?.ok)return started||no('仙界出征未能开始');result.data=Object.assign({},result.data,started.data||{});}}
     if(result===null)result=Q.handle(candidate,action,now,R);
     if(result===null)result=B.handle(candidate,action,now);
+    if(result===null)result=I.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
     if(result===null)return no('未识别的操作');
     if(!result.ok)return Object.assign({},result,{error:result.error||result.message});
@@ -188,5 +189,5 @@ return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.att
   journey,worldView,preparation,daoInsight:K.daoInsight,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
-  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A}};
+  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A,investigation:I}};
 });

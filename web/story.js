@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./story-scenes.js'):root.WendaoStoryScenes);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./story-scenes.js'):root.WendaoStoryScenes,node?require('./investigation.js'):root.WendaoInvestigation);
   if(node)module.exports=api;else root.WendaoStory=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,N){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,N,I){
 'use strict';
 const own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k);
 const copy=x=>JSON.parse(JSON.stringify(x));
@@ -14,6 +14,7 @@ function completedEndingTrial(s,route){
   return !!(s.progress.endingTrials[route]&&(s.ritualLegacyWins&&s.ritualLegacyWins[route+':5']||s.ritual&&s.ritual.route===route&&s.ritual.realm===5&&s.ritual.phase==='complete'||Array.isArray(s.ritualHistory)&&s.ritualHistory.some(h=>h.route===route&&h.realm===5)));
 }
 function value(s,r){
+  if(r.key==='investigation')return s.investigations?.[r.id]?.status==='resolved'?1:0;
   const produced=K.productionMetric(s,r);if(produced!==null)return produced;
   if(r.key==='rank')return K.maxRank(s);
   if(r.key==='maxRealm')return maxTier(s);
@@ -33,6 +34,7 @@ function value(s,r){
 }
 function requirementNav(s,r){
  const key=r.key,p=s.paths[s.route];
+ if(key==='investigation')return {page:'fate',kind:'investigation',payload:{id:r.id}};
  if(key==='rank'||key==='maxRealm'||key==='endingTrial')return {page:'cultivation',...(key==='endingTrial'||p.layer===10?{kind:'ritual'}:{})};
  if(key==='tower')return {page:'adventure',modal:'dungeon',payload:{id:'tower',floor:Math.min(60,(s.progress.tower||0)+1)}};
  if(key==='bossWins'||key==='dungeonWins'||key==='manualWins')return {page:'adventure',modal:'dungeon',payload:{id:r.id|| (key==='bossWins'?'boss_0':'resource_herb')}};
@@ -55,7 +57,7 @@ function requirementView(s,requirements){return (requirements||[]).map(r=>({key:
 function satisfied(s,requirements){return requirementView(s,requirements).every(x=>x.done);}
 const stages=['intro','survey','decision','reply','mission','interlude','outro','ready','completed'];
 const missionGoals=choice=>choice.goals||[choice.goal];
-function episode(id,version=2){
+function episode(id,version=3){
   const collection=N&&N.episodes||{},scene=Array.isArray(collection)?collection.find(x=>x.id===id):collection[id];
   const chapter=typeof id==='string'&&/^chapter_[0-5]$/.test(id)?C.chapters[Number(id.slice(8))]:null;
   const quest=chapter?null:C.sidequests.find(x=>x.id===id),catalog=chapter||quest;
@@ -80,7 +82,7 @@ function linesFor(ep,entry){
   return [];
 }
 function journeyView(s,id){
-  const saved=s.story.journeys&&s.story.journeys[id],ep=episode(id,saved?saved.rulesVersion||1:2);if(!ep)return null;
+  const saved=s.story.journeys&&s.story.journeys[id],ep=episode(id,saved?saved.rulesVersion||1:3);if(!ep)return null;
   const isComplete=completed(s,ep),entry=saved?copy(saved):null;
   const stage=isComplete?'completed':entry?entry.stage:'not-started',requirements=requirementView(s,ep.requirements);
   const goals=entry&&entry.choice?missionGoals(ep.choices[entry.choice]):[],goal=goals[entry&&entry.missionIndex||0]||null;
@@ -90,7 +92,7 @@ function journeyView(s,id){
   const mission=goal?{goal,current,required:goal.count,done,index,total:goals.length,nextRequirement:done&&index===goals.length-1?missingRequirements[0]||null:null,canReturn:done&&(index<goals.length-1||requirements.every(x=>x.done))}:null;
   const lines=entry?linesFor(ep,entry):[],selectedClue=stage==='survey'&&entry&&entry.clues.length?ep.clues.find(clue=>clue.id===entry.clues[entry.clues.length-1]):null;
   const line=selectedClue?{speaker:selectedClue.speaker||'narrator',text:selectedClue.text,expression:0}:lines[entry&&entry.line||0]||null;
-  return {episode:ep,entry,line,stage,mission,requirements,missingRequirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,cluesRead:entry?entry.clues.length:0};
+  return {episode:ep,entry,line,stage,mission,requirements,missingRequirements,accessible:accessible(s,ep),selectedClue,ready:!isComplete&&stage==='ready'&&!!mission&&index===goals.length-1&&mission.done&&requirements.every(x=>x.done),completed:isComplete,continuity:id==='chapter_1'&&s.investigations?.bell_flow?.status==='resolved'?'青岚记得你在雪夜核验的热息回路：这一回，也等证据相合后再下判断。':null,cluesRead:entry?entry.clues.length:0};
 }
 // Reading cursors are view parameters only, never save fields or game actions.
 function replayView(s,id,options={}){
@@ -99,11 +101,12 @@ function replayView(s,id,options={}){
   const sections=[{id:'intro',label:'相遇',lines:ep.intro},{id:'clues',label:'现场线索',lines:ep.clues.filter(c=>!j.entry||j.entry.clues.includes(c.id)).map(c=>({speaker:c.speaker||'narrator',text:c.title+'：'+c.text}))},{id:'reply',label:'抉择回应',lines:selected.reply}];
   for(const [index,lines] of (selected.interludes||[]).entries())sections.push({id:'interlude_'+index,label:'第 '+(index+1)+' 幕归来',lines});
   sections.push({id:'outro',label:'归来',lines:ep.outro[choice]});
+  for(const c of Object.values(I.cases))if(c.episode===id&&s.investigations?.[c.id]?.status==='resolved')sections.push({id:'proof_'+c.id,label:'证据札记',lines:[...c.answer.map(key=>{const e=c.evidence.find(x=>x.id===key);return {speaker:'narrator',text:e.title+'：'+e.text};}),{speaker:'narrator',text:c.reason},{speaker:c.speaker,text:c.response}]});
   const active=sections.find(section=>section.id===options.section)||sections[0];
   return {episode:ep,choice,choiceKnown:known,choices:['protect','seek'].map(id=>({id,label:ep.choices[id].label})),sections,active,goals:missionGoals(selected),notice:known?'沿你当时的选择重读。阅读不改变进度，也不重复发放奖励。':'旧记录未保留抉择。以下是标记的分支文本查阅，不代表当时的经历。'};
 }
 function handleJourney(s,a,now){
-  const saved=s.story.journeys?.[a.episode],ep=episode(a.episode,saved?saved.rulesVersion||1:2);if(!ep)return no('这段故事尚未开放');
+  const saved=s.story.journeys?.[a.episode],ep=episode(a.episode,saved?saved.rulesVersion||1:3);if(!ep)return no('这段故事尚未开放');
   if(completed(s,ep))return no('这段故事已经完成，奖励不会重复领取');
   if(!accessible(s,ep))return no(ep.previous?'先完成前一段故事，再继续同行':'这段故事需要先走到对应的修行阶段');
   if(!s.story.journeys)s.story.journeys={};
@@ -111,7 +114,7 @@ function handleJourney(s,a,now){
   if(a.type==='beginStory'){
     if(entry)return yes('回到未完的故事',{journey:journeyView(s,ep.id)});
     if(Object.keys(s.story.journeys).length>=24)return no('故事记录已满');
-    s.story.journeys[ep.id]={stage:'intro',line:0,clues:[],choice:null,baseline:0,missionIndex:0,rulesVersion:2};
+    s.story.journeys[ep.id]={stage:'intro',line:0,clues:[],choice:null,baseline:0,missionIndex:0,rulesVersion:3};
     return yes('进入《'+ep.title+'》',{journey:journeyView(s,ep.id)});
   }
   if(!entry)return no('请先进入这段故事');
