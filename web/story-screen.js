@@ -94,7 +94,7 @@ function controls(view,episode,id){
  if(stage==='mission'){
   const done=view.mission?.canReturn??(!!view.mission?.done&&(view.requirements||[]).every(x=>x.done));
   const next=view.mission?.nextRequirement;
-  return done?act('带着经历回来','advanceStory',params):ui(next?'前往：'+next.label:'前往当前目标','story-mission',params,'primary');
+  return done?act('带着经历回来','advanceStory',params):ui(next?'前往：'+next.label:view.mission?.goal?.key==='formation'?'展开护阵图':view.mission?.goal?.key==='investigation'?'核验证据':'前往当前目标','story-mission',params,'primary');
  }
  if(stage==='ready')return /^chapter_\d+$/.test(id)?act('记下此卷 · 继续仙途','claimChapter',{choice:view.entry?.choice},'primary',!view.entry?.choice):act('记下这段经历','claimSidequest',{id});
  const clues=episode.clues||[],seen=clues.filter(clue=>examined(view.entry,clue)).length;

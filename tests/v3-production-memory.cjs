@@ -50,7 +50,7 @@ test('recipe production counters saturate safely at the same numerical cap as in
 });
 test('new promises name the exact recipe; wrong pills and old stock do not fulfil them',()=>{
  const s=stock();act(s,{type:'craftPill',id:'heal0',count:4});toMission(s,'yueheng_0','protect',NOW);
- let j=S.journeyView(s,'yueheng_0');assert.equal(j.entry.rulesVersion,3);assert.equal(j.mission.goal.key,'pillBatch');assert.equal(j.mission.goal.id,'heal0');assert.equal(j.entry.baseline,4);assert.equal(j.mission.current,0);
+ let j=S.journeyView(s,'yueheng_0');assert.equal(j.entry.rulesVersion,4);assert.equal(j.mission.goal.key,'pillBatch');assert.equal(j.mission.goal.id,'heal0');assert.equal(j.entry.baseline,4);assert.equal(j.mission.current,0);
  act(s,{type:'craftPill',id:'qi0',count:5});assert.equal(S.journeyView(s,'yueheng_0').mission.done,false);denied(s,{type:'advanceStory',episode:'yueheng_0'});
  act(s,{type:'craftPill',id:'heal0',count:1});assert.equal(S.journeyView(s,'yueheng_0').mission.done,true);
 });
@@ -66,7 +66,7 @@ test('old accepted promises retain total-crafting rules and baselines across res
  finishJourney(s,'yueheng_0',NOW);act(s,{type:'claimSidequest',id:'yueheng_0'});denied(s,{type:'claimSidequest',id:'yueheng_0'});
 });
 test('unknown story rule versions reject rather than silently replacing the accepted objective',()=>{
- const s=stock();toMission(s,'yueheng_0','protect',NOW);for(const v of [0,4,1.5,'2',null]){const t=copy(s);t.story.journeys.yueheng_0.rulesVersion=v;assert.equal(E.validate(t).ok,false);}
+ const s=stock();toMission(s,'yueheng_0','protect',NOW);for(const v of [0,5,1.5,'2',null]){const t=copy(s);t.story.journeys.yueheng_0.rulesVersion=v;assert.equal(E.validate(t).ok,false);}
 });
 test('every phase of an already accepted legacy chapter restores without changing its cursor, promise or baseline',()=>{
  let s=stock();s.stats.crafted=50;act(s,{type:'beginStory',episode:'chapter_0'});delete s.story.journeys.chapter_0.rulesVersion;

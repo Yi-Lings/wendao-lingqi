@@ -6,13 +6,13 @@
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x)),own=(o,k)=>!!o&&Object.prototype.hasOwnProperty.call(o,k);
 const cases={
- bell_flow:{id:'bell_flow',episode:'chapter_0',missionIndex:0,title:'雪下的热息',place:'青岚村 · 药圃',question:'村中热息为何在雪夜消失？找出两条能互相印证流向的证据。',source:'resource_herb',sourceLabel:'药谷取样',speaker:'qinglan',
+ bell_flow:{id:'bell_flow',episode:'chapter_0',missionIndex:0,title:'雪下的热息',art:'v9-snow-village.png',artOffset:0,place:'青岚村 · 药圃',question:'村中热息为何在雪夜消失？找出两条能互相印证流向的证据。',source:'resource_herb',sourceLabel:'药谷取样',speaker:'qinglan',
   evidence:[...N.episodes.chapter_0.clues.map(c=>({id:c.id,title:c.label,text:c.text,origin:'现场亲见'})),
    {id:'surface_frost',title:'石阶上的薄霜',text:'背阴处结着薄霜，向阳处已融化。它能说明昨夜寒冷，却看不出热息去了哪里。',origin:'药圃补察'},
    {id:'old_ledger',title:'去年的采药簿',text:'旧簿记着往年霜期也会减产，但没有今年钟鸣、草叶倒伏或村屋失温的记录。',origin:'村中旧簿'}],
   hypotheses:[{id:'siphon',text:'汲灵回路将药圃与村屋的热息引向山顶'},{id:'weather',text:'只是寻常霜寒，钟片与枯草并无关联'},{id:'harvest',text:'往年采药过度，才让今年村屋失温'}],answer:['warm_shard','bent_herbs'],conclusion:'siphon',
   hint:'薄霜与旧簿只能说明背景。试着寻找同一方向、同一纹路的两条当下痕迹。',reason:'钟片向山上牵动，枯草也朝山顶倒伏；两者纹路相同，流向与回路互相印证。',response:'不是雪把村里的火吹灭了，是有人把热息引上了山。你把流向证清了，我便能沿着它护住回村的路。'},
- furnace_seal:{id:'furnace_seal',episode:'chapter_1',missionIndex:2,title:'封炉之后',place:'试剑台 · 公开验炉旁席',question:'赢得旁席后，核对封签与值炉记录：炉况究竟在哪一步发生了变化？',source:'arena_2',sourceLabel:'试剑决胜',speaker:'yueheng',
+ furnace_seal:{id:'furnace_seal',episode:'chapter_1',missionIndex:2,title:'封炉之后',art:'v9-furnace-inspection.png',artOffset:4,place:'试剑台 · 公开验炉旁席',question:'赢得旁席后，核对封签与值炉记录：炉况究竟在哪一步发生了变化？',source:'arena_2',sourceLabel:'试剑决胜',speaker:'yueheng',
   evidence:[{id:'intact_seal',title:'封炉时的原签',text:'原签由两名值守共同落款：封炉时火候平稳，炉门完好。签上时刻早于试剑开场，蜡印与封存副本一致。',origin:'公开验炉 · 原件核对'},
    {id:'shift_log',title:'封签后的值炉簿',text:'值炉簿在封签之后记下一次增火，所用钥令已换作另一名值守。增火时刻晚于原签，早于炉内焦痕被发现。',origin:'公开验炉 · 当班记录'},
    {id:'old_matchmarks',title:'台沿的旧战痕',text:N.episodes.chapter_1.clues.find(c=>c.id==='old_matchmarks').text,origin:'试剑台亲见'},
@@ -21,7 +21,7 @@ const cases={
   hint:'战痕能解释比试，传言没有时刻。将封炉前后的原始记录排在一起，再核对钥令。',reason:'共同落款的原签确认封炉时正常，值炉簿则记录了封签后换令增火；变化发生在封炉之后。',response:'旁席是你赢来的，判断则由这两份记录撑住。先查封签后的钥令交接，再问是谁借丹方替自己遮掩。'}
 };
 function freeze(x){if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;}freeze(cases);
-function active(s,c){const j=s.story.journeys?.[c.episode];return !!(j&&j.rulesVersion===3&&j.choice==='seek'&&j.stage==='mission'&&j.missionIndex===c.missionIndex);}
+function active(s,c){const j=s.story.journeys?.[c.episode];return !!(j&&j.rulesVersion>=3&&j.choice==='seek'&&j.stage==='mission'&&j.missionIndex===c.missionIndex);}
 const sourceReady=(s,c)=>(s.progress.dungeonWins[c.source]||0)>0;
 function view(s,id){const c=own(cases,id)?cases[id]:null;if(!c)return null;const note=s.investigations?.[id]||null;if(!active(s,c)&&!note)return null;return {case:c,note:note?copy(note):null,active:active(s,c),sourceReady:sourceReady(s,c),resolved:note?.status==='resolved',sourceNav:{page:'adventure',modal:'dungeon',payload:{id:c.source}},companion:C.companions[c.speaker].name};}
 function validate(s){
@@ -35,14 +35,14 @@ function validate(s){
   for(const [key,max]of [['read',4],['selected',2]])if(!Array.isArray(n[key])||n[key].length>max||new Set(n[key]).size!==n[key].length||n[key].some(e=>!c.evidence.some(x=>x.id===e)))fail();
   if(n.selected.some(e=>!n.read.includes(e))||n.hypothesis!==null&&!c.hypotheses.some(h=>h.id===n.hypothesis)||!['resolved','contradiction',null].includes(n.verdict))fail();
   if(n.verdict===null&&n.hypothesis!==null)fail();
-  if(!j||j.rulesVersion!==3||j.choice!=='seek'||j.missionIndex<c.missionIndex||['intro','survey','decision','reply'].includes(j.stage))fail();
+  if(!j||![3,4].includes(j.rulesVersion)||j.choice!=='seek'||j.missionIndex<c.missionIndex||['intro','survey','decision','reply'].includes(j.stage))fail();
   if(n.status==='open'){
    if(!active(s,c)||n.resolvedAt!==null||n.verdict==='resolved'||n.verdict==='contradiction'&&(!n.attempts||n.hypothesis===null||n.selected.length!==2||n.hypothesis===c.conclusion&&c.answer.every(x=>n.selected.includes(x))))fail();
   }else if(!integer(n.resolvedAt,n.startedAt,8640000000000000)||n.attempts<1||n.verdict!=='resolved'||n.hypothesis!==c.conclusion||n.selected.length!==2||!c.answer.every(x=>n.selected.includes(x))||!sourceReady(s,c))fail();
  }
  // A later story checkpoint cannot survive deleting its proof record on import.
  for(const c of Object.values(cases)){
-  const j=s.story.journeys?.[c.episode];if(j?.rulesVersion!==3||j.choice!=='seek')continue;
+  const j=s.story.journeys?.[c.episode];if(![3,4].includes(j?.rulesVersion)||j.choice!=='seek')continue;
   const passed=j.missionIndex>c.missionIndex||j.missionIndex===c.missionIndex&&['interlude','outro','ready','completed'].includes(j.stage);
   if(passed&&notes[c.id]?.status!=='resolved')fail();
   if(j.missionIndex===c.missionIndex&&j.baseline!==0)fail();

@@ -22,7 +22,7 @@ const branch=(id,label,reply,goal)=>({id,label,reply,goal});
 const episodes={};
 function add(e){episodes[e.id]=e;}
 
-add({id:'chapter_0',kind:'chapter',chapter:0,title:'荒山入道',subtitle:'雪夜青岚 · 荒山入道',location:'青岚山麓 · 雪夜药圃',stakes:'村人的体温正在流失。找到药材，也要查清山中为何没有一声钟响。',cast:['qinglan'],art:chapterArt(0),
+add({id:'chapter_0',kind:'chapter',chapter:0,title:'荒山入道',subtitle:'雪夜青岚 · 荒山入道',location:'青岚山麓 · 雪夜药圃',stakes:'村人的体温正在流失。找到药材，也要查清山中为何没有一声钟响。',cast:['qinglan'],art:{file:'v9-snow-village.png',cols:1,rows:1,col:0,row:0},
   intro:[line('narrator','雪把村口的脚印填平了。灶里柴火烧得通红，床上的孩子却连呼出的白气都没有。'),line('qinglan','他不是染了风寒。你摸这片钟：屋里越冷，它反而越烫。',1),line('player','镇山钟不是护住村子的么？'),line('qinglan','三日前，山顶最后一次响钟。随后是药圃枯萎，接着轮到人。跟紧我，别踩雪下的黑线。',2)],
   clues:[clue('warm_shard','仍在发烫的钟片','裂口沾着黑泥，内侧有一枚倒写的「息」字。每过三次呼吸，铜片便向山上轻轻一挣。','qinglan',28,64),clue('bent_herbs','倒向山顶的枯草','草叶没有冻裂，却全朝山顶弯折。泥土底下的细纹，与钟片裂口上的纹路正好接续。','narrator',72,56)],
   choices:[branch('protect','先取救命药，留下山路标记',[line('player','先把还能用的药带回去。阵纹留下拓印，别让孩子等。'),line('qinglan','我留一盏灯给回村的路。你负责药圃里的汲灵虫，我来搬开倒木。',1),line('narrator','青岚撕下袖边裹住钟片，热意渐渐烫红她的指节。')],herb('通关青岚灵圃，取回新鲜药材')),
@@ -283,7 +283,7 @@ for(const [id,rank] of Object.entries({world_forge:10,world_sect:4,world_tower:2
 
 // Version 1 is kept byte-for-byte in episodes for promises already accepted.
 // Version 2 names the actual recipe / set and slot; old totals are never guessed.
-function missionGoals(id,choice,version=3){
+function missionGoals(id,choice,version=4){
   const ep=episodes[id],option=ep&&(Array.isArray(ep.choices)?ep.choices.find(x=>x.id===choice):ep.choices[choice]);
   if(!option)return [];
   const goals=option.goals||[option.goal];
@@ -298,9 +298,14 @@ function missionGoals(id,choice,version=3){
     return goal;
   });
   if(version<3)return specific;
-  return specific.map((goal,index)=>{
+  const proven=specific.map((goal,index)=>{
     const proof=choice==='seek'&&(id==='chapter_0'&&index===0?'bell_flow':id==='chapter_1'&&index===2?'furnace_seal':null);
     return proof?{key:'investigation',id:proof,count:1,label:proof==='bell_flow'?'完成药谷取样，交叉核验两条热息流向的证据':'赢下试剑决胜，核验封签与值炉记录',nav:{page:'fate',kind:'investigation',payload:{id:proof}}}:goal;
+  });
+  if(version<4)return proven;
+  return proven.map((goal,index)=>{
+    const repair=id==='chapter_0'&&choice==='protect'&&index===0?'village_lamp':id==='chapter_2'&&index===2?(choice==='protect'?'archive_exit':'archive_seal'):null;
+    return repair?{key:'formation',id:repair,count:1,label:repair==='village_lamp'?'正式取药后接通回村护灯阵，留下温药与退口':repair==='archive_exit'?'赢下秘境终关，接回抄档人的第七退阵口':'赢下秘境终关，接通护纸回路并保留退口',nav:{page:'fate',kind:'formation',payload:{id:repair}}}:goal;
   });
 }
 function freeze(value){if(value&&typeof value==='object'&&!Object.isFrozen(value)){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;}

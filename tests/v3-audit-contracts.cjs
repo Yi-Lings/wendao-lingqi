@@ -25,17 +25,17 @@ for(const [id,kind,cost] of [['orangeGear','gear',120],['orangeTreasure','treasu
   assert.equal(result.ok,false);assert.deepEqual(s,before);assert.equal(R.model(action,result,before,s),null);
  });
 }
-test('all thirteen retained illustration archives are reachable one at a time without becoming item grants',()=>{
- assert.equal(Collection.records.length,13);assert.equal(new Set(Collection.records.map(x=>x.file)).size,13);
+test('thirteen retained illustrations and four new art sheets are reachable without becoming item grants',()=>{
+ assert.equal(Collection.records.length,17);assert.equal(new Set(Collection.records.map(x=>x.file)).size,17);
  const old=fs.readdirSync(path.join(__dirname,'../web/assets')).filter(f=>/^v5-gear-quality-[0-5]\.png$/.test(f));
  assert.equal(old.length,6);for(const file of old)assert(Collection.records.some(x=>x.file===file));
  const before=JSON.stringify(Collection.records);
- for(let i=0;i<13;i++){
+ for(let i=0;i<Collection.records.length;i++){
   const record=Collection.view(i),html=Collection.render(i),bytes=fs.readFileSync(path.join(__dirname,'../web/assets',record.file));
   assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
   assert(html.includes('assets/'+record.file));assert.equal((html.match(/art-collection-painting/g)||[]).length,1);
-  assert(html.includes((i+1)+' / 13'));assert(!html.includes('data-action='),'archive has no reward-producing actions');
+  assert(html.includes((i+1)+' / '+Collection.records.length));assert(!html.includes('data-action='),'archive has no reward-producing actions');
  }
- assert.equal(Collection.view(-1).index,0);assert.equal(Collection.view(100).index,12);
+ assert.equal(Collection.view(-1).index,0);assert.equal(Collection.view(100).index,16);
  assert.equal(JSON.stringify(Collection.records),before);
 });

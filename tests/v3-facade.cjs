@@ -54,7 +54,8 @@ function finishStory(s,id,choice){
  for(let stage=0;stage<20&&!['ready','completed'].includes(j.stage);stage++){
  if(j.stage==='mission')for(let n=j.mission.current;n<j.mission.required;n++){
   const goal=j.mission.goal;
-  if(goal.key==='investigation'){const c=E.modules.investigation.cases[goal.id];if(!(s.progress.dungeonWins[c.source]>0))win(s,c.source);act(s,{type:'beginInvestigation',id:c.id});for(const evidence of c.answer){act(s,{type:'readEvidence',id:c.id,evidence});act(s,{type:'selectEvidence',id:c.id,evidence});}act(s,{type:'submitInvestigation',id:c.id,hypothesis:c.conclusion});}
+  if(goal.key==='formation'){const c=E.modules.formation.catalog[goal.id];if(!(s.progress.dungeonWins[c.source]>0))win(s,c.source);act(s,{type:'beginFormation',id:c.id});for(let tile=0;tile<9;tile++)if(c.tiles[tile])while(s.formations[c.id].rotations[tile]!==0)act(s,{type:'turnFormation',id:c.id,tile,step:1});act(s,{type:'testFormation',id:c.id});}
+  else if(goal.key==='investigation'){const c=E.modules.investigation.cases[goal.id];if(!(s.progress.dungeonWins[c.source]>0))win(s,c.source);act(s,{type:'beginInvestigation',id:c.id});for(const evidence of c.answer){act(s,{type:'readEvidence',id:c.id,evidence});act(s,{type:'selectEvidence',id:c.id,evidence});}act(s,{type:'submitInvestigation',id:c.id,hypothesis:c.conclusion});}
   else if(goal.key==='dungeonWins'||goal.key==='bossWins')win(s,goal.id||'resource_herb');
   else if(goal.key==='pillBatch'){if(!s.learnedRecipes.includes(goal.id))act(s,{type:'researchRecipe',id:goal.id});act(s,{type:'craftPill',id:goal.id,count:1});}
   else if(goal.key==='crafted')act(s,{type:'craftPill',id:'heal0',count:1});

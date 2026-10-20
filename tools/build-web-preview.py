@@ -48,8 +48,8 @@ def compile_js(name: str, source: str, asset_vars: dict[str, str]) -> tuple[str,
 
     # All source dynamic art URL forms are deliberately supported explicitly.
     source, counts['template_art'] = re.subn(
-        r'url\(assets/\$\{([A-Za-z_$][\w$]*)\.file\}\)',
-        lambda m: "${window.WendaoAssetCSS('assets/'+" + m[1] + '.file)}',
+        r'url\(assets/\$\{([A-Za-z_$][\w$]*)\.(file|art)\}\)',
+        lambda m: "${window.WendaoAssetCSS('assets/'+" + m[1] + '.' + m[2] + ')}',
         source,
     )
     source, counts['concatenated_art'] = re.subn(

@@ -62,6 +62,29 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
    await p.reload({waitUntil:'networkidle',timeout:90000});assert.equal(await p.evaluate(()=>Lingqi.state().investigations.bell_flow.status),'resolved');
   });
  }
+ if(await p.evaluate(()=>!!window.IdleEngine.modules.formation)){
+  await test('offline formation keeps partial directions, resumes after reload and verifies only through actual controls',async()=>{
+   report.formationFixtureNotice='A validated high-rank protection mission with a supplied prior formal resource win verifies bundled graph rules, actual rotation controls and file persistence. It is not a natural-pacing claim.';
+   const E=require(path.join(ROOT,'web/engine.js')),helpers=require('./story-fixtures.cjs'),now=Date.now(),s=E.createState(now);s.training=false;s.paths.magic={realm:5,layer:10,xp:0,reserve:0};s.progress.dungeonWins.resource_herb=1;helpers.toMission(s,'chapter_0','protect',now);
+   await p.evaluate(s=>{if(!Lingqi.import(JSON.stringify(s)))throw Error('Formation fixture rejected');Lingqi.openStory('chapter_0');},s);
+   async function press(attr,name,predicate=()=>true){const scope=await p.locator('#modal-layer [role=dialog]').count()?'#modal-layer ':'';const bs=p.locator(scope+'button['+attr+'="'+name+'"]');for(let i=0;i<await bs.count();i++){const b=bs.nth(i),data=JSON.parse(await b.getAttribute('data-payload')||'{}');if(predicate(data)&&await b.isVisible()&&await b.isEnabled()){await b.click();return;}}throw Error('Missing offline formation control '+name);}
+   await press('data-ui','story-mission');await press('data-action','beginFormation');await press('data-action','turnFormation',q=>q.tile===3&&q.step===1);const partial=await p.evaluate(()=>Lingqi.state().formations.village_lamp);
+   await p.reload({waitUntil:'networkidle',timeout:90000});await p.evaluate(()=>Lingqi.openStory('chapter_0'));await press('data-ui','story-mission');assert.deepEqual(await p.evaluate(()=>Lingqi.state().formations.village_lamp),partial);
+   const c=E.modules.formation.catalog.village_lamp;for(let tile=0;tile<9;tile++)if(c.tiles[tile])while(await p.evaluate(tile=>Lingqi.state().formations.village_lamp.rotations[tile],tile))await press('data-action','turnFormation',q=>q.tile===tile&&q.step===1);
+   assert.equal(await p.evaluate(()=>Lingqi.state().formations.village_lamp.status),'working');await press('data-action','testFormation');assert.equal(await p.evaluate(()=>Lingqi.state().formations.village_lamp.status),'resolved');assert.match(await p.locator('.formation-result').innerText(),/回村的路也没有封死/);
+   await p.screenshot({path:path.join(ROOT,'dist/v45-offline-formation.png')});report.screenshots=['v45-offline-formation.png'];
+   await p.reload({waitUntil:'networkidle',timeout:90000});assert.equal(await p.evaluate(()=>Lingqi.state().formations.village_lamp.status),'resolved');
+  });
+  await test('all four new art PNGs decode from file-local embedded blobs with exact source bytes',async()=>{
+   const records=require(path.join(ROOT,'docs/art/V4_5_GENERATED_ASSETS.json')),collection=require(path.join(ROOT,'web/art-collection.js'));
+   for(let index=13;index<17;index++){
+    await p.evaluate(index=>Lingqi.showModal('art-collection',{index}),index);
+    const art=await p.locator('.art-collection-painting').evaluate(async e=>{const url=getComputedStyle(e).backgroundImage.slice(5,-2),im=new Image();im.src=url;await im.decode();const bytes=await(await fetch(url)).arrayBuffer(),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(n=>n.toString(16).padStart(2,'0')).join('');return {url,w:im.naturalWidth,h:im.naturalHeight,sha256:hash};});
+    const expected=records.files['web/assets/'+collection.records[index].file];assert(art.url.startsWith('blob:'));assert.equal(art.w,expected.width);assert.equal(art.h,expected.height);assert.equal(art.sha256,expected.sha256);
+   }
+   await p.screenshot({path:path.join(ROOT,'dist/v45-offline-art.png')});report.screenshots.push('v45-offline-art.png');
+  });
+ }
  for(const key of ['pageErrors','consoleErrors','failedRequests','externalRequests'])assert.equal(report[key].length,0,JSON.stringify(report[key]));
  await context.close();report.passed=report.tests.every(x=>x.passed);
 })().catch(e=>{report.passed=false;report.fatal=e.stack;console.error(e);}).finally(async()=>{

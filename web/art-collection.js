@@ -8,7 +8,11 @@ const records=[
  ['v4-treasures-atlas.png','百宝旧图','山门曾收藏的灵宝摹本。炉、灯、镜、塔各自留下纹路，等后来者读懂用途。'],
  ['v4-pills-atlas.png','丹心旧录','丹师的旧画册以色泽和纹理辨药。月衡把它留在藏画阁，供来者对照前人的心得。'],
  ['v4-basic-skills-atlas.png','入门手札','六派启蒙时画下的口诀与招式。那些最初学会的运转，仍藏在后来的每次出手里。'],
- ...['初','青','玄','紫','天','道'].map((name,i)=>['v5-gear-quality-'+i+'.png','行旅器谱 · '+name+'卷','六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。'])
+ ...['初','青','玄','紫','天','道'].map((name,i)=>['v5-gear-quality-'+i+'.png','行旅器谱 · '+name+'卷','六派旧器的合绘。青锋、玄武、雷霄、离火、太虚与回春，在各自的形制中留下传承。']),
+ ['v9-snow-village.png','雪夜留灯','雪下的药圃与回村的灯。铜槽怎样相接，决定暖意最终留在哪里。'],
+ ['v9-archive-chamber.png','第七阵口','古府的书架仍存旧卷，护阵桌与石门之间，留着不该被封死的退路。'],
+ ['v9-furnace-inspection.png','封炉旁席','原签、值炉簿与铜钥同置案头。灯照得见的记录，不必只听谁的声量。'],
+ ['v9-evidence-atlas.png','问证八笺','钟片、草根、霜痕、旧簿与封签，各有自己的来处。画能帮助辨认，判断仍需两份相合的证据。']
 ].map(([file,name,description],index)=>Object.freeze({id:'painting_'+index,file,name,description,index}));
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function view(index=0){const n=Number.isInteger(index)?Math.max(0,Math.min(records.length-1,index)):0;return {...records[n],total:records.length};}

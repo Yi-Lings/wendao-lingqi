@@ -1,10 +1,12 @@
-# 问道 · 灵契 V4.4
+# 问道 · 灵契 V4.5
 
 原创安卓竖屏单机修仙游戏：六章多幕剧情、闭关渡劫、斗技夺魁、六流派构筑，以及飞升后的登仙、真仙、金仙三阶成长。游戏资源随 APK 打包，安装后离线运行。
 
-[下载 V4.4 Android 体验 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.4.0-preview/wendao-lingqi-v4.4-preview.apk) · [V4.4 离线网页试玩](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.4.0-preview/wendao-lingqi-v4.4-preview.zip) · [完整源码 ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.4.0-preview/wendao-lingqi-v4.4.0-source.zip) · [发布说明](docs/RELEASE_NOTES_V4_4.md)
+[下载 V4.5 Android 体验 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.apk) · [V4.5 离线网页试玩](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip) · [完整源码 ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5.0-source.zip) · [发布说明](docs/RELEASE_NOTES_V4_5.md)
 
-V4.4 最低 Android 8.0，体验包使用独立包名 `com.lingqi.game.preview` 和调试签名，可与旧版并排安装。旧版存档可先导出 JSON，再在体验包中导入。全部源代码、美术、音频、方案与测试同步到 `main` 和 `work` 分支；[历史 V3 发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v3.0.0)保留。
+V4.5 最低 Android 8.0，体验包使用独立包名 `com.lingqi.game.preview` 和调试签名，可与旧版并排安装。旧版存档可先导出 JSON，再在体验包中导入。全部源代码、美术、音频、方案与测试同步到 `main` 和 `work` 分支；[历史 V3 发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v3.0.0)保留。
+
+V4.5「接脉留灯」新增三张接脉护阵图：旋转阵石、观察灵息、接回退路，正式历练后主动验阵。首页可直接走进剧情，三张场景画与八幅证据插画接入实际行动和札记。旧 V1/V2/V3 约定保留规则与进度。详见 [本轮方案](docs/ITERATION_V4_5.md) 与 [游戏、小说和交互资料复核](docs/RESEARCH_V4_5.md)。
 
 V4.4「问证与归途」把前两卷求证分支接入正式取证、两条证据核验、判断重试与人物回应；成功结果可在档案和全文中重读，第二卷承接已保存的第一卷判断。新旧任务规则分别保存，已接约定不变。详见 [本轮方案](docs/ITERATION_V4_4.md)。
 
@@ -17,6 +19,8 @@ V4.2 新增六域历世、三条道心、战前筹备和成长目标，完善配
 研究与头脑风暴见 [资料记录](docs/research/YINIAN_SYSTEMS_2026-10-07.md)、[方案选择](docs/research/BRAINSTORM_2026-10-07.md)。参考养成节奏与系统关系，采用原创人物、剧情、美术和配乐。持续扩充有效内容，不以重复素材或空文件凑大小。
 
 ## 已实现的玩法
+
+- **接脉护阵**：第一卷守护与第三卷两分支共三张图，七块阵石可顺转/逆转，实际铜槽连通决定来息、断口与归处。取得正式履历后主动验阵，结果进入人物回应与只读重读，不额外领取奖励。
 
 - **亲历求证**：前两卷共两案，先取得正式取样/决胜履历，选择两条已读证据并提交判断。错误可重试，成功留下只读依据和人物回应，不额外发经济奖励。
 
@@ -60,17 +64,17 @@ python3 -m http.server 8787 --bind 127.0.0.1 --directory web
 
 打开 <http://127.0.0.1:8787/>。网页无需 npm 构建，建议使用近期 Chrome、Edge 或更新后的 Android WebView。存档按浏览器的地址、端口与用户配置隔离；切换地址前可先导出 JSON。
 
-[下载 V4.4 离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.4.0-preview/wendao-lingqi-v4.4-preview.zip)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-v4.4-preview.html`。默认进入人界配装试玩，设置可切换天门飞升试玩或正式仙途；三个存档相互隔离。完整离线 HTML 约169 MiB，包含所有音画原字节资源。
+[下载 V4.5 离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-v4.5-preview.html`。默认进入人界配装试玩，设置可切换天门飞升试玩或正式仙途；三个存档相互隔离。完整离线 HTML 约169 MiB，包含所有音画原字节资源。
 
 角色页新增「成套装备」与「推荐配装」：六流派套装展示两件/四件激活效果，一键使用已有装备；推荐同时搭配装备、心法、神通顺序和秘术，展示用途与下一获取/参悟目标。六套各六部位、六档品级共216种装备图片映射互不复用，保留并使用名称与形状吻合的原美术。缺件展示图片与获取入口：固定套装/部位打造、对应妖王掉落、道品抽卡定向，条件与材料缺口明确显示。胜利自动弹出真实战利品结算；自动重战在结算后暂停，点击继续再挑战。点击部位装备后选择「更换装备」，可在当前部位直接比较穿戴与背包候选，长按查看完整属性。
 
 人界快速试玩入口为 `/?preview=1`，天门入口为 `/?preview=1&immortal=1`，使用独立进度和预置资源，新建试玩备齐六套完整装备，首次十连可体验逐件红卡演出。生成可直接打开的离线单文件试玩：
 
 ```sh
-python3 tools/build-web-preview.py --output dist/wendao-lingqi-v4.4-preview.html --zip
+python3 tools/build-web-preview.py --output dist/wendao-lingqi-v4.5-preview.html --zip
 ```
 
-输出 `dist/wendao-lingqi-v4.4-preview.html` 与同名 ZIP 压缩包。所有图片和 MP3 原字节内嵌，打开后无需网络或本地服务器；使用 Chrome 或 Edge 打开 HTML，首次点击后开始播放声音。试玩与正式存档键隔离；浏览器若禁止本地 HTML，可通过允许的网页预览方式运行同一文件。
+输出 `dist/wendao-lingqi-v4.5-preview.html` 与同名 ZIP 压缩包。所有图片和 MP3 原字节内嵌，打开后无需网络或本地服务器；使用 Chrome 或 Edge 打开 HTML，首次点击后开始播放声音。试玩与正式存档键隔离；浏览器若禁止本地 HTML，可通过允许的网页预览方式运行同一文件。
 
 ## 逻辑测试
 
@@ -92,15 +96,15 @@ node --test tests/v3*.cjs
 LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
 ```
 
-完整浏览器回归可运行 `npm run test:browser -- --full`；构建离线网页后另运行 `LINGQI_PREVIEW_HTML="$PWD/dist/wendao-lingqi-v4.4-preview.html" LINGQI_OFFLINE_REPORT=browser-v44-offline-report.json node tests/browser-v42-offline.cjs`。历史测试文件名保留，环境变量指定本轮实际产物。
+完整浏览器回归可运行 `npm run test:browser -- --full`；构建离线网页后另运行 `LINGQI_PREVIEW_HTML="$PWD/dist/wendao-lingqi-v4.5-preview.html" LINGQI_OFFLINE_REPORT=browser-v45-offline-report.json node tests/browser-v42-offline.cjs`。历史测试文件名保留，环境变量指定本轮实际产物。
 
-本轮 394 项逻辑、174 项浏览器检查（169 源页面＋5 离线文件）通过；Android 4.4/code8 的 108 个打包资源与源码一致，签名与对齐通过。报告、实际夹具边界及截图见 [V4.4 验证目录](docs/validation/v44/README.md)。尚未进行 Android 真机验收。
+本轮检查、实际夹具边界、生成美术清单与截图见 [V4.5 验证目录](docs/validation/v45/README.md)。Android 真机验收仍待完成。
 
 完整源码快照可运行 `python3 tools/package-source.py`，输出源码 ZIP、SHA-256 和逐文件清单，排除私钥、工具链、缓存及历史安装包。
 
 ## Android 构建
 
-最低 Android 8.0（API 26），目标与编译 API 35，V4 debug 体验包名 `com.lingqi.game.preview`，版本 4.4、versionCode 8。
+最低 Android 8.0（API 26），目标与编译 API 35，V4 debug 体验包名 `com.lingqi.game.preview`，版本 4.5、versionCode 9。
 
 标准开发构建使用 Java 17、Gradle 8.9、Android SDK platform 35 与 build-tools 35.0.0：
 

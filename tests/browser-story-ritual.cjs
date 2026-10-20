@@ -110,7 +110,7 @@ async function layout(p){const g=await p.evaluate(()=>{const r=e=>{const x=e.get
 
 (async()=>{
  fs.mkdirSync(DIST,{recursive:true});browser=await chromium.launch({headless:true,executablePath:process.env.LINGQI_CHROMIUM||'/usr/bin/chromium',args:['--no-sandbox','--disable-dev-shm-usage']});
- await test('story is a full scene, saves line and clues, and requires a fresh victory after a promise',()=>withPage({},async p=>{
+ await test('story is a full scene, saves line and clues, and requires active formation repair plus later fresh combat',()=>withPage({},async p=>{
   const original=await state(p);await openStory(p,'chapter_0');
   if(await p.locator('[data-narrative=story]').getAttribute('data-story-stage')==='not-started')await action(p,'beginStory');
   assert.equal(await p.locator('button[data-action=claimChapter]:visible').count(),0,'entry has no instant-complete option');
@@ -122,13 +122,13 @@ async function layout(p){const g=await p.evaluate(()=>{const r=e=>{const x=e.get
   await ui(p,'story-exit');await openStory(p,'chapter_0');assert((await state(p)).story.journeys.chapter_0.clues.includes(first),'discovery survives leaving scene');
   await walkToMission(p,'protect');const promised=await state(p),j=S.journeyView(promised,'chapter_0');assert.equal(j.mission.current,0,'ten old victories do not fulfil the new promise');
   assert.equal(promised.stones,original.stones);assert.deepEqual(promised.pills,original.pills,'reading never grants loot');await shot(p,'story-mission-390x844.png');
-  await ui(p,'story-mission');await action(p,'startDungeon');await finishBattleClock(p);
-  const won=await state(p);assert(won.lastBattleResult.win,'fresh actual battle won');assert(S.journeyView(won,'chapter_0').mission.done);
-  assert.equal(await p.locator('.battle-settlement').count(),1,'actual battle keeps independent true loot result');await ui(p,'close');
+  await ui(p,'story-mission');await action(p,'beginFormation');
+  for(let tile=0;tile<9;tile++)if(E.modules.formation.catalog.village_lamp.tiles[tile])while((await state(p)).formations.village_lamp.rotations[tile])await action(p,'turnFormation',q=>q.tile===tile&&q.step===1);
+  await action(p,'testFormation');const repaired=await state(p);assert.equal(repaired.formations.village_lamp.status,'resolved');assert(S.journeyView(repaired,'chapter_0').mission.done);assert.equal(await p.locator('.formation-result').count(),1);await ui(p,'story-open');
   await openStory(p,'chapter_0');await walkToReady(p);await shot(p,'story-return-390x844.png');const before=await state(p);await action(p,'claimChapter');
   const after=await state(p);assert.equal(after.story.chapter,1);assert.equal(after.story.mercy,1);assert.equal(after.stones-before.stones,E.catalog.chapters[0].reward.stones);await saved(p);
   await ui(p,'activity-return');assert.equal(await p.locator('button[data-action=claimChapter]:visible').count(),0,'completed story cannot collect a second time');
-  return {savedLine,clue:first,freshWin:true,chapter:after.story.chapter,choice:after.story.journeys.chapter_0.choice};
+  return {savedLine,clue:first,formationRepair:true,freshArenaWin:after.progress.dungeonWins.arena_0>0,chapter:after.story.chapter,choice:after.story.journeys.chapter_0.choice};
  }));
  await test('scene clue and decision save failures preserve the original line and can retry a different genuine choice',()=>withPage({},async p=>{
   await openStory(p,'chapter_0');if(await p.locator('[data-narrative=story]').getAttribute('data-story-stage')==='not-started')await action(p,'beginStory');

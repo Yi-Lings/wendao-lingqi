@@ -1,8 +1,8 @@
 (function(root,factory){
   const node=typeof module==='object'&&module.exports;
-  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension,node?require('./investigation.js'):root.WendaoInvestigation);
+  const api=factory(node?require('./data.js'):root.WendaoData,node?require('./core.js'):root.WendaoCore,node?require('./economy.js'):root.WendaoEconomy,node?require('./combat.js'):root.WendaoCombat,node?require('./story.js'):root.WendaoStory,node?require('./builds.js'):root.WendaoBuilds,node?require('./breakthrough-ritual.js'):root.WendaoBreakthroughRitual,node?require('./ascension.js'):root.WendaoAscension,node?require('./investigation.js'):root.WendaoInvestigation,node?require('./formation.js'):root.WendaoFormation);
   if(node)module.exports=api;else root.IdleEngine=api;
-})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A,I){
+})(typeof globalThis!=='undefined'?globalThis:this,function(C,K,Q,B,S,R,T,A,I,F){
 'use strict';
 const copy=x=>JSON.parse(JSON.stringify(x));
 const no=message=>({ok:false,message,error:message});
@@ -99,7 +99,9 @@ function journey(s){
     if(event)goals.push(goal('world:'+event.id,'历世机缘 · '+event.name,'山海有新的抉择，奖励与道心印记随选择确定。','前往历世',ui('world-event',{id:event.id})));
   }
   const milestones=[{rank:2,label:'资源秘境'},{rank:4,label:'宗门 · 三神通 · 秘术'},{rank:6,label:'问道塔'},{rank:8,label:'洞天探索'},{rank:10,label:'天道感应 · 四神通 · 灵宝'},{rank:13,label:'第二秘术 · 被动灵宝'},{rank:16,label:'完整灵宝槽'}];
-  return {realmLabel:K.realmLabel(s),checks,missing,goals,primary:next,trainingPerMinute:K.trainingPerTick(s)*20,etaSeconds:s.training&&!full?Math.ceil((needed-p.xp)/K.trainingPerTick(s))*3:null,nextUnlock:milestones.find(x=>x.rank>K.pathRank(s))||null};
+  const chapter=!s.battle&&!s.exploration&&!s.joint&&(!s.ritual||s.ritual.phase==='complete')?S.journeyView(s,'chapter_'+s.story.chapter):null;
+  const storyLead=chapter?.accessible&&!chapter.completed?{episode:chapter.episode.id,title:chapter.episode.title,label:chapter.stage==='not-started'?'走进这一卷':'继续这一卷',status:chapter.stage==='not-started'?(chapter.episode.id==='chapter_0'?'从雪夜与一盏灯开始':'新的约定等你走近'):chapter.mission?.goal?.key==='formation'?'接脉护阵':chapter.mission?.goal?.key==='investigation'?'核验证据':'约定仍在，同行者等你'}:null;
+  return {realmLabel:K.realmLabel(s),checks,missing,goals,storyLead,primary:next,trainingPerMinute:K.trainingPerTick(s)*20,etaSeconds:s.training&&!full?Math.ceil((needed-p.xp)/K.trainingPerTick(s))*3:null,nextUnlock:milestones.find(x=>x.rank>K.pathRank(s))||null};
 }
 function baseHandle(s,a,now){
   const route=a.route||s.route;
@@ -165,6 +167,7 @@ function act(state,action,now){
     if(result===null){result=A.handle(candidate,action,now);if(result?.ok&&result.data?.battleRequest){const started=B.handle(candidate,{type:'startDungeon',...result.data.battleRequest},now);if(!started?.ok)return started||no('仙界出征未能开始');result.data=Object.assign({},result.data,started.data||{});}}
     if(result===null)result=Q.handle(candidate,action,now,R);
     if(result===null)result=B.handle(candidate,action,now);
+    if(result===null)result=F.handle(candidate,action,now);
     if(result===null)result=I.handle(candidate,action,now);
     if(result===null)result=S.handle(candidate,action,now);
     if(result===null)return no('未识别的操作');
@@ -189,5 +192,5 @@ return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.att
   journey,worldView,preparation,daoInsight:K.daoInsight,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
   battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
-  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A,investigation:I}};
+  modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A,investigation:I,formation:F}};
 });

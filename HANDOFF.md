@@ -1,3 +1,19 @@
+# 问道·灵契 V4.5 接手说明
+
+更新：2026-10-20 UTC。用户要求继续优化迭代、广泛查询资料，并授权调用生图模型补充美术；先前全部提交 GitHub、构建和发布体验版的授权持续有效。仍同步 main/work，保留旧标签与原体验签名。
+
+当前 V4.5「接脉留灯」实现三张旋石接脉图：village_lamp（chapter_0 protect 第 1 幕）、archive_exit / archive_seal（chapter_2 第 3 幕两种选择）。正式 source 通关履历可沿用，试阵不计；七块阵石双向旋转，实际连通来息/三关键口/归处且无断口，主动 testFormation 后入册，无额外经济奖励。回到原幕继续对话、原条件与一次性结算。
+
+新任务 rulesVersion 4；V1/V2/V3 已接约定不变，investigation 支持 V3/V4。formations 有界校验，导入不能删去已过检查点所需记录；保存失败回滚全部动作。接通图、人物回应进入只读档案和全文札记。新档首页直接显示剧情入口。
+
+四次 image_gen 已生成并接入 4 个原始 PNG（3 场景＋1 张八证据图集），保留 /workspace/generated_images 原件；游戏副本位于 web/assets/v9-*.png。尺寸/散列见 docs/art/V4_5_GENERATED_ASSETS.json。藏画阁从 13 扩到 17 项，旧身份不变。截图发现证据裁切未生效后，已把新类接入 art-layout.js，明确背景位置并补实际绘制偏移测试；第二轮图像目检正确。
+
+机制和边界见 docs/ITERATION_V4_5.md，12 组一手资料链接及推导见 docs/RESEARCH_V4_5.md。419 项逻辑与四条合法完整引擎路线已检查，完整浏览器回归、离线验证及发布状态以本轮后续补充为准。Android 4.5/code9，publish-preview.yml 现指 V4.5；仍无真机验收。
+
+## 历史 V4.4 记录
+
+以下保留上一轮证据，当前规则与版本以上文及后续本轮交付记录为准。
+
 # 问道·灵契 V4.4 接手说明
 
 ## V4.4 公开交付已完成

@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-20T01:12:35.224860+00:00",
+  "generator": "image_gen tool",
+  "notice": "Four original generated PNGs are copied without pixel edits. Evidence cells use calibrated runtime CSS crops; original generation files remain in /workspace/generated_images. Backend model identifier was not exposed.",
+  "files": {
+    "web/assets/v9-snow-village.png": {
+      "sha256": "c06f4f940f97da8b9d3a2014b9eefe8cd142ab2348d5685501f7a9146726630f",
+      "bytes": 3655811,
+      "width": 1536,
+      "height": 1024,
+      "use": "雪夜村落与护灯阵，主线第一卷及求证/护阵场景"
+    },
+    "web/assets/v9-archive-chamber.png": {
+      "sha256": "66b21b9906cf7de0221bd3f4c4d281aaf77e22b9409b968e0c42e434367172e9",
+      "bytes": 2975851,
+      "width": 1536,
+      "height": 1024,
+      "use": "古府护阵桌与第七退阵口，第三卷两种护阵"
+    },
+    "web/assets/v9-furnace-inspection.png": {
+      "sha256": "d96a299c9e2ec868c882fa63d79276862bb25ea7ac8d97b15a2a0b6c170fc9bf",
+      "bytes": 2749521,
+      "width": 1536,
+      "height": 1024,
+      "use": "公开验炉丹房，第二卷封炉求证"
+    },
+    "web/assets/v9-evidence-atlas.png": {
+      "sha256": "2aaf3c667de5213899ef7ed9a1808c48c3bb0db23d56e0d401dd9f7cb9cf82e4",
+      "bytes": 3099898,
+      "width": 1774,
+      "height": 887,
+      "use": "四列两行八幅证据插画，八条具体证据分别取图"
+    }
+  }
+}

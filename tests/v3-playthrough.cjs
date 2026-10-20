@@ -21,7 +21,8 @@ const copy = x => JSON.parse(JSON.stringify(x));
 const CAMPAIGN_METHOD={method:'accelerated legal engine actions; no real-time browser/device claim',offlineSamplingStepHours:168,waitHoursAreMinimum:false,limitation:'Repeated seven-day resource waits establish legal reachability, not an optimized schedule, minimum completion time or human flow.'};
 
 class Campaign {
-  constructor(route) {
+  constructor(route,storyChoice) {
+    this.storyChoice=storyChoice;
     this.route = route;
     this.state = E.createState(START);
     this.now = START;
@@ -147,7 +148,13 @@ class Campaign {
   performStoryGoal(journey) {
     const goal=journey.mission.goal, needed=journey.mission.required-journey.mission.current;
     for(let n=0;n<needed;n++) {
-      if(goal.key==='investigation'){
+      if(goal.key==='formation'){
+        const c=E.modules.formation.catalog[goal.id];
+        if(!(this.state.progress.dungeonWins[c.source]>0)){if(!E.previewDungeon(this.state,{id:c.source,difficulty:0}).allowed)return false;this.clearWithRetry({id:c.source});}
+        this.act({type:'beginFormation',id:c.id});
+        for(let tile=0;tile<9;tile++)if(c.tiles[tile])while(this.state.formations[c.id].rotations[tile]!==0)this.act({type:'turnFormation',id:c.id,tile,step:1});
+        this.act({type:'testFormation',id:c.id});
+      }else if(goal.key==='investigation'){
         const c=E.modules.investigation.cases[goal.id];
         if(!(this.state.progress.dungeonWins[c.source]>0)){if(!E.previewDungeon(this.state,{id:c.source,difficulty:0}).allowed)return false;this.clearWithRetry({id:c.source});}
         this.act({type:'beginInvestigation',id:c.id});
@@ -206,14 +213,14 @@ class Campaign {
         const candidates=view.sidequestProgress.filter(q=>!q.completed&&q.journey&&q.journey.accessible&&q.progress.every(p=>p.done));
         if(view.currentChapter&&view.currentJourney&&view.currentJourney.accessible)candidates.push({id:'chapter_'+view.currentChapter.id,chapter:true});
         for(const candidate of candidates) {
-          let journey=toMission(this.state,candidate.id,'protect',this.now,a=>this.act(a)),blocked=false;
+          let journey=toMission(this.state,candidate.id,this.storyChoice,this.now,a=>this.act(a)),blocked=false;
           for(let stage=0;stage<20&&!['ready','completed'].includes(journey.stage);stage++){
             if(journey.stage==='mission'&&!journey.mission.done&&!this.performStoryGoal(journey)){blocked=true;break;}
             if(journey.stage==='mission'&&journey.mission.done&&journey.mission.canReturn===false){blocked=true;break;}
             journey=finishJourney(this.state,candidate.id,this.now,a=>this.act(a));
           }
           if(blocked)continue;assert.equal(journey.stage,'ready','all sequential chapter missions completed through real activity');
-          this.act(candidate.chapter?{type:'claimChapter',choice:'protect'}:{type:'claimSidequest',id:candidate.id});progressed=true;
+          this.act(candidate.chapter?{type:'claimChapter',choice:this.storyChoice}:{type:'claimSidequest',id:candidate.id});progressed=true;
           this.save();
         }
         if(!progressed)break;
@@ -348,7 +355,7 @@ class Campaign {
     }
     this.claimReady();
     assert.equal(this.state.story.chapter,6,'All six chapters');
-    this.act({type:'ending',choice:'guardian'});
+    this.act({type:'ending',choice:this.storyChoice==='seek'?'teacher':'guardian'});
     assert.deepEqual(this.state.paths[this.route==='magic'?'body':'magic'],this.originalOtherPath,'Secondary route remains at untouched rank zero');
     assert.equal(this.state.gacha.total,0);
     assert.equal(this.counts.maxEquippedRarity,3);
@@ -364,15 +371,15 @@ class Campaign {
     return this.summary();
   }
   summary() {
-    return {route:this.route,startTimestamp:START,seed:START>>>0,...this.counts,simulatedHours:this.counts.waitHours,realm:K.realmLabel(this.state),secondaryRoute:this.state.paths[this.route==='magic'?'body':'magic'],visitedNodes:this.visitedRanks.size,immortalNodes:this.visitedCelestial.size,immortalRealm:this.state.ascension?A.view(this.state).realmLabel:null,ascended:this.state.ascension?.stage==='ascended',perfected:!!this.state.ascension?.perfected,tower:this.state.progress.tower,uniqueBosses:Object.keys(this.state.progress.bossWins).length,chapter:this.state.story.chapter,ending:this.state.story.ending?.id||this.state.story.ending?.title||null,draws:this.state.gacha.total,redGearEquipped:0,redTreasuresEquipped:this.state.loadouts[this.route].treasures.filter(id=>id&&C.treasures[id].rarity===5).length,steps:this.steps,failures:this.failures};
+    return {route:this.route,storyChoice:this.storyChoice,startTimestamp:START,seed:START>>>0,...this.counts,simulatedHours:this.counts.waitHours,realm:K.realmLabel(this.state),secondaryRoute:this.state.paths[this.route==='magic'?'body':'magic'],visitedNodes:this.visitedRanks.size,immortalNodes:this.visitedCelestial.size,immortalRealm:this.state.ascension?A.view(this.state).realmLabel:null,ascended:this.state.ascension?.stage==='ascended',perfected:!!this.state.ascension?.perfected,tower:this.state.progress.tower,uniqueBosses:Object.keys(this.state.progress.bossWins).length,chapter:this.state.story.chapter,ending:this.state.story.ending?.id||this.state.story.ending?.title||null,draws:this.state.gacha.total,redGearEquipped:0,redTreasuresEquipped:this.state.loadouts[this.route].treasures.filter(id=>id&&C.treasures[id].rarity===5).length,steps:this.steps,failures:this.failures};
   }
 }
 
-test('zero-draw legal actions reach 120 mortal nodes, both endings, true flight and all 60 immortal nodes', {timeout:120000}, () => {
+test('zero-draw legal campaigns cover both story choices on both routes and every mortal and immortal node', {timeout:120000}, () => {
   fs.mkdirSync(path.join(__dirname,'../dist'),{recursive:true});
   const results=[];
-  for(const route of ['magic','body']) {
-    const campaign=new Campaign(route);
+  for(const route of ['magic','body'])for(const storyChoice of ['protect','seek']) {
+    const campaign=new Campaign(route,storyChoice);
     try {results.push(campaign.run());}
     catch(error) {
       results.push({...campaign.summary(),status:'blocked',error:error.message});

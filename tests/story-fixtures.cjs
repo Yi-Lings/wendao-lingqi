@@ -1,17 +1,22 @@
 'use strict';
 // Shared journey driver uses the public facade for every dialogue transition.
-// Only `creditMissionFixture` changes metrics directly: callers are explicit
+// Metric-credit helpers (including proof/formation sources) are explicit
 // unit fixtures, not reachability/playthrough evidence. Campaigns must execute
 // the declared fresh activity through ordinary engine actions.
 const assert=require('node:assert/strict');
 const E=require('../web/engine.js'),S=require('../web/story.js'),C=require('../web/data.js');
-const I=E.modules.investigation;
+const I=E.modules.investigation,F=E.modules.formation;
 const NOW=1791244800000;
 function proofFixture(s,id,now=Math.max(NOW,s.lastAt)){
  const c=I.cases[id];s.progress.dungeonWins[c.source]=Math.max(1,s.progress.dungeonWins[c.source]||0);
  const dispatch=actAt(s,now);dispatch({type:'beginInvestigation',id});
  for(const evidence of c.answer){dispatch({type:'readEvidence',id,evidence});dispatch({type:'selectEvidence',id,evidence});}
  dispatch({type:'submitInvestigation',id,hypothesis:c.conclusion});
+}
+function formationFixture(s,id,now=Math.max(NOW,s.lastAt)){
+ const c=F.catalog[id];s.progress.dungeonWins[c.source]=Math.max(1,s.progress.dungeonWins[c.source]||0);const dispatch=actAt(s,now);dispatch({type:'beginFormation',id});
+ for(let tile=0;tile<9;tile++)if(c.tiles[tile])while(s.formations[id].rotations[tile]!==0)dispatch({type:'turnFormation',id,tile,step:1});
+ dispatch({type:'testFormation',id});
 }
 const actAt=(s,now)=>(a)=>{const r=E.act(s,a,now);assert.equal(r.ok,true,JSON.stringify(a)+': '+r.message);return r;};
 function toMission(s,id,choice='protect',now=NOW,dispatch=actAt(s,now)){
@@ -29,7 +34,8 @@ function toMission(s,id,choice='protect',now=NOW,dispatch=actAt(s,now)){
 function creditMissionFixture(s,id){
  const v=S.journeyView(s,id),g=v.mission&&v.mission.goal;assert(g,id+' has a real mission');
  const count=Math.max(0,v.mission.required-v.mission.current);if(!count)return;
- if(g.key==='investigation')proofFixture(s,g.id);
+ if(g.key==='formation')formationFixture(s,g.id);
+ else if(g.key==='investigation')proofFixture(s,g.id);
  else if(g.key==='pillBatch'){const row=s.production.pills[g.id]||(s.production.pills[g.id]={batches:0,quantity:0});row.batches+=count;row.quantity+=count;}
  else if(g.key==='gearForge')s.production.gear[g.id]=(s.production.gear[g.id]||0)+count;
  else if(g.key==='dungeonWins')s.progress.dungeonWins[g.id]=(s.progress.dungeonWins[g.id]||0)+count;
@@ -61,4 +67,4 @@ function readyJourneyFixture(s,id,choice='protect',now=NOW){
  for(let guard=0;guard<20;guard++){const v=S.journeyView(s,id);if(v.stage==='ready'||v.stage==='completed')return v;creditMissionFixture(s,id);finishJourney(s,id,now);}
  throw Error('Fixture did not complete every fresh chapter mission: '+id);
 }
-module.exports={proofFixture,toMission,creditMissionFixture,finishJourney,readyJourneyFixture};
+module.exports={formationFixture,proofFixture,toMission,creditMissionFixture,finishJourney,readyJourneyFixture};
