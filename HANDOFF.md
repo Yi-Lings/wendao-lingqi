@@ -10,6 +10,14 @@ ascension.meditationPlan 以本层缺口计算 1–10 轮和总费用，复用�
 
 Android 4.6/code10，publish-preview.yml 指向 v4.6.0-preview。431 项逻辑、227 项浏览器（含 9 项实际 file://）覆盖通过，209 张截图归档。两条旧单轮选择器明确 count:1 后，飞升和完整性套件定点复测通过，保留初跑与最终日志。APK128资源、138冻结输入绑定 773af0e0f3a428af7f0576b2638825ac48576964，172866396字节，SHA256 4687f1b6cc06e2edc1661bbfb974c10712a66df3b369406ed22ccd6f5ac7705f；原体验签名和对齐通过。最终构建和公开交付证据见 docs/validation/v46。仍无 Android 真机与自然游玩/长期经济平衡结论。
 
+## V4.6 公开交付已完成
+
+[APK、离线网页及完整源码下载](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.6.0-preview)。发布工作流 [39383470262](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383470262) 成功。发布提交 `cde26069796cf732ea930f734202221346b58507`，APK 源冻结提交 `773af0e0f3a428af7f0576b2638825ac48576964`。两分支的 Android CI 成功；完整证据见 docs/validation/v46。
+
+六个公开附件匿名下载、公开 SHA 与 GitHub digest 全部一致。公开 APK/离线 ZIP 对应本地验收字节，ZIP CRC、内部 HTML 及完整源码 1284 文件散列通过。独立解压同源包 431 项逻辑通过。源码 ZIP 415238795 字节，SHA256 `65b056bf4a2d4b95d4e6f593cbe151a0de5af8e35106666c7182ebbcc448a5b6`；完整日志在 public-release.json、public-verification.log、source-archive-node.log。
+
+十二项评审意见中，R01–R09、R11–R12 已完成本轮实现与验证；R10 的长篇主线、三阶独有行动链、自然时长、长期经济与 Android 真机仍为后续范围。最终提交仅补交付证据，Web/Android/测试与发布提交一致。
+
 ## 历史 V4.5 记录
 
 # 问道·灵契 V4.5 接手说明

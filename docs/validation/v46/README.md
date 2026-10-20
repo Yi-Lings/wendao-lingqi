@@ -36,3 +36,15 @@
 ![新目录直达](screenshots/v46-art-directory.png)
 
 main/work Android CI 均成功：[main](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383140162) / [work](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383140218)。
+
+## 公开交付已核验
+
+[V4.6 下载页](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.6.0-preview) · [发布工作流](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383470262)。发布提交 `cde26069796cf732ea930f734202221346b58507`，APK 输入源冻结于 `773af0e0f3a428af7f0576b2638825ac48576964`；后补交付证据的提交不改变游戏和构建输入。
+
+六项资产通过匿名 HTTPS 下载、大小、GitHub digest 和公开 SHA256 校验。公开 APK 与离线 ZIP 与已测字节一致；ZIP CRC 与内部 HTML SHA 相同。完整源码包 1284 个文件逐项匹配发布提交，干净工作树的同源包独立解压后 431 项逻辑测试通过。公开源码 ZIP 415238795 字节，SHA256 `65b056bf4a2d4b95d4e6f593cbe151a0de5af8e35106666c7182ebbcc448a5b6`。
+
+- [全部匿名下载与源码文件核验](public-release.json) / [原始日志](public-verification.log)
+- [发布流程证据](github-publish.json) / [公开发布 API](github-release.json)
+- [独立源码包测试](source-archive-node.log) / [本地打包记录](local-source-package.json)
+
+本地与发布流程的源码 ZIP 创建时间不同，ZIP 容器散列可以不同；内部每个文件都已独立核对。源码包对应发布提交，后补交付记录在 main/work 中保留。

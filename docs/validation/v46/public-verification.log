@@ -1,0 +1,7 @@
+{"downloaded": "wendao-lingqi-v4.6-preview.apk.sha256", "bytes": 97, "sha256": "fef914874f7addf196597865500eba8940d89106c215366e61e12df8e6ef1ab2", "method": "anonymous HTTPS"}
+{"downloaded": "wendao-lingqi-v4.6-preview.zip.sha256", "bytes": 97, "sha256": "267c6853b55b2ac66d2ae8b2dc459af4bde1ada6ac9817ec32b1d00a352319ac", "method": "anonymous HTTPS"}
+{"downloaded": "wendao-lingqi-v4.6-preview.apk", "bytes": 172866396, "sha256": "4687f1b6cc06e2edc1661bbfb974c10712a66df3b369406ed22ccd6f5ac7705f", "method": "anonymous HTTPS ranges, complete file verified"}
+{"downloaded": "wendao-lingqi-v4.6.0-source.zip.sha256", "bytes": 98, "sha256": "11f995c23ede72af86d466f22166a36f6c41fed0eea076b283916a10509e78b5", "method": "anonymous HTTPS"}
+{"downloaded": "wendao-lingqi-v4.6-preview.zip", "bytes": 172967437, "sha256": "8f3d6b71a59fd8061f264e3adf484a5018c64a9d3a26820005a57c717e5d68d6", "method": "anonymous HTTPS ranges, complete file verified"}
+{"downloaded": "wendao-lingqi-v4.6.0-source.zip", "bytes": 415238795, "sha256": "65b056bf4a2d4b95d4e6f593cbe151a0de5af8e35106666c7182ebbcc448a5b6", "method": "anonymous HTTPS ranges, complete file verified"}
+PASS: all six anonymous public downloads, checksums, ZIP contents and complete source manifest verified.

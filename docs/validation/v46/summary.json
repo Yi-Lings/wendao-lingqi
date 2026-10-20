@@ -387,5 +387,18 @@
   "androidCI": {
     "main": "https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383140162",
     "work": "https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383140218"
-  }
+  },
+  "publicReleaseVerified": true,
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.6.0-preview",
+  "releaseCommit": "cde26069796cf732ea930f734202221346b58507",
+  "sourceArchiveFiles": 1284,
+  "sourceArchiveLogicPassed": 431,
+  "publicSourceArchive": {
+    "bytes": 415238795,
+    "sha256": "65b056bf4a2d4b95d4e6f593cbe151a0de5af8e35106666c7182ebbcc448a5b6",
+    "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.6.0-preview/wendao-lingqi-v4.6.0-source.zip",
+    "githubDigest": "sha256:65b056bf4a2d4b95d4e6f593cbe151a0de5af8e35106666c7182ebbcc448a5b6",
+    "method": "anonymous HTTPS ranges, complete file verified"
+  },
+  "publishRun": "https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39383470262"
 }
