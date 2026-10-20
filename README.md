@@ -98,7 +98,7 @@ LINGQI_ROOT="$PWD" LINGQI_URL="http://127.0.0.1:8787/" node tests/browser-v3.cjs
 
 完整浏览器回归可运行 `npm run test:browser -- --full`；构建离线网页后另运行 `LINGQI_PREVIEW_HTML="$PWD/dist/wendao-lingqi-v4.5-preview.html" LINGQI_OFFLINE_REPORT=browser-v45-offline-report.json node tests/browser-v42-offline.cjs`。历史测试文件名保留，环境变量指定本轮实际产物。
 
-本轮检查、实际夹具边界、生成美术清单与截图见 [V4.5 验证目录](docs/validation/v45/README.md)。Android 真机验收仍待完成。
+本轮 419 项逻辑、203 项浏览器检查通过；115 个 APK 资源与冻结源码一致，原体验签名及对齐通过。实际夹具边界、生成美术清单与截图见 [V4.5 验证目录](docs/validation/v45/README.md)。Android 真机验收仍待完成。
 
 完整源码快照可运行 `python3 tools/package-source.py`，输出源码 ZIP、SHA-256 和逐文件清单，排除私钥、工具链、缓存及历史安装包。
 

@@ -1,0 +1,338 @@
+{
+  "startedAt": "2026-10-20T01:27:17.884Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Except for the fresh-account entry, named validated UI fixtures supply high rank, resources, companion affinity and prior wins; the source-combat case adds explicit durable combat attributes and advances the app clock. All board turns, checks, evidence actions, saving failures and archive navigation use application controls. The separate four legal engine campaigns establish reachability with accelerated resource waits, not natural pacing or Android performance.",
+  "tests": [
+    {
+      "name": "fresh account exposes the story beside growth; one visible control opens the authored scene without a rank gate",
+      "passed": true
+    },
+    {
+      "name": "opening a formation displays its scene and does not create a record before explicit entry",
+      "passed": true
+    },
+    {
+      "name": "wrong channels yield useful local feedback, inverse turning restores the board, and correction commits no extra loot",
+      "passed": true
+    },
+    {
+      "name": "actual formal UI combat supplies the missing source but never auto-verifies a preconnected diagram",
+      "passed": true
+    },
+    {
+      "name": "partial directions survive a reload and resume as a working diagram",
+      "passed": true
+    },
+    {
+      "name": "failed storage rolls back rotations and a correct verification; retry preserves exactly one result",
+      "passed": true
+    },
+    {
+      "name": "the archive_exit route verifies its own diagram and records the correct companion response",
+      "passed": true
+    },
+    {
+      "name": "the archive_seal route verifies its own diagram and records the correct companion response",
+      "passed": true
+    },
+    {
+      "name": "completed repair is reachable through the archive and full replay as a read-only saved experience",
+      "passed": true
+    },
+    {
+      "name": "accepted V3 protection promise keeps its original fresh resource goal",
+      "passed": true
+    },
+    {
+      "name": "accepted V3 evidence case still works with native new thumbnails and preserves its accepted objective",
+      "passed": true
+    },
+    {
+      "name": "all four bell_flow evidence crops decode the intended square native atlas cells without stretching",
+      "passed": true,
+      "detail": [
+        {
+          "crop": "0,0,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "0px 0px",
+          "native": "4,2,0,0,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 328.046875,
+            "width": 80,
+            "height": 80,
+            "top": 328.046875,
+            "right": 124,
+            "bottom": 408.046875,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.25,0,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-78px 0px",
+          "native": "4,2,0.999999,0,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 550.921875,
+            "width": 80,
+            "height": 80,
+            "top": 550.921875,
+            "right": 124,
+            "bottom": 630.921875,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.5,0,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-156px 0px",
+          "native": "4,2,2.000001,0,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 773.796875,
+            "width": 80,
+            "height": 80,
+            "top": 773.796875,
+            "right": 124,
+            "bottom": 853.796875,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.75,0,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-234px 0px",
+          "native": "4,2,3,0,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 975.234375,
+            "width": 80,
+            "height": 80,
+            "top": 975.234375,
+            "right": 124,
+            "bottom": 1055.234375,
+            "left": 44
+          }
+        }
+      ]
+    },
+    {
+      "name": "all four furnace_seal evidence crops decode the intended square native atlas cells without stretching",
+      "passed": true,
+      "detail": [
+        {
+          "crop": "0,0.5,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "0px -78px",
+          "native": "4,2,0,1,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 328.046875,
+            "width": 80,
+            "height": 80,
+            "top": 328.046875,
+            "right": 124,
+            "bottom": 408.046875,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.25,0.5,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-78px -78px",
+          "native": "4,2,0.999999,1,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 529.484375,
+            "width": 80,
+            "height": 80,
+            "top": 529.484375,
+            "right": 124,
+            "bottom": 609.484375,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.5,0.5,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-156px -78px",
+          "native": "4,2,2.000001,1,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 730.921875,
+            "width": 80,
+            "height": 80,
+            "top": 730.921875,
+            "right": 124,
+            "bottom": 810.921875,
+            "left": 44
+          }
+        },
+        {
+          "crop": "0.75,0.5,0.25,0.5",
+          "fit": "contain",
+          "w": 1774,
+          "h": 887,
+          "bg": "312px 156px",
+          "offset": "-234px -78px",
+          "native": "4,2,3,1,1774,887",
+          "inner": [
+            78,
+            78
+          ],
+          "box": {
+            "x": 44,
+            "y": 953.796875,
+            "width": 80,
+            "height": 80,
+            "top": 953.796875,
+            "right": 124,
+            "bottom": 1033.796875,
+            "left": 44
+          }
+        }
+      ]
+    },
+    {
+      "name": "measured evidence fitting becomes stable at idle and does not rewrite unchanged crops",
+      "passed": true,
+      "detail": {
+        "idleCropMutations": 0
+      }
+    },
+    {
+      "name": "formation keyboard focus stays inside the dialog and Escape preserves the partial diagram",
+      "passed": true
+    },
+    {
+      "name": "four new paintings remain available in the collection, with old entries and identities intact",
+      "passed": true
+    },
+    {
+      "name": "active board at 320x640 keeps safe controls and supports keyboard rotation",
+      "passed": true
+    },
+    {
+      "name": "resolved board at 320x640 keeps the return action visible",
+      "passed": true
+    },
+    {
+      "name": "active board at 360x480 keeps safe controls and supports keyboard rotation",
+      "passed": true
+    },
+    {
+      "name": "resolved board at 360x480 keeps the return action visible",
+      "passed": true
+    },
+    {
+      "name": "active board at 390x844 keeps safe controls and supports keyboard rotation",
+      "passed": true
+    },
+    {
+      "name": "resolved board at 390x844 keeps the return action visible",
+      "passed": true
+    },
+    {
+      "name": "active board at 844x390 keeps safe controls and supports keyboard rotation",
+      "passed": true
+    },
+    {
+      "name": "resolved board at 844x390 keeps the return action visible",
+      "passed": true
+    },
+    {
+      "name": "active board at 1280x800 keeps safe controls and supports keyboard rotation",
+      "passed": true
+    },
+    {
+      "name": "resolved board at 1280x800 keeps the return action visible",
+      "passed": true
+    },
+    {
+      "name": "normal V4.5 scenarios have no uncaught script, console, HTTP or external-request failures",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "v45-fresh-story-lead.png",
+    "v45-snow-village-story.png",
+    "v45-formation-invitation.png",
+    "v45-broken-channels.png",
+    "v45-repaired-village.png",
+    "v45-partial-archive-resume.png",
+    "v45-archive_exit-response.png",
+    "v45-archive_seal-response.png",
+    "v45-repair-full-replay.png",
+    "v45-illustrated-evidence-response.png",
+    "v45-evidence-cells-bell_flow.png",
+    "v45-evidence-cells-furnace_seal.png",
+    "v45-new-painting-collection.png",
+    "v45-board-320x640.png",
+    "v45-resolved-320x640.png",
+    "v45-board-360x480.png",
+    "v45-resolved-360x480.png",
+    "v45-board-390x844.png",
+    "v45-resolved-390x844.png",
+    "v45-board-844x390.png",
+    "v45-resolved-844x390.png",
+    "v45-board-1280x800.png",
+    "v45-resolved-1280x800.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "badResponses": [],
+  "finishedAt": "2026-10-20T01:27:59.672Z",
+  "passed": true
+}

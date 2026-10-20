@@ -1,0 +1,90 @@
+{
+  "startedAt": "2026-10-20T01:26:24.100Z",
+  "url": "http://127.0.0.1:8787/",
+  "tests": [
+    {
+      "name": "world: six regions and real progression gates render as a navigable map",
+      "passed": true,
+      "durationMs": 576
+    },
+    {
+      "name": "world: closing an unresolved choice changes no rewards, record or random stream",
+      "passed": true,
+      "durationMs": 380
+    },
+    {
+      "name": "world: resolving a free choice grants a single mark and persists across reload",
+      "passed": true,
+      "durationMs": 926
+    },
+    {
+      "name": "dao: changing stance preserves choices and the displayed combat attributes follow actual bonuses",
+      "passed": true,
+      "durationMs": 992
+    },
+    {
+      "name": "journal: written outcomes can be revisited without repeating rewards",
+      "passed": true,
+      "durationMs": 408
+    },
+    {
+      "name": "preparation: four real response roles, consumables and dao are visible before a challenge",
+      "passed": true,
+      "durationMs": 416
+    },
+    {
+      "name": "saving: failed event and stance saves restore all rewards, marks, resources and revision",
+      "passed": true,
+      "durationMs": 915
+    },
+    {
+      "name": "journey: an available encounter is discoverable while immediate growth remains primary",
+      "passed": true,
+      "durationMs": 322
+    },
+    {
+      "name": "combat: dao controls are disabled and backend rejects changes while a fight is active",
+      "passed": true,
+      "durationMs": 106
+    },
+    {
+      "name": "compatibility: existing V3 backups without the extension remain valid and malformed history cannot replace them",
+      "passed": true,
+      "durationMs": 46
+    },
+    {
+      "name": "responsive: phone, tablet and desktop layouts keep controls in bounds and dialogs keyboard accessible",
+      "passed": true,
+      "durationMs": 6512
+    },
+    {
+      "name": "fresh: a new player sees the new world feature without opening locked content or skipping age confirmation",
+      "passed": true,
+      "durationMs": 911
+    },
+    {
+      "name": "world: the sixth region and complete journal remain readable with all eighteen choices saved",
+      "passed": true,
+      "durationMs": 94
+    }
+  ],
+  "screenshots": [
+    "v32-mobile-world.png",
+    "v32-mobile-event.png",
+    "v32-mobile-dao.png",
+    "v32-mobile-journal.png",
+    "v32-mobile-preparation.png",
+    "v32-small-world-reduced.png",
+    "v32-desktop-world.png",
+    "v32-desktop-home.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "fixtureNotice": "New feature integration uses validated fixtures for event eligibility and supplies. Existing V3 new-account gameplay and V3.2 legal action simulations are separate; these fixtures do not establish long-term balance or physical-device performance.",
+  "browser": "151.0.7922.34",
+  "passed": true,
+  "finishedAt": "2026-10-20T01:26:37.626Z"
+}

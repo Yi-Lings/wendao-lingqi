@@ -1,0 +1,8 @@
+PASS offline HTML boots its independent playable preview with all media embedded
+PASS offline world choice commits once and the journal survives file reload
+PASS offline actual crafting records the exact recipe and preserves it after file reload
+PASS offline read-only full replay works with an explicitly supplied legacy completion and no external assets
+PASS offline evidence judgment uses the bundled rules, commits a real selection and survives file reload
+PASS offline formation keeps partial directions, resumes after reload and verifies only through actual controls
+PASS all four new art PNGs decode from file-local embedded blobs with exact source bytes
+{"passed":true,"tests":7,"pageErrors":[]}

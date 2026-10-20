@@ -10,4 +10,4 @@
 
 Android 体验包 4.5/code9，最低 Android 8.0，包名 `com.lingqi.game.preview`，沿用原体验签名；旧体验版可覆盖安装，跨正式包可先导出 JSON 再导入。离线网页 ZIP 解压后打开同名 HTML，首次交互后播放声音。源码 ZIP 包含工程、美术、音频、方案、资料来源、测试和构建脚本。
 
-验证记录及夹具边界见 [仓库 V4.5 验证目录](https://github.com/Yi-Lings/wendao-lingqi/tree/main/docs/validation/v45)。真实通关节奏、长期平衡和 Android 真机仍需后续观察与验收。
+419 项逻辑、203 项浏览器检查通过（196 源页面＋7 实际离线文件）；115 个 APK 内资源与冻结源码一致，原体验签名及对齐通过。验证记录及夹具边界见 [仓库 V4.5 验证目录](https://github.com/Yi-Lings/wendao-lingqi/tree/main/docs/validation/v45)。真实通关节奏、长期平衡和 Android 真机仍需后续观察与验收。
