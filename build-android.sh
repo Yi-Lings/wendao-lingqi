@@ -7,6 +7,16 @@ TASK_BUILD="$TASK_ROOT/android/build/manual"
 TASK_SIGNED="$TASK_ROOT/android/build/signed.apk"
 TASK_SRC="$TASK_ROOT/android/app/src/main"
 TASK_SIGN="${LINGQI_SIGNING_DIR:-$TASK_ROOT/tools/signing}"
+TASK_VERSION=$(python3 - "$TASK_ROOT/android/app/build.gradle" <<'PY'
+import pathlib,re,sys
+config=pathlib.Path(sys.argv[1]).read_text()
+code=re.search(r'\bversionCode\s+(\d+)',config).group(1)
+name=re.search(r"\bversionName\s+'([0-9]+(?:\.[0-9]+)*)'",config).group(1)
+print(code+' '+name)
+PY
+)
+TASK_VERSION_CODE=${TASK_VERSION%% *}
+TASK_VERSION_NAME=${TASK_VERSION#* }
 export LD_LIBRARY_PATH="$TASK_TOOLS/lib64"
 for TASK_FILE in "$TASK_JAVA" "$TASK_TOOLS/android.jar" "$TASK_TOOLS/ecj.jar" "$TASK_TOOLS/aapt2" "$TASK_TOOLS/zipalign" "$TASK_TOOLS/lib/d8.jar" "$TASK_TOOLS/lib/apksigner.jar"; do
  if [ ! -f "$TASK_FILE" ]; then echo "Missing tool: $TASK_FILE. Run python3 tools/prepare-tools.py first." >&2; exit 1; fi
@@ -52,7 +62,7 @@ application.set('{http://schemas.android.com/apk/res/android}label','问道·灵
 manifest.write(build/'AndroidManifest.xml',encoding='utf-8',xml_declaration=True)
 PY
 "$TASK_TOOLS/aapt2" compile --dir "$TASK_SRC/res" -o "$TASK_BUILD/resources.zip"
-"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code 7 --version-name 4.3
+"$TASK_TOOLS/aapt2" link -o "$TASK_BUILD/base.apk" -I "$TASK_TOOLS/android.jar" --manifest "$TASK_BUILD/AndroidManifest.xml" --java "$TASK_BUILD/generated" -A "$TASK_ROOT/web" "$TASK_BUILD/resources.zip" --min-sdk-version 26 --target-sdk-version 35 --version-code "$TASK_VERSION_CODE" --version-name "$TASK_VERSION_NAME"
 "$TASK_JAVA" -jar "$TASK_TOOLS/ecj.jar" -8 -proc:none -nowarn -classpath "$TASK_TOOLS/android.jar" -d "$TASK_BUILD/classes" "@$TASK_BUILD/sources.list"
 python3 - "$TASK_BUILD" <<'PY'
 import pathlib,sys,zipfile

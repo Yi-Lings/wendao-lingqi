@@ -25,6 +25,16 @@ function costs(s,type,count=1){
  if(type==='breakthrough')return {yuan:100*(realm+1),materials:{essence:12*(realm+1),ore:20*(realm+1)}};
  return {};
 }
+function meditationPlan(s,count){
+ const a=s.ascension,active=!!a&&a.stage==='ascended'&&!a.perfected;
+ const missingXp=active?Math.max(0,xpNeeded(a)-a.xp):0,perRound=active?220+a.realm*160:220;
+ const roundsToFill=Math.ceil(missingXp/perRound);
+ const rounds=count===undefined?Math.min(10,roundsToFill):Number.isSafeInteger(count)&&count>=1&&count<=10?count:0;
+ const cost=costs(s,'meditation',rounds),xp=perRound*rounds,yuan=(8+(a?.realm||0)*4)*rounds;
+ const storageFits=active&&Math.max(0,xpNeeded(a)-a.xp)+CAP-a.reserve>=xp&&a.yuan+yuan<=CAP&&a.meditations+rounds<=CAP;
+ const affordable=canPay(s,cost),busy=!!(s.battle||s.exploration||s.joint||s.ritual&&s.ritual.phase!=='complete');
+ return {count:rounds,roundsToFill,missingXp,xp,yuan,cost,affordable,storageFits:!!storageFits,allowed:active&&rounds>0&&!busy&&affordable&&!!storageFits,fillsLayer:rounds>=roundsToFill&&roundsToFill>0};
+}
 function canPay(s,cost){return Object.entries(cost).every(([key,n])=>key==='materials'?Object.entries(n).every(([id,q])=>(s.materials[id]||0)>=q):key==='yuan'?!!s.ascension&&s.ascension.yuan>=n:s[key]>=n);}
 function pay(s,cost){if(!canPay(s,cost))return false;for(const [key,n] of Object.entries(cost)){if(key==='materials')for(const [id,q] of Object.entries(n))s.materials[id]-=q;else if(key==='yuan')s.ascension.yuan-=n;else s[key]-=n;}return true;}
 function currentLines(a){
@@ -91,7 +101,7 @@ function rewardBattle(s,d){
  return {xp,yuan,realm,realmName:names[realm]};
 }
 function view(s){
- const a=s.ascension,stage=a?a.stage:'preparation',busy=!!(s.battle||s.exploration)||!!(s.ritual&&s.ritual.phase!=='complete'),suggestedRoute=eligible(s,s.route)?s.route:routes.find(route=>eligible(s,route))||s.route,route=a&&a.route||suggestedRoute;
+ const a=s.ascension,stage=a?a.stage:'preparation',busy=!!(s.battle||s.exploration||s.joint)||!!(s.ritual&&s.ritual.phase!=='complete'),suggestedRoute=eligible(s,s.route)?s.route:routes.find(route=>eligible(s,route))||s.route,route=a&&a.route||suggestedRoute;
  const requirements=[{label:'人间终境十层修为圆满',current:fullMortal(s,route)?1:0,required:1,done:fullMortal(s,route)},{label:'亲自落定终境道誓',current:finalOath(s,route)?1:0,required:1,done:finalOath(s,route)},{label:'六卷山海主线',current:s.story.chapter,required:6,done:s.story.chapter===6}];
  const realm=a&&a.realm||0,scene=N.realms[realm],lines=a?currentLines(a):[],freshGate=!!a&&records(s,'heaven_gate')>a.baseline;
  const preparationCost=costs(s,'preparation'),meditationCost=costs(s,'meditation'),breakthroughCost=costs(s,'breakthrough'),realmFull=!!a&&a.layer===10&&a.xp>=xpNeeded(a),trialFresh=!!a&&records(s,'immortal_'+realm)>a.trialBaseline;
@@ -101,12 +111,12 @@ function view(s){
  const canAdvance=!!a&&!busy&&(stage==='invitation'||stage==='vow'&&!!a.choice||stage==='condense'&&(a.line<lines.length-1||canPay(s,preparationCost))||stage==='trial'&&(a.line<lines.length-1||freshGate)||stage==='return');
  const unlockedSections=['arrival',...(realmFull?['trial']:[]),...(trialFresh?['after']:[])],realmNarrative={...scene,unlockedSections,currentSummary:trialFresh?scene.after[0]:realmFull?scene.trial[0]:scene.arrival[0]};
  const line=lines[a&&a.line||0]||(ascended?realmNarrative.currentSummary:null);
- return {stage,line,entry:a?copy(a):null,choices:choiceViews,requirements,ready:stage==='ready',canBegin:!a&&!busy&&requirements.every(x=>x.done),canAdvance,canComplete:stage==='ready'&&!busy,ascended,realm,realmName:names[realm],realmLabel:ascended?names[realm]+' '+(a.perfected?'圆满':a.layer+'层'):'人间圆满 · 天门未启',layer:a&&a.layer||1,xp:a&&a.xp||0,xpNeeded:a?xpNeeded(a):480,reserve:a&&a.reserve||0,yuan:a&&a.yuan||0,perfected:!!(a&&a.perfected),canMeditate:ascended&&!busy&&!a.perfected&&canPay(s,meditationCost)&&a.reserve<CAP,canLevelUp:ascended&&!busy&&a.layer<10&&a.xp>=xpNeeded(a),canBreakthrough:ascended&&!busy&&!a.perfected&&realmFull&&trialFresh&&canPay(s,breakthroughCost),realmFull,trialFresh,preparationCost,meditationCost,breakthroughCost,challenges,realms:N.realms,realmNarrative,realmTrialWon:trialFresh,trialLines:N.trial||[],bonus:attributeBonus(s),suggestedRoute:route,gateWins:a?Math.max(0,records(s,'heaven_gate')-a.baseline):0,advanceLabel:stage==='condense'&&a.line===lines.length-1?'凝道 · 投入阵材':stage==='trial'&&a.line===lines.length-1?'带着天门回响归来':'继续听下去',mission:stage==='trial'?{goal:{id:'heaven_gate',label:'亲自通过天门考验'},current:a?Math.max(0,records(s,'heaven_gate')-a.baseline):0,required:1,done:freshGate}:null,meditations:a&&a.meditations||0,huntWins:a&&a.huntWins||0};
+ return {stage,line,entry:a?copy(a):null,choices:choiceViews,requirements,ready:stage==='ready',canBegin:!a&&!busy&&requirements.every(x=>x.done),canAdvance,canComplete:stage==='ready'&&!busy,ascended,realm,realmName:names[realm],realmLabel:ascended?names[realm]+' '+(a.perfected?'圆满':a.layer+'层'):'人间圆满 · 天门未启',layer:a&&a.layer||1,xp:a&&a.xp||0,xpNeeded:a?xpNeeded(a):480,reserve:a&&a.reserve||0,yuan:a&&a.yuan||0,perfected:!!(a&&a.perfected),meditationPlan:meditationPlan(s),canMeditate:meditationPlan(s,1).allowed,canLevelUp:ascended&&!busy&&a.layer<10&&a.xp>=xpNeeded(a),canBreakthrough:ascended&&!busy&&!a.perfected&&realmFull&&trialFresh&&canPay(s,breakthroughCost),realmFull,trialFresh,preparationCost,meditationCost,breakthroughCost,challenges,realms:N.realms,realmNarrative,realmTrialWon:trialFresh,trialLines:N.trial||[],bonus:attributeBonus(s),suggestedRoute:route,gateWins:a?Math.max(0,records(s,'heaven_gate')-a.baseline):0,advanceLabel:stage==='condense'&&a.line===lines.length-1?'凝道 · 投入阵材':stage==='trial'&&a.line===lines.length-1?'带着天门回响归来':'继续听下去',mission:stage==='trial'?{goal:{id:'heaven_gate',label:'亲自通过天门考验'},current:a?Math.max(0,records(s,'heaven_gate')-a.baseline):0,required:1,done:freshGate}:null,meditations:a&&a.meditations||0,huntWins:a&&a.huntWins||0};
 }
 function handle(s,a,now){
  const actions=['beginAscension','advanceAscension','chooseAscension','completeAscension','celestialMeditate','advanceCelestial','celestialHunt','celestialBreakthrough'];if(!a||!actions.includes(a.type))return null;
  if(!Number.isSafeInteger(now)||now<0||now>MAX_TIME)return no('飞升时间无效');
- if(s.battle||s.exploration||s.ritual&&s.ritual.phase!=='complete')return no('先完成当前历练或闭关，再继续天门道途');
+ if(s.battle||s.exploration||s.joint||s.ritual&&s.ritual.phase!=='complete')return no('先完成当前历练、共修或闭关，再继续天门道途');
  if(a.type==='beginAscension'){
   if(s.ascension)return no('天門来信已经留下，继续未完的约定即可');const v=view(s);if(!v.canBegin)return no('任一路人间终境十层修为圆满、终境道誓与六卷主线完成后，才可回应天门');
   s.route=v.suggestedRoute;s.ascension={version:1,stage:'invitation',line:0,choice:null,route:s.route,baseline:records(s,'heaven_gate'),startedAt:now,ascendedAt:null,realm:0,layer:1,xp:0,reserve:0,yuan:0,meditations:0,huntWins:0,breakthroughs:0,trialBaseline:0,perfected:false};
@@ -152,5 +162,5 @@ function handle(s,a,now){
  }
  return null;
 }
-return {normalize,validate,handle,view,xpNeeded,costs,attributeBonus,dungeonRequirement,battleAccess:dungeonRequirement,battleCost,prepareBattle,rewardBattle,finalOath,eligible};
+return {normalize,validate,handle,view,xpNeeded,costs,meditationPlan,attributeBonus,dungeonRequirement,battleAccess:dungeonRequirement,battleCost,prepareBattle,rewardBattle,finalOath,eligible};
 });

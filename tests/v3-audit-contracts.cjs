@@ -25,8 +25,8 @@ for(const [id,kind,cost] of [['orangeGear','gear',120],['orangeTreasure','treasu
   assert.equal(result.ok,false);assert.deepEqual(s,before);assert.equal(R.model(action,result,before,s),null);
  });
 }
-test('thirteen retained illustrations and four new art sheets are reachable without becoming item grants',()=>{
- assert.equal(Collection.records.length,17);assert.equal(new Set(Collection.records.map(x=>x.file)).size,17);
+test('retained illustrations and nine additional V4.6 art sheets are reachable without becoming item grants',()=>{
+ assert.equal(Collection.records.length,26);assert.equal(new Set(Collection.records.map(x=>x.file)).size,26);
  const old=fs.readdirSync(path.join(__dirname,'../web/assets')).filter(f=>/^v5-gear-quality-[0-5]\.png$/.test(f));
  assert.equal(old.length,6);for(const file of old)assert(Collection.records.some(x=>x.file===file));
  const before=JSON.stringify(Collection.records);
@@ -36,6 +36,6 @@ test('thirteen retained illustrations and four new art sheets are reachable with
   assert(html.includes('assets/'+record.file));assert.equal((html.match(/art-collection-painting/g)||[]).length,1);
   assert(html.includes((i+1)+' / '+Collection.records.length));assert(!html.includes('data-action='),'archive has no reward-producing actions');
  }
- assert.equal(Collection.view(-1).index,0);assert.equal(Collection.view(100).index,16);
+ assert.equal(Collection.view(-1).index,0);assert.equal(Collection.view(100).index,25);
  assert.equal(JSON.stringify(Collection.records),before);
 });

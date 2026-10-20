@@ -24,6 +24,7 @@ async function shot(p,name){await p.waitForTimeout(260);await p.evaluate(()=>{do
 async function restore(p,s){s.lastAt=Date.now();assert(await p.evaluate(raw=>window.Lingqi.import(raw),JSON.stringify(s)));await close(p);}
 async function overflow(p){assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1&&document.body.scrollWidth<=innerWidth+1),'viewport overflow');}
 async function resolve(p,id,choice){await p.evaluate(id=>window.Lingqi.showModal('world-event',{id}),id);
+ const previews=p.locator('[data-ui="world-choice"]');for(let i=0;i<await previews.count();i++)if(JSON.parse(await previews.nth(i).getAttribute('data-payload')).choice===choice){await previews.nth(i).click();break;}
  const buttons=p.locator('[data-action="resolveEncounter"]');let chosen=false;for(let i=0;i<await buttons.count();i++)if((await buttons.nth(i).evaluate(el=>JSON.parse(el.dataset.payload).choice))===choice){await buttons.nth(i).click();chosen=true;break;}assert(chosen);}
 (async()=>{
  fs.mkdirSync(DIST,{recursive:true});browser=await chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox','--disable-gpu'],env:{...process.env,FONTCONFIG_FILE:path.join(ROOT,'qa-tools/fonts.conf')}});report.browser=await browser.version();

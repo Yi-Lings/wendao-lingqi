@@ -10,7 +10,7 @@ if(!env.LINGQI_CHROMIUM){
  env.LINGQI_CHROMIUM=candidates.find(x=>fs.existsSync(x));
  if(!env.LINGQI_CHROMIUM)delete env.LINGQI_CHROMIUM;
 }
-const suites=['browser-v3.cjs','browser-v31.cjs','browser-v32.cjs','browser-v43.cjs','browser-v44.cjs','browser-v45.cjs'];
+const suites=['browser-v3.cjs','browser-v31.cjs','browser-v32.cjs','browser-v43.cjs','browser-v44.cjs','browser-v45.cjs','browser-v46.cjs'];
 if(process.argv.includes('--full'))suites.push('browser-equipment-builds.cjs','browser-activity-named-art.cjs','browser-story-ritual.cjs','browser-ascension.cjs','browser-v4-integrity.cjs');
 for(const name of suites){
  const result=spawnSync(process.execPath,[path.join(__dirname,name)],{stdio:'inherit',env});

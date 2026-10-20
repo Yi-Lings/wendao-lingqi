@@ -1,0 +1,40 @@
+.scene-art{position:relative;overflow:hidden;background-color:#102f34;background-repeat:no-repeat;isolation:isolate}
+.hero-scene .page-hero-art{position:absolute;inset:0;z-index:-2}
+.hero-scene::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#04191bce,#071e2240 60%,#04191b60),linear-gradient(0deg,#061a20e8,transparent 65%)}
+.event-scene{aspect-ratio:var(--scene-native-ratio,4/3);border:1px solid #bda67555;border-radius:9px;margin-bottom:14px}
+.event-scene-caption{font-size:12px;letter-spacing:.12em;color:var(--gold);margin:0 0 6px}
+.world-next{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px;margin-bottom:15px;border:1px solid #78b9a166;border-radius:9px;background:#20494055}
+.world-next p{margin:0;font-size:12px;color:var(--muted)}
+.world-next strong{display:block;font-family:var(--serif);color:var(--gold);font-size:17px}
+.world-next .btn{flex:none;min-height:44px}
+.world-choice-review{padding:18px;background:#1d464160;border:1px solid #a7c9a177;border-radius:10px;scroll-margin-top:8px}
+.world-choice-review h3{color:var(--gold);font-size:19px}
+.world-choice-review dl{display:grid;grid-template-columns:auto 1fr;gap:10px 15px;margin:18px 0}
+.world-choice-review dt{color:var(--muted)}
+.world-choice-review dd{margin:0;overflow-wrap:anywhere}
+.world-choice-review .choice-shortage{color:#f0b7a1}
+.companion-record-art{aspect-ratio:3/2;border:1px solid #bda67555;border-radius:10px}
+.companion-record-copy{padding:18px 2px}
+.companion-record-copy h3{font-size:25px;color:var(--gold)}
+.companion-record-copy blockquote{margin:10px 0 14px;padding:5px 12px;border-left:2px solid var(--gold);font-family:var(--serif);font-size:17px;color:#e8dbb6}
+.companion-next{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px;background:#24493c60;border-radius:9px;margin-bottom:18px}
+.companion-memory-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.companion-memory-list .btn{min-height:58px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;white-space:normal;gap:3px}
+.companion-memory-list small{font-size:11px;opacity:.7}
+.art-directory{border-top:1px solid #bda67540;margin-top:16px;padding-top:12px}
+.art-directory summary{min-height:44px;cursor:pointer;color:var(--gold)}
+.art-directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:10px}
+.art-directory-item{min-width:0;min-height:44px;border:1px solid #94b6ab40;border-radius:7px;background:#103137;color:var(--ink);padding:6px;text-align:left}
+.art-directory-item[aria-current=true]{border-color:var(--gold);background:#44503a}
+.art-directory-thumb{display:block;aspect-ratio:4/3;background-repeat:no-repeat;background-position:center;background-size:contain;border-radius:4px;margin-bottom:6px}
+.art-directory-item small{display:block;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.celestial-plan{border:1px solid #b9a57580;border-radius:9px;padding:12px;background:#163c38c9;margin-top:10px}
+.celestial-plan h3{font-size:15px;color:var(--gold);margin:0 0 5px}
+.celestial-plan p{font-size:12px;margin:4px 0;color:#d0ddd5}
+.celestial-plan .narrative-button{margin-top:7px;min-height:44px;width:100%}
+.celestial-plan .plan-cost{display:flex;gap:5px 12px;flex-wrap:wrap;list-style:none;margin:8px 0;padding:0;font-size:12px}
+.celestial-plan .missing{color:#f2b8a2}
+@media(min-width:760px){.event-scene{aspect-ratio:var(--scene-native-ratio,4/3)}.art-directory-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.companion-record-copy{padding:20px 5px}.companion-memory-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:360px){.companion-memory-list{grid-template-columns:1fr}.art-directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.world-next{flex-wrap:wrap}.world-choice-review{padding:12px}}
+
+.art-directory-pages{display:flex;flex-wrap:wrap;gap:6px}.art-directory-pages .btn{min-height:44px}.art-directory-pages [aria-pressed=true]{color:var(--gold);border-color:var(--gold)}

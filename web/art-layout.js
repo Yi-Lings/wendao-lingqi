@@ -17,7 +17,7 @@ function geometry({width,height,imageWidth,imageHeight,cols,rows,col,row,crop,fi
 }
 const doc=root.document;
 if(!doc)return Object.freeze({geometry});
-const SELECTOR='.art-icon,.monster-portrait,.boss-portrait,.boss-banner-art,.chapter-art,.dungeon-banner:not(.boss-banner),.battle-stage,.exploration-stage,.conversation-portrait,.companion-art,.proof-evidence-art';
+const SELECTOR='.art-icon,.monster-portrait,.boss-portrait,.boss-banner-art,.chapter-art,.dungeon-banner:not(.boss-banner),.battle-stage,.exploration-stage,.conversation-portrait,.companion-art,.proof-evidence-art,.scene-art';
 const profiles=new WeakMap(),tracked=new Set(),images=new Map();
 let pending=0;
 const clean=n=>Number(n.toFixed(5))+'px';

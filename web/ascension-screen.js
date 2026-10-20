@@ -59,6 +59,12 @@ function celestialProgress(s,v){
  const trainingCost=costRows(s,v.meditationCost).map(row=>`<li class="${row.owned<row.required?'missing':''}" title="${esc(row.name)}已有 ${row.owned}" aria-label="${esc(row.name)}需 ${row.required}，已有 ${row.owned}">${esc(row.name)} ${row.required}${row.owned<row.required?'（缺 '+(row.required-row.owned)+'）':''}</li>`).join('');
  return `<section class="celestial-progress" aria-label="仙界修为"><div class="celestial-progress-top"><strong>${esc(v.realmLabel||v.realmName+' · '+amount(v.layer)+'层')}</strong><span>仙元 ${amount(v.yuan)}</span></div><div class="celestial-xp-bar" role="progressbar" aria-label="本层仙界修为" aria-valuemin="0" aria-valuemax="${needed}" aria-valuenow="${Math.min(xp,needed)}" style="--celestial-xp:${percent}%"><i></i></div><p>本层修为 ${xp} / ${needed}${amount(v.reserve)?' · 储备 '+amount(v.reserve):''}</p><ul class="celestial-training-cost" aria-label="静修一周天实际投入">${trainingCost}</ul></section>`;
 }
+function trainingPlan(s,v){
+ const plan=v.meditationPlan;if(!plan?.count)return '';
+ const rows=costRows(s,plan.cost),missing=rows.filter(row=>row.owned<row.required),material=missing.find(row=>row.kind==='materials');
+ const source=material?ui('准备'+material.name,'ascension-source',{id:material.id,kind:'material'},'quiet'):missing.length?ui('查看资源集市','ascension-market',{},'quiet'):'';
+ return `<section class="celestial-plan" aria-label="按本层缺口静修"><h3>静修计划 · ${plan.count} 周天</h3><p>本层还缺 ${plan.missingXp} 修为；本次凝炼 ${plan.xp} 修为、${plan.yuan} 仙元。${plan.fillsLayer?'满层余量进入储备。':'本次最多十轮，之后仍可继续。'}</p><ul class="plan-cost">${rows.map(row=>`<li class="${row.owned<row.required?'missing':''}">${esc(row.name)} ${row.required} / 已有 ${row.owned}</li>`).join('')}</ul>${!plan.storageFits?'<p>修为或仙元储存已满，先晋层或升阶。</p>':''}${act('按计划静修 · '+plan.count+' 周天','celestialMeditate',{count:plan.count},!plan.allowed,'secondary')}${source}</section>`;
+}
 function challenges(s,v){
  const entries=v.challenges||[];if(!entries.length)return '';
  return `<div class="celestial-challenges" aria-label="当前仙界挑战">${entries.map(challenge=>{
@@ -113,7 +119,7 @@ function render(s,view){
  const finalRealm=amount(v.realm)===2;
  const breakthroughTitle=finalRealm?'金仙圆满的实际投入':'凝定下一仙阶的实际投入';
  const breakthroughExplanation=finalRealm?'本阶道劫已经完成；确认后扣除阵材，落定金仙圆满。':'本阶道劫已经完成；确认后扣除这些材料，进入新的仙阶。';
- const body=celestial?`${roadmap(v)}${celestialProgress(s,v)}<div class="ascension-panel">${challenges(s,v)}${v.realmFull&&v.trialFresh&&!v.perfected?costPanel(s,v.breakthroughCost,breakthroughTitle,breakthroughExplanation):''}${celestialLetters(s,v)}</div>`:`<div class="ascension-panel">${['preparation','invitation','condense'].includes(v.stage)?costPanel(s,v.preparationCost,'凝道入天门 · 阵材准备','阵材只在凝道读完并确认入劫时投入；先看清费用与缺口。'):''}${v.stage==='preparation'?requirementPanel(v):v.stage==='trial'?challenges(s,v):''}</div>`;
+ const body=celestial?`${roadmap(v)}${celestialProgress(s,v)}<div class="ascension-panel">${trainingPlan(s,v)}${challenges(s,v)}${v.realmFull&&v.trialFresh&&!v.perfected?costPanel(s,v.breakthroughCost,breakthroughTitle,breakthroughExplanation):''}${celestialLetters(s,v)}</div>`:`<div class="ascension-panel">${['preparation','invitation','condense'].includes(v.stage)?costPanel(s,v.preparationCost,'凝道入天门 · 阵材准备','阵材只在凝道读完并确认入劫时投入；先看清费用与缺口。'):''}${v.stage==='preparation'?requirementPanel(v):v.stage==='trial'?challenges(s,v):''}</div>`;
  return `<section class="narrative-screen ascension-screen" data-narrative="ascension" data-ascension-stage="${esc(v.stage)}" data-celestial-realm="${amount(v.realm)}" aria-label="${esc(title)}"><div class="chapter-art narrative-backdrop ascension-backdrop" data-art-crop="${crop.join(',')}" data-art-fit="cover" aria-hidden="true" style="${backgroundStyle}"></div><div class="narrative-shade ascension-shade" aria-hidden="true"></div><header class="narrative-hud"><div class="narrative-hud-copy"><span class="narrative-overline">${esc(stageNames[v.stage])} · ${celestial?'仙界三阶':'人界六境之后'}</span><h1>${esc(title)}</h1></div><div class="narrative-tools">${ui('暂歇','ascension-exit')}</div></header><div class="ascension-world">${sky(v)}${body}</div>${dialogue(s,v)}<footer class="narrative-footer ascension-footer"><p class="narrative-hint">${esc(hint(v))}</p><div class="narrative-actions">${controls(s,v)}</div></footer></section>`;
 }
 return Object.freeze({render});

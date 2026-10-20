@@ -1,0 +1,80 @@
+{
+  "version": "4.6.0",
+  "tool": "image_gen.imagegen",
+  "originalsPreserved": true,
+  "notice": "Original PNG bytes copied without pixel edits; three-six-cell sheets contain eighteen encounter illustrations. Source C is square-cell, A/B are 4:3-cell.",
+  "files": {
+    "web/assets/v10-cloud-retreat.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3032865,
+      "sha256": "6fef61786f62d95d97b2656084fa0681347200fac77e2d4c2800709e1ac06f64",
+      "use": "cultivation",
+      "illustrations": 1
+    },
+    "web/assets/v10-artifact-atelier.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3038367,
+      "sha256": "34da634682299154097fe807224a98f692fea43fde9aaa69cd7caa388c6a0df5",
+      "use": "armory",
+      "illustrations": 1
+    },
+    "web/assets/v10-star-observatory.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3064928,
+      "sha256": "b0e82495262e71eb324dc3e6d678ab971ed63840b6d8c68f51dd8793d20551de",
+      "use": "divination",
+      "illustrations": 1
+    },
+    "web/assets/v10-encounters-a.png": {
+      "width": 1774,
+      "height": 887,
+      "bytes": 3475980,
+      "sha256": "35788321b1891ccade00fe1d7f09d1d8d4d94e32bc3c54def65cee20c6e204e3",
+      "use": "events_a",
+      "illustrations": 6
+    },
+    "web/assets/v10-encounters-b.png": {
+      "width": 1774,
+      "height": 887,
+      "bytes": 3388067,
+      "sha256": "427f9d6df1ee3988c1bc151c3dec033978b7d54be0e07681416eaeec31fc9078",
+      "use": "events_b",
+      "illustrations": 6
+    },
+    "web/assets/v10-encounters-c.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3318349,
+      "sha256": "22a9401d550a51b9a210009b55e0b3fd8cb62903b6f5bd1e263fc21e42b149ba",
+      "use": "events_c",
+      "illustrations": 6
+    },
+    "web/assets/v10-qinglan-lantern.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3185199,
+      "sha256": "c70502775d59e2f9f296298f0d5ae580e2927e7967d2569ffd581dfe7d0229a7",
+      "use": "qinglan",
+      "illustrations": 1
+    },
+    "web/assets/v10-yueheng-medicine.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2808419,
+      "sha256": "d867204636449c28d68fc9dcac37b36527ee25265cb00d4bdc0e6bcb68cd911f",
+      "use": "yueheng",
+      "illustrations": 1
+    },
+    "web/assets/v10-suyan-records.png": {
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2825579,
+      "sha256": "eef95ef264d0c82c882ef1c6a2b674322a035e996aca94aacd91798473df8168",
+      "use": "suyan",
+      "illustrations": 1
+    }
+  }
+}

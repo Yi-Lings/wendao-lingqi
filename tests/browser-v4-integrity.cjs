@@ -121,7 +121,7 @@ async function dustExchange(item,kind){return withPage('dust exchange '+item,reg
  await test('dust orange treasure shows the actual saved item and restores the source without a second grant',()=>dustExchange('orangeTreasure','treasure'));
  await test('real meditation followed by celestial advancement shows the saved new layer without fabricated rewards',()=>withPage('celestial advancement',ascendedFixture(),async p=>{
  await p.evaluate(()=>Lingqi.openAscension());const before=await state(p);
- for(let n=0;n<3;n++){await action(p,'celestialMeditate');assert.equal(await p.locator('.celestial-result').count(),1);await ui(p,'ascension-open');}
+ for(let n=0;n<3;n++){await action(p,'celestialMeditate',q=>q.count===1);assert.equal(await p.locator('.celestial-result').count(),1);await ui(p,'ascension-open');}
  const trained=await state(p);assert.equal(trained.ascension.xp+trained.ascension.reserve-(before.ascension.xp+before.ascension.reserve),660);assert.equal(trained.ascension.yuan-before.ascension.yuan,24);
  const powerBefore=E.attributes(trained).power;await action(p,'advanceCelestial');const after=await state(p);assert.equal(after.ascension.layer,2);assert.equal(after.ascension.yuan,trained.ascension.yuan);assert.deepEqual(after.materials,trained.materials);assert.equal(after.stones,trained.stones);assert(E.attributes(after).power>powerBefore);assert.equal(after.ascension.xp+after.ascension.reserve,180);
  const dialog=p.locator('[role=dialog]');assert.match(await dialog.getAttribute('aria-label'),/仙修晋层.*登仙 2层/);const text=await p.locator('.celestial-result').innerText();assert.match(text,/登仙 2层/);assert.doesNotMatch(text,/仙元 \+|仙界修为 \+|实际投入/);

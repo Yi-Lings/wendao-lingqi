@@ -27,6 +27,7 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
  await test('offline world choice commits once and the journal survives file reload',async()=>{
   const id=await p.evaluate(()=>window.Lingqi.world().events.find(x=>x.available)?.id);assert(id,'preview has an eligible encounter');
   await p.evaluate(id=>window.Lingqi.showModal('world-event',{id}),id);
+  const choices=p.locator('[data-ui="world-choice"]');for(let i=0;i<await choices.count();i++)if(await choices.nth(i).evaluate(b=>JSON.parse(b.dataset.payload).choice==='insight')){await choices.nth(i).click();break;}
   const buttons=p.locator('[data-action="resolveEncounter"]');let hit=false;
   for(let i=0;i<await buttons.count();i++)if(await buttons.nth(i).evaluate(b=>JSON.parse(b.dataset.payload).choice==='insight')){await buttons.nth(i).click();hit=true;break;}
   assert(hit);const before=await p.evaluate(()=>window.Lingqi.state().wanderings);
@@ -83,6 +84,23 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
     const expected=records.files['web/assets/'+collection.records[index].file];assert(art.url.startsWith('blob:'));assert.equal(art.w,expected.width);assert.equal(art.h,expected.height);assert.equal(art.sha256,expected.sha256);
    }
    await p.screenshot({path:path.join(ROOT,'dist/v45-offline-art.png')});report.screenshots.push('v45-offline-art.png');
+  });
+ }
+ if(await p.evaluate(()=>!!window.WendaoCompanionRecords)){
+  await test('all nine V4.6 originals decode from embedded file blobs with source SHA256',async()=>{
+   const manifest=require(path.join(ROOT,'docs/art/V4_6_GENERATED_ASSETS.json')),collection=require(path.join(ROOT,'web/art-collection.js'));
+   for(let index=17;index<26;index++){
+    await p.evaluate(index=>Lingqi.showModal('art-collection',{index}),index);
+    const actual=await p.locator('.art-collection-painting').evaluate(async node=>{const url=getComputedStyle(node).backgroundImage.slice(5,-2),image=new Image();image.src=url;await image.decode();const bytes=await(await fetch(url)).arrayBuffer(),sha256=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(n=>n.toString(16).padStart(2,'0')).join('');return {url,width:image.naturalWidth,height:image.naturalHeight,sha256};});
+    const expected=manifest.files['web/assets/'+collection.records[index].file];assert(actual.url.startsWith('blob:'));assert.equal(actual.width,expected.width);assert.equal(actual.height,expected.height);assert.equal(actual.sha256,expected.sha256);
+   }
+   await p.screenshot({path:path.join(ROOT,'dist/v46-offline-painting.png')});report.screenshots.push('v46-offline-painting.png');
+  });
+  await test('file-local companion record and eighteen encounter crops render their actual embedded sheets',async()=>{
+   const E=require(path.join(ROOT,'web/engine.js')),s=E.createState(Date.now());s.training=false;s.paths.magic={realm:5,layer:10,xp:0,reserve:0};s.progress.dungeonWins.resource_herb=1;
+   await p.evaluate(s=>{if(!Lingqi.import(JSON.stringify(s)))throw Error('Review fixture rejected');},s);
+   for(const id of require(path.join(ROOT,'web/scene-art.js')).ids){await p.evaluate(id=>Lingqi.showModal('world-event',{id}),id);await p.waitForFunction(()=>!!document.querySelector('.event-scene')?.dataset.atlasFit);assert((await p.locator('.event-scene').evaluate(n=>getComputedStyle(n).backgroundImage)).includes('blob:'));}
+   await p.evaluate(()=>Lingqi.showModal('companion-record',{id:'suyan'}));assert.equal(await p.locator('[data-companion-record=suyan]').count(),1);await p.waitForFunction(()=>!!document.querySelector('.companion-record-art')?.dataset.atlasFit);await p.screenshot({path:path.join(ROOT,'dist/v46-offline-record.png')});report.screenshots.push('v46-offline-record.png');
   });
  }
  for(const key of ['pageErrors','consoleErrors','failedRequests','externalRequests'])assert.equal(report[key].length,0,JSON.stringify(report[key]));

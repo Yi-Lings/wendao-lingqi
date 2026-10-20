@@ -1,3 +1,17 @@
+# 问道·灵契 V4.6 接手说明
+
+2026-10-20。用户要求更多美术、详细自评并照意见改进。先前全部提交 GitHub、构建和发布体验版的授权继续有效；同步 main/work，保留历史标签与原体验签名。
+
+本轮评审见 docs/review/PROJECT_REVIEW_V4_6.md；机制与边界见 docs/ITERATION_V4_6.md。新增 9 个原始 PNG（3 主页＋18 事件＋3 同行叙事），原 65 项 PNG/MP3 字节保留。实际生成尺寸、散列与完整提示见 docs/art/V4_6_GENERATED_ASSETS.json 和 V4_6_GENERATION_RECORDS.json。原件保留在 /workspace/generated_images。
+
+scene-art.js 负责图片身份和独立格裁切；companion-records.js 是不补写缺失选择的经历入口；wayfarer-review.js 只读计算费用与缺口。预览的 choice 是模态框参数，不进入存档；真正确认复用 resolveEncounter。保存失败按原事务回滚，可在原预览重试。藏画保留旧 17 个 ID，扩至 26 项，目录每页最多六图。
+
+ascension.meditationPlan 以本层缺口计算 1–10 轮和总费用，复用既有 celestialMeditate，满层余量按原规则进储备；不改经济。发现并修复共修期间仍能仙修：所有飞升动作、view、计划统一检查 joint，八类动作均有原子性回归。计划置于既有 ascension-panel 滚动区，避免短横屏挤掉猎场。
+
+Android 4.6/code10，publish-preview.yml 指向 v4.6.0-preview。431 项逻辑和 22 项本轮界面专项已通过；最终全量、构建和公开交付证据见 docs/validation/v46。仍无 Android 真机与自然游玩/长期经济平衡结论。
+
+## 历史 V4.5 记录
+
 # 问道·灵契 V4.5 接手说明
 
 更新：2026-10-20 UTC。用户要求继续优化迭代、广泛查询资料，并授权调用生图模型补充美术；先前全部提交 GitHub、构建和发布体验版的授权持续有效。仍同步 main/work，保留旧标签与原体验签名。
