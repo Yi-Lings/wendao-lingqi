@@ -1,0 +1,189 @@
+{
+  "startedAt": "2026-10-20T06:47:49.181Z",
+  "fixtureNotice": "Validated rank, supplies, affinity and chapter fixtures are explicitly supplied to exercise presentation and transactions. The immortal fixture uses public ceremony actions and a simulated real gate victory. UI choices, plans, failures, gallery navigation and reloads use application controls. These checks do not establish natural pacing or Android device performance.",
+  "tests": [
+    {
+      "name": "six home pages show distinct contextual paintings without covering the primary controls",
+      "passed": true,
+      "details": [
+        "v10-cloud-retreat.png",
+        "v10-artifact-atelier.png",
+        "v10-encounters-c.png",
+        "v9-furnace-inspection.png",
+        "v9-snow-village.png",
+        "v10-star-observatory.png"
+      ]
+    },
+    {
+      "name": "all eighteen encounters decode the correct isolated cell with actual cover geometry",
+      "passed": true,
+      "details": [
+        "v10-encounters-a.png:-2.86864px -2.52648px",
+        "v10-encounters-a.png:-321.606px -2.52648px",
+        "v10-encounters-a.png:-640.343px -2.52648px",
+        "v10-encounters-a.png:-2.86864px -241.579px",
+        "v10-encounters-a.png:-321.606px -241.579px",
+        "v10-encounters-a.png:-640.343px -241.579px",
+        "v10-encounters-b.png:-2.86864px -2.52648px",
+        "v10-encounters-b.png:-321.606px -2.52648px",
+        "v10-encounters-b.png:-640.343px -2.52648px",
+        "v10-encounters-b.png:-2.86864px -241.579px",
+        "v10-encounters-b.png:-321.606px -241.579px",
+        "v10-encounters-b.png:-640.343px -241.579px",
+        "v10-encounters-c.png:-2.86864px -2.86864px",
+        "v10-encounters-c.png:-321.606px -2.86864px",
+        "v10-encounters-c.png:-640.343px -2.86864px",
+        "v10-encounters-c.png:-2.86864px -321.606px",
+        "v10-encounters-c.png:-321.606px -321.606px",
+        "v10-encounters-c.png:-640.343px -321.606px"
+      ]
+    },
+    {
+      "name": "choosing, reviewing, cancelling and changing a route never writes a save or draws randomness",
+      "passed": true
+    },
+    {
+      "name": "a confirmed route persists once, survives reload and becomes a read-only illustrated journal",
+      "passed": true
+    },
+    {
+      "name": "a failed save retains the selected route, rolls back fees and allows exactly one retry",
+      "passed": true
+    },
+    {
+      "name": "an unaffordable route clearly disables commitment while the free route stays available",
+      "passed": true
+    },
+    {
+      "name": "the world map exposes available counts and the next reachable encounter without overriding manual region choice",
+      "passed": true
+    },
+    {
+      "name": "three companion records show new identity paintings and only actually completed shared stories",
+      "passed": true
+    },
+    {
+      "name": "a fresh companion record offers an accessible story without inventing a memory or granting affinity",
+      "passed": true
+    },
+    {
+      "name": "the painting directory loads six thumbnails per page and jumps to any new sheet with keyboard-safe focus",
+      "passed": true
+    },
+    {
+      "name": "the celestial plan charges its exact displayed total and settles the minimum whole rounds once",
+      "passed": true
+    },
+    {
+      "name": "a failed batch save rolls back every round and a retry settles the advertised total",
+      "passed": true
+    },
+    {
+      "name": "a missing-material plan disables the batch and leads directly to its actual source",
+      "passed": true
+    },
+    {
+      "name": "illustrated encounter, review, companion and gallery fit 320x480",
+      "passed": true
+    },
+    {
+      "name": "celestial planning keeps fixed actions reachable at 320x480",
+      "passed": true
+    },
+    {
+      "name": "illustrated encounter, review, companion and gallery fit 390x844",
+      "passed": true
+    },
+    {
+      "name": "celestial planning keeps fixed actions reachable at 390x844",
+      "passed": true
+    },
+    {
+      "name": "illustrated encounter, review, companion and gallery fit 844x390",
+      "passed": true
+    },
+    {
+      "name": "celestial planning keeps fixed actions reachable at 844x390",
+      "passed": true
+    },
+    {
+      "name": "illustrated encounter, review, companion and gallery fit 1280x800",
+      "passed": true
+    },
+    {
+      "name": "celestial planning keeps fixed actions reachable at 1280x800",
+      "passed": true
+    },
+    {
+      "name": "new scenes do not continuously mutate layout while idle and normal scenarios have no browser or network errors",
+      "passed": true,
+      "details": {
+        "idleMutations": 0
+      }
+    }
+  ],
+  "screenshots": [
+    "v46-home-cultivation.png",
+    "v46-home-character.png",
+    "v46-home-adventure.png",
+    "v46-home-cave.png",
+    "v46-home-fate.png",
+    "v46-home-heaven.png",
+    "v46-encounter-bridge_lantern.png",
+    "v46-encounter-village_well.png",
+    "v46-encounter-mountain_bell.png",
+    "v46-encounter-lake_ferry.png",
+    "v46-encounter-cloud_garden.png",
+    "v46-encounter-old_sundial.png",
+    "v46-encounter-mist_archive.png",
+    "v46-encounter-stone_echo.png",
+    "v46-encounter-ash_letter.png",
+    "v46-encounter-root_crossing.png",
+    "v46-encounter-forge_oath.png",
+    "v46-encounter-red_spring.png",
+    "v46-encounter-star_watch.png",
+    "v46-encounter-moon_mirror.png",
+    "v46-encounter-furnace_seal.png",
+    "v46-encounter-deep_river.png",
+    "v46-encounter-last_disciple.png",
+    "v46-encounter-quiet_sky.png",
+    "v46-choice-review.png",
+    "v46-event-journal.png",
+    "v46-world-map.png",
+    "v46-companion-qinglan.png",
+    "v46-companion-yueheng.png",
+    "v46-companion-suyan.png",
+    "v46-art-directory.png",
+    "v46-new-painting.png",
+    "v46-planned-meditation-result.png",
+    "v46-missing-plan-material.png",
+    "v46-event-320x480.png",
+    "v46-review-320x480.png",
+    "v46-record-320x480.png",
+    "v46-gallery-320x480.png",
+    "v46-celestial-320x480.png",
+    "v46-event-390x844.png",
+    "v46-review-390x844.png",
+    "v46-record-390x844.png",
+    "v46-gallery-390x844.png",
+    "v46-celestial-390x844.png",
+    "v46-event-844x390.png",
+    "v46-review-844x390.png",
+    "v46-record-844x390.png",
+    "v46-gallery-844x390.png",
+    "v46-celestial-844x390.png",
+    "v46-event-1280x800.png",
+    "v46-review-1280x800.png",
+    "v46-record-1280x800.png",
+    "v46-gallery-1280x800.png",
+    "v46-celestial-1280x800.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "finishedAt": "2026-10-20T06:48:17.499Z",
+  "partial": false,
+  "passed": true
+}

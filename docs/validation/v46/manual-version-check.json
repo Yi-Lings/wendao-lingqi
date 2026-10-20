@@ -1,0 +1,8 @@
+{
+  "manualScriptSyntax": "passed",
+  "actualVersionParser": "passed",
+  "versionCode": 10,
+  "versionName": "4.6",
+  "releaseBuildExecuted": false,
+  "notice": "Only version parsing and shell syntax are checked for the alternative release script; actual preview uses Gradle debug and the retained preview signature."
+}

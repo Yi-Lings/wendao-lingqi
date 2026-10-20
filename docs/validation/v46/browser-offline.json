@@ -1,0 +1,57 @@
+{
+  "startedAt": "2026-10-20T06:44:05.469Z",
+  "file": "wendao-lingqi-v4.6-preview.html",
+  "tests": [
+    {
+      "name": "offline HTML boots its independent playable preview with all media embedded",
+      "passed": true
+    },
+    {
+      "name": "offline world choice commits once and the journal survives file reload",
+      "passed": true
+    },
+    {
+      "name": "offline actual crafting records the exact recipe and preserves it after file reload",
+      "passed": true
+    },
+    {
+      "name": "offline read-only full replay works with an explicitly supplied legacy completion and no external assets",
+      "passed": true
+    },
+    {
+      "name": "offline evidence judgment uses the bundled rules, commits a real selection and survives file reload",
+      "passed": true
+    },
+    {
+      "name": "offline formation keeps partial directions, resumes after reload and verifies only through actual controls",
+      "passed": true
+    },
+    {
+      "name": "all four new art PNGs decode from file-local embedded blobs with exact source bytes",
+      "passed": true
+    },
+    {
+      "name": "all nine V4.6 originals decode from embedded file blobs with source SHA256",
+      "passed": true
+    },
+    {
+      "name": "file-local companion record and eighteen encounter crops render their actual embedded sheets",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "replayFixtureNotice": "This case imports a validated supplied legacy completion solely to verify bundled replay UI; it is not evidence of naturally completing a chapter.",
+  "proofFixtureNotice": "A validated high-rank first-volume mission with an explicitly supplied prior non-practice source win is imported to test bundled proof controls and file persistence; this is not evidence of natural combat progression.",
+  "formationFixtureNotice": "A validated high-rank protection mission with a supplied prior formal resource win verifies bundled graph rules, actual rotation controls and file persistence. It is not a natural-pacing claim.",
+  "screenshots": [
+    "v45-offline-formation.png",
+    "v45-offline-art.png",
+    "v46-offline-painting.png",
+    "v46-offline-record.png"
+  ],
+  "passed": true,
+  "finishedAt": "2026-10-20T06:44:35.274Z"
+}
