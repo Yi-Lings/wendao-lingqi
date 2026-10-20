@@ -303,5 +303,18 @@
   "sourceCommit": "afe16861ab3a542d124fcbffd4cc70b8156bb19a",
   "verifiedAt": "2026-10-20T01:32:46.716795+00:00",
   "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
-  "androidBuildVerified": true
+  "androidBuildVerified": true,
+  "publicReleaseVerified": true,
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.5.0-preview",
+  "releaseCommit": "a2ce5600b915ed66be5989b4fcb2a680894394f3",
+  "sourceArchiveFiles": 1014,
+  "sourceArchiveLogicPassed": 419,
+  "publicSourceArchive": {
+    "bytes": 330461687,
+    "sha256": "b057b0eec33df2e53502c150a8f9550a11f1b1be232cf64e1ee88349f4d3fec2",
+    "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5.0-source.zip",
+    "githubDigest": "sha256:b057b0eec33df2e53502c150a8f9550a11f1b1be232cf64e1ee88349f4d3fec2",
+    "method": "anonymous HTTPS ranges, complete file verified"
+  },
+  "publishRun": "https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39354472290"
 }

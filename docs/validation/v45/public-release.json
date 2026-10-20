@@ -1,0 +1,56 @@
+{
+  "version": "4.5.0",
+  "verifiedAt": "2026-10-20T01:40:21.438385+00:00",
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.5.0-preview",
+  "releaseCommit": "a2ce5600b915ed66be5989b4fcb2a680894394f3",
+  "assets": {
+    "wendao-lingqi-v4.5-preview.apk": {
+      "bytes": 144718612,
+      "sha256": "ea465111ef6c20e96f0176f2c9fcd6b8a7751d051e99c556c4682d2f04d30d91",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.apk",
+      "githubDigest": "sha256:ea465111ef6c20e96f0176f2c9fcd6b8a7751d051e99c556c4682d2f04d30d91",
+      "method": "anonymous HTTPS ranges, complete file verified"
+    },
+    "wendao-lingqi-v4.5-preview.apk.sha256": {
+      "bytes": 97,
+      "sha256": "72c5918e7b78f9f055cde0a1e32baccbd5a0e02fb36b1f1ffd2390628dc5d414",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.apk.sha256",
+      "githubDigest": "sha256:72c5918e7b78f9f055cde0a1e32baccbd5a0e02fb36b1f1ffd2390628dc5d414",
+      "method": "anonymous HTTPS"
+    },
+    "wendao-lingqi-v4.5-preview.zip": {
+      "bytes": 144772083,
+      "sha256": "3da2144697efb2c87d0a2aa98e49cfeb264a317a314eee590f879f06a6d190f0",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip",
+      "githubDigest": "sha256:3da2144697efb2c87d0a2aa98e49cfeb264a317a314eee590f879f06a6d190f0",
+      "method": "anonymous HTTPS ranges, complete file verified"
+    },
+    "wendao-lingqi-v4.5-preview.zip.sha256": {
+      "bytes": 97,
+      "sha256": "bdbc0cdc26ad8e937ec7e7097b8d41c51c9b567d7498fc1c27d3f1076e5ad613",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip.sha256",
+      "githubDigest": "sha256:bdbc0cdc26ad8e937ec7e7097b8d41c51c9b567d7498fc1c27d3f1076e5ad613",
+      "method": "anonymous HTTPS"
+    },
+    "wendao-lingqi-v4.5.0-source.zip": {
+      "bytes": 330461687,
+      "sha256": "b057b0eec33df2e53502c150a8f9550a11f1b1be232cf64e1ee88349f4d3fec2",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5.0-source.zip",
+      "githubDigest": "sha256:b057b0eec33df2e53502c150a8f9550a11f1b1be232cf64e1ee88349f4d3fec2",
+      "method": "anonymous HTTPS ranges, complete file verified"
+    },
+    "wendao-lingqi-v4.5.0-source.zip.sha256": {
+      "bytes": 98,
+      "sha256": "c0253bb9c6c5ddec3d4fe0c9b06e62384069fae211681003288df93ec3dfbded",
+      "url": "https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5.0-source.zip.sha256",
+      "githubDigest": "sha256:c0253bb9c6c5ddec3d4fe0c9b06e62384069fae211681003288df93ec3dfbded",
+      "method": "anonymous HTTPS"
+    }
+  },
+  "anonymousDownloadVerified": true,
+  "offlineHtmlVerified": true,
+  "sourceManifestVerified": true,
+  "sourceFiles": 1014,
+  "sourceArchiveLogicPassed": 419,
+  "physicalAndroidVerified": false
+}

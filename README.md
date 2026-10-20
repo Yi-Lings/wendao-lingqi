@@ -64,7 +64,7 @@ python3 -m http.server 8787 --bind 127.0.0.1 --directory web
 
 打开 <http://127.0.0.1:8787/>。网页无需 npm 构建，建议使用近期 Chrome、Edge 或更新后的 Android WebView。存档按浏览器的地址、端口与用户配置隔离；切换地址前可先导出 JSON。
 
-[下载 V4.5 离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-v4.5-preview.html`。默认进入人界配装试玩，设置可切换天门飞升试玩或正式仙途；三个存档相互隔离。完整离线 HTML 约169 MiB，包含所有音画原字节资源。
+[下载 V4.5 离线网页试玩包](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.5.0-preview/wendao-lingqi-v4.5-preview.zip)，解压后用 Chrome 或 Edge 打开 `wendao-lingqi-v4.5-preview.html`。默认进入人界配装试玩，设置可切换天门飞升试玩或正式仙途；三个存档相互隔离。完整离线 HTML 约184.5 MiB，包含所有音画原字节资源。
 
 角色页新增「成套装备」与「推荐配装」：六流派套装展示两件/四件激活效果，一键使用已有装备；推荐同时搭配装备、心法、神通顺序和秘术，展示用途与下一获取/参悟目标。六套各六部位、六档品级共216种装备图片映射互不复用，保留并使用名称与形状吻合的原美术。缺件展示图片与获取入口：固定套装/部位打造、对应妖王掉落、道品抽卡定向，条件与材料缺口明确显示。胜利自动弹出真实战利品结算；自动重战在结算后暂停，点击继续再挑战。点击部位装备后选择「更换装备」，可在当前部位直接比较穿戴与背包候选，长按查看完整属性。
 

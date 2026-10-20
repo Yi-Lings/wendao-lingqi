@@ -8,9 +8,17 @@
 
 四次 image_gen 已生成并接入 4 个原始 PNG（3 场景＋1 张八证据图集），保留 /workspace/generated_images 原件；游戏副本位于 web/assets/v9-*.png。尺寸/散列见 docs/art/V4_5_GENERATED_ASSETS.json。藏画阁从 13 扩到 17 项，旧身份不变。截图发现证据裁切未生效后，已把新类接入 art-layout.js，明确背景位置并补实际绘制偏移测试；第二轮图像目检正确。
 
-机制和边界见 docs/ITERATION_V4_5.md，12 组一手资料链接及推导见 docs/RESEARCH_V4_5.md。419 项逻辑与四条合法完整引擎路线已检查，完整浏览器回归、离线验证及发布状态以本轮后续补充为准。Android 4.5/code9，publish-preview.yml 现指 V4.5；仍无真机验收。
+机制和边界见 docs/ITERATION_V4_5.md，12 组一手资料链接及推导见 docs/RESEARCH_V4_5.md。419 项逻辑、203 项浏览器与四条合法完整引擎路线已通过；离线验证与公开发布完成，证据见 docs/validation/v45。Android 4.5/code9，publish-preview.yml 现指 V4.5；仍无真机验收。
 
-419 项逻辑、203 项浏览器（196 源页面＋7 file://）、144 张截图已收录 docs/validation/v45。四条普通新档合法行动路线均完成全部人界/仙界节点。两个 Android CI 39353572480 / 39353572889 成功。APK 冻结输入 afe16861ab3a542d124fcbffd4cc70b8156bb19a（125 项），115 个打包资源逐字节匹配。4.5/code9，APK 144718612 字节，SHA-256 ea465111ef6c20e96f0176f2c9fcd6b8a7751d051e99c556c4682d2f04d30d91；原体验证书、对齐通过。离线 HTML 内嵌 68 项资源且新 4 PNG 原字节经实际 file:// 验证。当前正在完成公开发布与源码包验证，状态见后续交付记录。
+419 项逻辑、203 项浏览器（196 源页面＋7 file://）、144 张截图已收录 docs/validation/v45。四条普通新档合法行动路线均完成全部人界/仙界节点。两个 Android CI 39353572480 / 39353572889 成功。APK 冻结输入 afe16861ab3a542d124fcbffd4cc70b8156bb19a（125 项），115 个打包资源逐字节匹配。4.5/code9，APK 144718612 字节，SHA-256 ea465111ef6c20e96f0176f2c9fcd6b8a7751d051e99c556c4682d2f04d30d91；原体验证书、对齐通过。离线 HTML 内嵌 68 项资源且新 4 PNG 原字节经实际 file:// 验证。公开发布与源码包验证已完成。
+
+## V4.5 公开交付已完成
+
+[下载 APK、离线网页及完整源码](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.5.0-preview)。发布工作流 [39354472290](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39354472290) 成功，版本为公开预发布，保留历史版本。发布提交 `a2ce5600b915ed66be5989b4fcb2a680894394f3`，APK 构建输入冻结在 `afe16861ab3a542d124fcbffd4cc70b8156bb19a`；最终证据文档的提交不改变构建输入。
+
+三个大文件与各自 SHA256 共六项已通过匿名 HTTPS 下载、GitHub digest 和公开校验文件核验。公开 APK/离线 ZIP 与已测字节一致；ZIP CRC、内嵌 HTML SHA 和源码 ZIP 全部 1014 项文件散列通过。源码在干净工作树打包，独立解压后 419 项逻辑检查通过。源码 ZIP 330461687 字节，SHA256 `b057b0eec33df2e53502c150a8f9550a11f1b1be232cf64e1ee88349f4d3fec2`。完整证据见 docs/validation/v45/public-release.json。
+
+main/work 同步代码、美术原文件、方案、截图、测试报告与 APK 分片；无 Android 真机验收与自然时长平衡结论。
 
 ## 历史 V4.4 记录
 

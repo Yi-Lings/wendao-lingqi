@@ -38,3 +38,10 @@
 419 项逻辑、203 项浏览器检查通过（196 源页面＋7 实际离线文件），包含 25 项新护阵逻辑检查和 27 项本轮源界面检查。四条完整合法行动路线覆盖炼体/修法各自的守护/求证，均可推进主线、终境、真实飞升和全部三阶仙界节点；不以加速等待推断自然耗时。
 
 冻结源码 `afe16861ab3a542d124fcbffd4cc70b8156bb19a` 的 125 项 Web/Android 输入与 115 个 APK 资源通过逐字节核对；原体验签名与对齐通过。APK 144718612 字节，SHA-256 `ea465111ef6c20e96f0176f2c9fcd6b8a7751d051e99c556c4682d2f04d30d91`。离线 HTML 内嵌 68 项资源，新四幅 PNG 在实际 file:// 页面中解码并与源码散列相同。main/work 两个 Android CI 成功。
+
+
+## 公开发布与交付
+
+[V4.5 预发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.5.0-preview) 已公开；Actions 39354472290 成功。发布源冻结提交 `a2ce5600b915ed66be5989b4fcb2a680894394f3`，APK 源输入仍为 `afe16861ab3a542d124fcbffd4cc70b8156bb19a`。APK、离线 ZIP、完整源码 ZIP 及三个 SHA256 文件共六项匿名下载验证通过，GitHub digest、大小和公开 SHA 一致；前两项与本地验收的构建字节一致。
+
+源码包包含 1014 个文件，逐项 SHA 与冻结发布提交一致；独立解压的同源包通过全部 419 项逻辑测试。详见 [完整公开核验](validation/v45/public-release.json)。原画、资料、方案、全部实现、144 张截图、回归证据和 APK 分片同步 main/work。后补文档提交不修改本次 Web/Android 构建输入。
