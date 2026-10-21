@@ -1,0 +1,129 @@
+
+> wendao-lingqi@4.7.0 test:browser
+> node tests/run-browser.cjs --full
+
+PASS fresh: age confirmation, one-layer start and initial assets
+PASS fresh: freely chosen resource dungeon starts, pauses, resumes and wins
+PASS fresh: earned or crafted XP advances exactly one small layer
+PASS fresh: current account persists across reload
+PASS fixture: six pages and mobile dialogs render without overflow
+PASS fixture: 48 techniques and school/type filter plus source link
+PASS fixture: 18 alchemy recipes; crafting and qi use
+PASS fixture: red forging, six slots, protection and enhancement
+PASS fixture: loadout selects skills and presets retain configuration
+PASS fixture: gacha probabilities, target selection, hard red and reload
+PASS fixture: simulated jade shop direct credit exchange reload and failed-save rollback
+PASS fixture: animated jade ten-pull skip and mid-animation reload preserve prizes and pity
+PASS fixture: six dungeon families selectable and all can begin
+PASS fixture: manual skill, target, tactical pause and battle reload
+PASS fixture: story choice and sect action persist
+PASS fixture: adult companion bond and complete joint session with reload
+PASS fixture: export download, valid import and invalid-import protection
+PASS fixture: Native persistence failure rolls back reward and RNG
+PASS fixture: both cultivation routes preserve progress and unlock auto-small by highest path
+PASS fixture: completed trial permits one major breakthrough and preserves route
+PASS fixture: passive XP unlocks advancement button without navigation
+PASS fixture: two-hour offline summary agrees with HUD and never clears challenges
+PASS fixture: 360 px HUD handles large inventories without horizontal overflow
+PASS fixture: alchemy UI queue, three fire rounds, reload, reward once and storage rollback
+PASS fixture: alchemy capacity, ordinary payout and cancellation refund
+PASS fixture: terminal trial links to final chapter, all three endings persist and no seventh realm
+PASS recovery: corrupt stored data retained and exportable without overwrite
+PASS fixture: collection pages screenshots and readable red UI
+PASS responsive: 360 px six pages and probability dialog
+PASS responsive: 412 px six pages and probability dialog
+PASS responsive: 1440 px six pages and probability dialog
+PASS asset integrity: local resources and browser diagnostics
+{"passed":true,"tests":32,"failed":[],"pageErrors":[],"badResponses":0,"screenshots":["v3-mobile-shop.png","v3-mobile-summon.png","v3-mobile-draw.png","v3-mobile-battle.png","v3-mobile-conversation.png","v3-mobile-alchemy.png","v3-mobile-home.png","v3-mobile-dungeons.png","v3-mobile-forge.png","v3-mobile-heaven.png","v3-mobile-companions.png","v3-desktop-home.png"]}
+PASS fresh: live journey accelerates with an owned pill, then advances exactly one layer
+PASS fresh: an outdated journey link cannot repeat a consumed pill action
+PASS keyboard: dialogs contain Tab focus and restore the original settings button
+PASS journey: passive XP updates the visible goal without a reload
+PASS journey: tenth-layer materials link opens the real source and terminal guidance stays in six realms
+PASS equipment: sorted whole-build comparisons and reviewed recommendations apply only after acceptance
+PASS equipment: item protection refresh preserves dialog scroll and keyboard focus
+PASS keyboard: item detail inspection contains focus and returns to its parent inventory
+PASS recycling: preview shows exact count and refunds, cancellation changes nothing, confirmation persists
+PASS saving: recommendation and recycling failure roll back all equipment, rewards and RNG
+PASS combat: repeated rendering preserves focused targets and paused combat avoids DOM churn
+PASS saving: failed first save keeps the age gate and can be retried without phantom progress
+PASS saving: existing valid progress still opens readably when boot persistence fails
+PASS responsive: new goal, recommendation, comparison and recycle dialogs fit 320, 360, 412 and desktop
+PASS performance: full 300-item bag gives a non-decreasing plan and a responsive sorted inventory
+{"passed":true,"tests":15,"failed":[],"pageErrors":[],"screenshots":["v31-mobile-journey.png","v31-mobile-terminal-goal.png","v31-mobile-recommendation.png","v31-mobile-equipment.png","v31-mobile-recycle-preview.png","v31-mobile-save-recovery.png","v31-desktop-journey.png"]}
+PASS world: six regions and real progression gates render as a navigable map
+PASS world: closing an unresolved choice changes no rewards, record or random stream
+PASS world: resolving a free choice grants a single mark and persists across reload
+PASS dao: changing stance preserves choices and the displayed combat attributes follow actual bonuses
+PASS journal: written outcomes can be revisited without repeating rewards
+PASS preparation: four real response roles, consumables and dao are visible before a challenge
+PASS saving: failed event and stance saves restore all rewards, marks, resources and revision
+PASS journey: an available encounter is discoverable while immediate growth remains primary
+PASS combat: dao controls are disabled and backend rejects changes while a fight is active
+PASS compatibility: existing V3 backups without the extension remain valid and malformed history cannot replace them
+PASS responsive: phone, tablet and desktop layouts keep controls in bounds and dialogs keyboard accessible
+PASS fresh: a new player sees the new world feature without opening locked content or skipping age confirmation
+PASS world: the sixth region and complete journal remain readable with all eighteen choices saved
+{"passed":true,"tests":13,"failed":[],"screenshots":["v32-mobile-world.png","v32-mobile-event.png","v32-mobile-dao.png","v32-mobile-journal.png","v32-mobile-preparation.png","v32-small-world-reduced.png","v32-desktop-world.png","v32-desktop-home.png"]}
+PASS wrong medicine is excluded; guided controlled output records one batch and two pills
+PASS named forge guidance preselects a common-quality target and rejects the wrong set
+PASS failed storage rolls back counters, items, cost and RNG; retry can commit exactly once
+PASS known-choice full replay includes all sections, keeps the real branch and never invokes reward actions
+PASS old records disclose missing choices and allow labelled branch lookup while saving is unavailable
+PASS full replay remains readable with reachable controls at 360x480
+PASS body ritual has distinct physical narration and unchanged paid steps at 360x480
+PASS full replay remains readable with reachable controls at 390x844
+PASS body ritual has distinct physical narration and unchanged paid steps at 390x844
+PASS full replay remains readable with reachable controls at 844x390
+PASS body ritual has distinct physical narration and unchanged paid steps at 844x390
+PASS full replay remains readable with reachable controls at 1280x800
+PASS body ritual has distinct physical narration and unchanged paid steps at 1280x800
+PASS normal browser scenarios have no uncaught errors or external requests
+{"passed":true,"tests":14,"pageErrors":[]}
+PASS story mission opens the exact evidence notebook without advancing or inventing records
+PASS missing provenance guides real combat; actual victory unlocks judgment without granting it
+PASS wrong conclusion explains the mismatch; retry commits a resolved judgment and companion response
+PASS read evidence and selected pair survive a refresh without an automatic judgment
+PASS unrelated evidence produces feedback, then replacing the pair enables the furnace conclusion
+PASS failed save rolls back a successful judgment and can retry exactly once
+PASS resolved proof remains available in chapter archives and full replay with no mutation controls
+PASS the next volume displays the remembered judgment only when its proof was actually saved
+PASS old V2 accepted seek mission remains a real herb dungeon instead of being silently rewritten
+PASS active evidence notebook fits 360x480 with keyboard-selectable controls
+PASS resolved judgment and return control fit 360x480
+PASS active evidence notebook fits 390x844 with keyboard-selectable controls
+PASS resolved judgment and return control fit 390x844
+PASS active evidence notebook fits 844x390 with keyboard-selectable controls
+PASS resolved judgment and return control fit 844x390
+PASS active evidence notebook fits 1280x800 with keyboard-selectable controls
+PASS resolved judgment and return control fit 1280x800
+PASS normal evidence scenarios have no browser or network errors
+{"passed":true,"tests":18,"pageErrors":[]}
+FAIL fresh account exposes the story beside growth; one visible control opens the authored scene without a rank gate: No visible data-ui=story-open
+PASS opening a formation displays its scene and does not create a record before explicit entry
+PASS wrong channels yield useful local feedback, inverse turning restores the board, and correction commits no extra loot
+PASS actual formal UI combat supplies the missing source but never auto-verifies a preconnected diagram
+PASS partial directions survive a reload and resume as a working diagram
+PASS failed storage rolls back rotations and a correct verification; retry preserves exactly one result
+PASS the archive_exit route verifies its own diagram and records the correct companion response
+PASS the archive_seal route verifies its own diagram and records the correct companion response
+PASS completed repair is reachable through the archive and full replay as a read-only saved experience
+PASS accepted V3 protection promise keeps its original fresh resource goal
+PASS accepted V3 evidence case still works with native new thumbnails and preserves its accepted objective
+PASS all four bell_flow evidence crops decode the intended square native atlas cells without stretching
+PASS all four furnace_seal evidence crops decode the intended square native atlas cells without stretching
+PASS measured evidence fitting becomes stable at idle and does not rewrite unchanged crops
+PASS formation keyboard focus stays inside the dialog and Escape preserves the partial diagram
+PASS four new paintings remain available in the collection, with old entries and identities intact
+PASS active board at 320x640 keeps safe controls and supports keyboard rotation
+PASS resolved board at 320x640 keeps the return action visible
+PASS active board at 360x480 keeps safe controls and supports keyboard rotation
+PASS resolved board at 360x480 keeps the return action visible
+PASS active board at 390x844 keeps safe controls and supports keyboard rotation
+PASS resolved board at 390x844 keeps the return action visible
+PASS active board at 844x390 keeps safe controls and supports keyboard rotation
+PASS resolved board at 844x390 keeps the return action visible
+PASS active board at 1280x800 keeps safe controls and supports keyboard rotation
+PASS resolved board at 1280x800 keeps the return action visible
+PASS normal V4.5 scenarios have no uncaught script, console, HTTP or external-request failures
+{"passed":false,"tests":27,"pageErrors":[]}

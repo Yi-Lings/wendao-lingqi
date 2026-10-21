@@ -1,0 +1,88 @@
+{
+  "startedAt": "2026-10-21T15:19:32.629Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Named mission and archive fixtures explicitly provide rank/resources/affinity. All shown production, story transitions, read-only navigation, save failure and ritual steps use real application controls. They do not establish natural pacing or Android device performance.",
+  "tests": [
+    {
+      "name": "wrong medicine is excluded; guided controlled output records one batch and two pills",
+      "passed": true
+    },
+    {
+      "name": "named forge guidance preselects a common-quality target and rejects the wrong set",
+      "passed": true
+    },
+    {
+      "name": "failed storage rolls back counters, items, cost and RNG; retry can commit exactly once",
+      "passed": true
+    },
+    {
+      "name": "known-choice full replay includes all sections, keeps the real branch and never invokes reward actions",
+      "passed": true
+    },
+    {
+      "name": "old records disclose missing choices and allow labelled branch lookup while saving is unavailable",
+      "passed": true
+    },
+    {
+      "name": "full replay remains readable with reachable controls at 360x480",
+      "passed": true
+    },
+    {
+      "name": "body ritual has distinct physical narration and unchanged paid steps at 360x480",
+      "passed": true
+    },
+    {
+      "name": "full replay remains readable with reachable controls at 390x844",
+      "passed": true
+    },
+    {
+      "name": "body ritual has distinct physical narration and unchanged paid steps at 390x844",
+      "passed": true
+    },
+    {
+      "name": "full replay remains readable with reachable controls at 844x390",
+      "passed": true
+    },
+    {
+      "name": "body ritual has distinct physical narration and unchanged paid steps at 844x390",
+      "passed": true
+    },
+    {
+      "name": "full replay remains readable with reachable controls at 1280x800",
+      "passed": true
+    },
+    {
+      "name": "body ritual has distinct physical narration and unchanged paid steps at 1280x800",
+      "passed": true
+    },
+    {
+      "name": "normal browser scenarios have no uncaught errors or external requests",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "v43-medicine-settlement.png",
+    "v43-named-medicine-completed.png",
+    "v43-production-journal.png",
+    "v43-known-choice-replay.png",
+    "v43-memory-360x480.png",
+    "v43-body-preparation-360x480.png",
+    "v43-body-heart-360x480.png",
+    "v43-memory-390x844.png",
+    "v43-body-preparation-390x844.png",
+    "v43-body-heart-390x844.png",
+    "v43-memory-844x390.png",
+    "v43-body-preparation-844x390.png",
+    "v43-body-heart-844x390.png",
+    "v43-memory-1280x800.png",
+    "v43-body-preparation-1280x800.png",
+    "v43-body-heart-1280x800.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "badResponses": [],
+  "finishedAt": "2026-10-21T15:19:53.095Z",
+  "passed": true
+}

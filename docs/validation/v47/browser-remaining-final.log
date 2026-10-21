@@ -1,0 +1,150 @@
+PASS fresh account exposes the story beside growth; one visible control opens the authored scene without a rank gate
+PASS opening a formation displays its scene and does not create a record before explicit entry
+PASS wrong channels yield useful local feedback, inverse turning restores the board, and correction commits no extra loot
+PASS actual formal UI combat supplies the missing source but never auto-verifies a preconnected diagram
+PASS partial directions survive a reload and resume as a working diagram
+PASS failed storage rolls back rotations and a correct verification; retry preserves exactly one result
+PASS the archive_exit route verifies its own diagram and records the correct companion response
+PASS the archive_seal route verifies its own diagram and records the correct companion response
+PASS completed repair is reachable through the archive and full replay as a read-only saved experience
+PASS accepted V3 protection promise keeps its original fresh resource goal
+PASS accepted V3 evidence case still works with native new thumbnails and preserves its accepted objective
+PASS all four bell_flow evidence crops decode the intended square native atlas cells without stretching
+PASS all four furnace_seal evidence crops decode the intended square native atlas cells without stretching
+PASS measured evidence fitting becomes stable at idle and does not rewrite unchanged crops
+PASS formation keyboard focus stays inside the dialog and Escape preserves the partial diagram
+PASS four new paintings remain available in the collection, with old entries and identities intact
+PASS active board at 320x640 keeps safe controls and supports keyboard rotation
+PASS resolved board at 320x640 keeps the return action visible
+PASS active board at 360x480 keeps safe controls and supports keyboard rotation
+PASS resolved board at 360x480 keeps the return action visible
+PASS active board at 390x844 keeps safe controls and supports keyboard rotation
+PASS resolved board at 390x844 keeps the return action visible
+PASS active board at 844x390 keeps safe controls and supports keyboard rotation
+PASS resolved board at 844x390 keeps the return action visible
+PASS active board at 1280x800 keeps safe controls and supports keyboard rotation
+PASS resolved board at 1280x800 keeps the return action visible
+PASS normal V4.5 scenarios have no uncaught script, console, HTTP or external-request failures
+{"passed":true,"tests":27,"pageErrors":[]}
+PASS six home pages show distinct contextual paintings without covering the primary controls
+PASS all eighteen encounters decode the correct isolated cell with actual cover geometry
+PASS choosing, reviewing, cancelling and changing a route never writes a save or draws randomness
+PASS a confirmed route persists once, survives reload and becomes a read-only illustrated journal
+PASS a failed save retains the selected route, rolls back fees and allows exactly one retry
+PASS an unaffordable route clearly disables commitment while the free route stays available
+PASS the world map exposes available counts and the next reachable encounter without overriding manual region choice
+PASS three companion records show new identity paintings and only actually completed shared stories
+PASS a fresh companion record offers an accessible story without inventing a memory or granting affinity
+PASS the painting directory loads six thumbnails per page and jumps to any new sheet with keyboard-safe focus
+PASS the celestial plan charges its exact displayed total and settles the minimum whole rounds once
+PASS a failed batch save rolls back every round and a retry settles the advertised total
+PASS a missing-material plan disables the batch and leads directly to its actual source
+PASS illustrated encounter, review, companion and gallery fit 320x480
+PASS celestial planning keeps fixed actions reachable at 320x480
+PASS illustrated encounter, review, companion and gallery fit 390x844
+PASS celestial planning keeps fixed actions reachable at 390x844
+PASS illustrated encounter, review, companion and gallery fit 844x390
+PASS celestial planning keeps fixed actions reachable at 844x390
+PASS illustrated encounter, review, companion and gallery fit 1280x800
+PASS celestial planning keeps fixed actions reachable at 1280x800
+PASS new scenes do not continuously mutate layout while idle and normal scenarios have no browser or network errors
+{"passed":true,"tests":22,"failed":[],"screenshots":54}
+PASS fresh player follows real starting pill, advances, and reaches an affordable recipe without injected supplies
+PASS changing difficulty shows exact lock reasons before clicking and keeps preview pure
+PASS retry prepares the same tier and difficulty, and returning from loadout preserves that choice
+PASS free practice retry keeps the original parameters and never grants past rewards
+PASS failed save while changing loadout stays in preparation and leaves all game progress intact
+PASS new tower reports restore their actual floor, while a legacy report never invents it
+PASS a saved story mission shows its real target after reload and opens its actual action
+PASS a completed mission checkpoint offers return dialogue and never silently grants chapter rewards
+PASS flow controls remain reachable and keyboard contained at 320x480
+PASS flow controls remain reachable and keyboard contained at 390x844
+PASS flow controls remain reachable and keyboard contained at 844x390
+PASS flow controls remain reachable and keyboard contained at 1280x800
+PASS formal trial readiness agrees with the ceremony gate while free trial remains available
+PASS an open trial drawer updates when passive cultivation fills the layer without a selection change
+PASS crafting receipt reflects the saved companion task and returns without advancing or claiming it
+PASS normal flow scenarios produce no page, console or network errors
+{"passed":true,"tests":16,"failed":[],"screenshots":22}
+PASS all six character slots open their exact replacement screen through equipment details
+PASS long-press shows full current and candidate attributes without accidental replacement
+PASS pointer movement cancels inspection and replacement
+PASS candidate replacement updates current slot and persistent save while preserving page position
+PASS empty slot explains empty inventory without fabricated equipment
+PASS current-only slot explains empty inventory without fabricated equipment
+PASS sets entry presents real 2/4-piece activation, school synergy and all owned pieces
+PASS one-click owned set changes all six slots and activates genuine attribute effects
+PASS six school recommendations explain roles, rotations and technique purposes
+PASS one-click recommendation atomically saves equipment, heart, skills and secrets with real persisted identities
+PASS improvement goals show future unlocks, sources and navigation from an incomplete build
+PASS fresh account recommendations respect starter ownership and locked skill/secret slots
+PASS upgrade growth goal spends its exact cost, saves the new level and refreshes the next upgrade
+PASS forge growth goal opens the correct school and missing slot without spending resources
+PASS save failure rolls back the entire set change and keeps previous durable save
+PASS save failure rolls back the entire recommendation change and keeps previous durable save
+PASS save failure rolls back the entire slot change and keeps previous durable save
+PASS paused battle locks gear, sets and recommendations while leaving gear inspection available
+PASS character, sets, recommendations and slot replacement fit 375px with screenshots
+PASS character, sets, recommendations and slot replacement fit 390px with screenshots
+PASS character, sets, recommendations and slot replacement fit 1280px with screenshots
+PASS all exercised browser surfaces have zero script, console, network or external request failures
+{"passed":true,"tests":22,"failed":[],"screenshots":["equipment-builds-upgrade-goals-375.png","equipment-builds-upgrade-goals-after-375.png","equipment-builds-forge-goal-375.png","equipment-builds-character-375.png","equipment-builds-sets-375.png","equipment-builds-techniques-375.png","equipment-builds-gear-375.png","equipment-builds-goals-375.png","equipment-builds-slot-375.png","equipment-builds-character-390.png","equipment-builds-sets-390.png","equipment-builds-techniques-390.png","equipment-builds-gear-390.png","equipment-builds-goals-390.png","equipment-builds-slot-390.png","equipment-builds-character-1280.png","equipment-builds-sets-1280.png","equipment-builds-techniques-1280.png","equipment-builds-gear-1280.png","equipment-builds-goals-1280.png","equipment-builds-slot-1280.png"]}
+PASS production sweep saves actual batch, tier and cost, returns selections, and never grants first-clear loot twice
+PASS production batch alchemy saves actual pills and expenses then returns the selected batch and inner scroll
+PASS production queued alchemy and three-round control celebrate only the single saved completion including bonus
+PASS production forging displays its real new UID in inventory and supports actual attribute inspection
+PASS production forging displays its real new UID in overflow and supports actual attribute inspection
+PASS production reward dismissal via button restores forge inputs and source scroll without regranting
+PASS production reward dismissal via escape restores forge inputs and source scroll without regranting
+PASS production reward dismissal via close restores forge inputs and source scroll without regranting
+PASS production reward dismissal via native restores forge inputs and source scroll without regranting
+PASS production reward dismissal via backdrop restores forge inputs and source scroll without regranting
+PASS production browser save failure rolls back inventory and never presents a false success, then retry succeeds once
+PASS production native save failure rolls back inventory and never presents a false success, then retry succeeds once
+PASS production failed recipe/forge conditions preserve inputs and show no earned-loot overlay
+PASS production commissions save real current-tier rewards and cannot reclaim the same progress after closing
+PASS production chapter collection reports actual newly acquired techniques or duplicate fragments and returns to the story
+PASS production sidequest grants only newly learned blueprints, saves its completion and disables duplicate collection
+PASS production wisdom collection saves actual tickets and does not reopen an old battle report
+PASS production routine market purchases keep the market open for repeated purchases and never interrupt with loot overlay
+PASS production original combat victory keeps its own battle settlement priority and saved rewards
+PASS production sweep 360x640 first earned card and return footer fit without horizontal overflow
+PASS production alchemy 360x640 first earned card and return footer fit without horizontal overflow
+PASS production forge 360x640 first earned card and return footer fit without horizontal overflow
+PASS production sweep 390x844 first earned card and return footer fit without horizontal overflow
+PASS production alchemy 390x844 first earned card and return footer fit without horizontal overflow
+PASS production forge 390x844 first earned card and return footer fit without horizontal overflow
+PASS production sweep 1440x900 first earned card and return footer fit without horizontal overflow
+PASS production alchemy 1440x900 first earned card and return footer fit without horizontal overflow
+PASS production forge 1440x900 first earned card and return footer fit without horizontal overflow
+PASS named art all 330 cells decode actual native pixels, are distinct and preserve crop geometry with no object colour filters
+PASS named art mobile actual forge and equipment details expose their name palette and preserve native cell proportions
+PASS named art crop fitting becomes stable at idle and never loops on unchanged icon classes
+PASS browser asset requests and JavaScript stay clean
+{"passed":32,"failed":0,"report":"dist/browser-activity-named-art.json","screenshots":["activity-sweep-390x844.png","activity-alchemy-390x844.png","activity-sweep-360x640.png","activity-alchemy-360x640.png","activity-forge-360x640.png","activity-sweep-390x844.png","activity-alchemy-390x844.png","activity-forge-390x844.png","activity-sweep-1440x900.png","activity-alchemy-1440x900.png","activity-forge-1440x900.png","named-art-quality-0-36-cells.png","named-art-quality-5-36-cells.png","named-art-ghostfire-forge-390x844.png","named-art-ghostfire-inspection-390x844.png"]}
+PASS story is a full scene, saves line and clues, and requires active formation repair plus later fresh combat
+PASS scene clue and decision save failures preserve the original line and can retry a different genuine choice
+PASS story viewport 360x640 keeps dialogue and action visible
+PASS story viewport 390x844 keeps dialogue and action visible
+PASS story viewport 1440x900 keeps dialogue and action visible
+PASS mandatory main pill guide uses deterministic research and paid crafting; wrong cues and save recovery never charge twice
+PASS failed native and browser saves roll back ritual reservation and progress before any stage feedback
+PASS ritual viewport 360x640 keeps preparation, heart and controls visible
+PASS ritual viewport 390x844 keeps preparation, heart and controls visible
+PASS ritual viewport 1440x900 keeps preparation, heart and controls visible
+{"passed":true,"tests":10,"failed":[],"pageErrors":[]}
+PASS fresh celestial gate victory, farewell and actual flight continue into paid immortal training and a real hunt
+PASS failed final flight save retains the paid return scene and grants no immortal power until a single successful retry
+PASS missing real mortal completion and future immortal challenges remain blocked without changing the save
+PASS all actual ceremony and three-realm stages keep footer controls visible at short portrait and landscape sizes
+{"passed":true,"tests":4,"failed":[],"pageErrors":[],"assetsFailed":0}
+PASS formal query uses Native loading and commits the original character
+PASS human preview snapshot export and cancellation preserve formal Native and sibling slots
+PASS ascension preview snapshot export and cancellation preserve formal Native and sibling slots
+PASS failed Native ten-draw persistence restores currencies, rewards, UID, pity and random streams
+PASS postcommit feedback failure retains the saved forge UID and random state and reports presentationFailed
+PASS dust orange equipment shows the actual saved item and restores the source without a second grant
+PASS dust orange treasure shows the actual saved item and restores the source without a second grant
+PASS real meditation followed by celestial advancement shows the saved new layer without fabricated rewards
+PASS actual ascension-open control synchronously switches music and the real media clock advances with one loop
+{"passed":true,"tests":9,"failed":[],"pageErrors":[],"consoleErrors":[],"expectedConsoleErrors":[{"test":"postcommit renderer fault","error":"Error: LINGQI_QA_EXPECTED_POSTCOMMIT_MODEL_FAILURE\n    at Object.model (eval at evaluate (:311:30), <anonymous>:1:347)\n    at run (http://127.0.0.1:8787/app.js:849:127)\n    at Object.act (http://127.0.0.1:8787/app.js:1039:211)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:393)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"}],"badResponses":[],"failedRequests":[]}

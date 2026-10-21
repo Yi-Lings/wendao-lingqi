@@ -1,0 +1,2 @@
+PASS crafting receipt reflects the saved companion task and returns without advancing or claiming it
+{"passed":true,"tests":1,"failed":[],"screenshots":1}

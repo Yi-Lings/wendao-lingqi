@@ -1,3 +1,11 @@
+# V4.7 当前交付
+
+当前版本 v4.7.0-preview「行有所向」。下载入口为 [GitHub Release](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.7.0-preview)，包含 Android APK、离线网页 ZIP、完整源码 ZIP 与各自 SHA-256；无需手工处理分片。公开核验结果见 [本轮验证目录](../docs/validation/v47/README.md)。
+
+`parts-v47/manifest.json` 将已测试 APK 绑定到 `5095d2f514f4dee410138d1077376c0f6c230210` 的 141 项输入。七个分片重组成同一包，131 个 Web 资源、原体验证书与对齐通过。`v47-artifact-manifest.json` 保存 APK/HTML/ZIP 的确切字节与 SHA。工作流复核来源、签名和离线产物后上传，不更换体验证书。所有历史发布保留。
+
+## 历史 V4.3 记录
+
 # V4.3 当前交付
 
 最新版本为 v4.3.0-preview，包含 Android APK、独立离线网页 ZIP、完整源码 ZIP 及各自 SHA-256。主发布工作流 publish-preview.yml 已切到 V4.3；旧标签、分片与发布保留。

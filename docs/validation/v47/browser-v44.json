@@ -1,0 +1,102 @@
+{
+  "startedAt": "2026-10-21T15:19:53.427Z",
+  "url": "http://127.0.0.1:8787/",
+  "fixtureNotice": "Supplied high-rank fixtures provide resources, affinities and labelled prior wins; the single source-combat fixture adds explicit durable combat attributes. One source win is earned through actual UI combat; evidence reading, selection, judgments, reloads, save failures and archive access all use application controls. These checks do not establish natural pacing or physical Android performance.",
+  "tests": [
+    {
+      "name": "story mission opens the exact evidence notebook without advancing or inventing records",
+      "passed": true
+    },
+    {
+      "name": "missing provenance guides real combat; actual victory unlocks judgment without granting it",
+      "passed": true
+    },
+    {
+      "name": "wrong conclusion explains the mismatch; retry commits a resolved judgment and companion response",
+      "passed": true
+    },
+    {
+      "name": "read evidence and selected pair survive a refresh without an automatic judgment",
+      "passed": true
+    },
+    {
+      "name": "unrelated evidence produces feedback, then replacing the pair enables the furnace conclusion",
+      "passed": true
+    },
+    {
+      "name": "failed save rolls back a successful judgment and can retry exactly once",
+      "passed": true
+    },
+    {
+      "name": "resolved proof remains available in chapter archives and full replay with no mutation controls",
+      "passed": true
+    },
+    {
+      "name": "the next volume displays the remembered judgment only when its proof was actually saved",
+      "passed": true
+    },
+    {
+      "name": "old V2 accepted seek mission remains a real herb dungeon instead of being silently rewritten",
+      "passed": true
+    },
+    {
+      "name": "active evidence notebook fits 360x480 with keyboard-selectable controls",
+      "passed": true
+    },
+    {
+      "name": "resolved judgment and return control fit 360x480",
+      "passed": true
+    },
+    {
+      "name": "active evidence notebook fits 390x844 with keyboard-selectable controls",
+      "passed": true
+    },
+    {
+      "name": "resolved judgment and return control fit 390x844",
+      "passed": true
+    },
+    {
+      "name": "active evidence notebook fits 844x390 with keyboard-selectable controls",
+      "passed": true
+    },
+    {
+      "name": "resolved judgment and return control fit 844x390",
+      "passed": true
+    },
+    {
+      "name": "active evidence notebook fits 1280x800 with keyboard-selectable controls",
+      "passed": true
+    },
+    {
+      "name": "resolved judgment and return control fit 1280x800",
+      "passed": true
+    },
+    {
+      "name": "normal evidence scenarios have no browser or network errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "v44-source-victory-before-judgment.png",
+    "v44-wrong-judgment.png",
+    "v44-bell-proof-response.png",
+    "v44-furnace-proof-response.png",
+    "v44-proof-full-replay.png",
+    "v44-remembered-next-volume.png",
+    "v44-evidence-360x480.png",
+    "v44-resolved-360x480.png",
+    "v44-evidence-390x844.png",
+    "v44-resolved-390x844.png",
+    "v44-evidence-844x390.png",
+    "v44-resolved-844x390.png",
+    "v44-evidence-1280x800.png",
+    "v44-resolved-1280x800.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "badResponses": [],
+  "finishedAt": "2026-10-21T15:20:18.261Z",
+  "passed": true
+}

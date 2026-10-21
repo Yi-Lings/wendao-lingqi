@@ -1,0 +1,529 @@
+{
+  "startedAt": "2026-10-21T15:24:04.536Z",
+  "url": "http://127.0.0.1:8787/",
+  "filter": null,
+  "fixtureNotice": "Validated rich inventories and a paused one-HP enemy exercise real UI and app timers; economic reachability and balance are outside this test.",
+  "tests": [
+    {
+      "name": "production sweep saves actual batch, tier and cost, returns selections, and never grants first-clear loot twice",
+      "passed": true,
+      "durationMs": 2056,
+      "details": {
+        "count": 5,
+        "tier": 2,
+        "reserveSpentMs": 225000,
+        "noFirstClearOrReloadDuplication": true
+      }
+    },
+    {
+      "name": "production batch alchemy saves actual pills and expenses then returns the selected batch and inner scroll",
+      "passed": true,
+      "durationMs": 1422,
+      "details": {
+        "actualPills": 10,
+        "scrollRestored": 841,
+        "batchRetained": 10
+      }
+    },
+    {
+      "name": "production queued alchemy and three-round control celebrate only the single saved completion including bonus",
+      "passed": true,
+      "durationMs": 2156,
+      "details": {
+        "base": 10,
+        "bonus": 2,
+        "actualSaved": 12,
+        "noEarlyOrDuplicatePills": true
+      }
+    },
+    {
+      "name": "production forging displays its real new UID in inventory and supports actual attribute inspection",
+      "passed": true,
+      "durationMs": 1176,
+      "details": {
+        "uid": "g3",
+        "overflow": false,
+        "inspectedActualAttributes": true
+      }
+    },
+    {
+      "name": "production forging displays its real new UID in overflow and supports actual attribute inspection",
+      "passed": true,
+      "durationMs": 1674,
+      "details": {
+        "uid": "g301",
+        "overflow": true,
+        "inspectedActualAttributes": true
+      }
+    },
+    {
+      "name": "production reward dismissal via button restores forge inputs and source scroll without regranting",
+      "passed": true,
+      "durationMs": 1209,
+      "details": {
+        "method": "button",
+        "selectedSet": "array",
+        "selectedSlot": "bracer",
+        "selectedQuality": 2,
+        "scroll": 180
+      }
+    },
+    {
+      "name": "production reward dismissal via escape restores forge inputs and source scroll without regranting",
+      "passed": true,
+      "durationMs": 1159,
+      "details": {
+        "method": "escape",
+        "selectedSet": "array",
+        "selectedSlot": "bracer",
+        "selectedQuality": 2,
+        "scroll": 180
+      }
+    },
+    {
+      "name": "production reward dismissal via close restores forge inputs and source scroll without regranting",
+      "passed": true,
+      "durationMs": 1179,
+      "details": {
+        "method": "close",
+        "selectedSet": "array",
+        "selectedSlot": "bracer",
+        "selectedQuality": 2,
+        "scroll": 180
+      }
+    },
+    {
+      "name": "production reward dismissal via native restores forge inputs and source scroll without regranting",
+      "passed": true,
+      "durationMs": 1154,
+      "details": {
+        "method": "native",
+        "selectedSet": "array",
+        "selectedSlot": "bracer",
+        "selectedQuality": 2,
+        "scroll": 180
+      }
+    },
+    {
+      "name": "production reward dismissal via backdrop restores forge inputs and source scroll without regranting",
+      "passed": true,
+      "durationMs": 1117,
+      "details": {
+        "method": "backdrop",
+        "selectedSet": "array",
+        "selectedSlot": "bracer",
+        "selectedQuality": 2,
+        "scroll": 180
+      }
+    },
+    {
+      "name": "production browser save failure rolls back inventory and never presents a false success, then retry succeeds once",
+      "passed": true,
+      "durationMs": 1014,
+      "details": {
+        "rolledBack": true,
+        "diskPreserved": true,
+        "retryProducedOneItem": true
+      }
+    },
+    {
+      "name": "production native save failure rolls back inventory and never presents a false success, then retry succeeds once",
+      "passed": true,
+      "durationMs": 1011,
+      "details": {
+        "rolledBack": true,
+        "diskPreserved": true,
+        "retryProducedOneItem": true
+      }
+    },
+    {
+      "name": "production failed recipe/forge conditions preserve inputs and show no earned-loot overlay",
+      "passed": true,
+      "durationMs": 1016,
+      "details": {
+        "noPhantomRewards": true
+      }
+    },
+    {
+      "name": "production commissions save real current-tier rewards and cannot reclaim the same progress after closing",
+      "passed": true,
+      "durationMs": 1200,
+      "details": {
+        "currentTier": 2,
+        "consumedCommissionProgress": 5
+      }
+    },
+    {
+      "name": "production chapter collection reports actual newly acquired techniques or duplicate fragments and returns to the story",
+      "passed": true,
+      "durationMs": 1149,
+      "details": {
+        "nextChapter": 1,
+        "actualDuplicateFragments": 0
+      }
+    },
+    {
+      "name": "production sidequest grants only newly learned blueprints, saves its completion and disables duplicate collection",
+      "passed": true,
+      "durationMs": 1671,
+      "details": {
+        "newPermanentBlueprints": 6,
+        "completionSaved": true,
+        "duplicateDisabled": true
+      }
+    },
+    {
+      "name": "production wisdom collection saves actual tickets and does not reopen an old battle report",
+      "passed": true,
+      "durationMs": 1154,
+      "details": {
+        "actualTickets": 6
+      }
+    },
+    {
+      "name": "production routine market purchases keep the market open for repeated purchases and never interrupt with loot overlay",
+      "passed": true,
+      "durationMs": 1098,
+      "details": {
+        "continuousPurchases": 2,
+        "actualHerbGain": 500
+      }
+    },
+    {
+      "name": "production original combat victory keeps its own battle settlement priority and saved rewards",
+      "passed": true,
+      "durationMs": 1281,
+      "details": {
+        "battleReportPreserved": true,
+        "noProductionOverlay": true
+      }
+    },
+    {
+      "name": "production sweep 360x640 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1139,
+      "details": {
+        "width": 360,
+        "height": 640,
+        "documentWidth": 360,
+        "body": {
+          "top": 97.59375,
+          "bottom": 545.390625,
+          "left": 13,
+          "right": 347
+        },
+        "card": {
+          "top": 298.171875,
+          "bottom": 362.171875,
+          "left": 30,
+          "right": 330
+        },
+        "footer": {
+          "top": 545.390625,
+          "bottom": 613.390625,
+          "left": 13,
+          "right": 347
+        }
+      }
+    },
+    {
+      "name": "production alchemy 360x640 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1141,
+      "details": {
+        "width": 360,
+        "height": 640,
+        "documentWidth": 360,
+        "body": {
+          "top": 97.59375,
+          "bottom": 545.390625,
+          "left": 13,
+          "right": 347
+        },
+        "card": {
+          "top": 317.359375,
+          "bottom": 415.59375,
+          "left": 30,
+          "right": 330
+        },
+        "footer": {
+          "top": 545.390625,
+          "bottom": 613.390625,
+          "left": 13,
+          "right": 347
+        }
+      }
+    },
+    {
+      "name": "production forge 360x640 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1104,
+      "details": {
+        "width": 360,
+        "height": 640,
+        "documentWidth": 360,
+        "body": {
+          "top": 97.59375,
+          "bottom": 545.390625,
+          "left": 13,
+          "right": 347
+        },
+        "card": {
+          "top": 267.984375,
+          "bottom": 383.609375,
+          "left": 30,
+          "right": 330
+        },
+        "footer": {
+          "top": 545.390625,
+          "bottom": 613.390625,
+          "left": 13,
+          "right": 347
+        }
+      }
+    },
+    {
+      "name": "production sweep 390x844 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1089,
+      "details": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "body": {
+          "top": 105.984375,
+          "bottom": 741,
+          "left": 13,
+          "right": 377
+        },
+        "card": {
+          "top": 317.671875,
+          "bottom": 393.671875,
+          "left": 30,
+          "right": 360
+        },
+        "footer": {
+          "top": 741,
+          "bottom": 809,
+          "left": 13,
+          "right": 377
+        }
+      }
+    },
+    {
+      "name": "production alchemy 390x844 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1278,
+      "details": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "body": {
+          "top": 129.046875,
+          "bottom": 717.9375,
+          "left": 13,
+          "right": 377
+        },
+        "card": {
+          "top": 340.734375,
+          "bottom": 444.421875,
+          "left": 30,
+          "right": 360
+        },
+        "footer": {
+          "top": 717.9375,
+          "bottom": 785.9375,
+          "left": 13,
+          "right": 377
+        }
+      }
+    },
+    {
+      "name": "production forge 390x844 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1093,
+      "details": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "body": {
+          "top": 135.453125,
+          "bottom": 711.546875,
+          "left": 13,
+          "right": 377
+        },
+        "card": {
+          "top": 316.953125,
+          "bottom": 438.03125,
+          "left": 30,
+          "right": 360
+        },
+        "footer": {
+          "top": 711.546875,
+          "bottom": 779.546875,
+          "left": 13,
+          "right": 377
+        }
+      }
+    },
+    {
+      "name": "production sweep 1440x900 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1307,
+      "details": {
+        "width": 1440,
+        "height": 900,
+        "documentWidth": 1440,
+        "body": {
+          "top": 178.484375,
+          "bottom": 724.5,
+          "left": 431,
+          "right": 1009
+        },
+        "card": {
+          "top": 390.171875,
+          "bottom": 464.171875,
+          "left": 448,
+          "right": 708
+        },
+        "footer": {
+          "top": 724.5,
+          "bottom": 792.5,
+          "left": 431,
+          "right": 1009
+        }
+      }
+    },
+    {
+      "name": "production alchemy 1440x900 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1318,
+      "details": {
+        "width": 1440,
+        "height": 900,
+        "documentWidth": 1440,
+        "body": {
+          "top": 158.046875,
+          "bottom": 744.9375,
+          "left": 431,
+          "right": 1009
+        },
+        "card": {
+          "top": 369.734375,
+          "bottom": 471.421875,
+          "left": 448,
+          "right": 708
+        },
+        "footer": {
+          "top": 744.9375,
+          "bottom": 812.9375,
+          "left": 431,
+          "right": 1009
+        }
+      }
+    },
+    {
+      "name": "production forge 1440x900 first earned card and return footer fit without horizontal overflow",
+      "passed": true,
+      "durationMs": 1215,
+      "details": {
+        "width": 1440,
+        "height": 900,
+        "documentWidth": 1440,
+        "body": {
+          "top": 164.453125,
+          "bottom": 738.546875,
+          "left": 431,
+          "right": 1009
+        },
+        "card": {
+          "top": 345.953125,
+          "bottom": 465.03125,
+          "left": 448,
+          "right": 708
+        },
+        "footer": {
+          "top": 738.546875,
+          "bottom": 806.546875,
+          "left": 431,
+          "right": 1009
+        }
+      }
+    },
+    {
+      "name": "named art all 330 cells decode actual native pixels, are distinct and preserve crop geometry with no object colour filters",
+      "passed": true,
+      "durationMs": 3575,
+      "details": {
+        "counts": {
+          "gear": 216,
+          "technique": 48,
+          "treasure": 12,
+          "pill": 18,
+          "utility": 36
+        },
+        "nativeCellHashes": 330,
+        "decodedAtlasFiles": 11,
+        "originalAtlasesPreserved": 26,
+        "redAuraColours": 15
+      }
+    },
+    {
+      "name": "named art mobile actual forge and equipment details expose their name palette and preserve native cell proportions",
+      "passed": true,
+      "durationMs": 1477,
+      "details": {
+        "actualUiNamedPalettes": 5,
+        "originalPixelsRetained": true
+      }
+    },
+    {
+      "name": "named art crop fitting becomes stable at idle and never loops on unchanged icon classes",
+      "passed": true,
+      "durationMs": 2600,
+      "details": {
+        "unchangedIconMutationsIn1500ms": 0,
+        "controlsRemainResponsive": true
+      }
+    },
+    {
+      "name": "browser asset requests and JavaScript stay clean",
+      "passed": true,
+      "durationMs": 0,
+      "details": {
+        "pageErrors": 0,
+        "consoleErrors": 0,
+        "badResponses": 0,
+        "failedRequests": 0,
+        "externalRequests": 0,
+        "deferredMissingImages": 0
+      }
+    }
+  ],
+  "screenshots": [
+    "activity-sweep-390x844.png",
+    "activity-alchemy-390x844.png",
+    "activity-sweep-360x640.png",
+    "activity-alchemy-360x640.png",
+    "activity-forge-360x640.png",
+    "activity-sweep-390x844.png",
+    "activity-alchemy-390x844.png",
+    "activity-forge-390x844.png",
+    "activity-sweep-1440x900.png",
+    "activity-alchemy-1440x900.png",
+    "activity-forge-1440x900.png",
+    "named-art-quality-0-36-cells.png",
+    "named-art-quality-5-36-cells.png",
+    "named-art-ghostfire-forge-390x844.png",
+    "named-art-ghostfire-inspection-390x844.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "badResponses": [],
+  "failedRequests": [],
+  "externalRequests": [],
+  "deferredMissingImages": [],
+  "finishedAt": "2026-10-21T15:24:47.966Z",
+  "passed": 32,
+  "failed": 0
+}

@@ -1,0 +1,102 @@
+{
+  "startedAt": "2026-10-21T15:22:52.362Z",
+  "fixtureNotice": "Fresh-start tests use actual starting inventory and public actions. Later fixtures explicitly set rank/resources and story metrics to isolate UI states, not prove natural pacing. All preparation, result, reload and save-failure interactions use real controls; no Android hardware claim.",
+  "tests": [
+    {
+      "name": "fresh player follows real starting pill, advances, and reaches an affordable recipe without injected supplies",
+      "passed": true
+    },
+    {
+      "name": "changing difficulty shows exact lock reasons before clicking and keeps preview pure",
+      "passed": true
+    },
+    {
+      "name": "retry prepares the same tier and difficulty, and returning from loadout preserves that choice",
+      "passed": true
+    },
+    {
+      "name": "free practice retry keeps the original parameters and never grants past rewards",
+      "passed": true
+    },
+    {
+      "name": "failed save while changing loadout stays in preparation and leaves all game progress intact",
+      "passed": true
+    },
+    {
+      "name": "new tower reports restore their actual floor, while a legacy report never invents it",
+      "passed": true
+    },
+    {
+      "name": "a saved story mission shows its real target after reload and opens its actual action",
+      "passed": true
+    },
+    {
+      "name": "a completed mission checkpoint offers return dialogue and never silently grants chapter rewards",
+      "passed": true
+    },
+    {
+      "name": "flow controls remain reachable and keyboard contained at 320x480",
+      "passed": true
+    },
+    {
+      "name": "flow controls remain reachable and keyboard contained at 390x844",
+      "passed": true
+    },
+    {
+      "name": "flow controls remain reachable and keyboard contained at 844x390",
+      "passed": true
+    },
+    {
+      "name": "flow controls remain reachable and keyboard contained at 1280x800",
+      "passed": true
+    },
+    {
+      "name": "formal trial readiness agrees with the ceremony gate while free trial remains available",
+      "passed": true
+    },
+    {
+      "name": "an open trial drawer updates when passive cultivation fills the layer without a selection change",
+      "passed": true
+    },
+    {
+      "name": "crafting receipt reflects the saved companion task and returns without advancing or claiming it",
+      "passed": true
+    },
+    {
+      "name": "normal flow scenarios produce no page, console or network errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "v47-fresh-next-step.png",
+    "v47-fresh-crafted.png",
+    "v47-locked-difficulty.png",
+    "v47-battle-review.png",
+    "v47-retry-preparation.png",
+    "v47-story-focus.png",
+    "v47-story-ready.png",
+    "v47-home-320x480.png",
+    "v47-challenge-320x480.png",
+    "v47-report-320x480.png",
+    "v47-home-390x844.png",
+    "v47-challenge-390x844.png",
+    "v47-report-390x844.png",
+    "v47-home-844x390.png",
+    "v47-challenge-844x390.png",
+    "v47-report-844x390.png",
+    "v47-home-1280x800.png",
+    "v47-challenge-1280x800.png",
+    "v47-report-1280x800.png",
+    "v47-trial-preparation-gate.png",
+    "v47-trial-live-readiness.png",
+    "v47-craft-task-feedback.png"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "externalRequests": [],
+  "finishedAt": "2026-10-21T15:23:12.921Z",
+  "partial": false,
+  "passed": true
+}

@@ -1,0 +1,27 @@
+Wrote and verified 141 exact build inputs against current files and sourceCommit 5095d2f514f4dee410138d1077376c0f6c230210
+Verified 141 exact build inputs against current files and sourceCommit 5095d2f514f4dee410138d1077376c0f6c230210
+{
+  "sourceCommit": "5095d2f514f4dee410138d1077376c0f6c230210",
+  "parts": 7,
+  "partBytes": 25165824,
+  "buildInputs": 141,
+  "files": {
+    "wendao-lingqi-v4.7-preview.apk": {
+      "bytes": 172875163,
+      "sha256": "be7127502097ded62759faaa3b76b1b835d351bb952ca4a2f86eebf377f74dd4"
+    },
+    "wendao-lingqi-v4.7-preview.html": {
+      "bytes": 231025040,
+      "sha256": "1755315262a9621fc0ecfd11d74f3413b81e49cef6fd13d6f2494283f0e035a8"
+    },
+    "wendao-lingqi-v4.7-preview.zip": {
+      "bytes": 172973741,
+      "sha256": "0b0f33b0905b9bfbced59db8bf35dae4be370e7415b00143e7c1a5a62d795e8b"
+    }
+  },
+  "outputs": [
+    "releases/parts-v47",
+    "releases/wendao-lingqi-v4.7-preview.apk.sha256",
+    "releases/v47-artifact-manifest.json"
+  ]
+}

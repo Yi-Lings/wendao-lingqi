@@ -1,0 +1,12 @@
+PASS offline HTML boots its independent playable preview with all media embedded
+PASS offline world choice commits once and the journal survives file reload
+PASS offline actual crafting records the exact recipe and preserves it after file reload
+PASS offline read-only full replay works with an explicitly supplied legacy completion and no external assets
+PASS offline evidence judgment uses the bundled rules, commits a real selection and survives file reload
+PASS offline formation keeps partial directions, resumes after reload and verifies only through actual controls
+PASS all four new art PNGs decode from file-local embedded blobs with exact source bytes
+PASS all nine V4.6 originals decode from embedded file blobs with source SHA256
+PASS file-local companion record and eighteen encounter crops render their actual embedded sheets
+PASS offline flow guidance opens the affordable recipe and real saved story target without changing progress
+PASS offline challenge locks and battle retry use bundled guidance with no additional rewards
+{"passed":true,"tests":11,"pageErrors":[]}

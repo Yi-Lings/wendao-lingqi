@@ -1,3 +1,19 @@
+# 问道·灵契 V4.7 接手说明
+
+2026-10-21。用户要求先发现现有问题，参考优秀游戏的心流设计，再实施版本迭代。先前同步 main/work、构建与发布体验版的授权继续有效。
+
+当前代码冻结 `5095d2f514f4dee410138d1077376c0f6c230210`，已推 main/work。评审八项见 docs/review/FLOW_REVIEW_V4_7.md，五组参考见 docs/research/FLOW_GAME_REFERENCES_V4_7.md。
+
+engine.journey 使用真实库存/研究/费用连接炼丹与已有炉次。dungeonGate 被 previewDungeon 和 act(startDungeon) 共用，处理正式 trial 的仪式/路线与 busy/joint；不改经济。story-focus.js 只读解释实际约定、归来或剩余条件，battle-guidance.js 只读复盘和合法重试目标；app 接同参数筹备与配装返回，源目标每次重查。新塔报告可选 floor，旧记录不反推；存档 version3、故事 rulesVersion4 不变。
+
+464 项逻辑、245 项浏览器（234源页面＋11file://）、224截图通过；初跑旧V4.5故事入口selector更新为实际可见标签后，V4.5及剩余全部套件完成复测，前置成功套件不重跑。证据 docs/validation/v47。新档20分钟为零动作耗时的规则时钟模拟，非真人心流证据；已排除旧版新手药圃锁定的误判。
+
+Android4.7/code11，131资源、141冻结输入、原签名/对齐通过。APK172875163字节，SHA256 be7127502097ded62759faaa3b76b1b835d351bb952ca4a2f86eebf377f74dd4。74项旧音画原字节保留；无真机、自然20分钟与长期经济结论。
+
+发布工作流已接 v4.7.0-preview。公开交付完成后补记于本段。
+
+## 历史 V4.6 记录
+
 # 问道·灵契 V4.6 接手说明
 
 2026-10-20。用户要求更多美术、详细自评并照意见改进。先前全部提交 GitHub、构建和发布体验版的授权继续有效；同步 main/work，保留历史标签与原体验签名。

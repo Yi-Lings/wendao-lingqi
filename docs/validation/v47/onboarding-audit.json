@@ -1,0 +1,1817 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T15:22:43.807Z",
+  "tool": "tools/audit-flow-onboarding.cjs",
+  "baselineCommit": "df0dd17575b0e310204716094afdbca93d7f4ae0",
+  "workspaceHead": "5095d2f514f4dee410138d1077376c0f6c230210",
+  "baselineEngineSha256": "355685c166842beaf40c4e1f9b20acb7808eb26359321180a4edf86f225556e2",
+  "currentEngineSha256": "5f2edb8e51f27bc9e6322589219af250cbc1886396e6d7b7b478d1db95d72858",
+  "economicInputs": {
+    "core.js": {
+      "currentSha256": "4954134a5f7463406d0f5b89fc2c3670f88f6d1264441c9ccf94b85f09277859",
+      "baselineSha256": "217bd7bba021e7a2bb0f1128b1086b1272e36a4abe10504b8f3fd5925d3251dd",
+      "unchanged": false
+    },
+    "data.js": {
+      "currentSha256": "85b6b6cfcac8aab715818ea42298c464d8a9f12d5a9198261f59cc00b154e9d1",
+      "baselineSha256": "85b6b6cfcac8aab715818ea42298c464d8a9f12d5a9198261f59cc00b154e9d1",
+      "unchanged": true
+    },
+    "economy.js": {
+      "currentSha256": "1addb6d4dd45f29ad9501b7d9b2429373889088de08508c8b42dd7301f054013",
+      "baselineSha256": "1addb6d4dd45f29ad9501b7d9b2429373889088de08508c8b42dd7301f054013",
+      "unchanged": true
+    }
+  },
+  "scope": {
+    "freshState": "Both runs start only with E.createState(1800000000000). No fixture stock, realm edits or injected rewards.",
+    "baselineLoading": "git show of baseline engine.js via Module._compile + createRequire; all sibling modules use current workspace bytes.",
+    "comparison": "Isolated engine/journey comparison, not an archived full-baseline application or browser playtest.",
+    "strategy": "Only primary recommendation: usePill, legal levelUp, setTraining, targeted alchemy queue of one pill, targeted finishAlchemyJob. All mutations use public E.act or E.advance.",
+    "exclusions": "No battle start/tick/auto-win, no story choices, no control-fire solver, no shopping, gifts, ticket claims, quests, donations, or hidden resource changes.",
+    "timing": "E.advance uses a 3-second synthetic rules clock for 20 minutes; permitted actions take zero modeled seconds.",
+    "interpretation": "Read-only diagnostic evidence of reachable recommendations and existing costs; not proof of human flow, fun, retention, real completion speed or long-term balance."
+  },
+  "samePublicPrefix": {
+    "statesEqual": true,
+    "baseline": {
+      "events": [
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 0,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气二层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": null
+        }
+      ],
+      "stages": [
+        {
+          "label": "untouched-createState",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 1,
+              "xp": 0,
+              "reserve": 0
+            },
+            "xpNeeded": 100,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 1,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "efaf98cd3ceb64dafa42fa32d2e80a07eb8ef06985b86d09f006ce95b2c47935"
+          },
+          "recommendation": {
+            "id": "pill:qi0",
+            "title": "丹香入道 · 加速修行",
+            "description": "可服用聚气丹，获得 120 修为；溢出转为储备。",
+            "label": "服用聚气丹",
+            "target": {
+              "kind": "action",
+              "type": "usePill",
+              "payload": {
+                "id": "qi0"
+              }
+            },
+            "etaSeconds": 75,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "message": "服用聚气丹，获得120修为",
+              "action": {
+                "type": "usePill",
+                "id": "qi0"
+              },
+              "kind": "public-action"
+            }
+          }
+        },
+        {
+          "label": "after-genuine-starter-pill",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 1,
+              "xp": 100,
+              "reserve": 20
+            },
+            "xpNeeded": 100,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 0,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "f18e8a9fa865e9c93ddc2b56e763bb775056ecfc49b6c7b064b1eba22955e938"
+          },
+          "recommendation": {
+            "id": "level-up",
+            "title": "道基已稳 · 可以晋级",
+            "description": "本层修为已满，晋级保留溢出的修为。",
+            "label": "晋升下一层",
+            "target": {
+              "kind": "action",
+              "type": "levelUp",
+              "payload": {}
+            },
+            "etaSeconds": null,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "message": "炼气二层·初期，道基更稳。",
+              "action": {
+                "type": "levelUp"
+              },
+              "kind": "public-action"
+            }
+          }
+        },
+        {
+          "label": "after-legal-level-up-1",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 2,
+              "xp": 20,
+              "reserve": 0
+            },
+            "xpNeeded": 160,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 0,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "3fd1acf084feffc7f7e3584b6a3575b4525cac17b42db57cdf363ae0a82444ab"
+          },
+          "recommendation": {
+            "id": "cultivate",
+            "title": "灵息运转 · 积累修为",
+            "description": "洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。",
+            "label": "前往灵草秘境",
+            "target": {
+              "kind": "ui",
+              "type": "source",
+              "payload": {
+                "id": "resource_herb"
+              }
+            },
+            "etaSeconds": 105,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "kind": "dungeon-preview",
+              "requirements": [],
+              "reason": "挑战可进入；本策略不执行或自动结算战斗"
+            }
+          }
+        }
+      ],
+      "finalState": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 2,
+          "xp": 20,
+          "reserve": 0
+        },
+        "xpNeeded": 160,
+        "training": true,
+        "generalResourceGroupUnlocked": false,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 120,
+          "materials": {
+            "herb": 12,
+            "ore": 8,
+            "lotus": 3,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 0,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 0,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "3fd1acf084feffc7f7e3584b6a3575b4525cac17b42db57cdf363ae0a82444ab"
+      }
+    },
+    "current": {
+      "events": [
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 0,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气二层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": null
+        }
+      ],
+      "stages": [
+        {
+          "label": "untouched-createState",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 1,
+              "xp": 0,
+              "reserve": 0
+            },
+            "xpNeeded": 100,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 1,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "efaf98cd3ceb64dafa42fa32d2e80a07eb8ef06985b86d09f006ce95b2c47935"
+          },
+          "recommendation": {
+            "id": "pill:qi0",
+            "title": "丹香入道 · 加速修行",
+            "description": "可服用聚气丹，获得 120 修为；本层尚缺 100，溢出转为储备。",
+            "label": "服用聚气丹",
+            "target": {
+              "kind": "action",
+              "type": "usePill",
+              "payload": {
+                "id": "qi0"
+              }
+            },
+            "etaSeconds": 75,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "message": "服用聚气丹，获得120修为",
+              "action": {
+                "type": "usePill",
+                "id": "qi0"
+              },
+              "kind": "public-action"
+            }
+          }
+        },
+        {
+          "label": "after-genuine-starter-pill",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 1,
+              "xp": 100,
+              "reserve": 20
+            },
+            "xpNeeded": 100,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 0,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "f18e8a9fa865e9c93ddc2b56e763bb775056ecfc49b6c7b064b1eba22955e938"
+          },
+          "recommendation": {
+            "id": "level-up",
+            "title": "道基已稳 · 可以晋级",
+            "description": "本层修为已满，晋级保留溢出的修为。",
+            "label": "晋升下一层",
+            "target": {
+              "kind": "action",
+              "type": "levelUp",
+              "payload": {}
+            },
+            "etaSeconds": null,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "message": "炼气二层·初期，道基更稳。",
+              "action": {
+                "type": "levelUp"
+              },
+              "kind": "public-action"
+            }
+          }
+        },
+        {
+          "label": "after-legal-level-up-1",
+          "state": {
+            "route": "magic",
+            "path": {
+              "realm": 0,
+              "layer": 2,
+              "xp": 20,
+              "reserve": 0
+            },
+            "xpNeeded": 160,
+            "training": true,
+            "generalResourceGroupUnlocked": false,
+            "starterHerbDungeonAllowed": true,
+            "inventory": {
+              "stones": 120,
+              "materials": {
+                "herb": 12,
+                "ore": 8,
+                "lotus": 3,
+                "insight": 8,
+                "essence": 0,
+                "soul": 0,
+                "crystal0": 0,
+                "crystal1": 0,
+                "crystal2": 0,
+                "crystal3": 0,
+                "crystal4": 0,
+                "crystal5": 0
+              },
+              "pills": {
+                "qi0": 0,
+                "qi1": 0,
+                "qi2": 0,
+                "heal0": 2,
+                "heal1": 0,
+                "heal2": 0,
+                "shield0": 0,
+                "shield1": 0,
+                "shield2": 0,
+                "purify0": 0,
+                "purify1": 0,
+                "purify2": 0,
+                "break0": 0,
+                "break1": 0,
+                "break2": 0,
+                "break3": 0,
+                "break4": 0,
+                "break5": 0
+              }
+            },
+            "jobs": [],
+            "crafted": 0,
+            "storyChapter": 0,
+            "formalBattleWins": {},
+            "stateSha256": "3fd1acf084feffc7f7e3584b6a3575b4525cac17b42db57cdf363ae0a82444ab"
+          },
+          "recommendation": {
+            "id": "cultivate",
+            "title": "现有药材 · 炼丹助修",
+            "description": "聚气丹丹方已学会。一炉需灵石 16（已有 120）、灵草 4（已有 12）、灵莲 1（已有 3）；成丹服用可得 120 修为，本层尚缺 140。",
+            "label": "前往炼制聚气丹",
+            "target": {
+              "kind": "ui",
+              "type": "alchemy",
+              "payload": {
+                "id": "qi0"
+              }
+            },
+            "etaSeconds": 105,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "message": "已预付材料，加入聚气丹×1制作计划",
+              "action": {
+                "type": "queuePill",
+                "id": "qi0",
+                "count": 1
+              },
+              "kind": "alchemy-queue",
+              "cost": {
+                "stones": 16,
+                "materials": {
+                  "herb": 4,
+                  "lotus": 1
+                }
+              }
+            }
+          }
+        }
+      ],
+      "finalState": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 2,
+          "xp": 20,
+          "reserve": 0
+        },
+        "xpNeeded": 160,
+        "training": true,
+        "generalResourceGroupUnlocked": false,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 120,
+          "materials": {
+            "herb": 12,
+            "ore": 8,
+            "lotus": 3,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 0,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 0,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "3fd1acf084feffc7f7e3584b6a3575b4525cac17b42db57cdf363ae0a82444ab"
+      }
+    }
+  },
+  "simulations": {
+    "baseline": {
+      "label": "20-minute rules-clock simulation; NOT a natural human playtest",
+      "ruleSeconds": 1200,
+      "clockStepSeconds": 3,
+      "actionTimeModel": "zero time per public action; never interpret as human completion time",
+      "actionCount": 6,
+      "firstGeneralResourceGroupUnlockRuleSecond": 105,
+      "recommendedTargetUnavailableSeconds": 0,
+      "manualActivityAvailableButUnexecutedSeconds": 1200,
+      "otherPolicyWaitSeconds": 0,
+      "passiveXp": 1600,
+      "passiveOutput": {
+        "stones": 33,
+        "materials": {
+          "herb": 0,
+          "ore": 0,
+          "lotus": 0,
+          "insight": 0,
+          "essence": 0
+        }
+      },
+      "initial": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 1,
+          "xp": 0,
+          "reserve": 0
+        },
+        "xpNeeded": 100,
+        "training": true,
+        "generalResourceGroupUnlocked": false,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 120,
+          "materials": {
+            "herb": 12,
+            "ore": 8,
+            "lotus": 3,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 1,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 0,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "efaf98cd3ceb64dafa42fa32d2e80a07eb8ef06985b86d09f006ce95b2c47935"
+      },
+      "final": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 6,
+          "xp": 340,
+          "reserve": 0
+        },
+        "xpNeeded": 740,
+        "training": true,
+        "generalResourceGroupUnlocked": true,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 153,
+          "materials": {
+            "herb": 12,
+            "ore": 8,
+            "lotus": 3,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 0,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 0,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "cc03cffc91fb1e494bfa37a8a0cf23614585afce820d185ef5761034d4c7c795"
+      },
+      "netInventoryDelta": {
+        "stones": 33,
+        "materials": {},
+        "pills": {
+          "qi0": -1
+        }
+      },
+      "lastRecommendation": {
+        "id": "cultivate",
+        "title": "灵息运转 · 积累修为",
+        "description": "洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。",
+        "label": "前往灵草秘境",
+        "target": {
+          "kind": "ui",
+          "type": "source",
+          "payload": {
+            "id": "resource_herb"
+          }
+        },
+        "etaSeconds": 300,
+        "trainingPerMinute": 80,
+        "access": {
+          "allowed": true,
+          "kind": "dungeon-preview",
+          "requirements": [],
+          "reason": "挑战可进入；本策略不执行或自动结算战斗"
+        }
+      },
+      "events": [
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 0,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气二层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 105,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气三层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 160,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 285,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气四层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 240,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 4,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 555,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气五层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 4,
+            "xp": 360,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 5,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 945,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气六层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 5,
+            "xp": 520,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 6,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        }
+      ],
+      "waitIntervals": [
+        {
+          "fromRuleSecond": 0,
+          "toRuleSecond": 1200,
+          "seconds": 1200,
+          "reason": "manual-activity-available-outside-policy",
+          "goalId": "cultivate",
+          "recommendation": {
+            "id": "cultivate",
+            "title": "灵息运转 · 积累修为",
+            "description": "洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。",
+            "label": "前往灵草秘境",
+            "target": {
+              "kind": "ui",
+              "type": "source",
+              "payload": {
+                "id": "resource_herb"
+              }
+            },
+            "etaSeconds": 105,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "kind": "dungeon-preview",
+              "requirements": [],
+              "reason": "挑战可进入；本策略不执行或自动结算战斗"
+            }
+          }
+        }
+      ]
+    },
+    "current": {
+      "label": "20-minute rules-clock simulation; NOT a natural human playtest",
+      "ruleSeconds": 1200,
+      "clockStepSeconds": 3,
+      "actionTimeModel": "zero time per public action; never interpret as human completion time",
+      "actionCount": 15,
+      "firstGeneralResourceGroupUnlockRuleSecond": 0,
+      "recommendedTargetUnavailableSeconds": 0,
+      "manualActivityAvailableButUnexecutedSeconds": 1200,
+      "otherPolicyWaitSeconds": 0,
+      "passiveXp": 1600,
+      "passiveOutput": {
+        "stones": 33,
+        "materials": {
+          "herb": 0,
+          "ore": 0,
+          "lotus": 0,
+          "insight": 0,
+          "essence": 0
+        }
+      },
+      "initial": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 1,
+          "xp": 0,
+          "reserve": 0
+        },
+        "xpNeeded": 100,
+        "training": true,
+        "generalResourceGroupUnlocked": false,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 120,
+          "materials": {
+            "herb": 12,
+            "ore": 8,
+            "lotus": 3,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 1,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 0,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "efaf98cd3ceb64dafa42fa32d2e80a07eb8ef06985b86d09f006ce95b2c47935"
+      },
+      "final": {
+        "route": "magic",
+        "path": {
+          "realm": 0,
+          "layer": 6,
+          "xp": 700,
+          "reserve": 0
+        },
+        "xpNeeded": 740,
+        "training": true,
+        "generalResourceGroupUnlocked": true,
+        "starterHerbDungeonAllowed": true,
+        "inventory": {
+          "stones": 105,
+          "materials": {
+            "herb": 0,
+            "ore": 8,
+            "lotus": 0,
+            "insight": 8,
+            "essence": 0,
+            "soul": 0,
+            "crystal0": 0,
+            "crystal1": 0,
+            "crystal2": 0,
+            "crystal3": 0,
+            "crystal4": 0,
+            "crystal5": 0
+          },
+          "pills": {
+            "qi0": 0,
+            "qi1": 0,
+            "qi2": 0,
+            "heal0": 2,
+            "heal1": 0,
+            "heal2": 0,
+            "shield0": 0,
+            "shield1": 0,
+            "shield2": 0,
+            "purify0": 0,
+            "purify1": 0,
+            "purify2": 0,
+            "break0": 0,
+            "break1": 0,
+            "break2": 0,
+            "break3": 0,
+            "break4": 0,
+            "break5": 0
+          }
+        },
+        "jobs": [],
+        "crafted": 3,
+        "storyChapter": 0,
+        "formalBattleWins": {},
+        "stateSha256": "273c954e8873c69cf439ead18f4e8cd87cec9cd5aa42858b86d79480d6eb0c81"
+      },
+      "netInventoryDelta": {
+        "stones": -15,
+        "materials": {
+          "herb": -12,
+          "lotus": -3
+        },
+        "pills": {
+          "qi0": -1
+        }
+      },
+      "lastRecommendation": {
+        "id": "cultivate",
+        "title": "灵息运转 · 备料助修",
+        "description": "炼制聚气丹尚缺灵草 4（0 / 4）、灵莲 1（0 / 1）。静修持续积累修为。",
+        "label": "前往青岚灵圃",
+        "target": {
+          "kind": "ui",
+          "type": "source",
+          "payload": {
+            "id": "resource_herb"
+          }
+        },
+        "etaSeconds": 30,
+        "trainingPerMinute": 80,
+        "access": {
+          "allowed": true,
+          "kind": "dungeon-preview",
+          "requirements": [],
+          "reason": "挑战可进入；本策略不执行或自动结算战斗"
+        }
+      },
+      "events": [
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 0,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气二层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 1,
+            "xp": 100,
+            "reserve": 20
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "queuePill",
+            "id": "qi0",
+            "count": 1
+          },
+          "message": "已预付材料，加入聚气丹×1制作计划",
+          "actualInventoryDelta": {
+            "stones": -16,
+            "materials": {
+              "herb": -4,
+              "lotus": -1
+            },
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": {
+            "stones": 16,
+            "materials": {
+              "herb": 4,
+              "lotus": 1
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "finishAlchemyJob",
+            "jobId": "a1"
+          },
+          "message": "炼成聚气丹×1",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": 1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 20,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "queuePill",
+            "id": "qi0",
+            "count": 1
+          },
+          "message": "已预付材料，加入聚气丹×1制作计划",
+          "actualInventoryDelta": {
+            "stones": -16,
+            "materials": {
+              "herb": -4,
+              "lotus": -1
+            },
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "declaredCost": {
+            "stones": 16,
+            "materials": {
+              "herb": 4,
+              "lotus": 1
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "finishAlchemyJob",
+            "jobId": "a2"
+          },
+          "message": "炼成聚气丹×1",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": 1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 140,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 160,
+            "reserve": 100
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气三层·初期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 2,
+            "xp": 160,
+            "reserve": 100
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "queuePill",
+            "id": "qi0",
+            "count": 1
+          },
+          "message": "已预付材料，加入聚气丹×1制作计划",
+          "actualInventoryDelta": {
+            "stones": -16,
+            "materials": {
+              "herb": -4,
+              "lotus": -1
+            },
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "declaredCost": {
+            "stones": 16,
+            "materials": {
+              "herb": 4,
+              "lotus": 1
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "finishAlchemyJob",
+            "jobId": "a3"
+          },
+          "message": "炼成聚气丹×1",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": 1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 0,
+          "action": {
+            "type": "usePill",
+            "id": "qi0"
+          },
+          "message": "服用聚气丹，获得120修为",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {
+              "qi0": -1
+            }
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 100,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 220,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 15,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气四层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 3,
+            "xp": 240,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 4,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 285,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气五层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 4,
+            "xp": 360,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 5,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        },
+        {
+          "kind": "action",
+          "atRuleSecond": 675,
+          "action": {
+            "type": "levelUp"
+          },
+          "message": "炼气六层·中期，道基更稳。",
+          "actualInventoryDelta": {
+            "stones": 0,
+            "materials": {},
+            "pills": {}
+          },
+          "pathBefore": {
+            "realm": 0,
+            "layer": 5,
+            "xp": 520,
+            "reserve": 0
+          },
+          "pathAfter": {
+            "realm": 0,
+            "layer": 6,
+            "xp": 0,
+            "reserve": 0
+          },
+          "declaredCost": null
+        }
+      ],
+      "waitIntervals": [
+        {
+          "fromRuleSecond": 0,
+          "toRuleSecond": 1200,
+          "seconds": 1200,
+          "reason": "manual-activity-available-outside-policy",
+          "goalId": "cultivate",
+          "recommendation": {
+            "id": "cultivate",
+            "title": "灵息运转 · 备料助修",
+            "description": "炼制聚气丹尚缺灵草 4（0 / 4）、灵莲 1（0 / 1）。静修持续积累修为。",
+            "label": "前往青岚灵圃",
+            "target": {
+              "kind": "ui",
+              "type": "source",
+              "payload": {
+                "id": "resource_herb"
+              }
+            },
+            "etaSeconds": 15,
+            "trainingPerMinute": 80,
+            "access": {
+              "allowed": true,
+              "kind": "dungeon-preview",
+              "requirements": [],
+              "reason": "挑战可进入；本策略不执行或自动结算战斗"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "afterSameStarterActions": {
+      "baseline": {
+        "id": "cultivate",
+        "title": "灵息运转 · 积累修为",
+        "description": "洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。",
+        "label": "前往灵草秘境",
+        "target": {
+          "kind": "ui",
+          "type": "source",
+          "payload": {
+            "id": "resource_herb"
+          }
+        },
+        "etaSeconds": 105,
+        "trainingPerMinute": 80,
+        "access": {
+          "allowed": true,
+          "kind": "dungeon-preview",
+          "requirements": [],
+          "reason": "挑战可进入；本策略不执行或自动结算战斗"
+        }
+      },
+      "current": {
+        "id": "cultivate",
+        "title": "现有药材 · 炼丹助修",
+        "description": "聚气丹丹方已学会。一炉需灵石 16（已有 120）、灵草 4（已有 12）、灵莲 1（已有 3）；成丹服用可得 120 修为，本层尚缺 140。",
+        "label": "前往炼制聚气丹",
+        "target": {
+          "kind": "ui",
+          "type": "alchemy",
+          "payload": {
+            "id": "qi0"
+          }
+        },
+        "etaSeconds": 105,
+        "trainingPerMinute": 80,
+        "access": {
+          "allowed": true,
+          "message": "已预付材料，加入聚气丹×1制作计划",
+          "action": {
+            "type": "queuePill",
+            "id": "qi0",
+            "count": 1
+          },
+          "kind": "alchemy-queue",
+          "cost": {
+            "stones": 16,
+            "materials": {
+              "herb": 4,
+              "lotus": 1
+            }
+          }
+        }
+      }
+    },
+    "baselineBlockedRuleSeconds": 0,
+    "currentBlockedRuleSeconds": 0,
+    "baselineGeneralResourceGroupUnlockRuleSecond": 105,
+    "currentGeneralResourceGroupUnlockRuleSecond": 0,
+    "baselineStarterHerbDungeonAllowed": true,
+    "currentStarterHerbDungeonAllowed": true,
+    "warning": "An available dungeon is intentionally left for the player. Remaining policy wait does not mean the game offers no action; zero-time action chains are not human pacing measurements."
+  }
+}
