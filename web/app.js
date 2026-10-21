@@ -130,7 +130,7 @@ function mount(){
  for(const [index,id] of ['stones','tickets','dust'].entries()){const icon=app.querySelectorAll('.resource .gem')[index];if(icon)icon.outerHTML=utilityIcon(id,'','hud-resource-art');}
  updateChrome();renderPage();renderEncounter();
 }
-function text(id,value){const el=document.getElementById(id);if(el)el.textContent=value;}
+function text(id,value){const el=document.getElementById(id);if(el&&el.textContent!==String(value))el.textContent=value;}
 function updateChrome(){
  if(!mounted||!s)return;const v=currentView(),p=s.paths[s.route];
  text('hud-stones',num(s.stones));text('hud-tickets',num(s.tickets));text('hud-dust',num(s.dust));text('scene-name',s.player.name+' · '+routeName(s.route));text('scene-power','战力 '+num(v.power)+'  /  '+v.realmLabel);text('scene-realm',realmName());text('scene-layer',p.layer===10?'十层 · 圆满':p.layer+' 层 · '+(p.layer<4?'初期':p.layer<7?'中期':'后期'));
@@ -149,7 +149,7 @@ function updateChrome(){
  for(const b of document.querySelectorAll('[data-action="claimWisdom"]'))b.disabled=!s.wisdomTickets;
  const audioToggle=app.querySelector('[data-ui="audio-toggle"]');if(audioToggle){const muted=!!Sound?.getPreferences().muted;audioToggle.setAttribute('aria-pressed',String(!muted));audioToggle.setAttribute('aria-label',muted?'开启游戏声音':'静音游戏声音');audioToggle.textContent=muted?'🔇':'♫';}
  updateAudioScene();
- updateSaveStatus();updateJourney();
+ updateSaveStatus();updateJourney();if(modal?.type==='dungeon')updateDungeonPreview();
 }
 function navigate(id){if(!pages[id]||s?.battle||s?.exploration)return;const changed=page!==id;page=id;narrative=null;closeModal();updateChrome();renderPage({navigation:changed});updateAudioScene();}
 function renderPage({navigation=false}={}){
@@ -245,7 +245,7 @@ function renderCultivation(){
  const v=currentView(),p=s.paths[s.route],full=p.xp>=v.xpNeeded;
  const routes=Object.entries(C.routes).map(([id,r])=>`<div class="route-card ${id===s.route?'selected':''}"><strong>${esc(r.name)}</strong><p class="tiny">${esc(v.paths[id].realmLabel)}</p>${id===s.route?badge('当前主修','gold'):act('转修此路','switchRoute',{route:id},'ghost small',!!s.battle||!!s.exploration)}</div>`).join('');
  const advancement=p.layer<10?act('晋升下一层','levelUp',{},'primary',!full):ui(p.realm===5&&(s.ritualHistory||[]).some(h=>h.route===s.route&&h.realm===5)?'道心归卷 · 终章':'闭关 · 护道破境','ritual-open',{route:s.route},'primary');
- return heading('修行','静修有积累，破境有准备')+panel('此刻的仙途',`<div id="journey-body">${journeyBody(E.journey(s))}</div>`)+daoPanel()+panel(s.ascension?.stage==='ascended'?'仙界 · '+currentView().ascension.realmLabel:'天门 · 六境之外',`${ui(s.ascension?.stage==='ascended'?'进入仙界修行':s.ascension?'继续天门来信':'飞升 · 查看天门','ascension-open',{},'primary wide')}<p class="compact-note">六境圆满、道誓与山海六卷之后，亲自通过天门；仙界另有三阶修炼与天路。</p>`)+(PREVIEW?`<div class="preview-chapter-switch">${ui(ASCENSION_PREVIEW?'回到人界试玩':'直接体验飞升篇',ASCENSION_PREVIEW?'preview-human':'preview-ascension',{},'secondary small')}</div>`:'')+panel(v.realmLabel,`<div class="row spaced tiny"><span>当前修为</span><span id="cult-xp">${num(p.xp)} / ${num(v.xpNeeded)}</span></div>${bar(p.xp,v.xpNeeded,'gold','cult-xp-fill')}<div class="row spaced tiny cultivation-auto"><span id="cult-reserve">储备 ${num(p.reserve)}</span>${act(s.autoSmall?'自动小层：开':'自动小层：关','setAutoSmall',{enabled:!s.autoSmall},'ghost small',K.maxRank(s)<2)}</div><div class="grid-2 gap-top">${advancement}${act(s.training?'暂停修行':'开始修行','setTraining',{enabled:!s.training},'secondary')}</div><div class="gap-top">${ui(s.ritual?'继续闭关':'查看破境丹材','ritual-open',{route:s.route},'small secondary')}</div><p class="section-note">同境主药护脉，灵莲与玄铁布阵。备料、吐纳、问心后入劫；失败可重试，仪式进度保存。</p>`)+`<div class="grid-2 cultivation-routes">${routes}</div><details class="compact-details"><summary>近期仙途</summary><div class="list">${(s.logs||[]).slice(-5).reverse().map(x=>`<p class="tiny">${esc(typeof x==='string'?x:x.message||x.text||'')}</p>`).join('')||'<p class="muted">第一步，修行与配置你的功法。</p>'}</div></details>`;
+ return heading('修行','静修有积累，破境有准备')+panel('此刻的仙途',`<div id="journey-body">${journeyBody(E.journey(s))}</div>`)+panel(v.realmLabel,`<div class="row spaced tiny"><span>当前修为</span><span id="cult-xp">${num(p.xp)} / ${num(v.xpNeeded)}</span></div>${bar(p.xp,v.xpNeeded,'gold','cult-xp-fill')}<div class="row spaced tiny cultivation-auto"><span id="cult-reserve">储备 ${num(p.reserve)}</span>${act(s.autoSmall?'自动小层：开':'自动小层：关','setAutoSmall',{enabled:!s.autoSmall},'ghost small',K.maxRank(s)<2)}</div><div class="grid-2 gap-top">${advancement}${act(s.training?'暂停修行':'开始修行','setTraining',{enabled:!s.training},'secondary')}</div><div class="gap-top">${ui(s.ritual?'继续闭关':'查看破境丹材','ritual-open',{route:s.route},'small secondary')}</div><p class="section-note">同境主药护脉，灵莲与玄铁布阵。备料、吐纳、问心后入劫；失败可重试，仪式进度保存。</p>`)+daoPanel()+panel(s.ascension?.stage==='ascended'?'仙界 · '+currentView().ascension.realmLabel:'天门 · 六境之外',`${ui(s.ascension?.stage==='ascended'?'进入仙界修行':s.ascension?'继续天门来信':'飞升 · 查看天门','ascension-open',{},'primary wide')}<p class="compact-note">六境圆满、道誓与山海六卷之后，亲自通过天门；仙界另有三阶修炼与天路。</p>`)+(PREVIEW?`<div class="preview-chapter-switch">${ui(ASCENSION_PREVIEW?'回到人界试玩':'直接体验飞升篇',ASCENSION_PREVIEW?'preview-human':'preview-ascension',{},'secondary small')}</div>`:'')+`<div class="grid-2 cultivation-routes">${routes}</div><details class="compact-details"><summary>近期仙途</summary><div class="list">${(s.logs||[]).slice(-5).reverse().map(x=>`<p class="tiny">${esc(typeof x==='string'?x:x.message||x.text||'')}</p>`).join('')||'<p class="muted">第一步，修行与配置你的功法。</p>'}</div></details>`;
 }
 function renderCharacter(){
  const v=currentView(),u=v.unlocks||K.unlocks(s),selection=window.WendaoSelection,tab=layoutState.characterTab;
@@ -293,9 +293,15 @@ function motionBehavior(){return window.matchMedia('(prefers-reduced-motion: red
 
 function journeyCard(g,primary=false){return `<article class="journey-card${primary?' primary-goal':''}"><div><small>${primary?'建议下一步':'可顺路完成'}</small><strong>${esc(g.title)}</strong><p>${esc(g.description)}</p></div>${ui(g.label,'journey-go',{id:g.id},primary?'primary':'secondary small')}</article>`;}
 
+function storyFocusCard({receipt=false,preferred=null}={}){
+ const f=window.WendaoStoryFocus.view(s,preferred||(narrativeBookmark?.kind==='story'?narrativeBookmark.id:null));if(!f)return '';
+ const progress=f.progress?`<div class="flow-progress"><span>${esc(f.progress.label)}</span><strong>${num(f.progress.current)} / ${num(f.progress.required)}</strong></div>`:'';
+ return `<section class="story-focus journey-story-lead" data-focus-episode="${esc(f.episode)}" data-focus-stage="${esc(f.stage)}"><div><small>${receipt?'约定进度 · 已保存':'山海同行 · 眼前的约定'}</small><strong>${esc(f.title)}</strong><p>${esc(f.summary)}</p>${progress}<div class="flow-actions">${ui(f.label,'flow-story',{episode:f.episode},'secondary small')}${f.target.type!=='story-open'?ui('回到这一卷','story-open',{episode:f.episode},'ghost small'):''}</div></div></section>`;
+}
+
 function journeyBody(j){
  const m=j.nextUnlock,p=s.paths[s.route],eta=j.etaSeconds===null?'':j.etaSeconds<60?'不足 1 分钟':Math.ceil(j.etaSeconds/60)+' 分钟';
- const lead=j.storyLead?`<div class="journey-story-lead"><div><small>山海同行 · ${esc(j.storyLead.status)}</small><strong>${esc(j.storyLead.title)}</strong></div>${ui(j.storyLead.label,'story-open',{episode:j.storyLead.episode},'secondary small')}</div>`:'';
+ const lead=storyFocusCard();
  return journeyCard(j.primary,true)+lead+`<div class="journey-checks">${j.checks.map(x=>`<span class="${x.done?'done':''}">${x.done?'✓':'○'} ${esc(x.label)}${x.current!==undefined?' '+num(x.current)+' / '+num(x.required):''}</span>`).join('')}</div>`+(eta?`<p class="tiny muted">静修约 ${esc(eta)} 达到本层门槛 · 每分钟 ${num(j.trainingPerMinute)} 修为</p>`:'')+(m?`<p class="tiny muted gap-top">下个开放：${esc(C.routes[s.route].realmNames[Math.floor(m.rank/10)])}${m.rank%10+1}层 · ${esc(m.label)}</p>`:'')+`<div class="row spaced gap-top"><span class="tiny muted">${p.realm===5&&p.layer===10?'自证大道，自由游历':'每一步都由你选择'}</span>${ui('仙途目标'+(j.goals.length>1?' · '+j.goals.length:''),'journey',{},'ghost small')}</div>`;
 }
 
@@ -488,16 +494,35 @@ function techniquesModal(){
 }
 function ownedOptions(kind){return[{id:'',name:'空槽'},...Object.keys(s.techniques).filter(id=>C.techniques[id]?.kind===kind).map(id=>({id,name:C.techniques[id].name+' · '+s.techniques[id].level+'级'}))];}
 function loadoutModal(p={}){
- frame('出战配置 · '+routeName(s.route),window.WendaoSelection.renderLoadout(s,p),act('保存出战配置','setLoadout',{},'primary',!!s.battle));
+ const back=p.returnTo?ui(p.returnTo.type==='dungeon'?'返回本次筹备':'返回战报','preparation-return',{},'secondary'):'';
+ frame('出战配置 · '+routeName(s.route),window.WendaoSelection.renderLoadout(s,p),act('保存出战配置','setLoadout',{},'primary',!!s.battle)+back);
 }
 function presetModal(p){const x=s.presets[s.route][p.index];frame('预设 '+(p.index+1),`<p>${x?'已保存一套配置，可直接切换。预设引用的装备受到分解保护。':'此槽尚未保存配置。'}</p><p class="muted">保存当前装备、心法、神通顺序、秘术、灵宝和携丹。</p>`,act('保存当前配置','savePreset',{index:p.index},'primary',!!s.battle)+act('载入预设','loadPreset',{index:p.index},'secondary',!x||!!s.battle));}
 function dungeonModal(p){
- const d=C.dungeons[p.id];if(!d)return closeModal();uiState.selectedDungeon=d.id;const tier=d.type==='resource'||d.type==='trial'?s.paths[s.route].realm:d.realm,done=s.progress.firstClears.includes(d.id+':'+tier+':0')||d.type==='tower'&&s.progress.tower>=Math.min(60,s.progress.tower+1);
- const rewards=d.rewards||{},first=d.firstRewards||{};let preview='';try{const x=dungeonPreview({id:d.id,tier,difficulty:0,floor:Math.min(60,s.progress.tower+1)});if(x)preview=`<p id="dungeon-live-preview" class="cost">当前预览：${esc(price(x.rewards))}</p>`;}catch(e){}
- const controls=d.type==='trial'?`<p class="section-note">当前 ${esc(currentView().realmLabel)}。正式入劫前需要备齐丹材、完成吐纳护阵与问心；已封存材料不会重复扣除。</p>`:`<div class="grid-2">${d.type==='resource'?'<label>挑战阶位'+select('dungeon-tier',Array.from({length:s.paths[s.route].realm+1},(_,i)=>({id:i,name:realmName(s.route,i)})),tier)+'</label>':'<div class="route-card"><small>固定阶位</small><strong>'+esc(d.type==='tower'?'随所选塔层':realmName(s.route,d.realm))+'</strong></div>'}<label>难度${select('dungeon-difficulty',[{id:0,name:'普通'},{id:1,name:'困难'},{id:2,name:'极境'}],0)}</label></div>`;
+ const d=C.dungeons[p.id];if(!d)return closeModal();uiState.selectedDungeon=d.id;
+ const tier=d.type==='resource'&&Number.isInteger(p.tier)&&p.tier>=0&&p.tier<=s.paths[s.route].realm?p.tier:d.type==='resource'||d.type==='trial'?s.paths[s.route].realm:d.realm;
+ const difficulty=Number.isInteger(p.difficulty)&&p.difficulty>=0&&p.difficulty<=2?p.difficulty:0;
+ const floor=Math.min(60,Math.max(1,Number(p.floor)||s.progress.tower+1));
+ const controls=d.type==='trial'?`<p class="section-note">当前 ${esc(currentView().realmLabel)}。正式入劫前需要备齐丹材、完成吐纳护阵与问心；已封存材料不会重复扣除。</p>`:`<div class="grid-2">${d.type==='resource'?'<label>挑战阶位'+select('dungeon-tier',Array.from({length:s.paths[s.route].realm+1},(_,i)=>({id:i,name:realmName(s.route,i)})),tier)+'</label>':'<div class="route-card"><small>固定阶位</small><strong>'+esc(d.type==='tower'?'随所选塔层':realmName(s.route,d.realm))+'</strong></div>'}<label>难度${select('dungeon-difficulty',[{id:0,name:'普通'},{id:1,name:'困难'},{id:2,name:'极境'}],difficulty)}</label></div>`;
  const mechanics=(d.mechanics||[]).map(x=>`<div class="section-note">${esc(typeof x==='string'?x:(x.name||x.label||'守关机制'))}${typeof x==='object'?'<br>'+esc(x.description||x.trigger||'')+'<br>应对：'+esc((x.counter||[]).join(' / ')):''}</div>`).join('');
- frame(d.name,preparationPanel()+`${dungeonBanner(d)}<p>${esc(d.description)}</p><div class="row wrap gap-top">${badge(typeName[d.type])}${badge(done?'首通已领':'首次挑战','gold')}${badge(dungeonUnlocked(d)?'入口已开放':'需 '+realmName(s.route,d.realm)+(d.layer||1)+'层')}</div><h3>自由选择</h3>${controls}${d.type==='tower'?`<label class="gap-top">问道塔层数${select('dungeon-floor',Array.from({length:60},(_,i)=>({id:i+1,name:'第'+(i+1)+'层'+(i+1<=s.progress.tower?' · 已通关':'')})),Math.min(60,Math.max(1,Number(p.floor)||s.progress.tower+1)))}</label>`:''}<label class="check-line"><input id="dungeon-practice" type="checkbox">免费试阵：不耗战斗丹药，不发奖励或首通</label><h3>奖励</h3><p class="muted">基础产物：${esc(price(rewards))||'按当前挑战阶位结算'}</p>${preview}<p class="muted">首次奖励：${esc(price(first))||'对应秘籍、蓝图或一次性解锁'}${done?'（已领取）':''}</p>${d.type==='boss'?'<div class="table-wrap gap-top"><table><tr><th>难度</th><th>蓝</th><th>紫</th><th>橙</th><th>红</th></tr><tr><td>普通</td><td>65%</td><td>25%</td><td>9.5%</td><td>0.5%</td></tr><tr><td>困难</td><td>50%</td><td>35%</td><td>14%</td><td>1%</td></tr><tr><td>极境</td><td>35%</td><td>45%</td><td>18%</td><td>2%</td></tr></table></div>':''}<p class="safe-note">当前最高阶的有效挑战可得同阶天命晶与感应资源。回刷低阶保留基础产物。失败和退出不发关键奖励。</p><h3>敌人机制</h3>${mechanics||'<p class="muted">观察敌人前摇，使用护盾、治疗、打断与转火应对。</p>'}`,act(d.type==='cave'?'踏入洞天':'开始挑战','startDungeon',{id:d.id},'primary',!dungeonUnlocked(d)||!!s.battle||!!s.exploration));
+ frame(d.name,`${dungeonBanner(d)}<p>${esc(d.description)}</p><h3>选择本次挑战</h3>${controls}${d.type==='tower'?`<label class="gap-top">问道塔层数${select('dungeon-floor',Array.from({length:60},(_,i)=>({id:i+1,name:'第'+(i+1)+'层'+(i+1<=s.progress.tower?' · 已通关':'')})),floor)}</label>`:''}<label class="check-line"><input id="dungeon-practice" type="checkbox"${p.practice?' checked':''}>免费试阵：不耗战斗丹药，不发奖励或首通</label><section class="challenge-state" aria-label="本次挑战条件"><strong id="dungeon-selection"></strong><p id="dungeon-readiness" role="status"></p><p id="dungeon-live-preview" class="cost"></p><p id="dungeon-first-preview" class="muted"></p></section>${preparationPanel()}<h3>敌人机制</h3>${mechanics||'<p class="muted">观察敌人前摇，使用护盾、治疗、打断与转火应对。</p>'}${d.type==='boss'?'<details><summary>查看难度掉落</summary><div class="table-wrap"><table><tr><th>难度</th><th>蓝</th><th>紫</th><th>橙</th><th>红</th></tr><tr><td>普通</td><td>65%</td><td>25%</td><td>9.5%</td><td>0.5%</td></tr><tr><td>困难</td><td>50%</td><td>35%</td><td>14%</td><td>1%</td></tr><tr><td>极境</td><td>35%</td><td>45%</td><td>18%</td><td>2%</td></tr></table></div></details>':''}<p class="safe-note">当前最高阶的有效挑战可得同阶天命晶与感应资源。回刷低阶保留基础产物。失败和退出不发关键奖励。</p>`,act(d.type==='cave'?'踏入洞天':'开始挑战','startDungeon',{id:d.id},'primary',true));
+ updateDungeonPreview();
 }
+function updateDungeonPreview(){
+ if(modal?.type!=='dungeon')return;
+ const q=payload('startDungeon',{id:modal.p.id}),d=C.dungeons[q.id],x=dungeonPreview(q);
+ if(!d)return;
+ const occupied=!!(s.battle||s.exploration||s.joint),allowed=!!x?.allowed&&!occupied;
+ const reason=occupied?'先结束当前历练或共修。':!x?'暂无法读取挑战条件，请重新打开。':(x.requirements||[]).join('；');
+ text('dungeon-selection',(d.type==='tower'?'第 '+q.floor+' 层':realmName(s.route,q.tier))+' · '+['普通','困难','极境'][q.difficulty]+' · '+(q.practice?'免费试阵':'正式挑战'));
+ text('dungeon-readiness',allowed?'条件已齐备，可按自己的节奏开始。':reason||'当前条件尚未满足。');
+ text('dungeon-live-preview',q.practice?'试阵无奖励 · 正式消耗品与首通进度保留':'当前预览：'+(price(x?.rewards)||'按挑战结果结算'));
+ text('dungeon-first-preview',q.practice?'':x?.firstClear===true?'本次首通已记录':price(x?.firstRewards)?'首次奖励：'+price(x.firstRewards):'');
+ const status=document.getElementById('dungeon-readiness');if(status)status.dataset.ready=String(allowed);
+ const button=layer.querySelector('[data-action="startDungeon"]');if(button){button.disabled=!allowed;const label=q.practice?'开始免费试阵':d.type==='cave'?'踏入洞天':'开始挑战';if(button.textContent!==label)button.textContent=label;button.setAttribute('aria-describedby','dungeon-readiness');}
+ modal.p={...modal.p,...q};
+}
+
 function sweepModal(p){const best=Array.from({length:s.paths[s.route].realm+1},(_,i)=>i).filter(i=>(s.progress.stars[p.id+':'+i+':0']||0)>=3).pop()??s.paths[s.route].realm;frame('资源扫荡',`<p>历练储备 ${num(s.sweepMs/3600000)} 小时，最多储存八小时。</p><p class="muted">三星资源秘境可扫荡，仅得基础材料；不给券、晶、红装或首通。</p><div class="grid-2 gap-top"><label>阶位${select('sweep-tier',Array.from({length:s.paths[s.route].realm+1},(_,i)=>({id:i,name:realmName(s.route,i)})),best)}</label><label>次数${select('sweep-count',[{id:1,name:'1次'},{id:5,name:'5次'},{id:10,name:'10次'}],1)}</label></div>`,act('结算扫荡','sweepDungeon',{id:p.id},'primary'));}
 function gearItem(g,full=false){
  const worn=Object.values(s.equipped).includes(g.uid),stats=equipmentStats(g);
@@ -721,7 +746,12 @@ function battleReportModal(p={}){
  const rewards=window.WendaoRewards.model(r),legacy=r.reasons||r.advice||r.report;
  const review='<details class="settlement-details"><summary>查看战斗回顾与机制</summary><p class="tiny">'+esc(reportDate(r))+' · 处理机制 '+num(r.performance?.handled)+' · 错失机制 '+num(r.performance?.missed)+'</p>'+details('敌人机制',r.mechanisms)+details('应对建议',r.failures)+details('战斗回顾',legacy)+details('战斗记录',r.log)+'</details>';
  const continuation=p.settlement&&!s.battle&&!s.exploration&&narrativeBookmark?.kind==='ascension'?ui('返回仙界天路','ascension-open',{},'primary'):p.settlement&&!s.battle&&!s.exploration&&narrativeBookmark?ui(narrativeBookmark.kind==='ritual'?'返回静室 · 继续护道':'返回剧情 · 兑现约定',narrativeBookmark.kind==='ritual'?'ritual-open':'story-open',narrativeBookmark.kind==='ritual'?{route:narrativeBookmark.route}:{episode:narrativeBookmark.id},'primary'):p.settlement&&s.battle&&s.battle.paused?act('继续挑战','pauseBattle',{paused:false},'primary'):ui(s.exploration?'继续探索':'继续历练','close',{},'primary');
- frame(rewards.title+(rewards.items.length?' · 战利品':''),window.WendaoRewards.render(r,{state:s,context:reportContext(r)})+review,ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary',!!s.battle)+continuation);
+ const guidance=window.WendaoBattleGuidance.model(s,r),reportRef=Number.isInteger(p.index)?{index:p.index}:{};
+ const retry=guidance.retry?ui('按原设置重新筹备','battle-retry',reportRef,'secondary small'):'';
+ const practice=guidance.practiceTarget&&!r.practice?ui('先免费试阵','battle-retry',{...reportRef,practice:true},'ghost small'):'';
+ const follow=window.WendaoBattleGuidance.render(s,r)+((retry||practice)?'<div class="flow-actions battle-retry-actions">'+retry+practice+'</div>':'');
+ const loot=window.WendaoRewards.render(r,{state:s,context:reportContext(r)}),focus=p.settlement?storyFocusCard({receipt:true}):'';
+ frame(rewards.title+(rewards.items.length?' · 战利品':''),(rewards.win?loot+focus+follow:follow+loot+focus)+review,ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary',!!s.battle)+continuation);
 }
 function breakthroughResultModal(p){
  const route=p.route||s.route,realm=Number.isInteger(p.realm)?p.realm:s.paths[route].realm,old=Math.max(0,realm-1),memory=(s.ritualHistory||[]).find(h=>h.route===route&&h.realm===old);
@@ -752,7 +782,7 @@ function activityOrigin(){
 function activityRewardsModal(p={}){
  const value=p.value;if(!value)return closeModal();
  const label=value.type==='sweepDungeon'?'继续扫荡':['craftPill','finishAlchemyJob','cancelAlchemyJob'].includes(value.type)?'返回丹炉':value.type==='forgeGear'?'继续打造':value.pending?'继续探索':'返回';
- frame(value.title,window.WendaoActivityRewards.render(value,{state:s}),ui(label,'activity-return',{},'primary'));
+ frame(value.title,window.WendaoActivityRewards.render(value,{state:s})+storyFocusCard({receipt:true}),ui(label,'activity-return',{},'primary'));
 }
 function returnFromActivity(p=modal?.p){
  const origin=p?.origin,value=p?.value;closeModal();if(!origin)return;
@@ -792,7 +822,7 @@ function payload(type,p){
  if(type==='setBattleRules'){q.healBelow=Number(read('battle-heal-threshold'));q.reserveInterrupt=!!document.getElementById('battle-reserve-interrupt')?.checked;q.shieldBeforeBurst=!!document.getElementById('battle-shield-burst')?.checked;}
  if(type==='setAutoRetry'){q.enabled=!!document.getElementById('battle-retry-enabled')?.checked;q.maxRuns=Number(read('battle-retry-runs')||1);q.stopOnRed=!!document.getElementById('battle-retry-red')?.checked;q.stopOnDefeat=true;}
  if(type==='setLoadout'){const u=K.unlocks(s);q.heart=read('load-heart')||null;q.skills=Array.from({length:u.skillSlots},(_,i)=>read('load-skill-'+i)).filter(Boolean);q.secrets=Array.from({length:u.secretSlots},(_,i)=>read('load-secret-'+i)).filter(Boolean);q.treasures=Array.from({length:3},(_,i)=>read('load-treasure-'+i)||null);q.pills=[0,1,2].map(i=>read('load-pill-'+i)).filter(Boolean);}
- if(type==='startDungeon'){q.practice=!!document.getElementById('dungeon-practice')?.checked;q.tier=C.dungeons[q.id]?.type==='resource'||C.dungeons[q.id]?.type==='trial'?Number(read('dungeon-tier')||s.paths[s.route].realm):C.dungeons[q.id]?.realm;q.difficulty=Number(read('dungeon-difficulty')||0);if(C.dungeons[q.id]?.type==='tower')q.floor=Number(read('dungeon-floor')||Math.min(60,s.progress.tower+1));}
+ if(type==='startDungeon'){q.practice=!!document.getElementById('dungeon-practice')?.checked;q.tier=C.dungeons[q.id]?.type==='resource'||C.dungeons[q.id]?.type==='trial'?Number(read('dungeon-tier')||s.paths[s.route].realm):C.dungeons[q.id]?.realm;q.difficulty=Number(read('dungeon-difficulty')||(modal?.type==='dungeon'&&modal.p.id===q.id?modal.p.difficulty:0)||0);if(C.dungeons[q.id]?.type==='tower')q.floor=Number(read('dungeon-floor')||Math.min(60,s.progress.tower+1));}
  if(type==='sweepDungeon'){q.tier=Number(read('sweep-tier')||s.paths[s.route].realm);q.count=Number(read('sweep-count')||1);}
  if(type==='forgeGear'){q.slot=read('forge-slot');q.set=read('forge-set');q.rarity=Number(read('forge-rarity'));}
  if(type==='craftPill'){q.count=Number(read('pill-count')||1);q.control=0;}
@@ -840,6 +870,7 @@ function run(type,p={},interactive=true){
   else if(['researchRecipe','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob'].includes(type)){showModal('alchemy');}
   else if(type==='rerollGear'||type==='acceptReroll'){showModal('reroll',{uid:p.uid});}
   else if(type==='jointInvite'||type==='jointStep'){s.joint?showModal('joint'):closeModal();}
+  else if(type==='setLoadout'&&origin.modal?.p?.returnTo){const back=origin.modal.p.returnTo;showModal(back.type,back.p);}
   else if(type==='jointCancel'||type==='setLoadout'||type==='loadPreset'||type==='leaveBattle'||type==='recycleGear'||type==='resetTechnique'){closeModal();}
   else if(modal&&['upgradeTechnique','learnTechnique','queuePill','startAlchemyControl','stokeAlchemy','finishAlchemyJob','cancelAlchemyJob','craftPill','usePill','equipGear','equipSet','equipRecommendedBuild','claimOverflow','lockGear','enhanceSlot','recastGear','awakenGear','upgradeTreasure','equipTreasure','recycleTreasure','exchangeDust','talk','gift','savePreset','setTechniqueBranch'].includes(type)){const m=modal;if(m.type==='tech-branch')techBranch(m.p);else showModal(m.type,m.p);}
   if(type==='setGachaTarget')closeModal();
@@ -895,6 +926,11 @@ function acceptImport(raw){
  if(!persist(r.state)){s=old;return false;}s=r.state;recovery=null;closeModal();page='cultivation';boot();toast(r.migrated?'旧存档已迁移并载入。':'存档已载入。');return true;
 }
 function handleUi(id,p){
+ if(id==='flow-story'){const f=window.WendaoStoryFocus.view(s,p.episode);if(!f||f.episode!==p.episode)return toast('约定已更新，请查看当前进度。');return handleUi(f.target.type,f.target.payload);}
+ if(id==='battle-retry'){const r=Number.isInteger(p.index)?s.battleReports?.[p.index]:s.lastBattleResult;const v=window.WendaoBattleGuidance.model(s,r),target=p.practice?v?.practiceTarget:v?.retry;if(!target)return toast(v?.blockedReason||'当前无法重试这场挑战。');return showModal('dungeon',target);}
+ if(id==='loadout'&&['dungeon','battle-report'].includes(modal?.type)){if(modal.type==='dungeon')updateDungeonPreview();return showModal('loadout',{...p,returnTo:{type:modal.type,p:{...modal.p}}});}
+ if(id==='preparation-return'){const back=modal?.p?.returnTo;if(back&&['dungeon','battle-report'].includes(back.type))return showModal(back.type,back.p);return closeModal();}
+ if(id==='alchemy'&&p.id&&C.recipes[p.id]){const index=Object.keys(C.recipes).indexOf(p.id);uiState.modalPages.alchemy=Math.floor(index/4);return showModal('alchemy',p);}
  if(id==='journey-go')return followJourney(p.id);
  if(id==='world'){uiState.adventureMode='world';uiState.worldRegion=s.paths[s.route].realm;navigate('adventure');document.getElementById('page-content').scrollTop=0;return;}
  if(id==='adventure-mode'){if(!['world','dungeons'].includes(p.mode))return;uiState.adventureMode=p.mode;renderPage({navigation:true});return;}
@@ -978,7 +1014,7 @@ document.addEventListener('change',event=>{
  if(id==='filter-gear-set'){uiState.gearSet=read(id);uiState.modalPages.equipment=0;equipmentModal();}
  if(id==='set-preview-rarity'){uiState.setPreviewRarity=Number(read(id));equipmentSetsModal(modal?.p||{});}
  if(id==='source-gear-rarity')gearSourceModal(Object.assign({},modal?.p,{rarity:Number(read(id))}));
- if(['dungeon-tier','dungeon-difficulty','dungeon-floor','dungeon-practice'].includes(id)&&uiState.selectedDungeon){const x=dungeonPreview({id:uiState.selectedDungeon,tier:Number(read('dungeon-tier')||s.paths[s.route].realm),difficulty:Number(read('dungeon-difficulty')||0),floor:Number(read('dungeon-floor')||1),practice:!!document.getElementById('dungeon-practice')?.checked});if(x)text('dungeon-live-preview',(x.practice?'试阵无奖励':'当前预览：'+price(x.rewards))+(x.requirements?' · '+(Array.isArray(x.requirements)?x.requirements.join('、'):x.requirements):''));}
+ if(['dungeon-tier','dungeon-difficulty','dungeon-floor','dungeon-practice'].includes(id))updateDungeonPreview();
  if(['forge-slot','forge-set','forge-rarity'].includes(id))updateForgePreview();
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented){if(modal?.type==='activity-rewards')returnFromActivity();else closeModal();}else if(e.key==='Enter'||e.key===' ')Sound?.unlock();});

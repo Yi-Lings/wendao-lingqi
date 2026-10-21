@@ -103,6 +103,21 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
    await p.evaluate(()=>Lingqi.showModal('companion-record',{id:'suyan'}));assert.equal(await p.locator('[data-companion-record=suyan]').count(),1);await p.waitForFunction(()=>!!document.querySelector('.companion-record-art')?.dataset.atlasFit);await p.screenshot({path:path.join(ROOT,'dist/v46-offline-record.png')});report.screenshots.push('v46-offline-record.png');
   });
  }
+ if(await p.evaluate(()=>!!window.WendaoStoryFocus&&!!window.WendaoBattleGuidance)){
+  await test('offline flow guidance opens the affordable recipe and real saved story target without changing progress',async()=>{
+   const E=require(path.join(ROOT,'web/engine.js')),s=E.createState(await p.evaluate(()=>Date.now()));assert(E.act(s,{type:'usePill',id:'qi0'},s.lastAt).ok);assert(E.act(s,{type:'levelUp'},s.lastAt).ok);s.training=false;
+   await p.evaluate(s=>{if(!Lingqi.import(JSON.stringify(s)))throw Error('Flow fixture rejected');},s);
+   await p.evaluate(()=>Lingqi.act('setTraining',{enabled:true}));const before=await p.evaluate(()=>Lingqi.state());assert.equal(await p.locator('.story-focus').getAttribute('data-focus-stage'),'not-started');
+   await p.locator('[data-ui=journey-go]').filter({hasText:'前往炼制'}).click();assert(await p.locator('[data-action=queuePill][data-payload*=qi0]').count());assert.deepEqual(await p.evaluate(()=>Lingqi.state()),before);
+   await p.screenshot({path:path.join(ROOT,'dist/v47-offline-growth.png')});report.screenshots.push('v47-offline-growth.png');
+  });
+  await test('offline challenge locks and battle retry use bundled guidance with no additional rewards',async()=>{
+   await p.evaluate(()=>Lingqi.showModal('dungeon',{id:'resource_herb'}));await p.selectOption('#dungeon-difficulty','2');assert(await p.locator('[data-action=startDungeon]').isDisabled());
+   await p.selectOption('#dungeon-difficulty','0');await p.locator('#dungeon-practice').check();await p.locator('[data-action=startDungeon]').click();await p.evaluate(()=>Lingqi.act('leaveBattle'));assert(await p.locator('.battle-guidance').isVisible());
+   const saved=await p.evaluate(()=>Lingqi.state());await p.locator('[data-ui=battle-retry]').first().click();assert(await p.locator('#dungeon-practice').isChecked());assert.equal(await p.inputValue('#dungeon-difficulty'),'0');assert.deepEqual(await p.evaluate(()=>Lingqi.state()),saved);
+   await p.screenshot({path:path.join(ROOT,'dist/v47-offline-retry.png')});report.screenshots.push('v47-offline-retry.png');
+  });
+ }
  for(const key of ['pageErrors','consoleErrors','failedRequests','externalRequests'])assert.equal(report[key].length,0,JSON.stringify(report[key]));
  await context.close();report.passed=report.tests.every(x=>x.passed);
 })().catch(e=>{report.passed=false;report.fatal=e.stack;console.error(e);}).finally(async()=>{

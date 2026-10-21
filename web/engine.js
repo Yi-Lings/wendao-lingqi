@@ -83,9 +83,32 @@ function journey(s){
     next=goal('material:'+item.id,'备齐突破材料',name+' '+item.have+' / '+item.need+'，尚缺 '+item.shortage+'。前往对应秘境补齐。','前往材料来源',dungeon(source));
   }else if(!s.training)next=goal('training','灵息已停 · 继续修行','开启洞府静修后，离线也会积累基础修为。','开始修行',action('setTraining',{enabled:true}));
   else{
-    const pills=Object.values(C.recipes).filter(r=>r.kind==='qi'&&s.pills[r.id]>0&&(r.realm<p.realm||r.realm===p.realm&&(r.layer||1)<=p.layer)).sort((a,b)=>a.effect.xp-b.effect.xp);
-    const pill=pills.find(r=>r.effect.xp>=needed-p.xp)||pills[pills.length-1];
-    next=pill?goal('pill:'+pill.id,'丹香入道 · 加速修行','可服用'+pill.name+'，获得 '+pill.effect.xp+' 修为；溢出转为储备。','服用'+pill.name,action('usePill',{id:pill.id})):goal('cultivate','灵息运转 · 积累修为','洞府持续静修。也可历练赚取材料，或开炉炼制修为丹。','前往灵草秘境',dungeon('resource_herb'));
+    // Guidance only reads actual stock and costs. It never queues, crafts or learns a recipe.
+    const recipes=Object.values(C.recipes).filter(r=>r.kind==='qi'&&(r.realm<p.realm||r.realm===p.realm&&(r.layer||1)<=p.layer)).sort((a,b)=>a.effect.xp-b.effect.xp);
+    const choose=list=>list.find(r=>r.effect.xp>=needed-p.xp)||list[list.length-1];
+    const pill=choose(recipes.filter(r=>s.pills[r.id]>0));
+    const jobs=s.alchemy?.jobs||[],job=jobs.find(j=>j.status==='control')||jobs.find(j=>recipes.some(r=>r.id===j.recipe))||(jobs.length>=Q.alchemyCapacity(s)?jobs[0]:null);
+    const known=recipes.filter(r=>(s.learnedRecipes||[]).includes(r.id));
+    const rows=cost=>[
+      ...Object.entries(cost||{}).filter(([,n])=>typeof n==='number').map(([id,required])=>({id,name:id==='stones'?'灵石':id,required,have:s[id]||0})),
+      ...Object.entries(cost?.materials||{}).map(([id,required])=>({id,name:C.materials[id]?.name||id,required,have:s.materials[id]||0}))
+    ];
+    const costOf=r=>Q.costs(s,'craftPill',{id:r.id,count:1});
+    const recipe=choose(known.filter(r=>rows(costOf(r)).every(x=>x.have>=x.required)&&(s.pills[r.id]||0)<K.CAP));
+    if(pill)next=goal('pill:'+pill.id,'丹香入道 · 加速修行','可服用'+pill.name+'，获得 '+pill.effect.xp+' 修为；本层尚缺 '+(needed-p.xp)+'，溢出转为储备。','服用'+pill.name,action('usePill',{id:pill.id}));
+    else if(job){
+      const name=C.recipes[job.recipe].name,controlling=job.status==='control';
+      next=goal('alchemy:'+job.id,controlling?'炉火未歇 · 接续控火':'丹材已备 · 完成这一炉',controlling?name+'已完成 '+job.round+' / 3 轮控火，继续当前一炉即可。':name+' ×'+job.count+' 已预付材料，可先领取成丹；无需再次备料。',controlling?'继续当前控火':'前往丹炉成丹',ui('alchemy',{id:job.recipe,jobId:job.id}));
+    }else if(recipe){
+      const cost=rows(costOf(recipe)).filter(x=>x.required>0).map(x=>x.name+' '+x.required+'（已有 '+x.have+'）').join('、');
+      next=goal('cultivate','现有药材 · 炼丹助修',recipe.name+'丹方已学会。一炉需'+cost+'；成丹服用可得 '+recipe.effect.xp+' 修为，本层尚缺 '+(needed-p.xp)+'。','前往炼制'+recipe.name,ui('alchemy',{id:recipe.id}));
+    }else{
+      const wanted=choose(known),shortage=wanted?rows(costOf(wanted)).filter(x=>x.have<x.required):[];
+      const sources=[...shortage.map(x=>C.materials[x.id]?.source?.id),'resource_herb'].filter(Boolean);
+      const source=sources.find(id=>C.dungeons[id]&&B.previewDungeon(s,{id,tier:p.realm,difficulty:0}).allowed);
+      const detail=shortage.length?'炼制'+wanted.name+'尚缺'+shortage.map(x=>x.name+' '+(x.required-x.have)+'（'+x.have+' / '+x.required+'）').join('、')+'。':'当前没有可服用或可直接炼制的修为丹。';
+      next=goal('cultivate','灵息运转 · 备料助修',detail+'静修持续积累修为。',source?'前往'+C.dungeons[source].name:'查看洞府丹方',source?dungeon(source):ui('alchemy',wanted?{id:wanted.id}:{}));
+    }
   }
   goals.push(next);
   if(!s.battle&&!s.exploration&&!s.joint){
@@ -152,6 +175,23 @@ function baseHandle(s,a,now){
   }
   return null;
 }
+// The facade adds ceremony and mutual-activity rules to combat's entry rules.
+// Both the read-only preview and the committing action consult the same gate.
+function dungeonGate(s,a={}){
+  if(s.battle)return '当前战斗尚未结束';
+  if(s.exploration)return '当前洞天尚未结束';
+  if(s.joint)return '先完成或取消当前共修，再进入历练';
+  if(a.id==='trial'&&!a.practice){
+    if(a.route&&a.route!==s.route)return '先转修对应路线再进入其护道试炼';
+    const ritual=T.view(s,a.route||s.route);
+    if(!ritual.canTrial&&!ritual.legacyReady)return '先在修行页进入闭关，备丹、吐纳、护阵与问心后再入劫';
+  }
+  return null;
+}
+function previewDungeon(s,a={}){
+  const preview=B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor),gate=dungeonGate(s,a);
+  return gate?Object.assign({},preview,{allowed:false,requirements:[gate,...(preview.requirements||[]).filter(x=>x!==gate)]}):preview;
+}
 function act(state,action,now){
   if(!state||state.version!==3)return no('存档尚未正确载入');
   if(!action||typeof action.type!=='string')return no('操作无效');
@@ -160,7 +200,7 @@ function act(state,action,now){
   const candidate=copy(state);
   try{
     let result=null;
-    if(action.type==='startDungeon'&&action.id==='trial'&&!action.practice){if(action.route&&action.route!==candidate.route)return no('先转修对应路线再进入其护道试炼');const ritual=T.view(candidate,action.route||candidate.route);if(!ritual.canTrial&&!ritual.legacyReady)return no('先在修行页进入闭关，备丹、吐纳、护阵与问心后再入劫');}
+    if(action.type==='startDungeon'){const gate=dungeonGate(candidate,action);if(gate)return no(gate);}
     result=baseHandle(candidate,action,now);
     if(result===null)result=worldHandle(candidate,action,now);
     if(result===null)result=T.handle(candidate,action,now);
@@ -190,7 +230,7 @@ function tick(s,seconds){
 function serialize(s){const result=K.validate(s);if(!result.ok)throw Error(result.error);return JSON.stringify(result.state);}
 return {catalog:C,createState:K.createState,validate:K.validate,attributes:K.attributes,gearStats:K.gearStats,gearName:K.gearName,view,act,advance:K.advance,tick,serialize,breakthroughCost,
   journey,worldView,preparation,daoInsight:K.daoInsight,compareEquipment:Q.compareEquipment,recommendEquipment:Q.recommendEquipment,recyclePreview:Q.recyclePreview,
-  battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon:function(s,a){return B.previewDungeon?B.previewDungeon(s,a):B.dungeonView(s,a.id,a.tier,a.difficulty,a.floor);},
+  battleView:B.battleView,dungeonView:B.dungeonView,previewDungeon,dungeonGate,
   costs:function(s,type,args){if(type==='breakthrough')return breakthroughCost(s,args&&args.route);if(type==='upgradeSect')return {stones:300*Math.pow(s.sect.rank+1,2),contribution:60*(s.sect.rank+1)};return Q.costs(s,type,args||{});},
   modules:{core:K,economy:Q,combat:B,story:S,builds:R,ritual:T,ascension:A,investigation:I,formation:F}};
 });

@@ -549,6 +549,7 @@ function validateReports(s){
   array(s.battleReports,C.limits.battleReports,'最近战报');
   for(const r of s.battleReports){
     object(r,'战报');catalogKey(C.dungeons,r.entry,'战报入口');
+    if(r.floor!==undefined){if(C.dungeons[r.entry].type!=='tower')throw Error('非塔战报不能含塔层');integer(r.floor,1,60,'战报塔层');}
     if(!routeOk(r.route))throw Error('战报路线无效');
     if(typeof r.realm!=='string'||r.realm.length>80)throw Error('战报境界无效');r.realm=cleanText(r.realm,80);integer(r.tier,0,5,'战报阶位');integer(r.difficulty,0,2,'战报难度');
     boolean(r.win,'战报胜负');boolean(r.practice,'战报试阵');

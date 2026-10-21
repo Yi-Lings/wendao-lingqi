@@ -1,0 +1,31 @@
+/* V4.7: brief, visible feedback before the detailed battle log. */
+.battle-guidance{padding:14px;margin:12px 0;border:1px solid #83b8aa50;border-radius:12px;background:linear-gradient(135deg,#123e3c,#102e35);color:#e6eee9;overflow-wrap:anywhere}
+.battle-guidance h3{margin:0 0 5px;color:#eee0ad;font-size:16px}
+.battle-guidance-count{margin:0 0 10px;color:#b9dace;font-size:12px}
+.battle-guidance article{padding:9px 0;border-top:1px solid #a6c8bc26}
+.battle-guidance article p,.battle-guidance-advice{margin:4px 0;font-size:13px;line-height:1.65}
+.battle-guidance-advice{color:#cfdfd2}
+.battle-guidance small{display:block;margin-top:10px;color:#adcbc0;font-size:11px;line-height:1.6}
+.battle-guidance-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.battle-guidance-actions .btn{min-height:44px;flex:1 1 130px}
+
+/* A single concrete objective, inside the existing scroll area. */
+.story-focus.journey-story-lead { display:block; border-left:2px solid #c5b17e; padding:10px 12px; }
+.story-focus > div { min-width:0; width:100%; }
+.story-focus p { color:#c5d5cd; margin:6px 0; font-size:12px; line-height:1.7; }
+.flow-progress { display:flex; justify-content:space-between; gap:12px; font-size:12px; margin:7px 0; }
+.flow-progress span { min-width:0; overflow-wrap:anywhere; }
+.flow-progress strong { flex-shrink:0; color:#ecd39b; }
+.flow-actions { display:flex; flex-wrap:wrap; gap:8px; margin:9px 0; }
+.flow-actions .btn, .game-shell .flow-actions .btn.small { min-height:44px; white-space:normal; }
+.battle-retry-actions { padding:0 2px 8px; }
+.challenge-state { margin:12px 0; padding:12px; border:1px solid #8aa99366; border-radius:9px; background:#09272c; }
+.challenge-state > strong { display:block; color:#e8ce94; font-size:14px; }
+.challenge-state p { margin-top:6px; font-size:12px; line-height:1.7; }
+#dungeon-readiness[data-ready="false"] { color:#f0b394; }
+#dungeon-readiness[data-ready="true"] { color:#b7debf; }
+@media (max-width:359px), (max-height:500px) {
+ .story-focus.journey-story-lead { padding:8px; }
+ .story-focus p, .flow-progress { font-size:11px; }
+ .challenge-state { padding:9px; margin:9px 0; }
+}
