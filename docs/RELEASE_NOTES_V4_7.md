@@ -12,3 +12,5 @@
 版本为 4.7 / versionCode 11；保留既有离线玩法与体验包身份。构建、测试和公开下载状态以本轮实际验收及 Release 附件为准。
 
 本轮已通过 464 项逻辑和 245 项浏览器检查（含 11 项实际离线文件检查），224 张截图归档。两条 Android CI 成功，131 个打包资源与 141 项冻结输入匹配，体验签名与对齐通过。资料与边界见 [验收记录](https://github.com/Yi-Lings/wendao-lingqi/blob/main/docs/validation/v47/README.md)。
+
+APK、离线网页 ZIP、完整源码 ZIP 及各自校验文件已公开，六项匿名下载和 1565 项源码散列核验通过。公开核验见 [交付证据](https://github.com/Yi-Lings/wendao-lingqi/blob/main/docs/validation/v47/public-release.json)。

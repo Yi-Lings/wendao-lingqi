@@ -41,3 +41,5 @@
 ## 本轮执行结果
 
 F01–F08 已实现并完成规则与浏览器回归，464 项逻辑、245 项浏览器检查、224 张截图见 [验证目录](../validation/v47/README.md)。二十分钟模拟与真人试玩的区别按上文保留；完成这些检查不等于完成自然心流、长期平衡和真机验收。
+
+[V4.7 公开交付](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.7.0-preview) 已完成六项匿名附件、公开校验值与 1565 项源码散列核验；详细证据见 [public-release.json](../validation/v47/public-release.json)。

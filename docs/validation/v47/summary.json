@@ -397,10 +397,26 @@
     "wendao-lingqi-v4.7-preview.zip": {
       "bytes": 172973741,
       "sha256": "0b0f33b0905b9bfbced59db8bf35dae4be370e7415b00143e7c1a5a62d795e8b"
+    },
+    "wendao-lingqi-v4.7.0-source.zip": {
+      "bytes": 473874217,
+      "sha256": "0733713843c3b89aed6982a90e9601f4e357b83aee6e2f3bb3784f3709492036"
     }
   },
   "sourceCommit": "5095d2f514f4dee410138d1077376c0f6c230210",
   "verifiedAt": "2026-10-21T15:26:12.038311+00:00",
   "signerCertificateSha256": "7e0f7d7ffed4616bf6d4f6a0b1e3bff1e29ec032c5451aa9a6960e2c265715a6",
-  "androidBuildVerified": true
+  "androidBuildVerified": true,
+  "releaseCommit": "2e104c05b5ac738ca673e09c974e233554577ebf",
+  "releaseUrl": "https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.7.0-preview",
+  "publishRun": {
+    "id": 39626644659,
+    "url": "https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39626644659",
+    "conclusion": "success"
+  },
+  "anonymousDownloadVerified": true,
+  "publicSourceManifestVerified": true,
+  "sourceArchiveFiles": 1565,
+  "sourceArchiveLogicPassed": 464,
+  "publicVerifiedAt": "2026-10-21T15:36:29.690468+00:00"
 }

@@ -10,7 +10,11 @@ engine.journey 使用真实库存/研究/费用连接炼丹与已有炉次。dun
 
 Android4.7/code11，131资源、141冻结输入、原签名/对齐通过。APK172875163字节，SHA256 be7127502097ded62759faaa3b76b1b835d351bb952ca4a2f86eebf377f74dd4。74项旧音画原字节保留；无真机、自然20分钟与长期经济结论。
 
-发布工作流已接 v4.7.0-preview。公开交付完成后补记于本段。
+[V4.7 APK、离线网页与完整源码](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.7.0-preview) 已公开交付；发布工作流 [39626644659](https://github.com/Yi-Lings/wendao-lingqi/actions/runs/39626644659) 成功。发布提交 `2e104c05b5ac738ca673e09c974e233554577ebf`，游戏构建输入仍冻结于 `5095d2f514f4dee410138d1077376c0f6c230210`。
+
+六项附件均通过匿名下载、公开 SHA-256 与 GitHub digest 核验；APK、网页 ZIP 与本地验收字节一致，ZIP CRC、内部 HTML 和源码 1565 项文件散列全部通过。相同源码快照独立解压后 464 项逻辑通过。公开源码 ZIP 473874217 字节，SHA-256 `0733713843c3b89aed6982a90e9601f4e357b83aee6e2f3bb3784f3709492036`。完整记录见 docs/validation/v47/public-release.json。
+
+最终提交只补交付证据及文档，Web、Android 与测试文件保持发布提交的内容；全部成果同步 main/work。历史版本保留，自然二十分钟、长期平衡和 Android 真机仍未验收。
 
 ## 历史 V4.6 记录
 
