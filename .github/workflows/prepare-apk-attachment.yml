@@ -1,0 +1,53 @@
+name: Prepare verified APK attachment
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published release tag to deliver (including previews)
+        required: true
+        default: v4.7.0-preview
+        type: string
+permissions:
+  contents: read
+jobs:
+  prepare-attachment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Download the published APK without checking out the repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          LINGQI_RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          mkdir transfer
+          gh release view "$LINGQI_RELEASE_TAG" --json tagName,url,assets > transfer/release.json
+          gh release download "$LINGQI_RELEASE_TAG" --pattern '*.apk' --pattern '*.apk.sha256' --dir transfer
+      - name: Verify the exact APK against the published checksum and digest
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          folder = Path('transfer')
+          release = json.loads((folder / 'release.json').read_text())
+          apks = list(folder.glob('*.apk'))
+          assert len(apks) == 1, 'Expected exactly one published APK'
+          apk = apks[0]
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          checksum = (folder / (apk.name + '.sha256')).read_text().split()
+          assert checksum == [digest, apk.name], 'Published checksum does not match'
+          asset = next(a for a in release['assets'] if a['name'] == apk.name)
+          assert asset['size'] == apk.stat().st_size, 'Published size does not match'
+          assert asset['digest'] == 'sha256:' + digest, 'GitHub digest does not match'
+          (folder / 'release.json').unlink()
+          print(f'Verified {apk.name}: {apk.stat().st_size} bytes; SHA-256 {digest}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lingqi-apk-attachment
+          path: transfer/*
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
