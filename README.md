@@ -4,6 +4,8 @@
 
 [下载 V4.7 Android 体验 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.apk) · [V4.7 离线网页试玩](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.zip) · [完整源码 ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7.0-source.zip) · [发布说明](docs/RELEASE_NOTES_V4_7.md)
 
+安装游戏只需 APK，无需点击 Code → Download ZIP 下载整个仓库。最新体验版为 V4.7；GitHub 的 Latest 入口目前仍指向旧 V3 正式版。下载困难时可在对话中索取已核验的 APK 附件；诊断见 [下载记录](docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md)。
+
 V4.7 最低 Android 8.0，体验包使用独立包名 `com.lingqi.game.preview` 和既有体验签名，可覆盖更新旧体验版，也可与正式包并排安装。更新或换包前可导出 JSON 备份，再按需导入。全部源代码、美术、音频、方案与测试同步到 `main` 和 `work` 分支；[历史 V3 发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v3.0.0)保留。
 
 V4.7「行有所向」按 [心流评审](docs/review/FLOW_REVIEW_V4_7.md) 改善成长建议、真实约定进度、挑战门槛与战后筹备。已有材料直接接入炼丹，结算接回具体目标，重试保留原设置；参考依据见 [Hades、Slay the Spire、Stardew Valley 与 GameFlow](docs/research/FLOW_GAME_REFERENCES_V4_7.md)。464 项逻辑、245 项浏览器检查通过，详见 [方案](docs/ITERATION_V4_7.md) 与 [验证目录](docs/validation/v47/README.md)。

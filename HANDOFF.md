@@ -1,5 +1,7 @@
 # 问道·灵契 V4.7 接手说明
 
+2026-10-24 下载偏好：用户反馈 GitHub 下载极慢，以后优先直接提供最新 APK 的对话下载附件，保留 Release 为来源。新增 prepare-apk-attachment.yml，不 checkout 大仓库，获取指定 Release 原 APK 并核对 SHA-256、字节数、GitHub digest；再用 GitHub 连接器 download_workflow_artifact 转成对话下载文件（ZIP 内 APK＋校验值）。不要交付普通 Android CI 的不同签名重编译包。当前仓库约1.562 GiB，旧 APK 分片和截图占89.224%；详见 docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md。没有清理历史或修改游戏源码/版本。
+
 2026-10-21。用户要求先发现现有问题，参考优秀游戏的心流设计，再实施版本迭代。先前同步 main/work、构建与发布体验版的授权继续有效。
 
 当前代码冻结 `5095d2f514f4dee410138d1077376c0f6c230210`，已推 main/work。评审八项见 docs/review/FLOW_REVIEW_V4_7.md，五组参考见 docs/research/FLOW_GAME_REFERENCES_V4_7.md。
