@@ -21,7 +21,7 @@ jobs:
           LINGQI_RELEASE_TAG: ${{ inputs.release_tag }}
         run: |
           mkdir transfer
-          gh release view "$LINGQI_RELEASE_TAG" --json tagName,url,assets > transfer/release.json
+          gh api "repos/$GH_REPO/releases/tags/$LINGQI_RELEASE_TAG" > transfer/release.json
           gh release download "$LINGQI_RELEASE_TAG" --pattern '*.apk' --pattern '*.apk.sha256' --dir transfer
       - name: Verify the exact APK against the published checksum and digest
         run: |
