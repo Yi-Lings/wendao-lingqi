@@ -1,3 +1,15 @@
+# 问道·灵契 V4.8 接手说明
+
+2026-10-29。用户要求「查全部心流，我要爽感，提一版方案」，授权范围为实现＋测试＋文档＋本地提交，**未授权推送 GitHub、未授权构建或发布 APK**。本轮因此停在本地工作树：`package.json` 4.8.0、Android 4.8/code12 已改，但没有构建产物，也没有新 Release。
+
+本轮先做全系统爽感审计（[docs/review/JUICE_REVIEW_V4_8.md](docs/review/JUICE_REVIEW_V4_8.md)），结论是成长曲线不慢、问题在可感知性，因此只改呈现层：`web/combat-fx.js` 新增纯函数翻译层；`combat.js` 产生有界 `b.feedback` 事件流并累计 `performance.damageDealt/maxHit/crits/kills`；`app.js` 用挂在 patch 子树之外的 `#combat-fx-layer` 渲染飘字与连击；`battle.css` 补受击闪白、飘字、连击徽标；`rewards.css` 给 `rarity>=4` 加独立节拍；破境页加前后对比。经济、掉落、敌人强度、经验曲线与存档版本均未改动。
+
+验证：476 项逻辑（475 通过、1 跳过、0 失败），跳过项是 Windows 非管理员无法建符号链接的既有用例，现已明确 `t.skip` 并打印原因；234 项浏览器源页面检查全部通过，用本机 Edge 经 Playwright 驱动（`LINGQI_CHROMIUM` 指向 msedge.exe）。离线 file:// 的 11 项需要先构建单文件 HTML，本轮未构建，故未运行。新增 `tests/browser-v48-feedback.cjs` 与 `tests/capture-v48-fx.cjs`，截图见 `dist/v48-combat-fx*.png`。
+
+顺手修：`browser-v46.cjs` / `browser-v47.cjs` 原先在读取 `LINGQI_CHROMIUM` 之前就 `readdirSync(qa-tools/browsers)`，没有该目录的机器上直接 `ENOENT`，已改为先判断存在性。
+
+未做：会心专属音效（需新增 MP3 资产，牵动音频 manifest、APK 资源审计与离线单文件体积）、成就/称号墙、三仙阶长篇行动链、Android 真机验证、真人爽感与长期平衡结论。
+
 # 问道·灵契 V4.7 接手说明
 
 2026-10-24 下载偏好：用户反馈 GitHub 下载极慢，以后优先直接提供最新 APK 的对话下载附件，保留 Release 为来源。新增 prepare-apk-attachment.yml，不 checkout 大仓库，获取指定 Release 原 APK 并核对 SHA-256、字节数、GitHub digest；再用 GitHub 连接器 download_workflow_artifact 转成对话下载文件（ZIP 内 APK＋校验值）。不要交付普通 Android CI 的不同签名重编译包。当前仓库约1.562 GiB，旧 APK 分片和截图占89.224%；详见 docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md。没有清理历史或修改游戏源码/版本。

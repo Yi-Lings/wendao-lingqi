@@ -22,6 +22,10 @@
   function activeTreasure(s){var id=(loadout(s).treasures||[])[0];return C.treasures[id]&&s.ownedTreasures[id]&&C.treasures[id].kind==='active'?C.treasures[id]:null;}
   function redSets(s){var out={};Object.keys(s.equipped).forEach(function(slot){var g=s.bag.find(function(x){return x.uid===s.equipped[slot];});if(g&&g.rarity===5)out[g.special||g.set]=true;});return out;}
   function mechanicEvent(b,kind,message,handled){b.mechanismEvents=b.mechanismEvents||[];b.mechanismEvents.push({at:round(b.time),kind:kind,message:message,handled:handled===undefined?null:!!handled});if(b.mechanismEvents.length>60)b.mechanismEvents.shift();}
+  // Presentation-only event ring. Never read by rules or rewards; consumed by the
+  // floating-number layer and cleared after each persisted frame.
+  function pushFeedback(b,event){b.feedback=b.feedback||[];b.feedback.push(event);if(b.feedback.length>32)b.feedback.shift();}
+  function metric(b,key,n){if(!Number.isFinite(n)||n<=0)return;b.performance[key]=Math.min(K.CAP,(b.performance[key]||0)+n);}
   function note(b,msg){b.log.push({time:round(b.time),message:msg});if(b.log.length>36)b.log.shift();}
   function effect(list,id,duration,amount,stacks){var old=list.find(function(x){return x.id===id;});if(old){old.remaining=Math.max(old.remaining,duration);old.elapsed=0;old.amount=amount===undefined?old.amount:amount;old.stacks=stacks===undefined?old.stacks:stacks;}else list.push({id:id,remaining:duration,amount:amount||0,stacks:stacks||1,tick:0,elapsed:0});}
   function status(list,id){return list.find(function(x){return x.id===id;});}
@@ -36,7 +40,7 @@
 
   function shield(s,b,amount,duration){var p=b.player;amount*=1+(Number(p.shieldPower)||0);amount=clamp(amount,0,p.maxHp*.8);p.shield=Math.max(p.shield,amount);p.shieldTime=Math.max(p.shieldTime,duration||8);return amount;}
   function heal(s,b,amount){var p=b.player,arrayExists=status(p.statuses,'manaArray')||status(p.statuses,'starArray');amount*=1+clamp(p.healing,0,1)+(heart(s).id==='array_heart_0'&&arrayExists?.15*heartScale(s):0)+(status(p.statuses,'manaArray')?.1:0);
-    var actual=Math.min(p.maxHp-p.hp,amount);p.hp+=actual;if(b.protect&&b.bossIndex===10)b.protect.hp=Math.min(b.protect.maxHp,b.protect.hp+actual*.5);var over=amount-actual;
+    var actual=Math.min(p.maxHp-p.hp,amount);p.hp+=actual;if(actual>0)pushFeedback(b,{t:round(b.time),kind:'heal',target:null,amount:Math.round(actual),overkill:0,crit:false});if(b.protect&&b.bossIndex===10)b.protect.hp=Math.min(b.protect.maxHp,b.protect.hp+actual*.5);var over=amount-actual;
     if(over>0&&((secret(s,'array',1)&&arrayExists)||passive(s,'t9'))){var ratio=secret(s,'array',1)&&arrayExists?.35*passiveScale(s,'array_secret_1'):.2;p.shield=Math.max(p.shield,Math.min(p.maxHp*.2,p.shield+over*ratio));p.shieldTime=Math.max(p.shieldTime,8);}
     if(over>0&&arrayExists&&b.red.array&&(b.temporary.arrayRedGate||0)<=0){b.treasureCooldown=Math.max(0,b.treasureCooldown-2);b.temporary.arrayRedGate=10;}
     return actual;
@@ -52,19 +56,26 @@
     if(school==='sword'&&(b.sets.sword||0)>=4&&status(e.statuses,'armorBreak'))amount*=1.15;
     if(school==='sword'&&heart(s).id==='sword_heart_1'&&b.temporary.openingTarget===e.id)amount*=1+p.resource*.06*heartScale(s);
     var element=options.element||(school==='thunder'?'thunder':school==='shadow'?'shadow':school==='sword'||school==='body'?'physical':null);if(e.bossIndex===8&&element==='fire'){var furnace=status(e.statuses,'heat');effect(e.statuses,'heat',60,0,Math.min(100,(furnace?furnace.stacks:0)+10));}if(e.bossIndex===8&&element==='water'){var cool=status(e.statuses,'heat');if(cool){cool.stacks=Math.max(0,cool.stacks-30);mechanicEvent(b,'heat','寒潮使炉温降低30点',true);}}if(element&&e.resist&&e.resist[element])amount*=1-clamp(e.resist[element],0,.5);
-    amount=Math.max(1,amount);var absorb=Math.min(e.shield,amount);e.shield-=absorb;amount-=absorb;e.hp=Math.max(0,e.hp-amount);
+    amount=Math.max(1,amount);var absorb=Math.min(e.shield,amount);e.shield-=absorb;amount-=absorb;var hpBefore=e.hp;e.hp=Math.max(0,e.hp-amount);var overkill=Math.max(0,amount-hpBefore);
     if(status(e.statuses,'reflect')&&!options.dot&&amount>0){mechanicEvent(b,'reflect','反射期间仍使用直接攻击，受到镜壳反伤',false);}if(status(e.statuses,'reflect')&&!options.dot&&amount>0)damagePlayer(s,b,amount*(status(e.statuses,'reflect').amount||.25),'反射',true);
     if(crit)note(b,'会心！'+e.name+'受到 '+Math.round(amount)+' 点伤害');
     if(!options.dot&&p.lifesteal)heal(s,b,amount*clamp(p.lifesteal,0,.15));
     if(e.hp<=0&&!e.dead){e.dead=true;b.killCount=(b.killCount||0)+1;note(b,e.name+'被击败');if(e.role==='root'||e.role==='flower'||e.role==='guard'||e.role==='clone'){b.performance.handled++;mechanicEvent(b,'minion','已转火清除'+e.name,true);if(e.role==='root')purify(s,b,2);}
       if(secret(s,'thunder',0)&&(b.temporary.transferGate||0)<=0){var marks=status(e.statuses,'mark'),other=alive(b)[0];if(marks&&other){mark(other,Math.min(2+Math.floor((((s.techniques.thunder_secret_0||{}).level||1)-1)/8),marks.stacks));b.temporary.transferGate=triggerTime(s,'thunder_secret_0',1);}}
     }
+    var index=b.enemies.indexOf(e);
+    metric(b,'damageDealt',Math.min(amount,hpBefore));
+    if(!options.dot&&amount>(b.performance.maxHit||0))b.performance.maxHit=Math.round(amount);
+    if(crit)metric(b,'crits',1);
+    if(e.hp<=0&&e.dead&&!e.killRecorded){e.killRecorded=true;metric(b,'kills',1);}
+    pushFeedback(b,{t:round(b.time),kind:e.hp<=0?'kill':options.dot?'dot':crit?'crit':'hit',target:index<0?null:index,amount:Math.round(amount),overkill:Math.round(overkill),crit:!!crit});
     return amount;
   }
   function damagePlayer(s,b,amount,label,fixed){var p=b.player;if(p.hp<=0)return 0;
     var ev=status(p.statuses,'evade');if(!fixed&&rand(b)<clamp((p.dodge||0)+(ev?ev.amount:0),0,.4)){note(b,'闪避了'+label);b.performance.handled++;if((b.sets.shadow||0)>=4&&(b.temporary.shadowSetGate||0)<=0){b.treasureCooldown=Math.max(0,b.treasureCooldown-1);b.temporary.shadowSetGate=3;}return 0;}
     if(!fixed)amount=Math.max(amount*.18,amount-p.defense*.5);amount*=1-clamp(p.damageReduction,0,.65);var guard=status(p.statuses,'guard');if(guard&&!fixed)amount*=1-clamp(guard.amount||.25,0,.5);
     if(status(p.statuses,'vulnerable'))amount*=1.15;var previousShield=p.shield,absorbed=Math.min(p.shield,amount);p.shield-=absorbed;amount-=absorbed;p.hp=Math.max(0,p.hp-amount);b.performance.damageTaken+=amount;
+    if(absorbed>0||amount>0)pushFeedback(b,{t:round(b.time),kind:'player',target:null,amount:Math.round(amount),absorbed:Math.round(absorbed),overkill:0,crit:false});
     if(absorbed>0&&heart(s).id==='body_heart_0'){b.temporary.absorbed=(b.temporary.absorbed||0)+absorbed;var count=Math.floor(b.temporary.absorbed/(p.maxHp*.06/heartScale(s)));if(count){setResource(b,Math.min(5,p.resource+count));b.temporary.absorbed-=count*p.maxHp*.06/heartScale(s);}}
     if(amount>0&&!fixed&&heart(s).id==='body_heart_1'&&(b.temporary.spiritGate||0)<=0){setResource(b,Math.min(5,p.resource+1));b.temporary.spiritGate=triggerTime(s,heart(s).id,1);}
     if(amount>0&&!fixed&&secret(s,'body',1)&&(b.temporary.bodyMpGate||0)<=0){p.mp=Math.min(p.maxMp,p.mp+5*passiveScale(s,'body_secret_1'));b.temporary.bodyMpGate=triggerTime(s,'body_secret_1',3);}
@@ -357,7 +368,7 @@
     var bi=Number.isInteger(options.bossIndex)?options.bossIndex:Number.isInteger(d.bossIndex)?d.bossIndex:null;
     if(d.type==='trial')bi=[0,2,5,6,8,11][tier];
     var floorData=d.type==='tower'&&C.towerFloors[options.floor-1];if(floorData&&Number.isInteger(floorData.bossIndex))bi=floorData.bossIndex;
-    var b={id:d.id,name:options.name||d.name,type:d.type,tier:tier,difficulty:difficulty,route:s.route,floor:options.floor||null,bossIndex:bi,firstKey:null,startedAt:s.lastAt,realmLabel:K.realmLabel(s,s.route),mechanismEvents:[],time:0,paused:false,auto:true,target:0,practice:!!options.practice||!!(s.exploration&&s.exploration.practice),rules:Object.assign({healBelow:.45,reserveInterrupt:true,shieldBeforeBurst:true},s.battleRules||{}),practicePills:{},player:p,enemies:[dungeonEnemy(d,tier,difficulty,options.floor,bi)],cooldowns:{},treasureCooldown:0,potionCooldown:0,queue:[],log:[],rng:Math.floor(K.rng(s,'world')*4294967296)||1,attackTimer:.5,accumulator:0,lastSkill:null,performance:{handled:0,missed:0,damageTaken:0,interrupts:0,pills:0},temporary:{},protect:bi===10||(d.type==='trial'&&(tier===0||tier===3))?{hp:p.maxHp*1.5,maxHp:p.maxHp*1.5}:null,red:redSets(s),sets:a.sets||{},room:options.room||null};
+    var b={id:d.id,name:options.name||d.name,type:d.type,tier:tier,difficulty:difficulty,route:s.route,floor:options.floor||null,bossIndex:bi,firstKey:null,startedAt:s.lastAt,realmLabel:K.realmLabel(s,s.route),mechanismEvents:[],feedback:[],time:0,paused:false,auto:true,target:0,practice:!!options.practice||!!(s.exploration&&s.exploration.practice),rules:Object.assign({healBelow:.45,reserveInterrupt:true,shieldBeforeBurst:true},s.battleRules||{}),practicePills:{},player:p,enemies:[dungeonEnemy(d,tier,difficulty,options.floor,bi)],cooldowns:{},treasureCooldown:0,potionCooldown:0,queue:[],log:[],rng:Math.floor(K.rng(s,'world')*4294967296)||1,attackTimer:.5,accumulator:0,lastSkill:null,performance:{handled:0,missed:0,damageTaken:0,interrupts:0,pills:0,damageDealt:0,maxHit:0,crits:0,kills:0},temporary:{},protect:bi===10||(d.type==='trial'&&(tier===0||tier===3))?{hp:p.maxHp*1.5,maxHp:p.maxHp*1.5}:null,red:redSets(s),sets:a.sets||{},room:options.room||null};
     var count=d.type==='resource'?3:d.type==='tower'&&floorData?floorData.enemyCount||1:1;
     if(count>1){var total=b.enemies[0].maxHp;b.enemies=[];for(var n=0;n<count;n++){var e=enemyFor(null,tier,difficulty,d.type,options.floor);e.id='guard_'+n;e.name=d.type==='resource'?'秘境守卫·'+(n+1):'问道守阵者·'+(n+1);e.hp=e.maxHp=Math.round(total/count);e.attack*=d.type==='resource'?.4:.55;e.attackTimer=1+n*.7;e.mechanicTimer=7+n*3;b.enemies.push(e);}}
     if(d.type==='resource')b.enemies.forEach(function(e,i){setSpecies(e,(d.enemySpecies||['armor'])[i%(d.enemySpecies||['armor']).length]);});
@@ -473,5 +484,7 @@
     var lootRates=d.type==='boss'||d.type==='cave'?[{rarity:2,probability:[.65,.5,.35][difficulty]},{rarity:3,probability:[.25,.35,.45][difficulty]},{rarity:4,probability:[.095,.14,.18][difficulty]},{rarity:5,probability:[.005,.01,.02][difficulty]}]:null,enemy=dungeonEnemy(d,tier,difficulty,d.type==='tower'?floor:null);
     return {allowed:!error,requirements:error?[error]:[],attributes:{attack:Math.round(enemy.attack),defense:Math.round(enemy.defense),maxHp:Math.round(enemy.maxHp)},rewards:repeat,firstRewards:first,lootRates:lootRates,set:d.school||null,slotWeights:Object.fromEntries(Object.keys(C.slots).map(function(id){return [id,1];})),firstClear:!isFirst,stars:s.progress.stars[key]||0,practice:!!a.practice,consumption:d.type==='ascension'&&!a.practice?Ascension.battleCost(s,d):{},failure:d.type==='cave'?'失败只保留归途阵门确认携出的常规材料；不发晶与券':d.type==='ascension'&&!a.practice?'失败退出保留境界与装备，不发仙修或仙元；已投入出征材料不退':'失败退出不发奖励、不降层、不毁装',performanceRewards:d.type==='trial'||a.practice?'无经济奖励':'成功处理机制可额外获得10%灵石与1参悟砂',note:d.type==='cave'?'这里展示最终通关奖励；途中房间会在选择前展示独立收益':''};
   }
-  return {handle:handle,advanceBattle:advanceBattle,battleView:battleView,battleReportsView:battleReportsView,dungeonView:dungeonView,competitionsView:competitionsView,previewDungeon:previewDungeon,roomTypes:roomTypes};
+  // damageEnemy is exposed for tests only: forcing an exact damage-over-time tick or
+  // a known overflow through live play is not reproducible.
+  return {handle:handle,advanceBattle:advanceBattle,battleView:battleView,battleReportsView:battleReportsView,dungeonView:dungeonView,competitionsView:competitionsView,previewDungeon:previewDungeon,roomTypes:roomTypes,__test:{damageEnemy:damageEnemy}};
 });

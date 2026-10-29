@@ -125,7 +125,7 @@ function patchPageChildren(current,fresh){
  for(const node of [...current.childNodes])if(!used.has(node))node.remove();
 }
 function mount(){
- mounted=true;app.innerHTML=`<div class="game-shell"><header class="topbar"><div class="brand">问道 · 灵契<small>山海万象 · 自证大道</small></div><div class="top-actions"><button id="save-state" class="save-indicator" data-ui="settings" aria-label="进度已保存，打开设置">已保存</button><button id="open-help" class="icon-btn" data-ui="help" aria-label="修行指引">?</button><button id="open-settings" class="icon-btn" data-ui="settings" aria-label="设置">⚙</button></div></header><div class="resource-bar"><div class="resource"><i class="gem">◇</i><span>灵石</span><strong id="hud-stones"></strong></div><div class="resource"><i class="gem">✧</i><span>感应券</span><strong id="hud-tickets"></strong></div><div class="resource"><i class="gem">◈</i><span>天道尘</span><strong id="hud-dust"></strong></div></div><section class="hero-scene" id="hero-scene"><div id="page-hero-art"></div><div class="scene-stars"></div><div class="scene-copy"><p class="eyebrow" id="scene-kicker"></p><h1 id="scene-heading"></h1><p id="scene-description"></p></div><div class="scene-path"><strong id="scene-name"></strong><small id="scene-power"></small></div><div class="realm-orb"><strong id="scene-realm"></strong><small id="scene-layer"></small></div></section><div id="encounter-container"></div><main class="page-content" id="page-content"></main><nav class="nav-bottom">${Object.entries(pages).map(([id,[label,path]])=>`<button data-page="${id}" aria-label="${label}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg><span>${label}</span></button>`).join('')}</nav></div>`;
+ mounted=true;app.innerHTML=`<div class="game-shell"><header class="topbar"><div class="brand">问道 · 灵契<small>山海万象 · 自证大道</small></div><div class="top-actions"><button id="save-state" class="save-indicator" data-ui="settings" aria-label="进度已保存，打开设置">已保存</button><button id="open-help" class="icon-btn" data-ui="help" aria-label="修行指引">?</button><button id="open-settings" class="icon-btn" data-ui="settings" aria-label="设置">⚙</button></div></header><div class="resource-bar"><div class="resource"><i class="gem">◇</i><span>灵石</span><strong id="hud-stones"></strong></div><div class="resource"><i class="gem">✧</i><span>感应券</span><strong id="hud-tickets"></strong></div><div class="resource"><i class="gem">◈</i><span>天道尘</span><strong id="hud-dust"></strong></div></div><section class="hero-scene" id="hero-scene"><div id="page-hero-art"></div><div class="scene-stars"></div><div class="scene-copy"><p class="eyebrow" id="scene-kicker"></p><h1 id="scene-heading"></h1><p id="scene-description"></p></div><div class="scene-path"><strong id="scene-name"></strong><small id="scene-power"></small></div><div class="realm-orb"><strong id="scene-realm"></strong><small id="scene-layer"></small></div></section><div id="encounter-container"></div><main class="page-content" id="page-content"></main><nav class="nav-bottom">${Object.entries(pages).map(([id,[label,path]])=>`<button data-page="${id}" aria-label="${label}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg><span>${label}</span></button>`).join('')}</nav><div id="combat-fx-layer" class="combat-fx-layer" aria-hidden="true"><div id="combat-combo" class="combat-combo" hidden></div></div></div>`;
  app.querySelector('.top-actions').insertAdjacentHTML('afterbegin',`<button class="icon-btn sound-toggle" data-ui="audio-toggle" aria-label="游戏声音" aria-pressed="${!Sound?.getPreferences().muted}">${Sound?.getPreferences().muted?'🔇':'♫'}</button>`);
  for(const [index,id] of ['stones','tickets','dust'].entries()){const icon=app.querySelectorAll('.resource .gem')[index];if(icon)icon.outerHTML=utilityIcon(id,'','hud-resource-art');}
  updateChrome();renderPage();renderEncounter();
@@ -428,7 +428,7 @@ function renderEncounter(){
   const enemies=b.enemies.map(enemy=>{
    const primaryBoss=bossEncounter&&enemy.index===0,portrait=primaryBoss?portraitArt(window.WendaoMonsterArt.enemyArt(enemy,b)||window.WendaoMonsterArt.bossArt(dungeon),'boss-portrait boss-main-art',enemy.name):monsterPortrait(enemy,b);
    const vitality=`<strong>${esc(enemy.name)}</strong><small>${num(enemy.hp)} / ${num(enemy.maxHp)}${enemy.shield?' · 盾'+num(enemy.shield):''}</small>${bar(enemy.hp,enemy.maxHp,'red')}${statusTags(enemy.statuses)}`;
-   return `<button class="enemy-card${primaryBoss?' boss-target':''}${b.target===enemy.index?' target':''}${!enemy.alive?' dead':''}${oldFrame&&enemy.hp<(oldFrame.enemies[enemy.index]??enemy.hp)?' hurt':''}" data-action="targetEnemy" data-payload="${esc(JSON.stringify({index:enemy.index}))}" aria-label="锁定${esc(enemy.name)}"${!enemy.alive?' disabled':''}>${portrait}${primaryBoss?`<div class="boss-nameplate"><span class="boss-rank">${dungeon.type==='ascension'?dungeon.ascensionKind==='gate'?'天门守关':dungeon.ascensionKind==='hunt'?'仙域巡猎':'仙阶道劫':'山海妖王'} · ${difficulty}</span>${vitality}</div>`:vitality}${enemy.casting?`<div class="casting">${esc(enemy.casting.name)} · ${num(enemy.casting.remaining)}s${bar(enemy.casting.duration-enemy.casting.remaining,enemy.casting.duration,'gold')}<small>${esc(enemy.casting.hint)}${enemy.casting.interruptible?' · 可打断':''}</small></div>`:''}</button>`;
+   return `<button class="enemy-card${primaryBoss?' boss-target':''}${b.target===enemy.index?' target':''}${!enemy.alive?' dead':''}${oldFrame&&enemy.hp<(oldFrame.enemies[enemy.index]??enemy.hp)?' hurt':''}" data-action="targetEnemy" data-enemy-index="${enemy.index}" data-payload="${esc(JSON.stringify({index:enemy.index}))}" aria-label="锁定${esc(enemy.name)}"${!enemy.alive?' disabled':''}>${portrait}${primaryBoss?`<div class="boss-nameplate"><span class="boss-rank">${dungeon.type==='ascension'?dungeon.ascensionKind==='gate'?'天门守关':dungeon.ascensionKind==='hunt'?'仙域巡猎':'仙阶道劫':'山海妖王'} · ${difficulty}</span>${vitality}</div>`:vitality}${enemy.casting?`<div class="casting">${esc(enemy.casting.name)} · ${num(enemy.casting.remaining)}s${bar(enemy.casting.duration-enemy.casting.remaining,enemy.casting.duration,'gold')}<small>${esc(enemy.casting.hint)}${enemy.casting.interruptible?' · 可打断':''}</small></div>`:''}</button>`;
   }).join('');
   const skills=b.skills.map(skill=>combatIconButton(skill.name,'useSkill',{id:skill.id},'technique',skill.id,techniqueIcon(C.techniques[skill.id]),skill.remaining>0?num(skill.remaining)+'s':skill.mp+'真元',!skill.ready||b.paused)).join('');
   const treasure=b.treasure?combatIconButton(b.treasure.name,'useTreasure',{},'treasure',b.treasure.id,itemIcon('treasure',b.treasure.id,b.treasure.name),b.treasure.remaining>0?num(b.treasure.remaining)+'s':'灵宝',!b.treasure.ready||b.paused):'<span class="empty-combat-slot">未配灵宝</span>';
@@ -451,6 +451,45 @@ function renderEncounter(){
  if(!active&&layoutState.encounterScroll!==undefined){content.scrollTop=layoutState.encounterScroll;delete layoutState.encounterScroll;}
 }
 function combatIconButton(name,action,payload,kind,id,art,note,disabled){return `<button class="btn skill-button combat-icon${disabled?' cooldown':''}" data-action="${esc(action)}" data-payload="${esc(JSON.stringify(payload))}" data-inspect-kind="${kind}" data-inspect-id="${esc(id)}" aria-label="${esc(name+' · '+note)}"${disabled?' disabled':''}>${art}<span class="name">${esc(name)}</span><small class="cooldown">${esc(note)}</small></button>`;}
+let fxStreak={count:0,lastAt:0};
+function consumeCombatFx(){const b=s?.battle;if(!b||!Array.isArray(b.feedback)||!b.feedback.length)return [];const events=b.feedback.slice();b.feedback.length=0;return events;}
+function fxReduced(){return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}
+function fxAnchor(target){
+  if(target===null||target===undefined){const hud=document.querySelector('.battle-player.player-hud');if(!hud)return null;const r=hud.getBoundingClientRect();return {x:r.left+r.width*.5,y:r.top+Math.min(30,r.height*.32)};}
+  const card=document.querySelector('[data-enemy-index="'+target+'"]');if(!card)return null;const r=card.getBoundingClientRect();return {x:r.left+r.width*.5,y:r.top+r.height*.30};
+}
+function updateComboBadge(){
+  const badge=document.getElementById('combat-combo');if(!badge)return;
+  const fx=window.WendaoCombatFx,out=fx?fx.streakLabel(fxStreak.count):null;
+  if(!out||!out.tier){badge.hidden=true;badge.textContent='';badge.removeAttribute('data-tier');return;}
+  badge.hidden=false;badge.textContent=out.label;badge.setAttribute('data-tier',String(out.tier));
+}
+function tickCombo(){
+  const fx=window.WendaoCombatFx;if(!fx)return;
+  if(fxStreak.count&&Date.now()-fxStreak.lastAt>fx.COMBO_WINDOW*1000){fxStreak.count=0;updateComboBadge();}
+}
+function spawnCombatFx(events){
+  const fx=window.WendaoCombatFx,layer=document.getElementById('combat-fx-layer');
+  if(!fx||!layer||!events.length)return;
+  const now=Date.now(),hits=events.filter(event=>event&&(event.kind==='hit'||event.kind==='crit')).length;
+  if(hits){if(now-fxStreak.lastAt>fx.COMBO_WINDOW*1000)fxStreak.count=0;fxStreak.count+=hits;fxStreak.lastAt=now;}
+  const reduced=fxReduced(),out=fx.translate(events);
+  for(const entry of out.entries){
+    const point=fxAnchor(entry.target);if(!point)continue;
+    const node=document.createElement('span');
+    node.className='combat-fx tone-'+entry.tone+(entry.big?' fx-big':'')+(reduced?' fx-static':'');
+    node.textContent=entry.text;
+    node.style.left=point.x+'px';node.style.top=point.y+'px';
+    layer.appendChild(node);
+    setTimeout(()=>node.remove(),reduced?650:entry.big?1150:900);
+  }
+  updateComboBadge();
+}
+function clearCombatFx(){
+  fxStreak={count:0,lastAt:0};
+  const layer=document.getElementById('combat-fx-layer');if(layer)for(const node of [...layer.querySelectorAll('.combat-fx')])node.remove();
+  updateComboBadge();
+}
 function requestEncounterExit(){
  if(s?.battle){if(!s.battle.paused){const paused=run('pauseBattle',{paused:true});if(paused&&!paused.ok)return;}return showModal('confirm',{type:'leaveBattle',label:s.exploration?'退出洞天战斗':'退出本场战斗',text:s.exploration?'战斗暂停。退出后仅保留已确认携出的战利品，已使用丹药不返还。':'战斗暂停。本场未结算奖励不会发放，已使用丹药不返还。'});}
  if(s?.exploration){const cleared=s.exploration.status==='cleared';return showModal('confirm',{type:'finishCave',label:cleared?'领取洞天宝箱':'结束洞天探索',text:cleared?'洞天已经通关，将结算已携出与宝箱中的全部奖励。':'保留已确认携出的战利品；尚待通关的奖励不会领取。'});}
@@ -739,6 +778,16 @@ function battleHistoryModal(){
  const reports=s.battleReports?.length?s.battleReports:s.lastBattleResult?[s.lastBattleResult]:[];
  frame('历练战报 · 最近20场','<p class="muted">最近20场结算会随仙途保存。试阵、退出与正式胜利各有标记，选择一场查看机制和收益。</p><div class="list gap-top">'+(reports.map((r,i)=>({r,i})).reverse().map(({r,i})=>'<article class="item battle-history-row"><div class="item-main"><strong>'+esc(r.name||'山海历练')+' · '+esc(reportOutcome(r))+'</strong><small>'+esc(reportContext(r))+'</small><small>'+esc(reportDate(r))+' · 用时 '+num(r.duration??r.time)+' 秒</small><p>'+esc(r.reason||r.message||'历练已结算')+'</p><div class="item-actions">'+ui('查看战报','battle-report',{index:i},'secondary small')+'</div></div></article>').join('')||'<div class="empty">完成或退出一次历练后，战报会保存在这里。</div>')+'</div>',ui('返回历练','close',{},'primary'));
 }
+function battleOutputBlock(r,index){
+ const p=r?.performance||{};
+ if(!Number.isFinite(p.damageDealt)&&!Number.isFinite(p.maxHit))return '';
+ const reports=Array.isArray(s.battleReports)?s.battleReports:[],at=Number.isInteger(index)?index:reports.length-1;
+ const prior=at>0?[...reports].slice(0,at).reverse().find(x=>x&&x.entry===r.entry&&x.performance&&Number.isFinite(x.performance.damageDealt)):null;
+ const delta=prior&&Number.isFinite(p.damageDealt)?p.damageDealt-(prior.performance.damageDealt||0):null;
+ const rows=[['总输出',num(p.damageDealt||0)],['最高单击',num(p.maxHit||0)],['会心',num(p.crits||0)+' 次'],['击杀',num(p.kills||0)],['承受',num(p.damageTaken||0)]];
+ const trend=delta===null?'':delta>0?'<span class="battle-output-trend up">较上场 +'+num(delta)+'</span>':delta<0?'<span class="battle-output-trend down">较上场 '+num(delta)+'</span>':'<span class="battle-output-trend">与上场持平</span>';
+ return '<div class="battle-output" aria-label="本场输出">'+rows.map(([label,value])=>'<span><small>'+esc(label)+'</small><strong>'+esc(value)+'</strong></span>').join('')+'</div>'+trend;
+}
 function battleReportModal(p={}){
  const r=Number.isInteger(p.index)?s.battleReports?.[p.index]||s.lastBattleResult:s.lastBattleResult;
  if(!r)return frame('最近战报','<p>完成一次挑战后，可查看战报。</p>');
@@ -750,12 +799,25 @@ function battleReportModal(p={}){
  const retry=guidance.retry?ui('按原设置重新筹备','battle-retry',reportRef,'secondary small'):'';
  const practice=guidance.practiceTarget&&!r.practice?ui('先免费试阵','battle-retry',{...reportRef,practice:true},'ghost small'):'';
  const follow=window.WendaoBattleGuidance.render(s,r)+((retry||practice)?'<div class="flow-actions battle-retry-actions">'+retry+practice+'</div>':'');
- const loot=window.WendaoRewards.render(r,{state:s,context:reportContext(r)}),focus=p.settlement?storyFocusCard({receipt:true}):'';
- frame(rewards.title+(rewards.items.length?' · 战利品':''),(rewards.win?loot+focus+follow:follow+loot+focus)+review,ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary',!!s.battle)+continuation);
+ const loot=window.WendaoRewards.render(r,{state:s,context:reportContext(r)}),focus=p.settlement?storyFocusCard({receipt:true}):'',output=battleOutputBlock(r,p.index);
+ frame(rewards.title+(rewards.items.length?' · 战利品':''),(rewards.win?loot+focus+follow:follow+loot+focus)+output+review,ui('战报历史','battle-history',{},'secondary')+ui('调整功法','loadout',{},'secondary',!!s.battle)+continuation);
+}
+function breakthroughDelta(before,route){
+ if(typeof before!=='string'||!before)return '';
+ try{
+  const prior=E.view(JSON.parse(before)),now=E.view(s);
+  const rows=[['战力','power'],['攻击','attack'],['气血','maxHp']];
+  const items=rows.map(([label,key])=>{
+   const from=Math.round(Number(prior?.[key])||0),to=Math.round(Number(now?.[key])||0),gain=to-from,percent=from>0?Math.round(gain/from*1000)/10:null;
+   const change=gain>0?`<b class="up">+${num(gain)}${percent!==null?' · '+percent+'%':''}</b>`:gain<0?`<b class="down">${num(gain)}</b>`:'<b class="flat">不变</b>';
+   return `<div class="breakthrough-delta-row"><small>${label}</small><span>${num(from)} → <strong>${num(to)}</strong></span>${change}</div>`;
+  }).join('');
+  return `<div class="breakthrough-delta" aria-label="突破前后对比">${items}</div>`;
+ }catch(e){return '';}
 }
 function breakthroughResultModal(p){
- const route=p.route||s.route,realm=Number.isInteger(p.realm)?p.realm:s.paths[route].realm,old=Math.max(0,realm-1),memory=(s.ritualHistory||[]).find(h=>h.route===route&&h.realm===old);
- frame('破境成功 · '+C.routes[route].realmNames[realm],`<div class="breakthrough-result"><div class="chapter-art" style="background-position:${atlasPosition(Math.min(5,realm),3,2)}"></div><p class="eyebrow">丹材归元 · 道基已定</p><h3>${esc(C.routes[route].realmNames[old])} → ${esc(C.routes[route].realmNames[realm])}</h3><p>经脉中的灵息重新汇聚。你走出静室，山河仍在眼前，却已能看见更远处的路。</p>${memory?`<p class="section-note">道誓已经留下，同行者会记住这次蜕变。</p>`:''}<p>新境界一层已开启，修炼、丹方与对应挑战随境界开放。封存的丹药与阵材已用尽，没有重复扣除。</p></div>`,ui('走出静室 · 继续仙途','ritual-exit',{route},'primary'));
+ const route=p.route||s.route,realm=Number.isInteger(p.realm)?p.realm:s.paths[route].realm,old=Math.max(0,realm-1),memory=(s.ritualHistory||[]).find(h=>h.route===route&&h.realm===old),delta=breakthroughDelta(p.before,route);
+ frame('破境成功 · '+C.routes[route].realmNames[realm],`<div class="breakthrough-result"><div class="chapter-art" style="background-position:${atlasPosition(Math.min(5,realm),3,2)}"></div><p class="eyebrow">丹材归元 · 道基已定</p><h3>${esc(C.routes[route].realmNames[old])} → ${esc(C.routes[route].realmNames[realm])}</h3><p>经脉中的灵息重新汇聚。你走出静室，山河仍在眼前，却已能看见更远处的路。</p>${delta}${memory?`<p class="section-note">道誓已经留下，同行者会记住这次蜕变。</p>`:''}<p>新境界一层已开启，修炼、丹方与对应挑战随境界开放。封存的丹药与阵材已用尽，没有重复扣除。</p></div>`,ui('走出静室 · 继续仙途','ritual-exit',{route},'primary'));
  Sound?.play('victory');
 }
 function artCollectionModal(p){frame('山海藏画',window.WendaoArtCollection.render(Number(p.index)||0,{directory:!!p.directory,directoryPage:p.directoryPage}),ui('合卷归去','close',{},'primary'));}
@@ -857,7 +919,7 @@ function run(type,p={},interactive=true){
   else if(type==='pauseBattle'&&p.paused===false&&modal?.type==='battle-report'&&modal.p.settlement){closeModal();}
   else if(['completeAscension','celestialMeditate','advanceCelestial','celestialBreakthrough'].includes(type)){showModal('celestial-result',{type,data:r.data});}
   else if(type==='celestialHunt'){closeModal();}
-  else if(type==='breakthrough'){showModal('breakthrough-result',{route:r.data?.route||s.route,realm:r.data?.realm});}
+  else if(type==='breakthrough'){showModal('breakthrough-result',{route:r.data?.route||s.route,realm:r.data?.realm,before});}
   else if(type==='resolveEncounter'){showModal('world-event',{id:p.id});}
   else if(type==='setDaoStance'){if(modal?.type==='dao')showModal('dao');}
   else if(type==='autoEquip'&&p.expected){showModal('equipment');}
@@ -901,16 +963,16 @@ function boot(fresh=false){
  timer=setInterval(()=>{
   if(!s||!mounted||document.hidden||busy)return;const now=Date.now(),seconds=Math.min(1,(now-lastFrame)/1000);lastFrame=now;
   if(s.battle){
-   const before=JSON.stringify(s),previousReport=s.lastBattleResult,beforeView=battleView();let completed=false;
+   const before=JSON.stringify(s),previousReport=s.lastBattleResult,beforeView=battleView();let completed=false,fxEvents=[];
    try{
-    E.tick(s,seconds);completed=!!s.lastBattleResult&&s.lastBattleResult!==previousReport;
+    E.tick(s,seconds);fxEvents=consumeCombatFx();completed=!!s.lastBattleResult&&s.lastBattleResult!==previousReport;
     // Auto retry can immediately create a new battle. Pause it before committing
     // the completed fight so every reward screen has a stable, saved boundary.
     if(completed&&s.battle){const paused=E.act(s,{type:'pauseBattle',paused:true},now);if(!paused.ok)throw Error('下一场战斗暂停失败');}
     if(completed||now-lastPersist>1000){if(!persist(s)){s=JSON.parse(before);completed=false;if(s.battle)E.act(s,{type:'pauseBattle',paused:true},now);}}
-   }catch(e){s=JSON.parse(before);completed=false;}
+   }catch(e){s=JSON.parse(before);completed=false;fxEvents=[];}
    const afterView=battleView();if(!completed&&afterView.active&&beforeView.active&&(afterView.player.hp<beforeView.player.hp||afterView.enemies.some(x=>x.hp<(beforeView.enemies.find(y=>y.index===x.index)?.hp??x.hp))))Sound?.play('battle-hit');
-   renderEncounter();if(completed){updateChrome();renderPage();showBattleSettlement();}
+   renderEncounter();if(fxEvents.length)spawnCombatFx(fxEvents);else tickCombo();if(completed){clearCombatFx();updateChrome();renderPage();showBattleSettlement();}
   }
   if(now-lastPassive>=1000){const priorRank=K.pathRank(s),before=JSON.stringify(s);try{E.advance(s,now);if(now-lastPersist>5000&&!persist(s,true))s=JSON.parse(before);}catch(e){s=JSON.parse(before);}lastPassive=now;updateChrome();if(K.pathRank(s)!==priorRank)renderPage();}
  },250);

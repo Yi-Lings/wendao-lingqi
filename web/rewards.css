@@ -53,3 +53,39 @@
  .settlement-status{margin:9px 0;padding:7px;line-height:1.4}
 }
 @media(prefers-reduced-motion:reduce){.battle-settlement *,.battle-settlement *:before,.battle-settlement *:after{animation:none!important;transition:none!important}}
+
+/* V4.8 稀有战利品单独一个节拍：在既有的入场错峰之后扫过一道品级色光。
+   橙色及以上才有；减少动态效果时不播放。 */
+.settlement-card.settlement-rare-beat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 28%, color-mix(in srgb, var(--rarity) 40%, transparent) 50%, transparent 72%);
+  opacity: 0;
+  animation: settlement-rare-sheen 1.05s calc(min(var(--reward-order), 8) * 55ms + .32s) ease-out both;
+}
+
+@keyframes settlement-rare-sheen {
+  0% {
+    opacity: 0;
+    transform: translateX(-38%);
+  }
+
+  32% {
+    opacity: .92;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(38%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settlement-card.settlement-rare-beat::after {
+    animation: none;
+    opacity: 0;
+  }
+}

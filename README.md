@@ -1,12 +1,16 @@
-# 问道 · 灵契 V4.7
+# 问道 · 灵契 V4.8（开发中）
 
 原创安卓竖屏单机修仙游戏：六章多幕剧情、闭关渡劫、斗技夺魁、六流派构筑，以及飞升后的登仙、真仙、金仙三阶成长。游戏资源随 APK 打包，安装后离线运行。
+
+**当前已公开发布的是 V4.7。** 本分支的 V4.8 尚未打包 APK，也未发布 Release。
 
 [下载 V4.7 Android 体验 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.apk) · [V4.7 离线网页试玩](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.zip) · [完整源码 ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7.0-source.zip) · [发布说明](docs/RELEASE_NOTES_V4_7.md)
 
 安装游戏只需 APK，无需点击 Code → Download ZIP 下载整个仓库。最新体验版为 V4.7；GitHub 的 Latest 入口目前仍指向旧 V3 正式版。下载困难时可在对话中索取已核验的 APK 附件；诊断见 [下载记录](docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md)。
 
 V4.7 最低 Android 8.0，体验包使用独立包名 `com.lingqi.game.preview` 和既有体验签名，可覆盖更新旧体验版，也可与正式包并排安装。更新或换包前可导出 JSON 备份，再按需导入。全部源代码、美术、音频、方案与测试同步到 `main` 和 `work` 分支；[历史 V3 发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v3.0.0)保留。
+
+V4.8「一击可闻」先做全系统爽感审计（[爽感审计](docs/review/JUICE_REVIEW_V4_8.md)），结论是数值成长并不慢、问题在可感知性，于是只补呈现层：战斗伤害飘字与会心标识、普通敌人受击闪白、击杀与溢伤、连击档位、战报新增本场输出与同副本增减、稀有战利品单独节拍、破境前后面板落差。经济、掉落、敌人强度、经验曲线与存档版本均未改动。详见 [本轮方案](docs/ITERATION_V4_8.md)。
 
 V4.7「行有所向」按 [心流评审](docs/review/FLOW_REVIEW_V4_7.md) 改善成长建议、真实约定进度、挑战门槛与战后筹备。已有材料直接接入炼丹，结算接回具体目标，重试保留原设置；参考依据见 [Hades、Slay the Spire、Stardew Valley 与 GameFlow](docs/research/FLOW_GAME_REFERENCES_V4_7.md)。464 项逻辑、245 项浏览器检查通过，详见 [方案](docs/ITERATION_V4_7.md) 与 [验证目录](docs/validation/v47/README.md)。
 

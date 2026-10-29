@@ -583,6 +583,8 @@ function validateBattle(s){
   array(b.queue,80,'战斗行动');array(b.log,100,'战斗日志');
   if(b.mechanismEvents===undefined)b.mechanismEvents=[];
   array(b.mechanismEvents,60,'机制处理记录');for(const e of b.mechanismEvents){object(e,'机制处理记录');number(e.at,0,36000,'机制时间');if(typeof e.kind!=='string'||e.kind.length>80||typeof e.message!=='string'||e.message.length>300)throw Error('机制记录文字无效');e.message=cleanText(e.message,300);if(e.handled!==null)boolean(e.handled,'机制处理结果');}
+  if(b.feedback===undefined)b.feedback=[];
+  array(b.feedback,32,'战斗反馈');for(const e of b.feedback){object(e,'战斗反馈');number(e.t,0,36000,'反馈时间');if(!['hit','crit','dot','kill','heal','player'].includes(e.kind))throw Error('战斗反馈类型无效');if(e.target===undefined)e.target=null;if(e.target!==null)integer(e.target,0,11,'反馈目标');number(e.amount,0,CAP,'反馈数值');if(e.overkill!==undefined)number(e.overkill,0,CAP,'反馈溢出');if(e.absorbed!==undefined)number(e.absorbed,0,CAP,'反馈护盾');if(e.crit===undefined)e.crit=false;boolean(e.crit,'反馈会心');}
   if(b.lastSkill!==null&&b.lastSkill!==undefined)catalogKey(C.techniques,b.lastSkill,'上一神通');
 }
 function validateExploration(s){

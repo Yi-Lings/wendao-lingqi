@@ -1953,3 +1953,184 @@
   .battle-arena .battle-feed { grid-column: 2; grid-row: 5; margin: 0; }
   .battle-arena .battle-feed > summary { min-height: 40px; padding: 5px 2px; font-size: 9px; }
 }
+
+/* V4.8 打击反馈：受击闪白、伤害飘字、连击。全部为呈现层，不参与任何结算。 */
+.enemy-card.hurt {
+  animation: enemy-hurt-flash .26s ease-out;
+}
+
+@keyframes enemy-hurt-flash {
+  0% {
+    filter: brightness(2.2) saturate(.55);
+  }
+
+  100% {
+    filter: none;
+  }
+}
+
+.combat-fx-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.combat-fx {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  color: #fdf6e6;
+  -webkit-text-stroke: 2.5px #05161a;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 6px #000c, 0 0 12px #0009;
+  animation: combat-fx-rise .9s cubic-bezier(.2, .7, .3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.combat-fx.tone-crit {
+  font-size: 1.7rem;
+  color: #ffd76a;
+  -webkit-text-stroke: 3px #3a1f00;
+  text-shadow: 0 0 14px #ffb43ccc, 0 2px 8px #000e;
+  animation-duration: 1.15s;
+}
+
+.combat-fx.tone-kill {
+  font-size: 1.2rem;
+  color: #ff9d72;
+}
+
+.combat-fx.tone-heal {
+  color: #8fe6b0;
+}
+
+.combat-fx.tone-dot {
+  font-size: .84rem;
+  color: #c7a6ff;
+}
+
+.combat-fx.tone-player {
+  color: #ff7070;
+}
+
+.combat-fx.fx-big {
+  font-size: 1.7rem;
+}
+
+@keyframes combat-fx-rise {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.62);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -74%) scale(1.16);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -196%) scale(1);
+  }
+}
+
+.combat-combo {
+  position: fixed;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  padding: .3rem .85rem;
+  border: 1px solid #e5be7855;
+  border-radius: 999px;
+  background: #0b1a1fdd;
+  box-shadow: 0 0 18px #e5be7833;
+  color: #ffe7b0;
+  font-size: .8rem;
+  letter-spacing: .08em;
+}
+
+.combat-combo[data-tier="2"] {
+  border-color: #ffd76a88;
+  box-shadow: 0 0 22px #ffd76a55;
+  color: #ffd76a;
+}
+
+.combat-combo[data-tier="3"] {
+  border-color: #ffe9a8cc;
+  box-shadow: 0 0 28px #ffe9a877;
+  color: #ffe9a8;
+  animation: combat-combo-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes combat-combo-pulse {
+  50% {
+    box-shadow: 0 0 34px #ffe9a899;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .combat-fx {
+    animation: none;
+    opacity: 1;
+  }
+
+  .enemy-card.hurt {
+    animation: none;
+    outline: 1px solid #ffd76a88;
+  }
+
+  .combat-combo[data-tier="3"] {
+    animation: none;
+  }
+}
+
+/* V4.8 战报输出：把"我有多强"变成可比较的数字。只读展示，不参与结算。 */
+.battle-output {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid #5b898044;
+  border-radius: 11px;
+  background: linear-gradient(120deg, #0b262acc, #0a1d2599);
+}
+
+.battle-output > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.battle-output small {
+  font-size: 11px;
+  color: #8fb3aa;
+  letter-spacing: .04em;
+}
+
+.battle-output strong {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: #f0e6cf;
+}
+
+.battle-output-trend {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  color: #8fb3aa;
+}
+
+.battle-output-trend.up {
+  color: #8fe6b0;
+}
+
+.battle-output-trend.down {
+  color: #e8927f;
+}

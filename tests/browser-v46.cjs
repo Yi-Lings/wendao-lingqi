@@ -52,8 +52,9 @@ async function test(name,fn){
  catch(e){report.tests.push({name,passed:false,error:e.stack});console.error('FAIL '+name+': '+e.message);}
 }
 (async()=>{
- const revisions=fs.readdirSync(path.join(ROOT,'qa-tools/browsers')).filter(x=>x.startsWith('chromium_headless_shell-')).sort();
- browser=await chromium.launch({headless:true,executablePath:process.env.LINGQI_CHROMIUM||path.join(ROOT,'qa-tools/browsers',revisions.at(-1),'chrome-headless-shell-linux64/chrome-headless-shell'),args:['--no-sandbox','--disable-gpu'],env:{...process.env,FONTCONFIG_FILE:path.join(ROOT,'qa-tools/fonts.conf')}});
+ const bundle=path.join(ROOT,'qa-tools/browsers'),revisions=fs.existsSync(bundle)?fs.readdirSync(bundle).filter(x=>x.startsWith('chromium_headless_shell-')).sort():[];
+ if(!process.env.LINGQI_CHROMIUM&&!revisions.length)throw Error('未找到可用浏览器：设置 LINGQI_CHROMIUM，或准备 qa-tools/browsers');
+ browser=await chromium.launch({headless:true,executablePath:process.env.LINGQI_CHROMIUM||path.join(bundle,revisions.at(-1),'chrome-headless-shell-linux64/chrome-headless-shell'),args:['--no-sandbox','--disable-gpu'],env:{...process.env,FONTCONFIG_FILE:path.join(ROOT,'qa-tools/fonts.conf')}});
  await test('six home pages show distinct contextual paintings without covering the primary controls',()=>withPage(fixture(),async p=>{
   const seen=[];
   for(const page of ['cultivation','character','adventure','cave','fate','heaven']){

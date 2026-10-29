@@ -170,7 +170,15 @@ test('buildInputs rejects duplicate entries, traversal, bad sizes and bad checks
 
 test('source inputs cannot be replaced by symlinks to undeclared bytes outside the repository',t=>{
  const {repo,root}=fixture(t),asset=path.join(repo,'web/assets/hero.png'),external=path.join(root,'outside.png');
- fs.writeFileSync(external,INPUTS['web/assets/hero.png']);fs.unlinkSync(asset);fs.symlinkSync(external,asset);
+ fs.writeFileSync(external,INPUTS['web/assets/hero.png']);fs.unlinkSync(asset);
+ try{fs.symlinkSync(external,asset);}
+ catch(error){
+  // Windows without Developer Mode or an elevated token refuses symlink creation
+  // (EPERM) and some filesystems refuse it outright (ENOSYS/ENOTSUP). The guard
+  // below cannot be exercised there, so say so instead of failing or passing blind.
+  if(['EPERM','EACCES','ENOSYS','ENOTSUP'].includes(error.code))return t.skip('filesystem does not allow symlinks: '+error.code);
+  throw error;
+ }
  rejected(checker(repo),/nonregular current build input.*hero\.png/);
 });
 

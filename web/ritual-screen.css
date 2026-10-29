@@ -125,3 +125,49 @@
 @media (prefers-reduced-motion: reduce) {
   .ritual-altar *, .ritual-altar *::before, .ritual-altar *::after { animation: none !important; transition: none !important; }
 }
+
+/* V4.8 破境落差：突破前后真实面板对比。 */
+.breakthrough-delta {
+  display: grid;
+  gap: 6px;
+  margin: 14px auto 4px;
+  padding: 12px 14px;
+  max-width: 420px;
+  border: 1px solid #eacd8055;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #1a1a10cc, #0a1d2599);
+}
+
+.breakthrough-delta-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakthrough-delta-row small {
+  color: #c9b68a;
+  letter-spacing: .06em;
+}
+
+.breakthrough-delta-row strong {
+  color: #ffe9a8;
+}
+
+.breakthrough-delta-row b {
+  font-weight: 600;
+}
+
+.breakthrough-delta-row b.up {
+  color: #8fe6b0;
+}
+
+.breakthrough-delta-row b.down {
+  color: #e8927f;
+}
+
+.breakthrough-delta-row b.flat {
+  color: #8fb3aa;
+}
