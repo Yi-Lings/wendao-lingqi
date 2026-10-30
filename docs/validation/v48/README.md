@@ -88,14 +88,64 @@ python tools/package-source.py
 
 Android 真机、模拟器、系统文件选择器、返回手势、长时间运行；真人爽感强度与长期经济平衡；会心音效（本轮未实现）。浏览器与逻辑通过只说明行为符合规则。
 
-**APK 本轮没有构建**，原因见下。
+## Android 构建：debug 包已打通，正式签名包待私钥
 
-## 为什么这里构建不了 APK
+最初的判断是「这台机器编不出来」，**后续研究推翻了这个结论**：缺的不是能力，是两条可绕开的依赖路径。
 
-两条独立的硬阻塞，均已实测：
+### 绕开方式
 
-1. **没有体验签名**。`tools/signing/` 不存在，全机只找到标准的 `~/.android/debug.keystore`。`build-android.sh` 的规则是缺少 `signing-key.pk8` 与 `signing-cert.pem` 时停止，不创建新密钥；项目也明确不交付不同签名的重编包。
-2. **构建依赖不可达**。`dl.google.com`（SDK platform 35）与 `maven.google.com`（AGP 8.7.3 及其依赖）的 443 端口连接失败；本机 `~/.gradle` 为空，SDK 只装了 `platforms/android-36`，与项目声明的 `compileSdk 35` 不符。`repo.maven.apache.org` 与 `services.gradle.org` 虽可达，但缺了 Google 的两个源仍然无法解析 AGP。
+| 阻塞 | 实测状态 | 绕法 |
+| --- | --- | --- |
+| `maven.google.com`（AGP 8.7.3 及依赖） | 443 不可达 | `--init-script` 把 `pluginManagement` 与 `dependencyResolutionManagement` 的仓库清空后指向 `maven.aliyun.com/repository/{google,central,gradle-plugin}` |
+| `dl.google.com`（SDK platform 35） | 443 不可达 | `SDK_TEST_BASE_URL=https://mirrors.cloud.tencent.com/AndroidSDK/` 让 `sdkmanager` 从腾讯镜像安装 `platforms;android-35` |
+| Gradle 8.9 未安装 | `~/.gradle` 为空，无 wrapper | 从 `mirrors.cloud.tencent.com/gradle/gradle-8.9-bin.zip` 下载（实测 19 MB/s） |
+
+JDK 用 Android Studio 自带的 JBR 21。AGP 8.7.3 与 Gradle 8.9 在 JDK 21 下正常。
+
+### 复现
+
+```powershell
+$env:JAVA_HOME='E:\Android\Android Studio\jbr'
+$env:ANDROID_HOME='E:\Android\Sdk'
+gradle --no-daemon --init-script <aliyun-mirrors.gradle> -p android :app:assembleDebug
+```
+
+`local.properties` 写 `sdk.dir`。init 脚本只在本机使用，不进入仓库。
+
+### 结果
+
+```
+BUILD SUCCESSFUL in 30s
+android/app/build/outputs/apk/debug/app-debug.apk
+172,883,380 字节 · SHA-256 85c5759d1873e8dfbfdfa38519ea2192d0aa7e380bfbde4a268e2ecbdff53f6b
+```
+
+`audit-apk.py --variant debug --package-id com.lingqi.game.preview --version-code 12 --version-name 4.8` 全部通过：
+
+- `package name='com.lingqi.game.preview' versionCode='12' versionName='4.8' compileSdkVersion='35'`
+- `minSdkVersion:'26'` · `targetSdkVersion:'35'` · `application-label:'问道·灵契·体验'`
+- `launchable-activity: com.lingqi.game.MainActivity`
+- **132 个打包资源与源码逐字节一致**，42 张美术、16 段音频、36 个模块（含新增的 `combat-fx.js`）
+- `classes.dex` + `classes2.dex`，ZIP CRC 通过
+
+`apksigner verify`：v2 方案通过，签名者 `CN=Android Debug`。
+
+### 这份 debug 包不能当体验版发布
+
+它与既有体验包**签名不同**，无法覆盖升级已安装的 `com.lingqi.game.preview`（需先卸载）。项目规则明确不交付不同签名的重编包，因此它只作本地验证产物，不进 Release。
+
+### 正式签名包还差什么
+
+只差原私钥的两个文件：`signing-key.pk8` 与 `signing-cert.pem`（可放 `tools/signing/`，或用 `LINGQI_SIGNING_DIR` 指向别处）。拿到后即可 `:app:assembleRelease` 出未签名 APK，再用同一套 `zipalign` + `apksigner` 签名，得到可覆盖升级的正式体验包。
+
+### 顺带修掉的构建链缺陷
+
+`audit-apk.py` 有两处只在 Linux 上成立的写法，在 Windows 上必然失败：
+
+1. 找的是 `aapt2`，而 Windows build-tools 提供 `aapt2.exe`，于是报「aapt2 missing」并建议去准备 SDK——明明 SDK 是完整的。
+2. `subprocess.run(..., text=True)` 未指定编码，中文 Windows 默认用 GBK 解码 aapt2 的 UTF-8 输出，抛 `UnicodeDecodeError` 后 `stdout` 变成 `None`，后续断言报 `argument of type 'NoneType' is not iterable`。
+
+两处都已修，并补上 `combat-fx.js` 到必需模块清单。
 
 因此 V4.8 的 APK 需要在具备完整工具链与私钥的环境构建，例如本机已安装的 Android Studio 配合原签名。
 

@@ -67,4 +67,8 @@
 
 本轮修掉了一处**测试竞态**：离线套件原先要求点击重试后整个存档逐字段相等，而每 250ms 的被动结算会推进毫秒累加器，在本机慢速环境下跨过 1 秒边界即失败。改为快照前冻结 `Date.now`，让比较确定化，而不是放宽断言。
 
-**APK 没有构建，Release 没有发布。** 两条硬阻塞：缺少体验签名（`tools/signing/` 不存在，项目规则不允许新建密钥或交付不同签名的重编包）；`dl.google.com` 与 `maven.google.com` 不可达，SDK 只有 platform 36、AGP 无法解析。需要在具备完整工具链与原私钥的环境构建。
+**Android debug 包已构建并通过项目自带审计。** 起初判断这台机器编不出来，后续研究推翻了它：AGP 与依赖改走阿里云 Google 镜像、SDK platform 35 从腾讯镜像用 `SDK_TEST_BASE_URL` 安装、Gradle 8.9 从腾讯镜像下载，JDK 用 Android Studio 自带 JBR 21。产物 172,883,380 字节，`audit-apk.py` 确认包名 `com.lingqi.game.preview`、4.8/code12、compileSdk 35、132 个资源逐字节匹配源码，`apksigner` 确认 v2 签名有效。
+
+**但这份包不能当体验版发布**：它签的是 Android Debug 证书，与既有体验包签名不同，无法覆盖升级。正式体验包只差原私钥的两个文件（`signing-key.pk8` 与 `signing-cert.pem`）。Release 因此仍未发布。
+
+顺带修掉 `audit-apk.py` 两处只在 Linux 成立的写法：找 `aapt2` 而非 `aapt2.exe`，以及未指定编码导致中文 Windows 上用 GBK 解码 UTF-8 输出而崩溃。详见 [验证目录](validation/v48/README.md)。

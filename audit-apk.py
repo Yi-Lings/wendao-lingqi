@@ -17,7 +17,7 @@ args.package_id = args.package_id or ('com.lingqi.game.preview' if args.variant 
 args.version_code = args.version_code or re.search(r'\bversionCode\s+(\d+)', config).group(1)
 args.version_name = args.version_name or re.search(r"\bversionName\s+'([^']+)'", config).group(1)
 tools = ROOT / 'tools/android'
-modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'scene-art.js', 'story-focus.js', 'battle-guidance.js', 'wayfarer-review.js', 'companion-records.js', 'monster-art.js', 'story-scenes.js', 'investigation.js', 'formation.js', 'formation-screen.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
+modules = ['data.js', 'art-crops.js', 'art-identity.js', 'equipment-art.js', 'game-art.js', 'mentor-art.js', 'scene-art.js', 'story-focus.js', 'battle-guidance.js', 'wayfarer-review.js', 'companion-records.js', 'monster-art.js', 'story-scenes.js', 'investigation.js', 'formation.js', 'formation-screen.js', 'ascension-scenes.js', 'ascension.js', 'breakthrough-ritual.js', 'core.js', 'builds.js', 'economy.js', 'combat.js', 'combat-fx.js', 'story.js', 'engine.js', 'audio.js', 'selection.js', 'equipment-sources.js', 'rewards.js', 'activity-rewards.js', 'art-layout.js', 'preview.js', 'story-screen.js', 'ritual-screen.js', 'ascension-screen.js', 'app.js']
 art = ['v3-heroes.png', 'v3-hero-expressions.png', 'v3-forge.png', 'v3-world.png',
        'v3-map-atlas-a.png', 'v3-map-atlas-b.png', 'v3-monster-atlas.png',
        'v3-boss-atlas.png', 'v3-items-atlas.png', 'v3-skills-atlas.png', 'v3-summon.png', 'v3-shop.png', 'v3-chapter-atlas.png', 'v3-cardback.png',
@@ -59,14 +59,21 @@ with zipfile.ZipFile(apk) as archive:
             assert digest(source) == digest(packed), name + ' differs from tested source'
     dex_bytes = sum(archive.getinfo(name).file_size for name in dex_names)
 sdk = os.environ.get('ANDROID_HOME') or os.environ.get('ANDROID_SDK_ROOT')
-candidates = [tools / 'aapt2']
-if sdk: candidates.append(pathlib.Path(sdk) / 'build-tools/35.0.0/aapt2')
-if shutil.which('aapt2'): candidates.append(pathlib.Path(shutil.which('aapt2')))
+# Windows build-tools ship aapt2.exe; without the suffix the audit claimed the
+# toolchain was missing even when ANDROID_HOME pointed at a complete SDK.
+names = ['aapt2', 'aapt2.exe']
+candidates = [tools / name for name in names]
+if sdk: candidates += [pathlib.Path(sdk) / 'build-tools/35.0.0' / name for name in names]
+for name in names:
+    found = shutil.which(name)
+    if found: candidates.append(pathlib.Path(found))
 aapt2 = next((p for p in candidates if p.is_file()), None)
 if aapt2 is None: raise SystemExit('aapt2 missing: prepare tools/android or set ANDROID_HOME to SDK 35')
 result = subprocess.run([str(aapt2), 'dump', 'badging', str(apk)],
                         env={**os.environ, 'LD_LIBRARY_PATH': str(aapt2.parent / 'lib64') + os.pathsep + os.environ.get('LD_LIBRARY_PATH','')},
-                        check=True, text=True, capture_output=True)
+                        # aapt2 emits UTF-8; decoding with the console locale (GBK on a
+                        # Chinese Windows) raised UnicodeDecodeError and left stdout None.
+                        check=True, text=True, encoding='utf-8', errors='replace', capture_output=True)
 badging = result.stdout
 assert "name='" + args.package_id + "'" in badging
 assert "versionCode='" + args.version_code + "'" in badging and "versionName='" + args.version_name + "'" in badging

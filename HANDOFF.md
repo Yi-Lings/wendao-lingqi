@@ -1,10 +1,12 @@
 # 问道·灵契 V4.8 接手说明
 
-2026-10-29 起。用户要求「查全部心流，我要爽感，提一版方案」，随后追加「提交到我的github」与「继续」。已推送 `main`/`work`（提交 `5947d6e`），已构建并验证离线单文件试玩包与源码包，**APK 未构建、Release 未发布**。
+2026-10-29 起。用户要求「查全部心流，我要爽感，提一版方案」，随后追加「提交到我的github」「继续」「你帮我研究构建」。已推送 `main`/`work`，已构建并验证离线单文件试玩包与源码包，**debug APK 已构建并通过 `audit-apk.py` 审计，Release 仍未发布**。
 
-构建 APK 的两条硬阻塞（已实测）：① 缺体验签名，`tools/signing/` 不存在，全机只有 `~/.android/debug.keystore`；项目规则不允许新建密钥或交付不同签名的重编包。② `dl.google.com`（SDK platform 35）与 `maven.google.com`（AGP 8.7.3 依赖）443 不可达，SDK 只有 `platforms/android-36`，`~/.gradle` 为空。要出 V4.8 体验包，需在具备原私钥且能访问 Google Maven 的环境构建，或把 APK 交给本会话上传。
+构建链已在本机打通（`D:\lingqi-toolchain`）：Gradle 8.9 取自 `mirrors.cloud.tencent.com/gradle`；AGP 与依赖经 `--init-script` 指向 `maven.aliyun.com/repository/{google,central,gradle-plugin}`；SDK platform 35 用 `SDK_TEST_BASE_URL=https://mirrors.cloud.tencent.com/AndroidSDK/` 由 `sdkmanager` 安装；JDK 用 Android Studio 自带 JBR 21。命令与实测数据见 `docs/validation/v48/README.md`。
 
-网络提示：`github.com` 被 hosts 指向 `127.0.0.1`，本机 443 上有一个可用的本地代理（慢）；真实 GitHub IP 与 `dl.google.com` 均不可达。git 已配置 `gh auth setup-git` 作为凭据助手（账号 Yi-Lings），仓库本地未设置 `http.proxy`。
+**唯一剩余阻塞是原私钥**：`tools/signing/signing-key.pk8` 与 `signing-cert.pem` 不在本机，全机只有标准 `~/.android/debug.keystore`。因此只能出 `CN=Android Debug` 签名的包，无法覆盖升级既有体验版，按项目规则不进 Release。拿到私钥后：`:app:assembleRelease` 出未签名 APK，再 `zipalign` + `apksigner` 用同一证书签名即可发布。
+
+网络提示：`github.com` 被 hosts 指向 `127.0.0.1`，本机 443 上有一个可用的本地代理（慢）；真实 GitHub IP、`dl.google.com`、`maven.google.com` 均不可达。git 已配置 `gh auth setup-git` 作为凭据助手（账号 Yi-Lings），仓库本地未设置 `http.proxy`。
 
 本轮先做全系统爽感审计（[docs/review/JUICE_REVIEW_V4_8.md](docs/review/JUICE_REVIEW_V4_8.md)），结论是成长曲线不慢、问题在可感知性，因此只改呈现层：`web/combat-fx.js` 新增纯函数翻译层；`combat.js` 产生有界 `b.feedback` 事件流并累计 `performance.damageDealt/maxHit/crits/kills`；`app.js` 用挂在 patch 子树之外的 `#combat-fx-layer` 渲染飘字与连击；`battle.css` 补受击闪白、飘字、连击徽标；`rewards.css` 给 `rarity>=4` 加独立节拍；破境页加前后对比。经济、掉落、敌人强度、经验曲线与存档版本均未改动。
 
