@@ -1,12 +1,18 @@
 # 问道·灵契 V4.8 接手说明
 
-2026-10-29。用户要求「查全部心流，我要爽感，提一版方案」，授权范围为实现＋测试＋文档＋本地提交，**未授权推送 GitHub、未授权构建或发布 APK**。本轮因此停在本地工作树：`package.json` 4.8.0、Android 4.8/code12 已改，但没有构建产物，也没有新 Release。
+2026-10-29 起。用户要求「查全部心流，我要爽感，提一版方案」，随后追加「提交到我的github」与「继续」。已推送 `main`/`work`（提交 `5947d6e`），已构建并验证离线单文件试玩包与源码包，**APK 未构建、Release 未发布**。
+
+构建 APK 的两条硬阻塞（已实测）：① 缺体验签名，`tools/signing/` 不存在，全机只有 `~/.android/debug.keystore`；项目规则不允许新建密钥或交付不同签名的重编包。② `dl.google.com`（SDK platform 35）与 `maven.google.com`（AGP 8.7.3 依赖）443 不可达，SDK 只有 `platforms/android-36`，`~/.gradle` 为空。要出 V4.8 体验包，需在具备原私钥且能访问 Google Maven 的环境构建，或把 APK 交给本会话上传。
+
+网络提示：`github.com` 被 hosts 指向 `127.0.0.1`，本机 443 上有一个可用的本地代理（慢）；真实 GitHub IP 与 `dl.google.com` 均不可达。git 已配置 `gh auth setup-git` 作为凭据助手（账号 Yi-Lings），仓库本地未设置 `http.proxy`。
 
 本轮先做全系统爽感审计（[docs/review/JUICE_REVIEW_V4_8.md](docs/review/JUICE_REVIEW_V4_8.md)），结论是成长曲线不慢、问题在可感知性，因此只改呈现层：`web/combat-fx.js` 新增纯函数翻译层；`combat.js` 产生有界 `b.feedback` 事件流并累计 `performance.damageDealt/maxHit/crits/kills`；`app.js` 用挂在 patch 子树之外的 `#combat-fx-layer` 渲染飘字与连击；`battle.css` 补受击闪白、飘字、连击徽标；`rewards.css` 给 `rarity>=4` 加独立节拍；破境页加前后对比。经济、掉落、敌人强度、经验曲线与存档版本均未改动。
 
-验证：476 项逻辑（475 通过、1 跳过、0 失败），跳过项是 Windows 非管理员无法建符号链接的既有用例，现已明确 `t.skip` 并打印原因；234 项浏览器源页面检查全部通过，用本机 Edge 经 Playwright 驱动（`LINGQI_CHROMIUM` 指向 msedge.exe）。离线 file:// 的 11 项需要先构建单文件 HTML，本轮未构建，故未运行。新增 `tests/browser-v48-feedback.cjs` 与 `tests/capture-v48-fx.cjs`，截图见 `dist/v48-combat-fx*.png`。
+验证：476 项逻辑（475 通过、1 跳过、0 失败），跳过项是 Windows 非管理员无法建符号链接的既有用例，现已明确 `t.skip` 并打印原因；浏览器 245 项全部通过（234 源页面 + 11 真实 `file://`），用本机 Edge 经 Playwright 驱动（`LINGQI_CHROMIUM` 指向 msedge.exe）。新增 `tests/browser-v48-feedback.cjs` 与 `tests/capture-v48-fx.cjs`，截图见 `docs/validation/v48/`。
 
-顺手修：`browser-v46.cjs` / `browser-v47.cjs` 原先在读取 `LINGQI_CHROMIUM` 之前就 `readdirSync(qa-tools/browsers)`，没有该目录的机器上直接 `ENOENT`，已改为先判断存在性。
+离线包：`python tools/build-web-preview.py --output dist/wendao-lingqi-v4.8-preview.html --zip`，HTML 231,052,349 字节、ZIP 172,980,158 字节、77 项内嵌资源；`tests/browser-v42-offline.cjs` 连续三次 11/11、零页面错误、零外部请求。源码包 `python tools/package-source.py`，1,583 文件、475,046,525 字节。
+
+顺手修：`browser-v46.cjs` / `browser-v47.cjs` 原先在读取 `LINGQI_CHROMIUM` 之前就 `readdirSync(qa-tools/browsers)`，没有该目录的机器上直接 `ENOENT`，已改为先判断存在性。`browser-v42-offline.cjs` 的「挑战锁定与战报重试」原本要求整档逐字段相等，会与 250ms 被动结算赛跑（本机实测差 1000ms），改为快照前冻结 `Date.now` 使其确定，而非放宽断言。
 
 未做：会心专属音效（需新增 MP3 资产，牵动音频 manifest、APK 资源审计与离线单文件体积）、成就/称号墙、三仙阶长篇行动链、Android 真机验证、真人爽感与长期平衡结论。
 

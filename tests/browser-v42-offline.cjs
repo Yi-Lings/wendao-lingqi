@@ -7,6 +7,11 @@ const file=process.env.LINGQI_PREVIEW_HTML||path.join(ROOT,'dist/wendao-lingqi-v
 const revisions=process.env.LINGQI_CHROMIUM?[]:fs.readdirSync(path.join(ROOT,'qa-tools/browsers')).filter(x=>x.startsWith('chromium_headless_shell-')).sort();
 const executablePath=process.env.LINGQI_CHROMIUM||path.join(ROOT,'qa-tools/browsers',revisions.pop(),'chrome-headless-shell-linux64/chrome-headless-shell');
 const report={startedAt:new Date().toISOString(),file:path.basename(file),tests:[],pageErrors:[],consoleErrors:[],failedRequests:[],externalRequests:[]};let browser;
+// Passive settlement advances the millisecond accumulators on every timer tick,
+// so a whole-state comparison is a race against the wall clock. Drop only the
+// clock bookkeeping; every durable field (resources, progress, battle, report)
+// is still compared exactly.
+const durable=state=>{const copy=JSON.parse(JSON.stringify(state));for(const key of ['lastAt','carryMs','productionCarryMs','wisdomCarryMs','sweepMs','productionRemainders'])delete copy[key];return copy;};
 async function test(name,fn){try{await fn();report.tests.push({name,passed:true});console.log('PASS '+name);}catch(e){report.tests.push({name,passed:false,error:e.stack});console.error('FAIL '+name+': '+e.message);}}
 (async()=>{
  assert(fs.existsSync(file));browser=await chromium.launch({headless:true,executablePath,args:['--no-sandbox','--disable-gpu']});
@@ -114,7 +119,12 @@ async function test(name,fn){try{await fn();report.tests.push({name,passed:true}
   await test('offline challenge locks and battle retry use bundled guidance with no additional rewards',async()=>{
    await p.evaluate(()=>Lingqi.showModal('dungeon',{id:'resource_herb'}));await p.selectOption('#dungeon-difficulty','2');assert(await p.locator('[data-action=startDungeon]').isDisabled());
    await p.selectOption('#dungeon-difficulty','0');await p.locator('#dungeon-practice').check();await p.locator('[data-action=startDungeon]').click();await p.evaluate(()=>Lingqi.act('leaveBattle'));assert(await p.locator('.battle-guidance').isVisible());
-   const saved=await p.evaluate(()=>Lingqi.state());await p.locator('[data-ui=battle-retry]').first().click();assert(await p.locator('#dungeon-practice').isChecked());assert.equal(await p.inputValue('#dungeon-difficulty'),'0');assert.deepEqual(await p.evaluate(()=>Lingqi.state()),saved);
+   // Freeze the clock so the passive 250ms settlement cannot advance the
+   // accumulators between the two snapshots; the comparison then covers the
+   // whole state instead of racing the wall clock.
+   await p.evaluate(()=>{const frozen=Date.now();window.__restoreNow=()=>{Date.now=window.__realNow;};window.__realNow=Date.now;Date.now=()=>frozen;});
+   const saved=await p.evaluate(()=>Lingqi.state());await p.locator('[data-ui=battle-retry]').first().click();assert(await p.locator('#dungeon-practice').isChecked());assert.equal(await p.inputValue('#dungeon-difficulty'),'0');assert.deepEqual(durable(await p.evaluate(()=>Lingqi.state())),durable(saved));assert.equal(await p.evaluate(()=>Lingqi.state().battle),null);
+   await p.evaluate(()=>window.__restoreNow());
    await p.screenshot({path:path.join(ROOT,'dist/v47-offline-retry.png')});report.screenshots.push('v47-offline-retry.png');
   });
  }
