@@ -1,6 +1,10 @@
 # 问道·灵契 V4.8 接手说明
 
-2026-10-29 起。用户要求「查全部心流，我要爽感，提一版方案」，随后追加「提交到我的github」「继续」「你帮我研究构建」。已推送 `main`/`work`，已构建并验证离线单文件试玩包与源码包，**debug APK 已构建并通过 `audit-apk.py` 审计，Release 仍未发布**。
+2026-10-29 起。用户要求「查全部心流，我要爽感，提一版方案」，随后追加「提交到我的github」「继续」「你帮我研究构建」「打包为release，提交，或者给我html让我测试」。已推送 `main`/`work`，已构建并验证离线单文件试玩包与源码包，**debug APK 已构建并通过 `audit-apk.py` 审计，V4.8 体验版已作为 prerelease 发布**：`v4.8.0-preview`。
+
+发布四个附件：`wendao-lingqi-v4.8-debug.apk`（172,883,380 字节）、`wendao-lingqi-v4.8-preview.zip`（172,980,158）、`wendao-lingqi-v4.8.0-source.zip`（475,046,525）、`SHA256SUMS.txt`。GitHub 计算的四项 digest 与本地 SHA-256 完全一致，匿名下载复验结果见 `docs/validation/v48/README.md`。
+
+**APK 是 debug 签名，不是既有体验包签名**：可独立安装，但无法覆盖升级已装的 `com.lingqi.game.preview`。这是本轮唯一的功能性缺口，根因仍是原私钥不在本机。
 
 构建链已在本机打通（`D:\lingqi-toolchain`）：Gradle 8.9 取自 `mirrors.cloud.tencent.com/gradle`；AGP 与依赖经 `--init-script` 指向 `maven.aliyun.com/repository/{google,central,gradle-plugin}`；SDK platform 35 用 `SDK_TEST_BASE_URL=https://mirrors.cloud.tencent.com/AndroidSDK/` 由 `sdkmanager` 安装；JDK 用 Android Studio 自带 JBR 21。命令与实测数据见 `docs/validation/v48/README.md`。
 

@@ -1,12 +1,14 @@
-# 问道 · 灵契 V4.8（开发中）
+# 问道 · 灵契 V4.8
 
 原创安卓竖屏单机修仙游戏：六章多幕剧情、闭关渡劫、斗技夺魁、六流派构筑，以及飞升后的登仙、真仙、金仙三阶成长。游戏资源随 APK 打包，安装后离线运行。
 
-**当前已公开发布的是 V4.7。** 本分支的 V4.8 尚未打包 APK，也未发布 Release。
+[下载 V4.8 体验版](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v4.8.0-preview) · [发布说明](docs/RELEASE_NOTES_V4_8.md)
+
+**V4.8 的 APK 使用 debug 签名，不是既有体验包的签名**，可以独立安装，但无法覆盖升级已安装的 `com.lingqi.game.preview`，需要先卸载旧版。原体验签名不在本次构建环境中，按项目规则不新建密钥、也不把不同签名的重编包当作正式体验版；可覆盖升级的正式包需用原私钥重新签名。
 
 [下载 V4.7 Android 体验 APK](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.apk) · [V4.7 离线网页试玩](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7-preview.zip) · [完整源码 ZIP](https://github.com/Yi-Lings/wendao-lingqi/releases/download/v4.7.0-preview/wendao-lingqi-v4.7.0-source.zip) · [发布说明](docs/RELEASE_NOTES_V4_7.md)
 
-安装游戏只需 APK，无需点击 Code → Download ZIP 下载整个仓库。最新体验版为 V4.7；GitHub 的 Latest 入口目前仍指向旧 V3 正式版。下载困难时可在对话中索取已核验的 APK 附件；诊断见 [下载记录](docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md)。
+安装游戏只需 APK，无需点击 Code → Download ZIP 下载整个仓库。GitHub 的 Latest 入口目前仍指向旧 V3 正式版。下载困难时可在对话中索取已核验的 APK 附件；诊断见 [下载记录](docs/validation/DOWNLOAD_DIAGNOSTIC_2026-10-24.md)。
 
 V4.7 最低 Android 8.0，体验包使用独立包名 `com.lingqi.game.preview` 和既有体验签名，可覆盖更新旧体验版，也可与正式包并排安装。更新或换包前可导出 JSON 备份，再按需导入。全部源代码、美术、音频、方案与测试同步到 `main` 和 `work` 分支；[历史 V3 发布](https://github.com/Yi-Lings/wendao-lingqi/releases/tag/v3.0.0)保留。
 
